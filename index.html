@@ -1,0 +1,3475 @@
+<!doctype html>
+<html lang="pt-br" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Templates · Hub</title>
+    <meta
+      name="description"
+      content="Hub moderno de templates HTML. Navegação por categorias, busca instantânea, previews ao vivo."
+    />
+
+    <!-- Fontes do estilo "Geist": Inter (UI) + JetBrains Mono (números/código) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ===================================================================
+   DESIGN TOKENS
+   Variáveis CSS centralizadas: alterar aqui muda o app inteiro.
+   Convenção shadcn/ui — temas dark e light com mesma API.
+   =================================================================== */
+      :root[data-theme="dark"] {
+        --bg: #0a0a0a;
+        --bg-elev: #111111;
+        --bg-elev-2: #161616;
+        --bg-hover: #1a1a1a;
+        --border: #272727;
+        --border-hover: #3a3a3a;
+        --fg: #fafafa;
+        --fg-muted: #a1a1a1;
+        --fg-subtle: #6b6b6b;
+        --brand: #3b82f6;
+        --brand-soft: rgba(59, 130, 246, 0.12);
+        --success: #22c55e;
+        --warning: #eab308;
+        --danger: #ef4444;
+        --star: #fbbf24;
+        --ring: rgba(255, 255, 255, 0.08);
+        --shadow:
+          0 1px 0 rgba(255, 255, 255, 0.03), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+        --backdrop: rgba(0, 0, 0, 0.7);
+
+        --radius: 10px;
+        --radius-sm: 6px;
+        --radius-lg: 14px;
+      }
+      :root[data-theme="light"] {
+        --bg: #ffffff;
+        --bg-elev: #fafafa;
+        --bg-elev-2: #f4f4f5;
+        --bg-hover: #f4f4f5;
+        --border: #e4e4e7;
+        --border-hover: #d4d4d8;
+        --fg: #0a0a0a;
+        --fg-muted: #52525b;
+        --fg-subtle: #a1a1aa;
+        --brand: #2563eb;
+        --brand-soft: rgba(37, 99, 235, 0.1);
+        --success: #16a34a;
+        --warning: #ca8a04;
+        --danger: #dc2626;
+        --star: #f59e0b;
+        --ring: rgba(0, 0, 0, 0.06);
+        --shadow:
+          0 1px 0 rgba(0, 0, 0, 0.02), 0 8px 24px -12px rgba(0, 0, 0, 0.12);
+        --backdrop: rgba(255, 255, 255, 0.7);
+      }
+
+      /* ===== Reset enxuto ===== */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+      html,
+      body {
+        background: var(--bg);
+        color: var(--fg);
+      }
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          system-ui,
+          sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        min-height: 100vh;
+        font-feature-settings: "cv11", "ss01";
+      }
+      ::selection {
+        background: var(--fg);
+        color: var(--bg);
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      input,
+      select {
+        font: inherit;
+        color: inherit;
+        background: transparent;
+        border: none;
+        outline: none;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* ===================================================================
+   LAYOUT — topbar + sidebar + main (app shell)
+   =================================================================== */
+      .app {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        grid-template-rows: 56px 1fr;
+        grid-template-areas:
+          "topbar topbar"
+          "sidebar main";
+        min-height: 100vh;
+      }
+
+      /* ===================================================================
+   TOPBAR
+   =================================================================== */
+      .topbar {
+        grid-area: topbar;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: saturate(180%) blur(8px);
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: -0.01em;
+        min-width: 220px;
+        cursor: pointer;
+      }
+      .logo .mark {
+        width: 26px;
+        height: 26px;
+        display: grid;
+        place-items: center;
+        background: var(--fg);
+        color: var(--bg);
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .logo .slash {
+        color: var(--fg-subtle);
+        font-weight: 400;
+        margin: 0 -2px;
+      }
+      .logo .scope {
+        color: var(--fg-muted);
+        font-weight: 500;
+        font-size: 13px;
+      }
+
+      .search {
+        flex: 1;
+        max-width: 520px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg-elev);
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        cursor: text;
+      }
+      .search:hover {
+        border-color: var(--border-hover);
+      }
+      .search:focus-within {
+        border-color: var(--border-hover);
+        background: var(--bg-elev-2);
+        box-shadow: 0 0 0 4px var(--ring);
+      }
+      .search svg {
+        flex-shrink: 0;
+        color: var(--fg-subtle);
+      }
+      .search input {
+        flex: 1;
+        font-size: 13px;
+      }
+      .search input::placeholder {
+        color: var(--fg-subtle);
+      }
+      .search kbd {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        padding: 2px 6px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--fg-muted);
+        background: var(--bg);
+      }
+
+      .topbar .actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: auto;
+      }
+      .icon-btn {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: var(--radius-sm);
+        color: var(--fg-muted);
+        transition:
+          background 0.15s,
+          color 0.15s;
+        position: relative;
+      }
+      .icon-btn:hover {
+        background: var(--bg-elev-2);
+        color: var(--fg);
+      }
+
+      /* Tooltip simples nos icon-btn */
+      .icon-btn[data-tip]:hover::after {
+        content: attr(data-tip);
+        position: absolute;
+        top: calc(100% + 6px);
+        right: 0;
+        font-family: "Inter", sans-serif;
+        font-size: 11px;
+        padding: 4px 8px;
+        background: var(--fg);
+        color: var(--bg);
+        border-radius: 4px;
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      /* ===================================================================
+   SIDEBAR — árvore de categorias + atalhos
+   =================================================================== */
+      .sidebar {
+        grid-area: sidebar;
+        border-right: 1px solid var(--border);
+        background: var(--bg);
+        padding: 20px 12px;
+        overflow-y: auto;
+        height: calc(100vh - 56px);
+        position: sticky;
+        top: 56px;
+      }
+      .side-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--fg-subtle);
+        padding: 16px 10px 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .side-label:first-child {
+        padding-top: 0;
+      }
+      .tree {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .tree-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        color: var(--fg-muted);
+        cursor: pointer;
+        transition:
+          background 0.12s,
+          color 0.12s;
+        text-align: left;
+        width: 100%;
+      }
+      .tree-item:hover {
+        background: var(--bg-elev-2);
+        color: var(--fg);
+      }
+      .tree-item.active {
+        background: var(--bg-elev-2);
+        color: var(--fg);
+        font-weight: 500;
+      }
+      .tree-item .chev {
+        width: 14px;
+        height: 14px;
+        display: grid;
+        place-items: center;
+        color: var(--fg-subtle);
+        transition: transform 0.15s;
+        flex-shrink: 0;
+      }
+      .tree-item.expanded .chev {
+        transform: rotate(90deg);
+      }
+      .tree-item .ico {
+        width: 16px;
+        height: 16px;
+        display: grid;
+        place-items: center;
+        color: var(--fg-subtle);
+        flex-shrink: 0;
+      }
+      .tree-item.active .ico {
+        color: var(--brand);
+      }
+      .tree-item .ico.star {
+        color: var(--star);
+      }
+      .tree-item .name {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tree-item .count {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        color: var(--fg-subtle);
+        padding: 1px 6px;
+        border-radius: 4px;
+        background: var(--bg-elev-2);
+      }
+      .tree-item.active .count {
+        background: var(--bg);
+      }
+
+      .tree-children {
+        display: none;
+        margin-left: 13px;
+        padding-left: 11px;
+        border-left: 1px solid var(--border);
+        flex-direction: column;
+        gap: 2px;
+        margin-top: 2px;
+        margin-bottom: 4px;
+      }
+      .tree-children.open {
+        display: flex;
+      }
+
+      /* ===================================================================
+   MAIN
+   =================================================================== */
+      .main {
+        grid-area: main;
+        padding: 32px 40px 80px;
+        max-width: 1400px;
+        width: 100%;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--fg-muted);
+        margin-bottom: 8px;
+      }
+      .breadcrumb a {
+        cursor: pointer;
+        transition: color 0.12s;
+      }
+      .breadcrumb a:hover {
+        color: var(--fg);
+      }
+      .breadcrumb .sep {
+        color: var(--fg-subtle);
+        display: grid;
+        place-items: center;
+      }
+      .breadcrumb .here {
+        color: var(--fg);
+        font-weight: 500;
+      }
+
+      /* Cabeçalho da página */
+      .page-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 14px 0 24px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 28px;
+      }
+      .page-head h1 {
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        margin-bottom: 6px;
+      }
+      .page-head .lead {
+        color: var(--fg-muted);
+        font-size: 14px;
+        max-width: 60ch;
+      }
+      .page-head .stats {
+        display: flex;
+        gap: 16px;
+        flex-shrink: 0;
+      }
+      .stat-pill {
+        padding: 8px 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg-elev);
+        text-align: center;
+      }
+      .stat-pill .v {
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1;
+      }
+      .stat-pill .k {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--fg-subtle);
+        margin-top: 4px;
+      }
+
+      /* ===================================================================
+   FILTROS / TOOLBAR
+   =================================================================== */
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 11px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--bg-elev);
+        font-size: 12px;
+        color: var(--fg-muted);
+        transition: all 0.12s;
+      }
+      .chip:hover {
+        border-color: var(--border-hover);
+        color: var(--fg);
+      }
+      .chip.active {
+        background: var(--fg);
+        color: var(--bg);
+        border-color: var(--fg);
+      }
+      .toolbar-right {
+        margin-left: auto;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .select-sort {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg-elev);
+        font-size: 12px;
+        color: var(--fg-muted);
+        cursor: pointer;
+      }
+      .select-sort:hover {
+        color: var(--fg);
+        border-color: var(--border-hover);
+      }
+      .select-sort select {
+        cursor: pointer;
+        padding-right: 4px;
+      }
+      .view-toggle {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+        background: var(--bg-elev);
+      }
+      .view-toggle button {
+        padding: 6px 10px;
+        font-size: 12px;
+        color: var(--fg-muted);
+        display: grid;
+        place-items: center;
+      }
+      .view-toggle button:hover {
+        color: var(--fg);
+      }
+      .view-toggle button.active {
+        background: var(--bg-elev-2);
+        color: var(--fg);
+      }
+
+      /* ===================================================================
+   FOLDER CARDS  (subcategorias)
+   =================================================================== */
+      .section-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 14px;
+      }
+      .section-title h2 {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--fg);
+      }
+      .section-title .more {
+        font-size: 12px;
+        color: var(--fg-muted);
+      }
+
+      .folders {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 12px;
+        margin-bottom: 36px;
+      }
+      .folder-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg-elev);
+        text-align: left;
+        width: 100%;
+        transition: all 0.15s;
+      }
+      .folder-card:hover {
+        border-color: var(--border-hover);
+        background: var(--bg-elev-2);
+        transform: translateY(-1px);
+      }
+      .folder-card .ico-wrap {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        background: var(--brand-soft);
+        color: var(--brand);
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+      }
+      .folder-card .info {
+        flex: 1;
+        min-width: 0;
+      }
+      .folder-card .name {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--fg);
+        margin-bottom: 2px;
+      }
+      .folder-card .meta {
+        font-size: 12px;
+        color: var(--fg-muted);
+      }
+      .folder-card .arr {
+        color: var(--fg-subtle);
+        flex-shrink: 0;
+      }
+
+      /* ===================================================================
+   TEMPLATE CARDS  (grid view) + skeleton + lazy
+   =================================================================== */
+      .templates.grid-view {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 16px;
+      }
+      .tpl-card {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--bg-elev);
+        overflow: hidden;
+        position: relative;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      .tpl-card:hover {
+        border-color: var(--border-hover);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .tpl-preview {
+        aspect-ratio: 16 / 10;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-elev-2);
+        position: relative;
+        overflow: hidden;
+      }
+      .tpl-preview iframe {
+        width: 200%;
+        height: 200%;
+        border: 0;
+        transform: scale(0.5);
+        transform-origin: 0 0;
+        pointer-events: none;
+        background: #fff;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+      }
+      .tpl-preview iframe.loaded {
+        opacity: 1;
+      }
+
+      /* Skeleton enquanto não carregou */
+      .tpl-preview .skeleton {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          var(--bg-elev-2) 0%,
+          var(--bg-hover) 50%,
+          var(--bg-elev-2) 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.4s ease-in-out infinite;
+      }
+      .tpl-preview .skeleton.hidden {
+        display: none;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      .tpl-preview .open-overlay {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: rgba(10, 10, 10, 0.55);
+        opacity: 0;
+        transition: opacity 0.15s;
+        backdrop-filter: blur(2px);
+        pointer-events: none;
+      }
+      .tpl-card:hover .open-overlay {
+        opacity: 1;
+      }
+      .tpl-preview .open-overlay span {
+        padding: 8px 14px;
+        background: #fff;
+        color: #0a0a0a;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Botão de favoritar (estrela) no canto do card */
+      .fav-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: rgba(255, 255, 255, 0.7);
+        transition: all 0.15s;
+        opacity: 0;
+      }
+      .tpl-card:hover .fav-btn,
+      .fav-btn.is-fav {
+        opacity: 1;
+      }
+      .fav-btn:hover {
+        background: rgba(0, 0, 0, 0.75);
+        color: var(--star);
+        transform: scale(1.05);
+      }
+      .fav-btn.is-fav {
+        color: var(--star);
+      }
+      .fav-btn.is-fav svg {
+        fill: var(--star);
+      }
+
+      .tpl-body {
+        padding: 14px 16px 16px;
+      }
+      .tpl-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 6px;
+      }
+      .tpl-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--fg);
+        letter-spacing: -0.005em;
+        line-height: 1.3;
+      }
+      .tpl-cat {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        color: var(--fg-subtle);
+        text-transform: lowercase;
+        white-space: nowrap;
+        margin-top: 1px;
+      }
+      .tpl-desc {
+        font-size: 13px;
+        color: var(--fg-muted);
+        line-height: 1.45;
+        margin-bottom: 12px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .tpl-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .tpl-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        padding: 2px 7px;
+        background: var(--bg-elev-2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--fg-muted);
+      }
+
+      /* ===================================================================
+   TEMPLATE LIST view
+   =================================================================== */
+      .templates.list-view {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--bg-elev);
+      }
+      .templates.list-view .tpl-card {
+        flex-direction: row;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+        padding: 0;
+      }
+      .templates.list-view .tpl-card:last-child {
+        border-bottom: none;
+      }
+      .templates.list-view .tpl-card:hover {
+        transform: none;
+        box-shadow: none;
+        background: var(--bg-elev-2);
+      }
+      .templates.list-view .tpl-preview {
+        width: 140px;
+        flex-shrink: 0;
+        aspect-ratio: 16/10;
+        border-right: 1px solid var(--border);
+        border-bottom: none;
+      }
+      .templates.list-view .tpl-body {
+        flex: 1;
+        padding: 14px 18px;
+      }
+      .templates.list-view .tpl-desc {
+        -webkit-line-clamp: 1;
+        margin-bottom: 8px;
+      }
+      .templates.list-view .fav-btn {
+        opacity: 1;
+        position: static;
+        margin-right: 14px;
+      }
+
+      /* ===================================================================
+   TEMPLATE VIEWER (mantém shell)
+   =================================================================== */
+      .viewer {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--bg-elev);
+        overflow: hidden;
+        animation: fade-up 0.25s ease both;
+      }
+      .viewer-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-elev);
+      }
+      .viewer-info .meta {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        flex: 1;
+      }
+      .viewer-info .meta .ttl {
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      .viewer-info .meta .desc {
+        font-size: 13px;
+        color: var(--fg-muted);
+      }
+      .viewer-info .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .viewer-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-elev-2);
+      }
+      .viewer-bar .dots {
+        display: flex;
+        gap: 6px;
+      }
+      .viewer-bar .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--bg-elev);
+        border: 1px solid var(--border);
+      }
+      .viewer-bar .url {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--fg-muted);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .viewer-bar .url svg {
+        flex-shrink: 0;
+        color: var(--success);
+      }
+      .viewer-bar .url .file {
+        color: var(--fg);
+      }
+
+      .viewer-bar .vw-actions {
+        display: flex;
+        gap: 4px;
+      }
+      .viewer-bar .vw-btn {
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 12px;
+        color: var(--fg-muted);
+        background: var(--bg);
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.12s;
+        position: relative;
+      }
+      .viewer-bar .vw-btn:hover {
+        color: var(--fg);
+        border-color: var(--border-hover);
+      }
+      .viewer-bar .vw-btn.primary {
+        background: var(--fg);
+        color: var(--bg);
+        border-color: var(--fg);
+      }
+      .viewer-bar .vw-btn.primary:hover {
+        opacity: 0.88;
+        color: var(--bg);
+      }
+      .viewer-bar .vw-btn.is-fav svg {
+        fill: var(--star);
+        color: var(--star);
+      }
+      .viewer-bar .vw-btn[data-tip]:hover::after {
+        content: attr(data-tip);
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px;
+        padding: 4px 8px;
+        background: var(--fg);
+        color: var(--bg);
+        border-radius: 4px;
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      .device-toggle {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .device-toggle button {
+        padding: 6px 10px;
+        font-size: 12px;
+        color: var(--fg-muted);
+        display: grid;
+        place-items: center;
+      }
+      .device-toggle button:hover {
+        color: var(--fg);
+      }
+      .device-toggle button.active {
+        background: var(--bg-elev-2);
+        color: var(--fg);
+      }
+
+      .viewer-stage {
+        background:
+          linear-gradient(45deg, var(--bg-elev-2) 25%, transparent 25%),
+          linear-gradient(-45deg, var(--bg-elev-2) 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, var(--bg-elev-2) 75%),
+          linear-gradient(-45deg, transparent 75%, var(--bg-elev-2) 75%);
+        background-size: 16px 16px;
+        background-position:
+          0 0,
+          0 8px,
+          8px -8px,
+          -8px 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        min-height: 600px;
+        position: relative;
+      }
+      .viewer-frame {
+        width: 100%;
+        height: 720px;
+        max-width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 12px 40px -16px rgba(0, 0, 0, 0.5);
+        transition:
+          max-width 0.3s ease,
+          opacity 0.25s ease;
+      }
+      .viewer-frame:not(.loaded) {
+        opacity: 0;
+      }
+      .viewer-stage[data-device="tablet"] .viewer-frame {
+        max-width: 820px;
+      }
+      .viewer-stage[data-device="mobile"] .viewer-frame {
+        max-width: 390px;
+      }
+
+      /* Spinner durante carregamento do iframe principal */
+      .viewer-loading {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: var(--fg-muted);
+        pointer-events: none;
+      }
+      .viewer-loading.hidden {
+        display: none;
+      }
+      .spinner {
+        width: 28px;
+        height: 28px;
+        border: 2px solid var(--border);
+        border-top-color: var(--brand);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Modo tela cheia */
+      .viewer.fullscreen {
+        position: fixed;
+        inset: 56px 0 0 0;
+        z-index: 30;
+        border-radius: 0;
+        border: none;
+        border-top: 1px solid var(--border);
+      }
+      .viewer.fullscreen .viewer-stage {
+        flex: 1;
+        padding: 16px;
+      }
+      .viewer.fullscreen .viewer-frame {
+        height: 100%;
+      }
+
+      /* ===================================================================
+   EMPTY STATE
+   =================================================================== */
+      .empty {
+        padding: 60px 24px;
+        text-align: center;
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--bg-elev);
+      }
+      .empty .ico {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 14px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--bg-elev-2);
+        color: var(--fg-subtle);
+      }
+      .empty h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .empty p {
+        color: var(--fg-muted);
+        font-size: 13px;
+      }
+      .empty p a {
+        color: var(--brand);
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      /* ===================================================================
+   COMMAND PALETTE (⌘K modal)
+   =================================================================== */
+      .cmdk-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: var(--backdrop);
+        backdrop-filter: blur(4px);
+        display: none;
+        animation: fade-in 0.12s ease both;
+      }
+      .cmdk-backdrop.open {
+        display: block;
+      }
+      .cmdk {
+        position: fixed;
+        top: 15vh;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(600px, calc(100% - 32px));
+        z-index: 101;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--bg-elev);
+        box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+        display: none;
+        animation: cmdk-in 0.18s ease both;
+      }
+      .cmdk.open {
+        display: block;
+      }
+      @keyframes cmdk-in {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -8px);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, 0);
+        }
+      }
+      .cmdk-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .cmdk-search svg {
+        color: var(--fg-subtle);
+        flex-shrink: 0;
+      }
+      .cmdk-search input {
+        flex: 1;
+        font-size: 14px;
+      }
+      .cmdk-search input::placeholder {
+        color: var(--fg-subtle);
+      }
+      .cmdk-search kbd {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        padding: 2px 6px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--fg-muted);
+        background: var(--bg);
+      }
+      .cmdk-results {
+        max-height: 50vh;
+        overflow-y: auto;
+        padding: 8px;
+      }
+      .cmdk-group {
+        margin-bottom: 8px;
+      }
+      .cmdk-group:last-child {
+        margin-bottom: 0;
+      }
+      .cmdk-group-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--fg-subtle);
+        padding: 8px 8px 4px;
+      }
+      .cmdk-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--fg);
+      }
+      .cmdk-item.hl {
+        background: var(--bg-elev-2);
+      }
+      .cmdk-item .ic {
+        width: 26px;
+        height: 26px;
+        display: grid;
+        place-items: center;
+        border-radius: 5px;
+        background: var(--bg-elev-2);
+        color: var(--fg-muted);
+        flex-shrink: 0;
+      }
+      .cmdk-item.hl .ic {
+        background: var(--bg);
+        color: var(--fg);
+      }
+      .cmdk-item .body {
+        flex: 1;
+        min-width: 0;
+      }
+      .cmdk-item .title {
+        font-weight: 500;
+      }
+      .cmdk-item .sub {
+        font-size: 11px;
+        color: var(--fg-subtle);
+        margin-top: 1px;
+        font-family: "JetBrains Mono", monospace;
+      }
+      .cmdk-item .kbd-hint {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        color: var(--fg-subtle);
+        padding: 1px 6px;
+        border-radius: 4px;
+        background: var(--bg-elev-2);
+      }
+      .cmdk-empty {
+        padding: 30px;
+        text-align: center;
+        color: var(--fg-muted);
+        font-size: 13px;
+      }
+      .cmdk-foot {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 14px;
+        border-top: 1px solid var(--border);
+        font-size: 11px;
+        color: var(--fg-subtle);
+      }
+      .cmdk-foot kbd {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        padding: 1px 6px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--bg);
+        margin: 0 2px;
+      }
+
+      /* ===================================================================
+   TOAST notifications
+   =================================================================== */
+      .toast-wrap {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        pointer-events: none;
+      }
+      .toast {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--fg);
+        color: var(--bg);
+        border-radius: var(--radius);
+        font-size: 13px;
+        font-weight: 500;
+        box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.4);
+        animation: toast-in 0.25s ease both;
+      }
+      .toast.out {
+        animation: toast-out 0.25s ease both;
+      }
+      @keyframes toast-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes toast-out {
+        to {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+      }
+      .toast svg {
+        flex-shrink: 0;
+      }
+
+      /* ===================================================================
+   FOOTER
+   =================================================================== */
+      .foot {
+        margin-top: 60px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--fg-subtle);
+      }
+
+      /* ===================================================================
+   RESPONSIVO
+   =================================================================== */
+      @media (max-width: 880px) {
+        .app {
+          grid-template-columns: 1fr;
+          grid-template-areas: "topbar" "main";
+        }
+        .sidebar {
+          display: none;
+        }
+        .app.menu-open .sidebar {
+          display: block;
+          grid-area: unset;
+          position: fixed;
+          top: 56px;
+          left: 0;
+          width: 280px;
+          height: calc(100vh - 56px);
+          z-index: 40;
+          border-right: 1px solid var(--border);
+        }
+        .main {
+          padding: 20px 16px 60px;
+        }
+        .search {
+          max-width: none;
+        }
+        .logo {
+          min-width: 0;
+        }
+        .logo .slash,
+        .logo .scope {
+          display: none;
+        }
+        .page-head {
+          flex-direction: column;
+          gap: 16px;
+        }
+        .page-head .stats {
+          width: 100%;
+        }
+        .stat-pill {
+          flex: 1;
+        }
+        .menu-toggle {
+          display: grid !important;
+        }
+        .viewer-info {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .viewer-bar {
+          flex-wrap: wrap;
+        }
+      }
+      .menu-toggle {
+        display: none;
+      }
+
+      /* ===================================================================
+   ANIMAÇÕES
+   =================================================================== */
+      @keyframes fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .tpl-card,
+      .folder-card {
+        animation: fade-up 0.25s ease both;
+      }
+      .tpl-card:nth-child(2),
+      .folder-card:nth-child(2) {
+        animation-delay: 0.03s;
+      }
+      .tpl-card:nth-child(3),
+      .folder-card:nth-child(3) {
+        animation-delay: 0.06s;
+      }
+      .tpl-card:nth-child(4),
+      .folder-card:nth-child(4) {
+        animation-delay: 0.09s;
+      }
+      .tpl-card:nth-child(5),
+      .folder-card:nth-child(5) {
+        animation-delay: 0.12s;
+      }
+      .tpl-card:nth-child(6),
+      .folder-card:nth-child(6) {
+        animation-delay: 0.15s;
+      }
+      .tpl-card:nth-child(7),
+      .folder-card:nth-child(7) {
+        animation-delay: 0.18s;
+      }
+      .tpl-card:nth-child(8),
+      .folder-card:nth-child(8) {
+        animation-delay: 0.21s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app" id="app">
+      <!-- ============== TOPBAR ============== -->
+      <header class="topbar">
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+
+        <a class="logo" id="logoBtn">
+          <span class="mark">T</span>
+          <span>templates</span>
+          <span class="slash">/</span>
+          <span class="scope">hub</span>
+        </a>
+
+        <!-- Botão que abre o Command Palette -->
+        <button class="search" id="searchBtn" aria-label="Abrir busca (Ctrl+K)">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <input
+            id="quickSearch"
+            type="search"
+            placeholder="Buscar templates, tags ou categorias…"
+            autocomplete="off"
+          />
+          <kbd>⌘ K</kbd>
+        </button>
+
+        <div class="actions">
+          <button
+            class="icon-btn"
+            id="themeToggle"
+            data-tip="Alternar tema"
+            aria-label="Alternar tema"
+          >
+            <svg
+              id="iconMoon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <svg
+              id="iconSun"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              style="display: none"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              />
+            </svg>
+          </button>
+          <a
+            class="icon-btn"
+            href="https://github.com"
+            target="_blank"
+            rel="noopener"
+            data-tip="Repositório"
+            aria-label="Repositório"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.5-2.7 5.5-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.5 4.6-1.5 7.8-5.8 7.8-10.9C23.5 5.6 18.4.5 12 .5z"
+              />
+            </svg>
+          </a>
+        </div>
+      </header>
+
+      <!-- ============== SIDEBAR ============== -->
+      <aside class="sidebar" id="sidebar">
+        <div class="side-label">Navegação</div>
+        <div class="tree" id="quickNav"></div>
+
+        <div class="side-label">Categorias</div>
+        <div class="tree" id="categoryTree"></div>
+      </aside>
+
+      <!-- ============== MAIN ============== -->
+      <main class="main">
+        <nav
+          class="breadcrumb"
+          id="breadcrumb"
+          aria-label="Trilha de navegação"
+        ></nav>
+
+        <div class="page-head">
+          <div>
+            <h1 id="pageTitle">Todos os templates</h1>
+            <p class="lead" id="pageLead">
+              Explore a coleção completa. Filtre, busque e abra templates em
+              segundos.
+            </p>
+          </div>
+          <div class="stats" id="pageStats">
+            <div class="stat-pill">
+              <div class="v" id="statTemplates">0</div>
+              <div class="k">templates</div>
+            </div>
+            <div class="stat-pill">
+              <div class="v" id="statCategories">0</div>
+              <div class="k">categorias</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros e toolbar -->
+        <div class="filters" id="filters">
+          <button class="chip" data-tag="" id="chipAll">Todos</button>
+          <!-- chips de tag injetados via JS -->
+
+          <div class="toolbar-right">
+            <label class="select-sort" title="Ordenar">
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M3 6h18M6 12h12M10 18h4" />
+              </svg>
+              <select id="sortSelect">
+                <option value="recent">Mais recentes</option>
+                <option value="oldest">Mais antigos</option>
+                <option value="az">A → Z</option>
+                <option value="za">Z → A</option>
+              </select>
+            </label>
+            <div class="view-toggle">
+              <button
+                id="viewGrid"
+                class="active"
+                aria-label="Visualização em grade"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                </svg>
+              </button>
+              <button id="viewList" aria-label="Visualização em lista">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <line x1="8" y1="6" x2="21" y2="6" />
+                  <line x1="8" y1="12" x2="21" y2="12" />
+                  <line x1="8" y1="18" x2="21" y2="18" />
+                  <circle cx="4" cy="6" r="1" />
+                  <circle cx="4" cy="12" r="1" />
+                  <circle cx="4" cy="18" r="1" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Container onde subcategorias + templates ou viewer são renderizados -->
+        <div id="content"></div>
+
+        <footer class="foot">
+          <span>Hub de templates · client-side</span>
+          <span
+            >Pressione
+            <kbd
+              style="
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+                font-size: 10px;
+                padding: 1px 5px;
+                border: 1px solid var(--border);
+                border-radius: 3px;
+              "
+              >⌘K</kbd
+            >
+            para buscar</span
+          >
+        </footer>
+      </main>
+    </div>
+
+    <!-- ============== COMMAND PALETTE (⌘K) ============== -->
+    <div class="cmdk-backdrop" id="cmdkBackdrop"></div>
+    <div class="cmdk" id="cmdk" role="dialog" aria-label="Paleta de comandos">
+      <div class="cmdk-search">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <input
+          id="cmdkInput"
+          type="text"
+          placeholder="Buscar templates, categorias ou comandos…"
+          autocomplete="off"
+        />
+        <kbd>Esc</kbd>
+      </div>
+      <div class="cmdk-results" id="cmdkResults"></div>
+      <div class="cmdk-foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> navegar</span>
+        <span><kbd>↵</kbd> selecionar &nbsp;·&nbsp; <kbd>Esc</kbd> fechar</span>
+      </div>
+    </div>
+
+    <!-- ============== TOASTS ============== -->
+    <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+    <!-- Dados (catálogo de categorias e templates) -->
+    <script src="data.js"></script>
+
+    <script>
+      /* ===================================================================
+       *  TEMPLATE HUB — APP CORE
+       * ===================================================================
+       *  Tudo é client-side. O fluxo geral é:
+       *
+       *    1. Lê o hash da URL  (#/categoria/subcategoria  ou  #/view/:id)
+       *    2. Atualiza `state`
+       *    3. Re-renderiza shell (sidebar, breadcrumb, header)
+       *       e área central (lista de templates OU viewer interno)
+       *
+       *  Persistência: `localStorage` guarda tema, view, ordenação,
+       *  favoritos, histórico e pastas expandidas.
+       * =================================================================== */
+
+      /* ----- Atalhos genéricos de DOM ----------------------------------- */
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) =>
+        Array.from(root.querySelectorAll(sel));
+
+      /* ----- Chaves do localStorage ------------------------------------- */
+      const STORAGE = {
+        theme: "hub.theme", // "dark" | "light"
+        view: "hub.view", // "grid" | "list"
+        sort: "hub.sort", // "recent" | "oldest" | "az" | "za"
+        device: "hub.device", // "desktop" | "tablet" | "mobile"
+        favorites: "hub.favorites", // array de template ids
+        history: "hub.history", // array de template ids (mais recente primeiro)
+        expanded: "hub.expanded", // array de paths expandidos na sidebar
+      };
+
+      const HISTORY_LIMIT = 8; // máx. de itens no "Vistos recentemente"
+
+      /* ===================================================================
+   ESTADO DA APLICAÇÃO
+   `state` é o objeto vivo que o resto do código consulta para saber
+   o que renderizar. Cada `update()` lê este objeto e atualiza o DOM.
+   =================================================================== */
+      const state = {
+        path: [], // caminho de ids: ex. ["simbolismo","alquimia"]
+        query: "", // filtro de busca textual
+        tag: "", // tag ativa (chip)
+        view: "grid", // modo de visualização da lista
+        sort: "recent", // ordenação dos templates
+        viewingId: null, // id do template aberto no viewer (null = lista)
+        device: "desktop", // preset de tamanho do iframe no viewer
+        fullscreen: false, // viewer em tela cheia?
+        favorites: new Set(), // ids favoritados
+        history: [], // ids vistos recentemente (mais recente 1º)
+        expanded: new Set(), // paths (string "a/b/c") expandidos na sidebar
+        // virtual paths (para sidebar):
+        // - "__favs"     → mostra todos os favoritos
+        // - "__recent"   → mostra histórico
+        virtualPath: null,
+      };
+
+      /* ===================================================================
+   PERSISTÊNCIA — leitura segura do localStorage
+   =================================================================== */
+
+      /**
+       * Lê um valor JSON do localStorage, com fallback.
+       * @param {string} key   Chave em STORAGE.
+       * @param {*}      fallback Valor padrão se não existir ou der erro.
+       * @returns {*}
+       */
+      function loadStorage(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (raw === null) return fallback;
+          return JSON.parse(raw);
+        } catch (e) {
+          return fallback;
+        }
+      }
+
+      /**
+       * Grava um valor no localStorage como JSON, silenciando erros
+       * (ex. modo privado, quota excedida).
+       * @param {string} key
+       * @param {*} value
+       */
+      function saveStorage(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) {}
+      }
+
+      /**
+       * Inicializa o estado a partir do localStorage.
+       * Roda uma vez no boot.
+       */
+      function hydrateState() {
+        state.view = loadStorage(STORAGE.view, "grid");
+        state.sort = loadStorage(STORAGE.sort, "recent");
+        state.device = loadStorage(STORAGE.device, "desktop");
+        state.favorites = new Set(loadStorage(STORAGE.favorites, []));
+        state.history = loadStorage(STORAGE.history, []);
+        state.expanded = new Set(loadStorage(STORAGE.expanded, []));
+      }
+
+      /* ===================================================================
+   UTILITÁRIOS DE ÁRVORE
+   Funções puras que operam sobre o CATALOG (data.js).
+   =================================================================== */
+
+      /**
+       * Navega pela árvore seguindo um array de ids e devolve o nó final.
+       * @param {string[]} path  Ex.: ["simbolismo","alquimia"]
+       * @returns {object|null}  O nó (categoria) ou null se inválido.
+       */
+      function getNodeByPath(path) {
+        let nodes = CATALOG.categories;
+        let node = null;
+        for (const id of path) {
+          node = nodes.find((n) => n.id === id);
+          if (!node) return null;
+          nodes = node.children || [];
+        }
+        return node;
+      }
+
+      /**
+       * Conta recursivamente quantos templates há em um nó (e descendentes).
+       * @param {object} node
+       * @returns {number}
+       */
+      function countTemplatesDeep(node) {
+        let count = (node.templates || []).length;
+        (node.children || []).forEach((c) => (count += countTemplatesDeep(c)));
+        return count;
+      }
+
+      /**
+       * Total de templates em todo o catálogo.
+       * @returns {number}
+       */
+      function countAllTemplates() {
+        return CATALOG.categories.reduce(
+          (sum, c) => sum + countTemplatesDeep(c),
+          0,
+        );
+      }
+
+      /**
+       * Conta categorias e subcategorias em toda a árvore.
+       * @param {object[]} nodes
+       * @returns {number}
+       */
+      function countAllCategories(nodes = CATALOG.categories) {
+        let c = 0;
+        nodes.forEach((n) => {
+          c++;
+          if (n.children) c += countAllCategories(n.children);
+        });
+        return c;
+      }
+
+      /**
+       * Achata a árvore em uma lista plana de templates,
+       * anexando a propriedade `_category` com o caminho legível.
+       * Usado para busca global e ordenação.
+       * @param {object[]} nodes
+       * @param {string[]} breadcrumb  Acumulador (nomes das categorias).
+       * @param {object[]} acc         Acumulador de templates.
+       * @returns {object[]}
+       */
+      function collectAllTemplates(
+        nodes = CATALOG.categories,
+        breadcrumb = [],
+        acc = [],
+      ) {
+        for (const n of nodes) {
+          const path = [...breadcrumb, n.name];
+          (n.templates || []).forEach((t) =>
+            acc.push({ ...t, _category: path.join(" / ") }),
+          );
+          if (n.children) collectAllTemplates(n.children, path, acc);
+        }
+        return acc;
+      }
+
+      /**
+       * Coleta todas as tags únicas do catálogo, em ordem alfabética.
+       * @returns {string[]}
+       */
+      function collectAllTags() {
+        const tags = new Set();
+        collectAllTemplates().forEach((t) =>
+          (t.tags || []).forEach((x) => tags.add(x)),
+        );
+        return [...tags].sort();
+      }
+
+      /**
+       * Localiza um template pelo id em qualquer ponto da árvore.
+       * Devolve também a trilha de nós-pai (útil para breadcrumb).
+       * @param {string} id
+       * @param {object[]} nodes   (uso interno na recursão)
+       * @param {object[]} trail   (uso interno na recursão)
+       * @returns {{template:object, trail:object[]}|null}
+       */
+      function findTemplateById(id, nodes = CATALOG.categories, trail = []) {
+        for (const n of nodes) {
+          const t = (n.templates || []).find((x) => x.id === id);
+          if (t) return { template: t, trail: [...trail, n] };
+          if (n.children) {
+            const r = findTemplateById(id, n.children, [...trail, n]);
+            if (r) return r;
+          }
+        }
+        return null;
+      }
+
+      /**
+       * Devolve a descrição do "nível atual": que pastas e templates
+       * a área central deve mostrar para o caminho/virtualPath atual.
+       *
+       * Casos:
+       *  - state.virtualPath === "__favs"    → lista só favoritos
+       *  - state.virtualPath === "__recent"  → lista só histórico
+       *  - state.path vazio                  → raiz: todas categorias + todos templates
+       *  - state.path preenchido             → nó específico
+       *
+       * @returns {{
+       *   isRoot:boolean, subcategories:object[], templates:object[],
+       *   title:string, description:string, isVirtual?:boolean
+       * }}
+       */
+      function getCurrentLevel() {
+        if (state.virtualPath === "__favs") {
+          const tpls = collectAllTemplates().filter((t) =>
+            state.favorites.has(t.id),
+          );
+          return {
+            isRoot: false,
+            isVirtual: true,
+            subcategories: [],
+            templates: tpls,
+            title: "Favoritos",
+            description: tpls.length
+              ? "Seus templates marcados com estrela."
+              : "Você ainda não favoritou nenhum template. Clique na estrela em qualquer card para marcar.",
+          };
+        }
+        if (state.virtualPath === "__recent") {
+          // Mantém a ordem do histórico (mais recente primeiro)
+          const all = collectAllTemplates();
+          const map = new Map(all.map((t) => [t.id, t]));
+          const tpls = state.history.map((id) => map.get(id)).filter(Boolean);
+          return {
+            isRoot: false,
+            isVirtual: true,
+            subcategories: [],
+            templates: tpls,
+            title: "Vistos recentemente",
+            description: tpls.length
+              ? "Templates que você abriu há pouco tempo."
+              : "Seu histórico está vazio — abra alguns templates para vê-los aqui.",
+          };
+        }
+
+        if (state.path.length === 0) {
+          return {
+            isRoot: true,
+            subcategories: CATALOG.categories,
+            templates: collectAllTemplates(),
+            title: "Todos os templates",
+            description:
+              "Explore a coleção completa. Filtre, busque e abra templates em segundos.",
+          };
+        }
+
+        const node = getNodeByPath(state.path);
+        if (!node) {
+          // path inválido → volta pra raiz silenciosamente
+          state.path = [];
+          return getCurrentLevel();
+        }
+        return {
+          isRoot: false,
+          subcategories: node.children || [],
+          templates: collectAllTemplates([node]),
+          title: node.name,
+          description: node.description || "",
+        };
+      }
+
+      /* ===================================================================
+   FAVORITOS  &  HISTÓRICO
+   =================================================================== */
+
+      /**
+       * Alterna o estado de favorito de um template.
+       * @param {string} id
+       * @returns {boolean} novo estado (true = favoritado)
+       */
+      function toggleFavorite(id) {
+        const wasFav = state.favorites.has(id);
+        if (wasFav) state.favorites.delete(id);
+        else state.favorites.add(id);
+        saveStorage(STORAGE.favorites, [...state.favorites]);
+        return !wasFav;
+      }
+
+      /**
+       * Empurra um id no histórico (sem duplicar). Mantém só os últimos N.
+       * @param {string} id
+       */
+      function pushHistory(id) {
+        state.history = [id, ...state.history.filter((x) => x !== id)].slice(
+          0,
+          HISTORY_LIMIT,
+        );
+        saveStorage(STORAGE.history, state.history);
+      }
+
+      /* ===================================================================
+   URL HASH ROUTING
+   =================================================================== */
+
+      /**
+       * Lê o hash atual da URL e atualiza state.path/state.viewingId.
+       *
+       * Rotas suportadas:
+       *   #/                       → raiz
+       *   #/cat/sub                → navegação por categorias
+       *   #/view/:id               → viewer interno do template
+       *   #/favs                   → favoritos
+       *   #/recent                 → vistos recentemente
+       */
+      function readHash() {
+        const h = location.hash.replace(/^#\/?/, "");
+        state.viewingId = null;
+        state.virtualPath = null;
+        state.path = [];
+
+        if (!h) return;
+        const parts = h.split("/").filter(Boolean);
+
+        if (parts[0] === "view" && parts[1]) {
+          state.viewingId = parts[1];
+        } else if (parts[0] === "favs") {
+          state.virtualPath = "__favs";
+        } else if (parts[0] === "recent") {
+          state.virtualPath = "__recent";
+        } else {
+          state.path = parts;
+        }
+      }
+
+      /**
+       * Reflete o state atual de volta no hash da URL,
+       * sem disparar reload nem entrar no histórico do navegador.
+       */
+      function writeHash() {
+        let h;
+        if (state.viewingId) h = "#/view/" + state.viewingId;
+        else if (state.virtualPath === "__favs") h = "#/favs";
+        else if (state.virtualPath === "__recent") h = "#/recent";
+        else if (state.path.length) h = "#/" + state.path.join("/");
+        else h = "#/";
+        if (location.hash !== h) history.replaceState(null, "", h);
+      }
+
+      /* ----- Helpers de navegação programática ------------------------- */
+
+      /** Volta para a raiz do hub. */
+      function goHome() {
+        state.path = [];
+        state.viewingId = null;
+        state.virtualPath = null;
+        update();
+      }
+      /** Vai para a página de favoritos. */
+      function goFavorites() {
+        state.virtualPath = "__favs";
+        state.viewingId = null;
+        state.path = [];
+        update();
+      }
+      /** Vai para a página de vistos recentemente. */
+      function goRecent() {
+        state.virtualPath = "__recent";
+        state.viewingId = null;
+        state.path = [];
+        update();
+      }
+      /** Abre um template no viewer interno. */
+      function openTemplate(id) {
+        state.viewingId = id;
+        state.fullscreen = false;
+        pushHistory(id);
+        update();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      /** Fecha o viewer e volta para a listagem. */
+      function closeTemplate() {
+        state.viewingId = null;
+        state.fullscreen = false;
+        update();
+      }
+
+      /* ===================================================================
+   FILTRO E ORDENAÇÃO
+   =================================================================== */
+
+      /**
+       * Aplica busca textual e filtro de tag a uma lista de templates.
+       * @param {object[]} list
+       * @returns {object[]}
+       */
+      function applyFilters(list) {
+        let out = list.slice();
+        const q = state.query.toLowerCase().trim();
+        if (q) {
+          out = out.filter((t) => {
+            const hay =
+              `${t.title} ${t.description || ""} ${(t.tags || []).join(" ")} ${t._category || ""}`.toLowerCase();
+            return hay.includes(q);
+          });
+        }
+        if (state.tag) {
+          out = out.filter((t) => (t.tags || []).includes(state.tag));
+        }
+        return out;
+      }
+
+      /**
+       * Ordena templates conforme `state.sort`.
+       * @param {object[]} list
+       * @returns {object[]}  (mesma referência mutada)
+       */
+      function applySort(list) {
+        const cmpDate = (a, b) => (b.date || "").localeCompare(a.date || "");
+        const cmpAz = (a, b) => a.title.localeCompare(b.title, "pt-br");
+        switch (state.sort) {
+          case "oldest":
+            list.sort((a, b) => -cmpDate(a, b));
+            break;
+          case "az":
+            list.sort(cmpAz);
+            break;
+          case "za":
+            list.sort((a, b) => -cmpAz(a, b));
+            break;
+          case "recent":
+          default:
+            list.sort(cmpDate);
+            break;
+        }
+        return list;
+      }
+
+      /** Limpa busca e filtro de tag. */
+      function clearFilters() {
+        state.query = "";
+        state.tag = "";
+        $("#quickSearch").value = "";
+        update();
+      }
+
+      /* ===================================================================
+   RENDER — SIDEBAR (atalhos rápidos + árvore de categorias)
+   =================================================================== */
+
+      /**
+       * Renderiza os atalhos rápidos da sidebar:
+       * Todos / Favoritos / Vistos recentemente.
+       */
+      function renderQuickNav() {
+        const root = $("#quickNav");
+        const total = countAllTemplates();
+        const favCt = state.favorites.size;
+        const recCt = state.history.length;
+        const isHome =
+          !state.viewingId && !state.virtualPath && state.path.length === 0;
+
+        root.innerHTML = `
+    <button class="tree-item ${isHome ? "active" : ""}" data-action="home">
+      <span class="ico">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </span>
+      <span class="name">Todos os templates</span>
+      <span class="count">${total}</span>
+    </button>
+
+    <button class="tree-item ${state.virtualPath === "__favs" ? "active" : ""}" data-action="favs">
+      <span class="ico star">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="${favCt ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </span>
+      <span class="name">Favoritos</span>
+      <span class="count">${favCt}</span>
+    </button>
+
+    <button class="tree-item ${state.virtualPath === "__recent" ? "active" : ""}" data-action="recent">
+      <span class="ico">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </span>
+      <span class="name">Vistos recentemente</span>
+      <span class="count">${recCt}</span>
+    </button>
+  `;
+
+        // Bind dos cliques (delegação simples)
+        $$("#quickNav [data-action]").forEach((btn) => {
+          btn.onclick = () => {
+            const a = btn.dataset.action;
+            if (a === "home") goHome();
+            if (a === "favs") goFavorites();
+            if (a === "recent") goRecent();
+          };
+        });
+      }
+
+      /**
+       * Renderiza a árvore inteira de categorias na sidebar,
+       * com expansão preservada via state.expanded.
+       */
+      function renderTree() {
+        const root = $("#categoryTree");
+        root.innerHTML = "";
+        CATALOG.categories.forEach((cat) =>
+          root.appendChild(buildTreeNode(cat, [])),
+        );
+      }
+
+      /**
+       * Constrói um item da árvore (recursivamente seus filhos).
+       * @param {object} node       Nó-categoria.
+       * @param {string[]} parentPath  Caminho até este nó.
+       * @returns {HTMLElement}
+       */
+      function buildTreeNode(node, parentPath) {
+        const path = [...parentPath, node.id];
+        const pathKey = path.join("/");
+        const hasChildren = (node.children || []).length > 0;
+
+        const wrap = document.createElement("div");
+        const btn = document.createElement("button");
+        btn.className = "tree-item";
+
+        // Marca como ativo se este caminho casa com o atual
+        const isCurrent =
+          !state.viewingId &&
+          !state.virtualPath &&
+          state.path.join("/") === pathKey;
+        if (isCurrent) btn.classList.add("active");
+
+        // Decide se está expandido
+        // Auto-expande qualquer pasta no caminho atual; ou se está em state.expanded
+        const isOnPath = state.path.slice(0, path.length).join("/") === pathKey;
+        const isExpanded =
+          (isOnPath && hasChildren) || state.expanded.has(pathKey);
+        if (isExpanded && hasChildren) btn.classList.add("expanded");
+
+        btn.innerHTML = `
+    ${
+      hasChildren
+        ? `<span class="chev"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>`
+        : `<span class="chev"></span>`
+    }
+    <span class="ico">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+    </span>
+    <span class="name">${escapeHtml(node.name)}</span>
+    <span class="count">${countTemplatesDeep(node)}</span>
+  `;
+
+        btn.onclick = (e) => {
+          // Clique na seta apenas alterna expansão (sem navegar)
+          if (hasChildren && e.target.closest(".chev")) {
+            const open = !btn.classList.contains("expanded");
+            btn.classList.toggle("expanded", open);
+            const next = btn.nextElementSibling;
+            if (next && next.classList.contains("tree-children"))
+              next.classList.toggle("open", open);
+            // Persiste estado
+            if (open) state.expanded.add(pathKey);
+            else state.expanded.delete(pathKey);
+            saveStorage(STORAGE.expanded, [...state.expanded]);
+            return;
+          }
+          // Clique no nome navega
+          state.virtualPath = null;
+          state.viewingId = null;
+          state.path = path;
+          update();
+        };
+        wrap.appendChild(btn);
+
+        if (hasChildren) {
+          const childWrap = document.createElement("div");
+          childWrap.className = "tree-children";
+          if (isExpanded) childWrap.classList.add("open");
+          node.children.forEach((child) => {
+            childWrap.appendChild(buildTreeNode(child, path));
+          });
+          wrap.appendChild(childWrap);
+        }
+        return wrap;
+      }
+
+      /* ===================================================================
+   RENDER — BREADCRUMB
+   =================================================================== */
+
+      /**
+       * Renderiza o breadcrumb conforme o contexto atual:
+       * - Em viewer: Hub › trilha de categorias › título do template
+       * - Em página virtual: Hub › Favoritos / Vistos recentemente
+       * - Em categoria: Hub › cat › sub …
+       *
+       * @param {{template:object, trail:object[]}|null} found  Resultado de findTemplateById se aplicável.
+       */
+      function renderBreadcrumb(found) {
+        const el = $("#breadcrumb");
+        el.innerHTML = "";
+
+        // Sempre começa com "Hub"
+        const home = document.createElement("a");
+        home.textContent = "Hub";
+        home.onclick = goHome;
+        el.appendChild(home);
+
+        const addSep = () => {
+          const sep = document.createElement("span");
+          sep.className = "sep";
+          sep.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>`;
+          el.appendChild(sep);
+        };
+
+        // Página virtual (favoritos/recentes)
+        if (state.virtualPath) {
+          addSep();
+          const here = document.createElement("span");
+          here.className = "here";
+          here.textContent =
+            state.virtualPath === "__favs"
+              ? "Favoritos"
+              : "Vistos recentemente";
+          el.appendChild(here);
+          return;
+        }
+
+        // Viewer interno: usa trilha do template
+        if (found) {
+          found.trail.forEach((node, i) => {
+            addSep();
+            const a = document.createElement("a");
+            a.textContent = node.name;
+            a.onclick = () => {
+              state.viewingId = null;
+              state.path = found.trail.slice(0, i + 1).map((n) => n.id);
+              update();
+            };
+            el.appendChild(a);
+          });
+          addSep();
+          const here = document.createElement("span");
+          here.className = "here";
+          here.textContent = found.template.title;
+          el.appendChild(here);
+          return;
+        }
+
+        // Browse normal por categorias
+        let walked = [];
+        state.path.forEach((id, i) => {
+          walked.push(id);
+          const myPath = [...walked];
+          const node = getNodeByPath(myPath);
+          addSep();
+          const last = i === state.path.length - 1;
+          const item = document.createElement(last ? "span" : "a");
+          item.textContent = node ? node.name : id;
+          if (last) item.className = "here";
+          else
+            item.onclick = () => {
+              state.path = myPath;
+              update();
+            };
+          el.appendChild(item);
+        });
+      }
+
+      /* ===================================================================
+   RENDER — CABEÇALHO DA PÁGINA
+   =================================================================== */
+
+      /**
+       * Atualiza título, descrição e stats no topo da página.
+       * No viewer, mostra dados do template aberto e esconde stats.
+       * @param {object} level  Saída de getCurrentLevel().
+       * @param {{template:object, trail:object[]}|null} found
+       */
+      function renderHeader(level, found) {
+        if (found) {
+          $("#pageTitle").textContent = found.template.title;
+          $("#pageLead").textContent = found.template.description || "";
+          $("#pageStats").style.display = "none";
+          return;
+        }
+        $("#pageTitle").textContent = level.title;
+        $("#pageLead").textContent = level.description || "";
+        $("#pageStats").style.display = "";
+        $("#statTemplates").textContent = level.templates.length;
+        $("#statCategories").textContent = level.isRoot
+          ? countAllCategories()
+          : level.subcategories.length || 0;
+      }
+
+      /* ===================================================================
+   RENDER — TOOLBAR DE FILTROS
+   =================================================================== */
+
+      /**
+       * Reconstrói os chips de tag e sincroniza o select de ordenação.
+       * Esconde a toolbar quando o viewer está aberto.
+       */
+      function renderFilters() {
+        const viewing = !!state.viewingId;
+        $("#filters").style.display = viewing ? "none" : "";
+
+        // Remove chips antigos exceto o "Todos" e o toolbar-right
+        $$("#filters .chip:not(#chipAll)").forEach((el) => el.remove());
+
+        const filtersEl = $("#filters");
+        const toolbarRight = filtersEl.querySelector(".toolbar-right");
+
+        const chipAll = $("#chipAll");
+        chipAll.classList.toggle("active", state.tag === "");
+        chipAll.onclick = () => {
+          state.tag = "";
+          update();
+        };
+
+        collectAllTags().forEach((tag) => {
+          const chip = document.createElement("button");
+          chip.className = "chip";
+          if (state.tag === tag) chip.classList.add("active");
+          chip.textContent = tag;
+          chip.onclick = () => {
+            state.tag = state.tag === tag ? "" : tag;
+            update();
+          };
+          filtersEl.insertBefore(chip, toolbarRight);
+        });
+
+        // Sync do select de sort
+        $("#sortSelect").value = state.sort;
+      }
+
+      /* ===================================================================
+   RENDER — SUBCATEGORIAS (cards de pasta)
+   =================================================================== */
+
+      /**
+       * Renderiza os "folder cards" das subcategorias do nível atual.
+       * @param {object} level
+       * @returns {string} HTML
+       */
+      function renderSubcategories(level) {
+        if (!level.subcategories || !level.subcategories.length) return "";
+        const cards = level.subcategories
+          .map((sub) => {
+            const tplCount = countTemplatesDeep(sub);
+            const childCount = (sub.children || []).length;
+            return `
+      <button class="folder-card" data-go="${sub.id}">
+        <div class="ico-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+        </div>
+        <div class="info">
+          <div class="name">${escapeHtml(sub.name)}</div>
+          <div class="meta">${tplCount} templates${childCount ? ` · ${childCount} subpastas` : ""}</div>
+        </div>
+        <div class="arr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </button>
+    `;
+          })
+          .join("");
+
+        return `
+    <div class="section-title">
+      <h2>${state.path.length ? "Subpastas" : "Categorias"}</h2>
+      <span class="more">${level.subcategories.length} ${level.subcategories.length === 1 ? "item" : "itens"}</span>
+    </div>
+    <div class="folders">${cards}</div>
+  `;
+      }
+
+      /* ===================================================================
+   RENDER — LISTA DE TEMPLATES (grid / lista)
+   =================================================================== */
+
+      /**
+       * Gera o HTML dos cards de templates após aplicar filtros e ordenação.
+       * Devolve string vazia se vazia + tem subpastas; mostra empty state caso contrário.
+       * @param {object} level
+       * @returns {string}
+       */
+      function renderTemplates(level) {
+        let list = applyFilters(level.templates);
+        applySort(list);
+
+        if (!list.length) {
+          if (state.query || state.tag) {
+            return emptyState({
+              icon: searchSvg(),
+              title: "Nenhum template encontrado",
+              sub: `Tente outros termos ou <a data-clear>limpe os filtros</a>.`,
+            });
+          }
+          if (level.isVirtual) {
+            return emptyState({
+              icon: level.title === "Favoritos" ? starSvg() : clockSvg(),
+              title:
+                level.title === "Favoritos"
+                  ? "Sem favoritos ainda"
+                  : "Histórico vazio",
+              sub: level.description,
+            });
+          }
+          if (level.subcategories.length) return ""; // só pastas, ok
+          return emptyState({
+            icon: boxSvg(),
+            title: "Categoria vazia",
+            sub: "Adicione templates em <code>data.js</code> para começar.",
+          });
+        }
+
+        const cards = list.map((t) => renderCard(t)).join("");
+        return `
+    <div class="section-title">
+      <h2>Templates</h2>
+      <span class="more">${list.length} ${list.length === 1 ? "resultado" : "resultados"}</span>
+    </div>
+    <div class="templates ${state.view}-view">${cards}</div>
+  `;
+      }
+
+      /**
+       * HTML de um único card de template.
+       * @param {object} t
+       * @returns {string}
+       */
+      function renderCard(t) {
+        const isFav = state.favorites.has(t.id);
+        return `
+    <article class="tpl-card" data-open="${t.id}">
+      <button class="fav-btn ${isFav ? "is-fav" : ""}" data-fav="${t.id}" aria-label="Favoritar" title="${isFav ? "Remover dos favoritos" : "Adicionar aos favoritos"}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="${isFav ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </button>
+      <div class="tpl-preview" data-src="${t.path}">
+        <div class="skeleton"></div>
+        <div class="open-overlay">
+          <span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            Abrir template
+          </span>
+        </div>
+      </div>
+      <div class="tpl-body">
+        <div class="tpl-row">
+          <div class="tpl-title">${escapeHtml(t.title)}</div>
+          <div class="tpl-cat">${escapeHtml(t._category || "")}</div>
+        </div>
+        <div class="tpl-desc">${escapeHtml(t.description || "")}</div>
+        <div class="tpl-tags">
+          ${(t.tags || []).map((tag) => `<span class="tpl-tag">${escapeHtml(tag)}</span>`).join("")}
+        </div>
+      </div>
+    </article>
+  `;
+      }
+
+      /**
+       * Compõe um bloco de empty state padronizado.
+       * @param {{icon:string,title:string,sub:string}} cfg
+       * @returns {string}
+       */
+      function emptyState({ icon, title, sub }) {
+        return `
+    <div class="empty">
+      <div class="ico">${icon}</div>
+      <h3>${title}</h3>
+      <p>${sub}</p>
+    </div>
+  `;
+      }
+
+      /* ----- Iconezinhos para empty states ------------------------------ */
+      function searchSvg() {
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>`;
+      }
+      function boxSvg() {
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>`;
+      }
+      function starSvg() {
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+      }
+      function clockSvg() {
+        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+      }
+
+      /* ===================================================================
+   RENDER — TEMPLATE VIEWER (área central)
+   =================================================================== */
+
+      /**
+       * Constrói o viewer interno (sem sair do shell) para o template aberto.
+       * @returns {string} HTML
+       */
+      function renderViewer() {
+        const found = findTemplateById(state.viewingId);
+        if (!found) {
+          // Template não encontrado → toast e volta para listagem
+          showToast("Template não encontrado.", "warning");
+          state.viewingId = null;
+          return renderTemplates(getCurrentLevel());
+        }
+
+        const { template: t, trail } = found;
+        const categoryName = trail.map((n) => n.name).join(" / ");
+        const isFav = state.favorites.has(t.id);
+
+        return `
+    <div class="viewer ${state.fullscreen ? "fullscreen" : ""}" id="viewerRoot">
+      <div class="viewer-info">
+        <div class="meta">
+          <div class="ttl">${escapeHtml(t.title)}</div>
+          <div class="desc">${escapeHtml(t.description || "")}</div>
+        </div>
+        <div class="tags-row">
+          ${(t.tags || []).map((tag) => `<span class="tpl-tag">${escapeHtml(tag)}</span>`).join("")}
+        </div>
+      </div>
+
+      <div class="viewer-bar">
+        <div class="dots">
+          <span class="dot" style="background:#ff5f57;border-color:#e0443e"></span>
+          <span class="dot" style="background:#febc2e;border-color:#dea123"></span>
+          <span class="dot" style="background:#28c840;border-color:#1aab29"></span>
+        </div>
+
+        <div class="url" title="${escapeHtml(t.path)}">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>${escapeHtml(categoryName.toLowerCase().replace(/\s+/g, "-"))}/<span class="file">${escapeHtml(t.path.split("/").pop())}</span></span>
+        </div>
+
+        <div class="device-toggle" id="deviceToggle" role="group" aria-label="Tamanho de tela">
+          <button data-device="desktop" class="${state.device === "desktop" ? "active" : ""}" data-tip="Desktop (D)" aria-label="Desktop">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </button>
+          <button data-device="tablet"  class="${state.device === "tablet" ? "active" : ""}" data-tip="Tablet (T)"  aria-label="Tablet">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </button>
+          <button data-device="mobile"  class="${state.device === "mobile" ? "active" : ""}" data-tip="Mobile (M)"  aria-label="Mobile">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div class="vw-actions">
+          <button class="vw-btn ${isFav ? "is-fav" : ""}" id="favViewer" data-tip="${isFav ? "Remover dos favoritos" : "Favoritar"}" aria-label="Favoritar">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="${isFav ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </button>
+          <button class="vw-btn" id="copyCodeBtn" data-tip="Copiar código (C)" aria-label="Copiar código">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button class="vw-btn" id="shareBtn" data-tip="Copiar link" aria-label="Copiar link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button class="vw-btn" id="fullscreenBtn" data-tip="${state.fullscreen ? "Sair de tela cheia (F)" : "Tela cheia (F)"}" aria-label="Tela cheia">
+            ${
+              state.fullscreen
+                ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v4a1 1 0 0 1-1 1H3M21 8h-4a1 1 0 0 1-1-1V3M3 16h4a1 1 0 0 1 1 1v4M16 21v-4a1 1 0 0 1 1-1h4"/></svg>`
+                : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8V5a2 2 0 0 1 2-2h3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M21 16v3a2 2 0 0 1-2 2h-3"/></svg>`
+            }
+          </button>
+          <a class="vw-btn" href="${t.path}" target="_blank" rel="noopener" data-tip="Abrir em nova aba">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="vw-btn" href="${t.path}" download data-tip="Baixar arquivo">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+          <button class="vw-btn primary" id="closeViewer" data-tip="Fechar (Esc)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Fechar
+          </button>
+        </div>
+      </div>
+
+      <div class="viewer-stage" data-device="${state.device}">
+        <div class="viewer-loading" id="viewerLoading"><div class="spinner"></div></div>
+        <iframe class="viewer-frame" id="viewerFrame" src="${t.path}" title="${escapeHtml(t.title)}"></iframe>
+      </div>
+    </div>
+  `;
+      }
+
+      /**
+       * Liga todos os eventos da UI do viewer (botões, atalhos, etc.).
+       * Deve ser chamada toda vez que o viewer é renderizado.
+       */
+      function bindViewerEvents() {
+        const close = $("#closeViewer");
+        if (close) close.onclick = closeTemplate;
+
+        const fs = $("#fullscreenBtn");
+        if (fs)
+          fs.onclick = () => {
+            state.fullscreen = !state.fullscreen;
+            update();
+          };
+
+        // Iframe loading
+        const frame = $("#viewerFrame");
+        const loadingEl = $("#viewerLoading");
+        if (frame) {
+          frame.addEventListener("load", () => {
+            frame.classList.add("loaded");
+            if (loadingEl) loadingEl.classList.add("hidden");
+          });
+        }
+
+        // Device toggle
+        $$("#deviceToggle button[data-device]").forEach((b) => {
+          b.onclick = () => {
+            state.device = b.dataset.device;
+            saveStorage(STORAGE.device, state.device);
+            update();
+          };
+        });
+
+        // Favoritar
+        const favBtn = $("#favViewer");
+        if (favBtn)
+          favBtn.onclick = () => {
+            const nowFav = toggleFavorite(state.viewingId);
+            showToast(
+              nowFav ? "Adicionado aos favoritos" : "Removido dos favoritos",
+              "star",
+            );
+            update();
+          };
+
+        // Copiar código fonte do template
+        const copyBtn = $("#copyCodeBtn");
+        if (copyBtn) copyBtn.onclick = copyTemplateCode;
+
+        // Copiar link (compartilhar)
+        const shareBtn = $("#shareBtn");
+        if (shareBtn) shareBtn.onclick = shareCurrent;
+      }
+
+      /* ===================================================================
+   AÇÕES DO VIEWER — copiar código / compartilhar link
+   =================================================================== */
+
+      /**
+       * Baixa o HTML do template aberto e copia para o clipboard.
+       * Mostra toast com sucesso/erro.
+       */
+      async function copyTemplateCode() {
+        const found = findTemplateById(state.viewingId);
+        if (!found) return;
+        try {
+          const r = await fetch(found.template.path);
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          const txt = await r.text();
+          await navigator.clipboard.writeText(txt);
+          showToast("Código copiado para o clipboard", "check");
+        } catch (e) {
+          showToast("Não foi possível copiar o código", "warning");
+        }
+      }
+
+      /**
+       * Copia a URL atual (incluindo hash) para o clipboard.
+       */
+      async function shareCurrent() {
+        try {
+          await navigator.clipboard.writeText(location.href);
+          showToast("Link copiado", "link");
+        } catch (e) {
+          showToast("Não foi possível copiar o link", "warning");
+        }
+      }
+
+      /* ===================================================================
+   LAZY LOADING DE PREVIEWS  (IntersectionObserver)
+   =================================================================== */
+
+      let previewObserver = null;
+
+      /**
+       * Inicializa (uma única vez) o IntersectionObserver que carrega
+       * iframes de preview apenas quando entram na viewport.
+       * Performance: hub com 50+ templates não fica lento.
+       */
+      function initPreviewObserver() {
+        if (previewObserver) return;
+        previewObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const wrap = entry.target;
+              const src = wrap.dataset.src;
+              if (!src || wrap.dataset.loaded) return;
+
+              const iframe = document.createElement("iframe");
+              iframe.src = src;
+              iframe.loading = "lazy";
+              iframe.sandbox = "allow-same-origin";
+              iframe.setAttribute("scrolling", "no");
+              iframe.setAttribute("title", "Preview");
+              iframe.addEventListener("load", () => {
+                iframe.classList.add("loaded");
+                const sk = wrap.querySelector(".skeleton");
+                if (sk) sk.classList.add("hidden");
+              });
+              wrap.appendChild(iframe);
+              wrap.dataset.loaded = "1";
+              previewObserver.unobserve(wrap);
+            });
+          },
+          { rootMargin: "200px 0px" },
+        );
+      }
+
+      /**
+       * Registra todos os .tpl-preview presentes no DOM atual,
+       * para o observer começar a observá-los.
+       */
+      function observeAllPreviews() {
+        initPreviewObserver();
+        $$(".tpl-preview[data-src]").forEach((el) => {
+          if (!el.dataset.observed) {
+            previewObserver.observe(el);
+            el.dataset.observed = "1";
+          }
+        });
+      }
+
+      /* ===================================================================
+   TOAST NOTIFICATIONS
+   =================================================================== */
+
+      /**
+       * Exibe um toast por ~2,5s no canto inferior direito.
+       * @param {string} msg
+       * @param {"check"|"warning"|"link"|"star"} [icon]
+       */
+      function showToast(msg, icon = "check") {
+        const wrap = $("#toastWrap");
+        const el = document.createElement("div");
+        el.className = "toast";
+        el.innerHTML = toastIcon(icon) + `<span>${escapeHtml(msg)}</span>`;
+        wrap.appendChild(el);
+        setTimeout(() => {
+          el.classList.add("out");
+          setTimeout(() => el.remove(), 250);
+        }, 2400);
+      }
+
+      function toastIcon(kind) {
+        switch (kind) {
+          case "warning":
+            return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+          case "link":
+            return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
+          case "star":
+            return `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+          default:
+            return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>`;
+        }
+      }
+
+      /* ===================================================================
+   COMMAND PALETTE  (⌘K)
+   =================================================================== */
+
+      const cmdk = {
+        open: false,
+        query: "",
+        items: [],
+        highlight: 0,
+      };
+
+      /** Abre o command palette. */
+      function openCmdk() {
+        cmdk.open = true;
+        cmdk.query = "";
+        cmdk.highlight = 0;
+        $("#cmdkBackdrop").classList.add("open");
+        $("#cmdk").classList.add("open");
+        $("#cmdkInput").value = "";
+        buildCmdkItems();
+        renderCmdkResults();
+        setTimeout(() => $("#cmdkInput").focus(), 30);
+      }
+
+      /** Fecha o command palette. */
+      function closeCmdk() {
+        cmdk.open = false;
+        $("#cmdkBackdrop").classList.remove("open");
+        $("#cmdk").classList.remove("open");
+      }
+
+      /**
+       * Constrói a lista de itens (comandos + templates + categorias)
+       * que o command palette pode mostrar.
+       */
+      function buildCmdkItems() {
+        const items = [];
+
+        // Comandos globais
+        items.push(
+          {
+            kind: "cmd",
+            title: "Ir para Todos os templates",
+            group: "Comandos",
+            icon: "home",
+            run: goHome,
+          },
+          {
+            kind: "cmd",
+            title: "Ir para Favoritos",
+            group: "Comandos",
+            icon: "star",
+            run: goFavorites,
+          },
+          {
+            kind: "cmd",
+            title: "Ir para Vistos recentemente",
+            group: "Comandos",
+            icon: "clock",
+            run: goRecent,
+          },
+          {
+            kind: "cmd",
+            title: "Alternar tema (claro/escuro)",
+            group: "Comandos",
+            icon: "theme",
+            run: toggleTheme,
+          },
+          {
+            kind: "cmd",
+            title: "Mudar para visão Grid",
+            group: "Comandos",
+            icon: "grid",
+            run: () => setView("grid"),
+          },
+          {
+            kind: "cmd",
+            title: "Mudar para visão Lista",
+            group: "Comandos",
+            icon: "list",
+            run: () => setView("list"),
+          },
+        );
+
+        // Categorias
+        const walk = (nodes, trail) => {
+          nodes.forEach((n) => {
+            const path = [...trail, n];
+            items.push({
+              kind: "cat",
+              title: n.name,
+              sub: path.map((x) => x.name).join(" / "),
+              group: "Categorias",
+              icon: "folder",
+              run: () => {
+                state.virtualPath = null;
+                state.viewingId = null;
+                state.path = path.map((x) => x.id);
+                update();
+              },
+            });
+            if (n.children) walk(n.children, path);
+          });
+        };
+        walk(CATALOG.categories, []);
+
+        // Templates
+        collectAllTemplates().forEach((t) => {
+          items.push({
+            kind: "tpl",
+            title: t.title,
+            sub: t._category,
+            tags: (t.tags || []).join(" "),
+            group: "Templates",
+            icon: "file",
+            run: () => openTemplate(t.id),
+          });
+        });
+
+        cmdk.items = items;
+      }
+
+      /**
+       * Filtra a lista do palette pela query atual e devolve a versão
+       * mostrada. Retorna no máximo 30 itens para manter snappy.
+       * @returns {object[]}
+       */
+      function filteredCmdkItems() {
+        const q = cmdk.query.toLowerCase().trim();
+        if (!q) return cmdk.items.slice(0, 30);
+        return cmdk.items
+          .filter((it) => {
+            const hay =
+              `${it.title} ${it.sub || ""} ${it.tags || ""}`.toLowerCase();
+            return hay.includes(q);
+          })
+          .slice(0, 30);
+      }
+
+      /** Renderiza a lista filtrada do command palette. */
+      function renderCmdkResults() {
+        const root = $("#cmdkResults");
+        const items = filteredCmdkItems();
+        cmdk.highlight = Math.min(
+          cmdk.highlight,
+          Math.max(0, items.length - 1),
+        );
+
+        if (!items.length) {
+          root.innerHTML = `<div class="cmdk-empty">Nenhum resultado.</div>`;
+          return;
+        }
+
+        // Agrupa por "group"
+        const groups = {};
+        items.forEach((it) => {
+          (groups[it.group] = groups[it.group] || []).push(it);
+        });
+
+        let idx = 0;
+        const html = Object.entries(groups)
+          .map(
+            ([group, list]) => `
+    <div class="cmdk-group">
+      <div class="cmdk-group-label">${group}</div>
+      ${list
+        .map((it) => {
+          const hl = idx === cmdk.highlight ? "hl" : "";
+          const out = `
+          <div class="cmdk-item ${hl}" data-idx="${idx}">
+            <span class="ic">${cmdkIcon(it.icon)}</span>
+            <div class="body">
+              <div class="title">${escapeHtml(it.title)}</div>
+              ${it.sub ? `<div class="sub">${escapeHtml(it.sub)}</div>` : ""}
+            </div>
+            <span class="kbd-hint">${it.kind === "tpl" ? "abrir" : "ir"}</span>
+          </div>`;
+          idx++;
+          return out;
+        })
+        .join("")}
+    </div>
+  `,
+          )
+          .join("");
+
+        root.innerHTML = html;
+
+        // Liga cliques
+        $$(".cmdk-item").forEach((el) => {
+          el.onclick = () => {
+            const i = parseInt(el.dataset.idx, 10);
+            const target = filteredCmdkItems()[i];
+            if (target) {
+              closeCmdk();
+              target.run();
+            }
+          };
+          el.onmouseenter = () => {
+            cmdk.highlight = parseInt(el.dataset.idx, 10);
+            $$(".cmdk-item").forEach((e) => e.classList.toggle("hl", e === el));
+          };
+        });
+      }
+
+      /** Move o highlight no palette (-1 = cima, +1 = baixo). */
+      function moveCmdkHighlight(delta) {
+        const total = filteredCmdkItems().length;
+        if (!total) return;
+        cmdk.highlight = (cmdk.highlight + delta + total) % total;
+        $$(".cmdk-item").forEach((el) => {
+          el.classList.toggle(
+            "hl",
+            parseInt(el.dataset.idx, 10) === cmdk.highlight,
+          );
+        });
+        // Garante que o item selecionado fica visível
+        const el = $(`.cmdk-item[data-idx="${cmdk.highlight}"]`);
+        if (el) el.scrollIntoView({ block: "nearest" });
+      }
+
+      /** Executa o item destacado. */
+      function commitCmdk() {
+        const items = filteredCmdkItems();
+        const target = items[cmdk.highlight];
+        if (target) {
+          closeCmdk();
+          target.run();
+        }
+      }
+
+      function cmdkIcon(kind) {
+        const stroke = `fill="none" stroke="currentColor" stroke-width="2"`;
+        switch (kind) {
+          case "home":
+            return `<svg width="14" height="14" viewBox="0 0 24 24" ${stroke}><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`;
+          case "star":
+            return `<svg width="14" height="14" viewBox="0 0 24 24" ${stroke}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+          case "clock":
+            return `<svg width="14" height="14" viewBox="0 0 24 24" ${stroke}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+          case "theme":
+            return `<svg width="14" height="14" viewBox="0 0 24 24" ${stroke}><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+          case "grid":
+            return `<svg width="14" height="14" viewBox="0 0 24 24" ${stroke}><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`;
+          case "list":
+            return `<svg width="14" height="14" viewBox="0 0 24 24" ${stroke}><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>`;
+          case "folder":
+            return `<svg width="14" height="14" viewBox="0 0 24 24" ${stroke}><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>`;
+          case "file":
+          default:
+            return `<svg width="14" height="14" viewBox="0 0 24 24" ${stroke}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+        }
+      }
+
+      /* ===================================================================
+   ATALHOS DE TECLADO
+   =================================================================== */
+
+      /**
+       * Trata todos os atalhos globais e contextuais.
+       * @param {KeyboardEvent} e
+       */
+      function handleHotkeys(e) {
+        // Detecta se o usuário está digitando em um campo de texto qualquer
+        const tag = (e.target.tagName || "").toLowerCase();
+        const typing =
+          tag === "input" || tag === "textarea" || e.target.isContentEditable;
+
+        // ⌘K / Ctrl+K → abre command palette de qualquer lugar
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          openCmdk();
+          return;
+        }
+
+        // Esc → fecha viewer/palette/menu (não consome se nada estiver aberto)
+        if (e.key === "Escape") {
+          if (cmdk.open) {
+            closeCmdk();
+            return;
+          }
+          if (state.fullscreen) {
+            state.fullscreen = false;
+            update();
+            return;
+          }
+          if (state.viewingId) {
+            closeTemplate();
+            return;
+          }
+          return;
+        }
+
+        // Dentro do command palette: setas e enter
+        if (cmdk.open) {
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            moveCmdkHighlight(+1);
+          }
+          if (e.key === "ArrowUp") {
+            e.preventDefault();
+            moveCmdkHighlight(-1);
+          }
+          if (e.key === "Enter") {
+            e.preventDefault();
+            commitCmdk();
+          }
+          return;
+        }
+
+        // Não interpretar atalhos enquanto digita
+        if (typing) return;
+
+        // Atalhos contextuais do viewer
+        if (state.viewingId) {
+          if (e.key === "f" || e.key === "F") {
+            state.fullscreen = !state.fullscreen;
+            update();
+          }
+          if (e.key === "d" || e.key === "D") {
+            state.device = "desktop";
+            saveStorage(STORAGE.device, state.device);
+            update();
+          }
+          if (e.key === "t" || e.key === "T") {
+            state.device = "tablet";
+            saveStorage(STORAGE.device, state.device);
+            update();
+          }
+          if (e.key === "m" || e.key === "M") {
+            state.device = "mobile";
+            saveStorage(STORAGE.device, state.device);
+            update();
+          }
+          if (e.key === "c" || e.key === "C") {
+            copyTemplateCode();
+          }
+          if (e.key === "j" || e.key === "J") {
+            navigateSibling(+1);
+          }
+          if (e.key === "k" || e.key === "K") {
+            navigateSibling(-1);
+          }
+        }
+      }
+
+      /**
+       * No viewer, navega para o próximo/anterior template da mesma listagem
+       * (mesma categoria, na ordem atualmente filtrada/ordenada).
+       * @param {number} delta  +1 = próximo, -1 = anterior
+       */
+      function navigateSibling(delta) {
+        // Reconstrói a lista que estava ativa antes de abrir o viewer
+        // (a partir da trilha do template aberto)
+        const found = findTemplateById(state.viewingId);
+        if (!found) return;
+        const parent = found.trail[found.trail.length - 1];
+        const list = applyFilters(collectAllTemplates([parent]));
+        applySort(list);
+        const idx = list.findIndex((t) => t.id === state.viewingId);
+        if (idx === -1) return;
+        const nextIdx = (idx + delta + list.length) % list.length;
+        openTemplate(list[nextIdx].id);
+      }
+
+      /* ===================================================================
+   TEMA
+   =================================================================== */
+
+      /**
+       * Aplica um tema e atualiza ícones + localStorage.
+       * @param {"dark"|"light"} theme
+       */
+      function applyTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        $("#iconMoon").style.display = theme === "dark" ? "block" : "none";
+        $("#iconSun").style.display = theme === "dark" ? "none" : "block";
+        saveStorage(STORAGE.theme, theme);
+      }
+      /** Alterna entre dark e light. */
+      function toggleTheme() {
+        const cur =
+          document.documentElement.getAttribute("data-theme") || "dark";
+        applyTheme(cur === "dark" ? "light" : "dark");
+      }
+      /** Lê tema salvo ou usa "dark" como padrão. */
+      function initTheme() {
+        applyTheme(loadStorage(STORAGE.theme, "dark"));
+      }
+
+      /**
+       * Define o modo de visualização (grid ou list) e persiste.
+       * @param {"grid"|"list"} v
+       */
+      function setView(v) {
+        state.view = v;
+        saveStorage(STORAGE.view, v);
+        $("#viewGrid").classList.toggle("active", v === "grid");
+        $("#viewList").classList.toggle("active", v === "list");
+        update();
+      }
+
+      /* ===================================================================
+   UPDATE CENTRAL
+   Re-renderiza tudo conforme o `state` atual.
+   =================================================================== */
+
+      /**
+       * Função-mestre de renderização. Pode ser chamada à vontade —
+       * é o ponto único de saída de qualquer mudança de estado.
+       */
+      function update() {
+        writeHash();
+
+        const viewing = !!state.viewingId;
+        const found = viewing ? findTemplateById(state.viewingId) : null;
+        const level = getCurrentLevel();
+
+        // Shell (sempre renderiza)
+        renderQuickNav();
+        renderTree();
+        renderBreadcrumb(found);
+        renderHeader(level, found);
+        renderFilters();
+
+        // Conteúdo central
+        if (viewing) {
+          $("#content").innerHTML = renderViewer();
+          bindViewerEvents();
+        } else {
+          const subsHtml = renderSubcategories(level);
+          const tplHtml = renderTemplates(level);
+          $("#content").innerHTML = subsHtml + tplHtml;
+
+          // Liga cliques nas pastas
+          $$(".folder-card[data-go]").forEach((btn) => {
+            btn.onclick = () => {
+              state.path = [...state.path, btn.dataset.go];
+              state.virtualPath = null;
+              update();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            };
+          });
+
+          // Liga cliques nos cards de template
+          $$(".tpl-card[data-open]").forEach((card) => {
+            card.onclick = (e) => {
+              // Se o clique foi no botão favorito, não abre o template
+              if (e.target.closest("[data-fav]")) return;
+              openTemplate(card.dataset.open);
+            };
+          });
+
+          // Botões de favoritar nos cards
+          $$("[data-fav]").forEach((b) => {
+            b.onclick = (e) => {
+              e.stopPropagation();
+              const nowFav = toggleFavorite(b.dataset.fav);
+              showToast(
+                nowFav ? "Adicionado aos favoritos" : "Removido dos favoritos",
+                "star",
+              );
+              update();
+            };
+          });
+
+          // Empty state → "limpar filtros"
+          $$("[data-clear]").forEach((a) => (a.onclick = clearFilters));
+
+          // Lazy load dos previews
+          observeAllPreviews();
+        }
+
+        // Fecha menu hambúrguer mobile depois de qualquer interação
+        $("#app").classList.remove("menu-open");
+      }
+
+      /* ===================================================================
+   EVENTOS GLOBAIS (bind feito uma vez no boot)
+   =================================================================== */
+      function bindGlobalEvents() {
+        // Logo e busca
+        $("#logoBtn").onclick = goHome;
+        $("#searchBtn").onclick = (e) => {
+          // Se o input já está focado, deixa digitar; senão abre palette
+          if (document.activeElement !== $("#quickSearch")) openCmdk();
+        };
+        // Para o input agir como "atalho" — sempre delega para o palette
+        $("#quickSearch").addEventListener("focus", () => {
+          openCmdk();
+          $("#quickSearch").blur();
+        });
+
+        // Toggle tema, menu mobile, view, sort
+        $("#themeToggle").onclick = toggleTheme;
+        $("#menuToggle").onclick = () =>
+          $("#app").classList.toggle("menu-open");
+        $("#viewGrid").onclick = () => setView("grid");
+        $("#viewList").onclick = () => setView("list");
+        $("#sortSelect").onchange = (e) => {
+          state.sort = e.target.value;
+          saveStorage(STORAGE.sort, state.sort);
+          update();
+        };
+
+        // Command palette
+        $("#cmdkBackdrop").onclick = closeCmdk;
+        $("#cmdkInput").addEventListener("input", (e) => {
+          cmdk.query = e.target.value;
+          cmdk.highlight = 0;
+          renderCmdkResults();
+        });
+
+        // Hash do navegador (back/forward)
+        window.addEventListener("popstate", () => {
+          readHash();
+          update();
+        });
+        window.addEventListener("hashchange", () => {
+          readHash();
+          update();
+        });
+
+        // Hotkeys
+        document.addEventListener("keydown", handleHotkeys);
+      }
+
+      /* ===================================================================
+   UTILS
+   =================================================================== */
+
+      /**
+       * Escapa caracteres HTML em uma string para evitar injection
+       * ao inserir conteúdo do data.js diretamente no DOM via innerHTML.
+       * @param {string} str
+       * @returns {string}
+       */
+      function escapeHtml(str) {
+        if (str == null) return "";
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      /* ===================================================================
+   BOOT
+   =================================================================== */
+      hydrateState(); // 1. carrega tema, view, sort, favs, history
+      initTheme(); // 2. aplica tema visualmente
+      bindGlobalEvents(); // 3. registra todos os event listeners
+      readHash(); // 4. lê a URL inicial
+      // 5. sincroniza UI controlada (view/sort) com state
+      $("#viewGrid").classList.toggle("active", state.view === "grid");
+      $("#viewList").classList.toggle("active", state.view === "list");
+      $("#sortSelect").value = state.sort;
+      update(); // 6. renderiza tudo
+    </script>
+  </body>
+</html>

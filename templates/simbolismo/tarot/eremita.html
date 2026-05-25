@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>O Eremita — Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0a0a14; --night:#15152a; --gold:#d4af37; --moon:#e8e2d0; --rule:#2a2a44; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--moon);
+    font-family:"Cormorant Garamond",serif; font-size:18px; line-height:1.65;
+    min-height:100vh;
+    background-image:
+      radial-gradient(2px 2px at 20% 30%, rgba(232,226,208,.6), transparent),
+      radial-gradient(1px 1px at 70% 80%, rgba(232,226,208,.5), transparent),
+      radial-gradient(1px 1px at 40% 90%, rgba(232,226,208,.4), transparent),
+      radial-gradient(2px 2px at 85% 20%, rgba(212,175,55,.6), transparent),
+      radial-gradient(ellipse at center, #15152a 0%, #0a0a14 70%);
+  }
+  .page{ max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; text-align:center; }
+  .label{ font-family:"Cinzel",serif; font-size:11px; letter-spacing:.4em; color:var(--gold); text-transform:uppercase; }
+  .card{
+    margin: 40px auto; padding: 50px 36px;
+    border: 1px solid var(--gold); border-radius: 4px;
+    background: linear-gradient(180deg, #1a1a32 0%, #0f0f1f 100%);
+    box-shadow: 0 0 60px rgba(212,175,55,.2), inset 0 0 30px rgba(0,0,0,.6);
+    position:relative;
+  }
+  .card::before, .card::after{
+    content:""; position:absolute; width:30px; height:30px;
+    border: 1px solid var(--gold);
+  }
+  .card::before{ top:10px; left:10px; border-right:none; border-bottom:none; }
+  .card::after{ bottom:10px; right:10px; border-left:none; border-top:none; }
+  .roman{ font-family:"Cinzel",serif; font-weight:600; font-size:20px; color:var(--gold); letter-spacing:.3em; margin-bottom:18px; }
+  .lantern{ font-size: 110px; line-height:1; margin: 18px 0 24px; filter: drop-shadow(0 0 30px rgba(212,175,55,.6)); }
+  h1{ font-family:"Cinzel",serif; font-weight:800; font-size: 42px; letter-spacing:.15em; margin-bottom:14px; }
+  .sub{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:18px; color:#a8a0c0; margin-bottom:30px; }
+  .meaning{ text-align:left; max-width:420px; margin: 30px auto 0; font-size: 17px; }
+  .meaning strong{ font-family:"Cinzel",serif; font-size:11px; letter-spacing:.25em; color:var(--gold); display:block; margin: 18px 0 6px; text-transform:uppercase; }
+  footer{ margin-top:40px; font-family:"Cinzel",serif; font-size:10px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="label">Arcano Maior · IX</div>
+
+  <div class="card">
+    <div class="roman">IX</div>
+    <div class="lantern">🜂</div>
+    <h1>O EREMITA</h1>
+    <div class="sub">"Aquele que carrega a própria luz nas trevas."</div>
+    <div class="meaning">
+      <strong>Significado</strong>
+      Introspecção. Solidão buscada. Sabedoria que só nasce do retiro. A lanterna ilumina o passo seguinte, não o caminho inteiro.
+
+      <strong>Invertido</strong>
+      Isolamento estéril. Recusa em sair do próprio mundo. Conselho ignorado.
+
+      <strong>Elemento</strong>
+      Terra · Virgem
+    </div>
+  </div>
+
+  <footer>Template · Atlas &amp; Arquivos · Simbolismo › Tarot</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tábua de Esmeralda — Template</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0d0a;
+        --fg: #e6dcc6;
+        --gold: #c4a35a;
+        --emerald: #3a6b4a;
+        --rule: #2a2a26;
+        --serif: "Cormorant Garamond", Georgia, serif;
+        --mono: "JetBrains Mono", monospace;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--serif);
+        font-size: 19px;
+        line-height: 1.6;
+        min-height: 100vh;
+        background-image:
+          radial-gradient(
+            ellipse at 20% 0%,
+            rgba(58, 107, 74, 0.15),
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 80% 100%,
+            rgba(196, 163, 90, 0.08),
+            transparent 50%
+          );
+      }
+      .container {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 60px 28px 100px;
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 14px;
+      }
+      .hero {
+        padding: 90px 0 60px;
+        text-align: center;
+        position: relative;
+      }
+      .hero .sigil {
+        font-size: 80px;
+        color: var(--gold);
+        margin-bottom: 24px;
+        line-height: 1;
+        text-shadow: 0 0 40px rgba(196, 163, 90, 0.4);
+      }
+      .hero h1 {
+        font-family: var(--serif);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(48px, 8vw, 96px);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        margin-bottom: 18px;
+      }
+      .hero h1 em {
+        color: var(--gold);
+      }
+      .hero p {
+        font-style: italic;
+        color: #bdb39e;
+        max-width: 52ch;
+        margin: 0 auto;
+        font-size: 20px;
+      }
+      .verse {
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        padding: 40px 0;
+        margin: 60px 0;
+        text-align: center;
+      }
+      .verse p {
+        font-style: italic;
+        font-size: 24px;
+        max-width: 30ch;
+        margin: 0 auto 8px;
+      }
+      .verse .by {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--gold);
+        text-transform: uppercase;
+      }
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border-top: 1px solid var(--rule);
+      }
+      .grid3 > div {
+        border-right: 1px solid var(--rule);
+        padding: 28px 22px;
+      }
+      .grid3 > div:last-child {
+        border-right: none;
+      }
+      .grid3 .num {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--gold);
+        margin-bottom: 14px;
+        text-transform: uppercase;
+      }
+      .grid3 h3 {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 26px;
+        margin-bottom: 10px;
+      }
+      .grid3 p {
+        font-size: 16px;
+        color: #bdb39e;
+      }
+      footer {
+        margin-top: 80px;
+        padding-top: 18px;
+        border-top: 1px solid var(--rule);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--gold);
+        text-transform: uppercase;
+        text-align: center;
+      }
+      @media (max-width: 720px) {
+        .grid3 {
+          grid-template-columns: 1fr;
+        }
+        .grid3 > div {
+          border-right: none;
+          border-bottom: 1px solid var(--rule);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="top">
+        <span>☿ · Hermes Trismegisto</span>
+        <span>Folio I</span>
+      </div>
+
+      <section class="hero">
+        <div class="sigil">☉ ☽ ☿</div>
+        <h1>Tábua de <em>Esmeralda</em></h1>
+        <p>
+          O que está em cima é como o que está embaixo, e o que está embaixo é
+          como o que está em cima — para realizar o milagre de uma só coisa.
+        </p>
+      </section>
+
+      <section class="verse">
+        <p>
+          "Separa a terra do fogo, o sutil do espesso, suavemente, com grande
+          engenho."
+        </p>
+        <div class="by">— Hermes</div>
+      </section>
+
+      <section class="grid3">
+        <div>
+          <div class="num">I · Nigredo</div>
+          <h3>A obra ao negro</h3>
+          <p>Dissolução. A matéria primeira reduzida a pó e umidade.</p>
+        </div>
+        <div>
+          <div class="num">II · Albedo</div>
+          <h3>A obra ao branco</h3>
+          <p>Purificação. O espírito separa-se da escória.</p>
+        </div>
+        <div>
+          <div class="num">III · Rubedo</div>
+          <h3>A obra ao vermelho</h3>
+          <p>União dos opostos. O ouro filosofal manifesta-se.</p>
+        </div>
+      </section>
+
+      <footer>Template · Atlas &amp; Arquivos · Simbolismo › Alquimia</footer>
+    </div>
+  </body>
+</html>
