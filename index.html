@@ -41,7 +41,8 @@
         --star: #fbbf24;
         --ring: rgba(255, 255, 255, 0.08);
         --shadow:
-          0 1px 0 rgba(255, 255, 255, 0.03), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+          0 1px 0 rgba(255, 255, 255, 0.03),
+          0 8px 24px -12px rgba(255, 255, 255, 0.6);
         --backdrop: rgba(0, 0, 0, 0.7);
 
         --radius: 10px;
@@ -66,8 +67,12 @@
         --star: #f59e0b;
         --ring: rgba(0, 0, 0, 0.06);
         --shadow:
-          0 1px 0 rgba(0, 0, 0, 0.02), 0 8px 24px -12px rgba(0, 0, 0, 0.12);
+          0 1px 0 rgba(0, 0, 0, 0.02), 0 8px 24px -12px rgba(0, 0, 0, 0.527);
         --backdrop: rgba(255, 255, 255, 0.7);
+
+        --radius: 10px;
+        --radius-sm: 6px;
+        --radius-lg: 14px;
       }
 
       /* ===== Reset enxuto ===== */
@@ -637,7 +642,7 @@
         display: flex;
         flex-direction: column;
         border: 1px solid var(--border);
-        border-radius: var(--radius-lg);
+        /* border-radius: var(--radius-lg); */
         background: var(--bg-elev);
         overflow: hidden;
         position: relative;
@@ -648,6 +653,8 @@
         border-color: var(--border-hover);
         transform: translateY(-2px);
         box-shadow: var(--shadow);
+        /* border-radius: var(--radius); */
+        scale: 1.01;
       }
 
       .tpl-preview {
@@ -1675,7 +1682,7 @@
         <div id="content"></div>
 
         <footer class="foot">
-          <span>Hub de templates · client-side</span>
+          <span>Hub de templates · Desenvolvido por Tcharles Davi Lassen</span>
           <span
             >Pressione
             <kbd
