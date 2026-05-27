@@ -1,0 +1,1906 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buraco Negro de Kerr — O Gigante Rotacional do Universo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Rajdhani:wght@300;400;500;600&family=Space+Mono:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --void: #02020a;
+        --deep: #060612;
+        --abyss: #0a0a1a;
+        --gold: #c8922a;
+        --gold-bright: #f0b94a;
+        --gold-pale: #e8d090;
+        --blue-cold: #1a3a6e;
+        --blue-mid: #2060c8;
+        --blue-plasma: #40a0ff;
+        --blue-arc: #80d0ff;
+        --red-energy: #cc2020;
+        --red-hot: #ff6040;
+        --red-corona: #ff9060;
+        --white-star: #f0f0ff;
+        --text-body: #b8b8d0;
+        --text-dim: #6060a0;
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--void);
+        color: var(--text-body);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        overflow-x: hidden;
+        cursor: crosshair;
+      }
+
+      /* ── STARFIELD ── */
+      #starfield {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse at 30% 20%,
+          #0a0a2a 0%,
+          var(--void) 70%
+        );
+      }
+      #starfield canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* ── LAYOUT ── */
+      .container {
+        position: relative;
+        z-index: 2;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 3rem;
+      }
+
+      /* ── HERO ── */
+      #hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .kerr-canvas-wrap {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #kerrCanvas {
+        opacity: 0.92;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 5;
+        text-align: center;
+        padding: 3rem;
+      }
+
+      .hero-eyebrow {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2rem;
+        animation: fadeUp 1.4s ease 0.3s both;
+      }
+
+      h1.hero-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3rem, 8vw, 7rem);
+        font-weight: 300;
+        line-height: 0.92;
+        color: var(--white-star);
+        letter-spacing: -0.02em;
+        animation: fadeUp 1.4s ease 0.5s both;
+      }
+      h1.hero-title em {
+        color: var(--gold-bright);
+        font-style: italic;
+      }
+
+      .hero-subtitle {
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 300;
+        font-size: clamp(0.9rem, 2vw, 1.15rem);
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--blue-arc);
+        margin-top: 2rem;
+        animation: fadeUp 1.4s ease 0.8s both;
+      }
+
+      .hero-equation {
+        font-family: "Space Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--text-dim);
+        margin-top: 1.5rem;
+        animation: fadeUp 1.4s ease 1s both;
+        letter-spacing: 0.05em;
+      }
+
+      .scroll-cue {
+        position: absolute;
+        bottom: 3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: "Rajdhani", sans-serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        animation: pulse 2.5s ease infinite;
+        z-index: 5;
+      }
+      .scroll-cue::after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(var(--gold), transparent);
+        margin: 0.8rem auto 0;
+      }
+
+      /* ── SECTIONS ── */
+      section {
+        position: relative;
+        padding: 8rem 0;
+        border-top: 1px solid rgba(200, 146, 42, 0.08);
+      }
+
+      .section-index {
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        color: var(--gold);
+        opacity: 0.5;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      h2.section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 5vw, 3.8rem);
+        font-weight: 300;
+        color: var(--white-star);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      h2.section-title em {
+        color: var(--gold-bright);
+        font-style: italic;
+      }
+
+      .section-rule {
+        width: 60px;
+        height: 1px;
+        background: var(--gold);
+        margin: 1.5rem 0 3rem;
+        position: relative;
+      }
+      .section-rule::after {
+        content: "";
+        position: absolute;
+        left: 70px;
+        top: 0;
+        width: 200px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(200, 146, 42, 0.4),
+          transparent
+        );
+      }
+
+      .body-text {
+        font-size: clamp(1rem, 1.5vw, 1.2rem);
+        line-height: 1.9;
+        font-weight: 300;
+        color: var(--text-body);
+        max-width: 720px;
+      }
+
+      .body-text + .body-text {
+        margin-top: 1.5rem;
+      }
+
+      .body-text strong {
+        color: var(--gold-pale);
+        font-weight: 400;
+      }
+      .body-text em {
+        color: var(--blue-arc);
+        font-style: italic;
+      }
+
+      /* ── CALLOUT BLOCKS ── */
+      .callout {
+        border-left: 2px solid var(--gold);
+        padding: 1.5rem 2rem;
+        margin: 3rem 0;
+        background: rgba(200, 146, 42, 0.04);
+        position: relative;
+      }
+      .callout::before {
+        content: attr(data-label);
+        font-family: "Rajdhani", sans-serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 0.8rem;
+      }
+      .callout p {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.25rem;
+        font-style: italic;
+        line-height: 1.7;
+        color: var(--gold-pale);
+      }
+
+      .callout-blue {
+        border-left-color: var(--blue-plasma);
+        background: rgba(64, 160, 255, 0.04);
+      }
+      .callout-blue::before {
+        color: var(--blue-plasma);
+      }
+      .callout-blue p {
+        color: var(--blue-arc);
+      }
+
+      .callout-red {
+        border-left-color: var(--red-hot);
+        background: rgba(255, 96, 64, 0.04);
+      }
+      .callout-red::before {
+        color: var(--red-hot);
+      }
+      .callout-red p {
+        color: var(--red-corona);
+      }
+
+      /* ── EQUATION BLOCKS ── */
+      .eq-block {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+        color: var(--blue-plasma);
+        padding: 1.5rem 2rem;
+        background: rgba(0, 0, 20, 0.6);
+        border: 1px solid rgba(64, 160, 255, 0.15);
+        margin: 2.5rem 0;
+        line-height: 2;
+        position: relative;
+        overflow: hidden;
+      }
+      .eq-block::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(64, 160, 255, 0.03) 0%,
+          transparent 60%
+        );
+      }
+      .eq-block .eq-label {
+        font-size: 0.6rem;
+        letter-spacing: 0.25em;
+        color: var(--text-dim);
+        display: block;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+      }
+
+      /* ── TABLE ── */
+      .kerr-table-wrap {
+        overflow-x: auto;
+        margin: 3rem 0;
+      }
+      table.kerr-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: "Rajdhani", sans-serif;
+      }
+      table.kerr-table th {
+        font-size: 0.65rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--gold);
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(200, 146, 42, 0.3);
+        text-align: left;
+        font-weight: 500;
+      }
+      table.kerr-table td {
+        font-size: 0.95rem;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        color: var(--text-body);
+        vertical-align: middle;
+      }
+      table.kerr-table tr:hover td {
+        background: rgba(200, 146, 42, 0.04);
+        color: var(--gold-pale);
+      }
+      table.kerr-table .tag-yes {
+        color: var(--blue-plasma);
+        font-weight: 500;
+      }
+      table.kerr-table .tag-no {
+        color: var(--text-dim);
+      }
+      table.kerr-table .row-highlight td {
+        color: var(--gold-bright);
+      }
+
+      /* ── SPLIT LAYOUT ── */
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        align-items: start;
+      }
+      @media (max-width: 768px) {
+        .split {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+      }
+
+      /* ── STRUCTURE DIAGRAM ── */
+      .structure-viz {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 3rem auto;
+        max-width: 520px;
+      }
+      #structCanvas {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+
+      /* ── FEATURE GRID ── */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5px;
+        margin: 3rem 0;
+        border: 1.5px solid rgba(200, 146, 42, 0.12);
+      }
+      .feature-cell {
+        padding: 2.5rem 2rem;
+        background: rgba(10, 10, 26, 0.8);
+        position: relative;
+        overflow: hidden;
+        transition: background 0.4s;
+      }
+      .feature-cell:hover {
+        background: rgba(200, 146, 42, 0.06);
+      }
+      .feature-cell::before {
+        content: attr(data-num);
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        color: var(--text-dim);
+        letter-spacing: 0.2em;
+        display: block;
+        margin-bottom: 1rem;
+      }
+      .feature-cell h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.35rem;
+        font-weight: 400;
+        color: var(--white-star);
+        margin-bottom: 0.8rem;
+        line-height: 1.2;
+      }
+      .feature-cell h3 em {
+        color: var(--gold-bright);
+        font-style: italic;
+      }
+      .feature-cell p {
+        font-size: 0.9rem;
+        line-height: 1.8;
+        color: var(--text-body);
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 300;
+      }
+      .feature-cell .accent-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold), transparent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+      }
+      .feature-cell:hover .accent-bar {
+        transform: scaleX(1);
+      }
+
+      /* ── PHILOSOPHY SECTION ── */
+      #philosophy {
+        background: radial-gradient(
+          ellipse at 50% 0%,
+          rgba(200, 146, 42, 0.05) 0%,
+          transparent 60%
+        );
+      }
+
+      .phil-quote {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+        font-weight: 300;
+        font-style: italic;
+        color: var(--white-star);
+        line-height: 1.4;
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto 4rem;
+        position: relative;
+      }
+      .phil-quote::before,
+      .phil-quote::after {
+        content: '"';
+        font-size: 6rem;
+        line-height: 0;
+        position: absolute;
+        color: var(--gold);
+        opacity: 0.2;
+      }
+      .phil-quote::before {
+        top: 2rem;
+        left: -2rem;
+      }
+      .phil-quote::after {
+        bottom: -2rem;
+        right: -2rem;
+        transform: rotate(180deg);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        padding: 5rem 0;
+        text-align: center;
+        border-top: 1px solid rgba(200, 146, 42, 0.1);
+      }
+      .footer-logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.5rem;
+        color: var(--gold);
+        letter-spacing: 0.2em;
+        margin-bottom: 1.5rem;
+      }
+      .footer-text {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        line-height: 2.2;
+      }
+
+      /* ── ANIMATIONS ── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinReverse {
+        to {
+          transform: rotate(-360deg);
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1.5rem 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(var(--void), transparent);
+        pointer-events: none;
+      }
+      .nav-brand {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold);
+        opacity: 0.7;
+      }
+      .nav-eq {
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        color: var(--text-dim);
+        letter-spacing: 0.05em;
+      }
+
+      /* ── OBSERVATION CARDS ── */
+      .obs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+      .obs-card {
+        padding: 2rem;
+        border: 1px solid rgba(64, 160, 255, 0.12);
+        background: rgba(6, 6, 18, 0.8);
+        position: relative;
+      }
+      .obs-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--blue-plasma), transparent);
+      }
+      .obs-card .obs-value {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        color: var(--blue-arc);
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      .obs-card .obs-label {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        display: block;
+        margin-bottom: 1rem;
+      }
+      .obs-card .obs-desc {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        color: var(--text-body);
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 300;
+      }
+
+      /* ── SPIN METER ── */
+      .spin-meter {
+        margin: 3rem 0;
+        padding: 2rem;
+        background: rgba(0, 0, 10, 0.6);
+        border: 1px solid rgba(200, 146, 42, 0.1);
+      }
+      .spin-label {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin-bottom: 1rem;
+        display: block;
+      }
+      .spin-bar-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .spin-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .spin-name {
+        font-family: "Rajdhani", sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        color: var(--text-body);
+        min-width: 160px;
+      }
+      .spin-track {
+        flex: 1;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.06);
+        position: relative;
+        border-radius: 2px;
+      }
+      .spin-fill {
+        height: 100%;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--blue-mid), var(--gold-bright));
+        transition: width 1.5s ease;
+      }
+      .spin-val {
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--gold);
+        min-width: 60px;
+        text-align: right;
+      }
+
+      .divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold) 30%,
+          transparent 70%,
+          transparent
+        );
+        margin: 5rem 0;
+        opacity: 0.2;
+      }
+
+      /* GLOW EFFECTS */
+      .glow-gold {
+        text-shadow: 0 0 40px rgba(200, 146, 42, 0.5);
+      }
+      .glow-blue {
+        text-shadow: 0 0 40px rgba(64, 160, 255, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <span class="nav-brand">Kerr · 1963</span>
+      <span class="nav-eq"
+        >ds² = −(1 − 2Mr/Σ)dt² + Σ/Δ dr² + Σdθ² + sin²θ(r²+a²+2Ma²r
+        sin²θ/Σ)dφ²</span
+      >
+    </nav>
+
+    <!-- STARFIELD -->
+    <div id="starfield"><canvas id="starCanvas"></canvas></div>
+
+    <!-- ══════════════════════════════════════════════════════ HERO -->
+    <section id="hero">
+      <div class="kerr-canvas-wrap">
+        <canvas id="kerrCanvas" width="900" height="900"></canvas>
+      </div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Relatividade Geral · Roy Kerr · 1963</p>
+        <h1 class="hero-title">
+          O <em>Buraco</em><br />Negro de<br /><em>Kerr</em>
+        </h1>
+        <p class="hero-subtitle">O Gigante Rotacional do Universo</p>
+        <p class="hero-equation">
+          a = J / Mc &nbsp;·&nbsp; 0 ≤ a ≤ M &nbsp;·&nbsp; Δ = r² − 2Mr + a²
+        </p>
+      </div>
+      <span class="scroll-cue">Aproximar-se</span>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ O QUE É -->
+    <section id="intro">
+      <div class="container">
+        <span class="section-index reveal">001 — Definição</span>
+        <h2 class="section-title reveal">
+          O Que é um <em>Buraco<br />Negro de Kerr</em>
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <div class="split">
+          <div>
+            <p class="body-text reveal">
+              Em 1963, o matemático neozelandês
+              <strong>Roy Kerr</strong> descobriu uma solução exata das equações
+              de campo da Relatividade Geral de Einstein que descrevia algo sem
+              precedentes na física teórica: um
+              <strong>buraco negro em rotação</strong>. Não era uma aproximação.
+              Era uma solução exata — rigorosa, elegante e devastadoramente
+              real.
+            </p>
+            <p class="body-text reveal">
+              A diferença em relação ao modelo de
+              <strong>Karl Schwarzschild</strong> — o buraco negro esférico e
+              estático de 1916 — é profunda como a diferença entre um oceano
+              parado e um ciclone cósmico. O Buraco Negro de Kerr <em>gira</em>.
+              E essa rotação transforma toda a geometria do espaço-tempo ao
+              redor.
+            </p>
+            <p class="body-text reveal">
+              Virtualmente <strong>todos os buracos negros reais</strong> no
+              universo são buracos negros de Kerr. A razão é simples: a
+              conservação do momento angular. Quando uma estrela massiva
+              colapsa, ela mantém seu spin — e o intensifica catastroficamente.
+              O resultado final não é uma singularidade pontual e silenciosa. É
+              um vórtice cósmico que torce o próprio tecido da realidade.
+            </p>
+          </div>
+          <div>
+            <div class="callout" data-label="Insight Fundamental">
+              <p>
+                Um Buraco Negro de Kerr não existe no espaço-tempo — ele
+                <em>é</em> uma deformação do espaço-tempo. Sua rotação não
+                ocorre dentro do universo; ela reorganiza o universo ao redor de
+                si.
+              </p>
+            </div>
+            <div class="eq-block reveal">
+              <span class="eq-label">Métrica de Kerr — Equação Central</span>
+              ds² = −(1 − 2Mr/Σ)dt²<br />
+              &nbsp;&nbsp;&nbsp;&nbsp; − (4Mar sin²θ/Σ)dtdφ<br />
+              &nbsp;&nbsp;&nbsp;&nbsp; + (Σ/Δ)dr²<br />
+              &nbsp;&nbsp;&nbsp;&nbsp; + Σdθ²<br />
+              &nbsp;&nbsp;&nbsp;&nbsp; + (r²+a²+2Ma²r sin²θ/Σ)sin²θ dφ²<br /><br />
+              onde Σ = r² + a²cos²θ<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Δ = r² − 2Mr + a²
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ COMPARAÇÃO -->
+    <section id="comparison">
+      <div class="container">
+        <span class="section-index reveal">002 — Taxonomia</span>
+        <h2 class="section-title reveal">
+          Os <em>Quatro</em> Arquétipos<br />dos Buracos Negros
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <p class="body-text reveal">
+          A Relatividade Geral prevê quatro soluções de buraco negro,
+          classificadas por seus atributos físicos fundamentais. O universo, com
+          sua violência e movimento, favorece esmagadoramente os modelos com
+          rotação.
+        </p>
+
+        <div class="kerr-table-wrap reveal">
+          <table class="kerr-table">
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Massa</th>
+                <th>Rotação</th>
+                <th>Carga Elétrica</th>
+                <th>Existência Física</th>
+                <th>Singularidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Schwarzschild (1916)</td>
+                <td class="tag-yes">Sim</td>
+                <td class="tag-no">Não</td>
+                <td class="tag-no">Não</td>
+                <td style="color: var(--text-dim)">Idealização</td>
+                <td>Pontual</td>
+              </tr>
+              <tr class="row-highlight">
+                <td><strong>Kerr (1963)</strong></td>
+                <td class="tag-yes">Sim</td>
+                <td class="tag-yes">Sim</td>
+                <td class="tag-no">Não</td>
+                <td style="color: var(--blue-plasma)">Prevalente</td>
+                <td>Anel</td>
+              </tr>
+              <tr>
+                <td>Reissner–Nordström</td>
+                <td class="tag-yes">Sim</td>
+                <td class="tag-no">Não</td>
+                <td class="tag-yes">Sim</td>
+                <td style="color: var(--text-dim)">Improvável</td>
+                <td>Pontual</td>
+              </tr>
+              <tr>
+                <td>Kerr–Newman</td>
+                <td class="tag-yes">Sim</td>
+                <td class="tag-yes">Sim</td>
+                <td class="tag-yes">Sim</td>
+                <td style="color: var(--text-dim)">Teórico</td>
+                <td>Anel</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="body-text reveal">
+          A carga elétrica de buracos negros reais tende a ser neutralizada
+          rapidamente pela acreção de matéria com carga oposta. Restam,
+          portanto, o <strong>Modelo de Schwarzschild</strong> como idealização
+          matemática e o <strong>Modelo de Kerr</strong> como o buraco negro do
+          universo real.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ ESTRUTURA -->
+    <section id="structure">
+      <div class="container">
+        <span class="section-index reveal">003 — Anatomia</span>
+        <h2 class="section-title reveal">
+          Estrutura <em>Interna</em><br />de um Kerr
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <div class="structure-viz">
+          <canvas id="structCanvas" width="520" height="520"></canvas>
+        </div>
+
+        <div class="feature-grid reveal">
+          <div class="feature-cell" data-num="I">
+            <h3>Singularidade<br />em <em>Anel</em></h3>
+            <p>
+              Diferentemente do ponto de Schwarzschild, a singularidade de Kerr
+              é um <strong>anel unidimensional</strong> no plano equatorial — um
+              círculo de curvatura infinita com raio proporcional ao momento
+              angular. A geometria não euclidiana implica que a singularidade
+              não é uma "localização", mas uma fronteira da física conhecida.
+            </p>
+            <div class="accent-bar"></div>
+          </div>
+          <div class="feature-cell" data-num="II">
+            <h3>Horizonte <em>Externo</em><br />de Eventos</h3>
+            <p>
+              Fronteira relativística além da qual nenhuma informação escapa.
+              Seu raio é <strong>r₊ = M + √(M² − a²)</strong>. Conforme o spin
+              aumenta, este horizonte contrai-se em direção ao interno. Para
+              partículas em queda, o cruzamento ocorre em tempo finito por seu
+              próprio referencial — mas tempo infinito para observadores
+              externos.
+            </p>
+            <div class="accent-bar"></div>
+          </div>
+          <div class="feature-cell" data-num="III">
+            <h3>Horizonte <em>Interno</em><br />de Cauchy</h3>
+            <p>
+              O horizonte interno <strong>r₋ = M − √(M² − a²)</strong> é uma
+              estrutura sem análogo em Schwarzschild. É o chamado
+              <em>Horizonte de Cauchy</em> — uma fronteira causal além da qual o
+              futuro deixa de ser determinado pelas condições iniciais. A física
+              clássica colapsa em instabilidade aqui.
+            </p>
+            <div class="accent-bar"></div>
+          </div>
+          <div class="feature-cell" data-num="IV">
+            <h3>A <em>Ergosfera</em><br />Rotacional</h3>
+            <p>
+              Uma região elipsoidal exterior ao horizonte onde o
+              <strong>espaço-tempo gira obrigatoriamente</strong> com o buraco
+              negro. Mesmo viajando à velocidade da luz no sentido contrário, é
+              impossível permanecer estacionário. Toda matéria é arrastada pelo
+              vórtice gravitacional nesta zona de violação da causalidade
+              estática.
+            </p>
+            <div class="accent-bar"></div>
+          </div>
+          <div class="feature-cell" data-num="V">
+            <h3>A <em>Fotosfera</em><br />Polar</h3>
+            <p>
+              Ao longo do eixo de rotação, fótons podem orbitar em esferas
+              instáveis. Para buracos negros de Kerr extremos, estas órbitas
+              fotonais se aproximam do horizonte de eventos, e a
+              <strong>emissão de radiação de jatos polares</strong> torna-se
+              extremamente eficiente — alimentando quasares visíveis a bilhões
+              de anos-luz.
+            </p>
+            <div class="accent-bar"></div>
+          </div>
+          <div class="feature-cell" data-num="VI">
+            <h3>Região<br /><em>Hiperbólica</em></h3>
+            <p>
+              Entre os dois horizontes existe uma região onde a coordenada
+              radial <em>r</em> torna-se <strong>temporal</strong> e a
+              coordenada temporal <em>t</em> torna-se espacial — uma inversão
+              completa do papel de espaço e tempo. Não é metáfora. É matemática
+              rigorosa descrevendo realidade fisicamente inacessível ao
+              observador externo.
+            </p>
+            <div class="accent-bar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ ERGOSFERA -->
+    <section id="ergosphere">
+      <div class="container">
+        <span class="section-index reveal">004 — Fenomenologia</span>
+        <h2 class="section-title reveal">
+          A <em>Ergosfera</em>:<br />Onde Espaço-Tempo Gira
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <div class="split">
+          <div>
+            <p class="body-text reveal">
+              A ergosfera é a fronteira mais paradoxal da física. Ela existe
+              <strong>fora do horizonte de eventos</strong> — tecnicamente,
+              ainda no universo acessível. Mas dentro dela, o espaço-tempo gira
+              tão violentamente que a própria ideia de "permanecer imóvel" perde
+              significado físico.
+            </p>
+            <p class="body-text reveal">
+              Seu limite externo, o <em>estático limite</em>, é definido por:
+              <strong>r_erg = M + √(M² − a²cos²θ)</strong>. Ao contrário do
+              horizonte de eventos, este limite varia com a latitude — é
+              achatado nos polos e máximo no equador, criando um formato
+              elipsoidal que respira com a rotação.
+            </p>
+            <p class="body-text reveal">
+              Partículas que entram na ergosfera são literalmente
+              <strong>arrastadas para velocidades próximas à da luz</strong> na
+              direção da rotação. Estrelas, nuvens de gás, plasma e até fótons
+              com o vetor de movimento errado são forçados a co-rotacionar — não
+              pela força, mas pela geometria.
+            </p>
+          </div>
+          <div>
+            <div class="spin-meter reveal">
+              <span class="spin-label"
+                >Parâmetros de Spin — Objetos Observados</span
+              >
+              <div class="spin-bar-wrap">
+                <div class="spin-row">
+                  <span class="spin-name">Cyg X-1 (BH Estelar)</span>
+                  <div class="spin-track">
+                    <div class="spin-fill" data-w="95"></div>
+                  </div>
+                  <span class="spin-val">a* ≈ 0.95</span>
+                </div>
+                <div class="spin-row">
+                  <span class="spin-name">M87* (Supermassivo)</span>
+                  <div class="spin-track">
+                    <div class="spin-fill" data-w="90"></div>
+                  </div>
+                  <span class="spin-val">a* ≈ 0.90</span>
+                </div>
+                <div class="spin-row">
+                  <span class="spin-name">Sagitário A* (Via Láctea)</span>
+                  <div class="spin-track">
+                    <div class="spin-fill" data-w="65"></div>
+                  </div>
+                  <span class="spin-val">a* ≈ 0.65</span>
+                </div>
+                <div class="spin-row">
+                  <span class="spin-name">GRS 1915+105</span>
+                  <div class="spin-track">
+                    <div class="spin-fill" data-w="98"></div>
+                  </div>
+                  <span class="spin-val">a* ≈ 0.98</span>
+                </div>
+                <div class="spin-row">
+                  <span class="spin-name">Kerr Extremo (Teórico)</span>
+                  <div class="spin-track">
+                    <div
+                      class="spin-fill"
+                      data-w="100"
+                      style="
+                        background: linear-gradient(
+                          90deg,
+                          var(--red-energy),
+                          var(--gold-bright)
+                        );
+                      "
+                    ></div>
+                  </div>
+                  <span class="spin-val" style="color: var(--red-hot)"
+                    >a* = 1.0</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="callout callout-red" data-label="Kerr Extremo">
+              <p>
+                Quando <em>a* = M</em>, os dois horizontes de eventos coincidem.
+                A ergosfera toca o horizonte. O buraco negro extremo é o limite
+                absoluto — uma fronteira além da qual a solução deixa de existir
+                como buraco negro.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ FRAME DRAGGING -->
+    <section id="framedragging">
+      <div class="container">
+        <span class="section-index reveal">005 — Efeito Relativístico</span>
+        <h2 class="section-title reveal">
+          Arrasto de<br /><em>Referenciais</em>
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <p class="body-text reveal">
+          O <strong>Efeito Lense-Thirring</strong> — previsto em 1918 por Josef
+          Lense e Hans Thirring com base na Relatividade Geral — descreve o
+          fenômeno pelo qual um corpo massivo em rotação literalmente
+          <em>arrasta o espaço-tempo</em> ao seu redor, como uma bola mergulhada
+          em mel viscoso que, ao girar, força o fluido a girar junto.
+        </p>
+        <p class="body-text reveal">
+          Para um Buraco Negro de Kerr, este efeito não é perturbação — é a
+          característica definitória de sua geometria. O tensor métrico de Kerr
+          contém um <strong>termo cruzado dtdφ</strong> que não aparece em
+          Schwarzschild. Esse termo é a assinatura matemática do arrasto: ele
+          acopla o tempo à direção angular, tornando-os inseparáveis no
+          referencial rotacional.
+        </p>
+
+        <div class="eq-block reveal">
+          <span class="eq-label"
+            >Velocidade Angular de Arrasto do Espaço-Tempo</span
+          >
+          ω(r,θ) = dφ/dt = 2Mar / (r² + a²)² − a²Δsin²θ<br /><br />
+          No horizonte de eventos: ω_H = a / (r₊² + a²)<br />
+          → O espaço-tempo co-rotaciona com o buraco negro no horizonte.
+        </div>
+
+        <div class="obs-grid reveal">
+          <div class="obs-card">
+            <span class="obs-value">~6,600 km/h</span>
+            <span class="obs-label"
+              >Arrasto Medido em Gyroscopes — Missão Gravity Probe B
+              (Terra)</span
+            >
+            <p class="obs-desc">
+              Confirmação experimental do efeito Lense-Thirring ao redor da
+              Terra rotacional. Em buracos negros de Kerr, o fenômeno é bilhões
+              de vezes mais intenso.
+            </p>
+          </div>
+          <div class="obs-card">
+            <span class="obs-value">∞ → 0</span>
+            <span class="obs-label"
+              >Variação do Raio de Última Órbita Estável (ISCO)</span
+            >
+            <p class="obs-desc">
+              Para Kerr prograde, o ISCO colapsa de 6M (Schwarzschild) até M
+              (Kerr extremo). Isso eleva enormemente a eficiência de conversão
+              massa-energia em discos de acreção.
+            </p>
+          </div>
+          <div class="obs-card">
+            <span class="obs-value">42%</span>
+            <span class="obs-label">Eficiência Máxima de Kerr Extremo</span>
+            <p class="obs-desc">
+              Um Kerr extremo pode converter até 42% da massa em acreção em
+              energia pura — comparado ao mísero 0,7% da fusão nuclear. É o
+              processo mais eficiente conhecido no universo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ PENROSE -->
+    <section id="penrose">
+      <div class="container">
+        <span class="section-index reveal">006 — Extração de Energia</span>
+        <h2 class="section-title reveal">
+          Processo <em>Penrose</em>:<br />Colhendo Energia do Vazio
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <div class="split">
+          <div>
+            <div
+              class="callout callout-blue"
+              data-label="Proposto por Roger Penrose — 1969"
+            >
+              <p>
+                Uma partícula que entra na ergosfera pode dividir-se. Se um
+                fragmento cair no buraco negro com <em>energia negativa</em>, o
+                outro fragmento emerge com energia maior que a original. A
+                diferença é extraída do momento angular rotacional do buraco
+                negro.
+              </p>
+            </div>
+            <p class="body-text reveal" style="margin-top: 2rem">
+              Este não é especulação. É consequência rigorosa da geometria de
+              Kerr. A ergosfera possui
+              <strong>estados de energia negativa</strong> — trajetórias
+              geodésicas onde a energia de uma partícula, medida por um
+              observador distante, é menor que zero. Impossível fora da
+              ergosfera. Possível dentro dela.
+            </p>
+            <p class="body-text reveal">
+              O mecanismo de <strong>Superradiance</strong> — a versão
+              ondulatória do Processo Penrose — mostra que ondas
+              eletromagnéticas e gravitacionais que penetram a ergosfera podem
+              ser refletidas com amplitude maior, extraindo energia rotacional
+              em escala macroscópica.
+            </p>
+          </div>
+          <div>
+            <div class="eq-block reveal">
+              <span class="eq-label"
+                >Condição de Extração de Energia de Penrose</span
+              >
+              E = −p_t &lt; 0 (na ergosfera)<br /><br />
+              Para partícula dividindo-se em A e B:<br />
+              E_original = E_A + E_B<br />
+              Se E_B &lt; 0 (cai no BN),<br />
+              então E_A &gt; E_original<br /><br />
+              Energia extraída: ΔE = −E_B &gt; 0<br />
+              Proveniente do: momento angular J do BN<br /><br />
+              Processo cessa quando: a → 0 (BN para de girar)
+            </div>
+            <p class="body-text reveal">
+              Uma
+              <strong>civilização Tipo III na Escala de Kardashev</strong>
+              poderia teoricamente construir uma estrutura ao redor da ergosfera
+              de um buraco negro supermassivo de Kerr e extrair energia
+              rotacional em escala galáctica — por bilhões de anos, até que o
+              buraco negro se aproximasse do estado de Schwarzschild.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ DISCOS -->
+    <section id="accretion">
+      <div class="container">
+        <span class="section-index reveal">007 — Astrofísica</span>
+        <h2 class="section-title reveal">
+          Discos de <em>Acreção</em><br />e Jatos Relativísticos
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <p class="body-text reveal">
+          O universo não lança matéria silenciosamente em buracos negros. Ela
+          espirala. O momento angular conservado faz com que o gás em queda
+          forme um <strong>disco de acreção</strong> — uma estrutura planar de
+          plasma superaquecido girando em velocidades relativísticas, brilhando
+          em raios-X, emitindo radiação síncrotron e produzindo campos
+          magnéticos de intensidade inimaginável.
+        </p>
+        <p class="body-text reveal">
+          No centro deste disco, próximo à ISCO (<em
+            >Innermost Stable Circular Orbit</em
+          >), o plasma atinge temperaturas de
+          <strong>bilhões de Kelvin</strong>. A fricção viscosa e os campos
+          magnéticos retorçidos convertem energia gravitacional em radiação —
+          tão eficientemente que um quasar alimentado por um Kerr supermassivo
+          pode superar em luminosidade <em>toda</em> sua galáxia hospedeira por
+          fator de 1.000.
+        </p>
+
+        <div
+          class="callout"
+          data-label="Jatos Relativísticos — Mecanismo Blandford-Znajek"
+        >
+          <p>
+            Os campos magnéticos do disco de acreção, torcidos pela ergosfera do
+            buraco negro de Kerr, formam um solenóide cósmico que extrai energia
+            rotacional diretamente e a lança em jatos colimados a
+            <em>99% da velocidade da luz</em> — por distâncias de milhões de
+            anos-luz.
+          </p>
+        </div>
+
+        <div class="obs-grid reveal">
+          <div class="obs-card">
+            <span class="obs-value">5,000 anos-luz</span>
+            <span class="obs-label">Comprimento do Jato — M87*</span>
+            <p class="obs-desc">
+              O jato relativístico do buraco negro supermassivo de M87
+              estende-se por 5.000 anos-luz, visível em rádio, óptico e raios-X.
+              Alimentado por rotação.
+            </p>
+          </div>
+          <div class="obs-card">
+            <span class="obs-value">6.5 × 10⁹ M☉</span>
+            <span class="obs-label">Massa de M87* — EHT 2019</span>
+            <p class="obs-desc">
+              A primeira imagem direta de um horizonte de eventos — uma silhueta
+              de 42 microarcssegundos — revelada pelo Event Horizon Telescope em
+              abril de 2019.
+            </p>
+          </div>
+          <div class="obs-card">
+            <span class="obs-value">4 × 10⁶ M☉</span>
+            <span class="obs-label"
+              >Massa de Sagitário A* — Centro da Via Láctea</span
+            >
+            <p class="obs-desc">
+              A 26.000 anos-luz da Terra. Imagem obtida pelo EHT em 2022. Nosso
+              buraco negro galáctico central — silencioso comparado a quasares
+              ativos.
+            </p>
+          </div>
+          <div class="obs-card">
+            <span class="obs-value">~150 dB</span>
+            <span class="obs-label"
+              >Amplitude de Ondas Gravitacionais — LIGO GW150914</span
+            >
+            <p class="obs-desc">
+              A primeira detecção direta de ondas gravitacionais em 2015 — dois
+              buracos negros de Kerr fundindo-se, liberando mais energia que
+              toda luz do universo observável naquele instante.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ VIAGEM NO TEMPO -->
+    <section id="timetravel">
+      <div class="container">
+        <span class="section-index reveal">008 — Física Extrema</span>
+        <h2 class="section-title reveal">
+          A Singularidade em Anel<br />e as <em>Wormholes</em>
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <p class="body-text reveal">
+          A singularidade em anel do Buraco Negro de Kerr possui uma propriedade
+          matematicamente extraordinária: ela é <strong>evitável</strong>. Um
+          observador em queda pode, teoricamente, passar através do plano
+          equatorial sem atingir o anel, se a trajetória for inclinada
+          adequadamente. O que está além?
+        </p>
+        <p class="body-text reveal">
+          A extensão maximal da métrica de Kerr revela uma estrutura fascinante:
+          ao atravessar o horizonte interno, emerge-se em um
+          <strong>universo diferente</strong> — ou em uma região diferente do
+          mesmo universo. As chamadas <em>Pontes Einstein-Rosen</em>, ou
+          wormholes, são soluções matemáticas que conectam regiões separadas do
+          espaço-tempo através do interior de um Kerr.
+        </p>
+
+        <div
+          class="callout callout-blue"
+          data-label="Curvas Temporais Fechadas"
+        >
+          <p>
+            A métrica de Kerr permite, em princípio,
+            <em>Curvas Causais Fechadas</em> — trajetórias no espaço-tempo que
+            retornam ao próprio ponto de origem. Isso é o que a física chama de
+            viagem no tempo. A questão não é se as equações permitem. Elas
+            permitem. A questão é se a realidade física as implementa — ou se
+            proteções de causalidade as destroem antes.
+          </p>
+        </div>
+
+        <div class="eq-block reveal">
+          <span class="eq-label"
+            >Condição para Curvas Causais Fechadas — Região de Kerr</span
+          >
+          g_φφ &lt; 0 implica coordenada φ temporal<br />
+          Possível para r &lt; 0 (extensão analítica da métrica)<br /><br />
+          Hipótese de Proteção da Cronologia (Hawking, 1992):<br />
+          → Flutuações quânticas destroem qualquer wormhole<br />
+          antes que se torne utilizável para viagem temporal.<br /><br />
+          Mas a discussão permanece matematicamente em aberto.
+        </div>
+
+        <p class="body-text reveal">
+          A <strong>Conjecture de Penrose sobre Censura Cósmica</strong> propõe
+          que singularidades nuas — visíveis ao universo externo — são proibidas
+          pela natureza. Se verdadeira, o interior de um Kerr permanece
+          eternamente inacessível à observação, seus mistérios protegidos pelo
+          horizonte de eventos como segredos cosmológicos guardados por uma
+          fronteira inviolável.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ FÍSICA RELATIVÍSTICA -->
+    <section id="relativity">
+      <div class="container">
+        <span class="section-index reveal">009 — Relatividade</span>
+        <h2 class="section-title reveal">
+          Dilatação do <em>Tempo</em><br />e Geodésicas Extremas
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <div class="split">
+          <div>
+            <p class="body-text reveal">
+              Um observador em órbita ao redor de um Buraco Negro de Kerr
+              experimenta duas formas de dilatação temporal simultaneamente: a
+              <strong>dilatação gravitacional</strong> — o tempo flui mais
+              devagar em campos gravitacionais mais intensos — e a
+              <strong>dilatação cinética</strong> — o tempo flui mais devagar
+              para corpos em movimento.
+            </p>
+            <p class="body-text reveal">
+              Para um observador orbitando na ISCO prograde de um Kerr extremo,
+              o tempo passa <em>infinitamente mais devagar</em> que para um
+              observador distante. Um ano nessa órbita pode corresponder a eras
+              geológicas na Terra. O universo, observado de lá, pareceria
+              avançar em câmera ultrarrápida.
+            </p>
+            <p class="body-text reveal">
+              As <strong>geodésicas de Kerr</strong> — os caminhos retos no
+              espaço-tempo curvado — não são elipses fechadas como as de Newton.
+              Elas <em>precessam</em>. A pericósmio de cada órbita avança. Os
+              planos orbitais nutam. O espaço-tempo vibrante de Kerr transforma
+              toda geometria orbital em uma dança rotacional sem clausura.
+            </p>
+          </div>
+          <div>
+            <div class="eq-block reveal">
+              <span class="eq-label"
+                >Dilatação Temporal Gravitacional + Cinemática</span
+              >
+              dτ/dt = √(−g_tt − 2g_tφ·Ω − g_φφ·Ω²)<br /><br />
+              Para Ω = velocidade angular orbital prograde:<br />
+              Ω_ISCO(Kerr extremo) → c³/GM<br /><br />
+              Taxa: dτ/dt → 0 na ISCO extrema<br />
+              → Tempo próprio para nessa órbita → ∞
+            </div>
+            <div
+              class="callout callout-red"
+              data-label="Efeito Observável em M87*"
+            >
+              <p>
+                A imagem do EHT mostra o lado que se aproxima do observador
+                <em>dramaticamente mais brilhante</em> que o lado que se afasta
+                — magnificação relativística por fator de ~3-5, consequência
+                direta do Efeito Doppler relativístico e beaming de radiação em
+                plasma girando a ~0.5c.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ FILOSOFIA -->
+    <section id="philosophy">
+      <div class="container">
+        <span class="section-index reveal">010 — Filosofia Cósmica</span>
+        <h2 class="section-title reveal">
+          Na <em>Fronteira</em><br />da Física e do Ser
+        </h2>
+        <div class="section-rule reveal"></div>
+
+        <div class="phil-quote reveal">
+          O Buraco Negro de Kerr não é um objeto no universo. É uma questão que
+          o universo faz sobre si mesmo — sobre onde o espaço termina, onde o
+          tempo começa, e o que existe quando ambos deixam de existir.
+        </div>
+
+        <p class="body-text reveal">
+          A física de Kerr empurra a ciência até suas bordas epistemológicas. A
+          singularidade em anel não é uma falha do modelo — é uma
+          <strong>declaração honesta da ignorância física</strong>: aqui, onde a
+          densidade tende ao infinito e a curvatura explode, nossas equações
+          param de descrever a realidade e começam a descrever sua própria
+          dissolução.
+        </p>
+        <p class="body-text reveal">
+          Kant propôs que <em>espaço e tempo</em> são formas a priori da
+          intuição humana — estruturas impostas pela mente ao caos sensorial. Os
+          Buracos Negros de Kerr sugerem algo diferente e mais perturbador: que
+          espaço e tempo são <strong>estruturas físicas dinâmicas</strong>,
+          passíveis de torção, mistura, dilatação e ruptura. Não são palco — são
+          atores.
+        </p>
+        <p class="body-text reveal">
+          Roger Penrose, ao desenvolver os teoremas de singularidade com Stephen
+          Hawking, demonstrou que o colapso gravitacional sob condições físicas
+          gerais <em>inevitavelmente produz singularidades</em>. O universo não
+          evita o infinito — ele o gera. A singularidade não é falha do cosmos.
+          É sua confissão.
+        </p>
+
+        <div class="callout" data-label="Reflexão Final">
+          <p>
+            Somos seres que evoluíram para navegar planícies africanas, e ainda
+            assim somos capazes de imaginar — e matematicamente descrever —
+            regiões do universo onde o tempo gira como espaço, onde o passado e
+            o futuro trocam de lugar, onde a própria causalidade que torna o
+            pensamento possível se dissolve em geometria pura. Isso não é
+            triunfo da razão sobre o cosmos. É o cosmos reconhecendo a si mesmo
+            através de nós.
+          </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <p
+          class="body-text reveal"
+          style="
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-dim);
+            font-style: italic;
+          "
+        >
+          O Buraco Negro de Kerr não é o fim do conhecimento.<br />
+          É o mapa de onde o conhecimento ainda precisa chegar.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-logo">∮</div>
+        <p class="footer-text">
+          Buraco Negro de Kerr · Solução Exata da Relatividade Geral<br />
+          Roy P. Kerr · 1963 · Physical Review Letters<br />
+          <br />
+          Event Horizon Telescope · LIGO Scientific Collaboration<br />
+          Gravity Probe B · Sagitário A* · M87*<br />
+          <br />
+          <em
+            style="
+              color: var(--gold);
+              font-family: &quot;Cormorant Garamond&quot;, serif;
+              font-style: italic;
+              letter-spacing: 0.1em;
+            "
+          >
+            "O universo não é apenas mais estranho do que imaginamos.<br />É
+            mais estranho do que podemos imaginar." — J.B.S. Haldane
+          </em>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // ══════════════════════════════ STARFIELD
+      const starCanvas = document.getElementById("starCanvas");
+      const sCtx = starCanvas.getContext("2d");
+      let stars = [];
+
+      function initStars() {
+        starCanvas.width = window.innerWidth;
+        starCanvas.height = window.innerHeight;
+        stars = [];
+        const count = Math.floor((starCanvas.width * starCanvas.height) / 900);
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random() * starCanvas.width,
+            y: Math.random() * starCanvas.height,
+            r: Math.random() * 1.2,
+            a: Math.random(),
+            speed: Math.random() * 0.003 + 0.001,
+            twinkle: Math.random() * Math.PI * 2,
+          });
+        }
+      }
+
+      function drawStars(t) {
+        sCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+        stars.forEach((s) => {
+          s.twinkle += s.speed;
+          const alpha = s.a * (0.5 + 0.5 * Math.sin(s.twinkle));
+          sCtx.beginPath();
+          sCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          sCtx.fillStyle = `rgba(200,210,255,${alpha})`;
+          sCtx.fill();
+        });
+      }
+
+      // ══════════════════════════════ KERR HERO CANVAS
+      const kerrCanvas = document.getElementById("kerrCanvas");
+      const kCtx = kerrCanvas.getContext("2d");
+      const KW = kerrCanvas.width;
+      const KH = kerrCanvas.height;
+      const CX = KW / 2;
+      const CY = KH / 2;
+
+      let kTime = 0;
+
+      function drawKerr(t) {
+        kCtx.clearRect(0, 0, KW, KH);
+
+        // Accretion disk glow base
+        const grad = kCtx.createRadialGradient(CX, CY, 0, CX, CY, 380);
+        grad.addColorStop(0, "rgba(0,0,0,0)");
+        grad.addColorStop(0.3, "rgba(10,30,100,0.12)");
+        grad.addColorStop(0.6, "rgba(180,100,20,0.06)");
+        grad.addColorStop(1, "rgba(0,0,0,0)");
+        kCtx.fillStyle = grad;
+        kCtx.fillRect(0, 0, KW, KH);
+
+        // Outer ergosphere glow
+        const ergoGrad = kCtx.createRadialGradient(CX, CY, 140, CX, CY, 260);
+        ergoGrad.addColorStop(0, "rgba(40,80,200,0.0)");
+        ergoGrad.addColorStop(0.5, "rgba(40,80,200,0.04)");
+        ergoGrad.addColorStop(1, "rgba(40,80,200,0.0)");
+        kCtx.fillStyle = ergoGrad;
+        kCtx.beginPath();
+        kCtx.ellipse(CX, CY, 240, 185, 0, 0, Math.PI * 2);
+        kCtx.fill();
+
+        // ── ACCRETION DISK (layered ellipses)
+        const diskLayers = 60;
+        for (let i = diskLayers; i >= 0; i--) {
+          const progress = i / diskLayers;
+          const innerR = 95,
+            outerR = 390;
+          const r = innerR + (outerR - innerR) * progress;
+          const tilt = 0.22;
+          const ry = r * tilt;
+
+          // Color gradient: inner = white-hot, outer = red-orange-dark
+          let col;
+          if (progress < 0.15) {
+            col = `rgba(255,255,230,${0.9 - progress * 3})`;
+          } else if (progress < 0.35) {
+            const p = (progress - 0.15) / 0.2;
+            col = `rgba(${255},${Math.floor(180 - p * 80)},${Math.floor(80 - p * 60)},${0.5 - p * 0.15})`;
+          } else if (progress < 0.65) {
+            const p = (progress - 0.35) / 0.3;
+            col = `rgba(${Math.floor(200 - p * 80)},${Math.floor(80 - p * 40)},${Math.floor(20 - p * 15)},${0.3 - p * 0.1})`;
+          } else {
+            col = `rgba(${Math.floor(80 - progress * 60)},${Math.floor(20 - progress * 15)},0,${0.15 - progress * 0.12})`;
+          }
+
+          kCtx.beginPath();
+          kCtx.ellipse(CX, CY, r, ry, 0, 0, Math.PI * 2);
+          kCtx.strokeStyle = col;
+          kCtx.lineWidth = ((outerR - innerR) / diskLayers) * 1.6;
+          kCtx.stroke();
+        }
+
+        // ── LENSING RING — photon sphere
+        const lensR = 92;
+        for (let ring = 0; ring < 3; ring++) {
+          const opacity = [0.7, 0.4, 0.2][ring];
+          const width = [3, 2, 4][ring];
+          const rr = lensR + ring * 5;
+          const gradient = kCtx.createLinearGradient(CX - rr, CY, CX + rr, CY);
+          gradient.addColorStop(0, `rgba(200,160,60,${opacity})`);
+          gradient.addColorStop(0.25, `rgba(255,220,120,${opacity * 1.3})`);
+          gradient.addColorStop(0.5, `rgba(200,160,60,${opacity})`);
+          gradient.addColorStop(0.75, `rgba(255,220,120,${opacity * 1.3})`);
+          gradient.addColorStop(1, `rgba(200,160,60,${opacity})`);
+          kCtx.beginPath();
+          kCtx.arc(CX, CY, rr, 0, Math.PI * 2);
+          kCtx.strokeStyle = gradient;
+          kCtx.lineWidth = width;
+          kCtx.stroke();
+        }
+
+        // ── EVENT HORIZON (black disc)
+        const bhGrad = kCtx.createRadialGradient(CX, CY, 0, CX, CY, 88);
+        bhGrad.addColorStop(0, "rgba(0,0,0,1)");
+        bhGrad.addColorStop(0.7, "rgba(0,0,5,1)");
+        bhGrad.addColorStop(0.9, "rgba(0,0,12,0.95)");
+        bhGrad.addColorStop(1, "rgba(0,0,20,0.0)");
+        kCtx.beginPath();
+        kCtx.arc(CX, CY, 88, 0, Math.PI * 2);
+        kCtx.fillStyle = bhGrad;
+        kCtx.fill();
+
+        // ── ERGOSPHERE OUTLINE
+        kCtx.beginPath();
+        kCtx.ellipse(CX, CY, 158, 122, 0, 0, Math.PI * 2);
+        kCtx.strokeStyle = "rgba(64,120,255,0.18)";
+        kCtx.lineWidth = 1.5;
+        kCtx.setLineDash([4, 8]);
+        kCtx.stroke();
+        kCtx.setLineDash([]);
+
+        // ── POLAR JETS
+        const jetAlpha = 0.6 + 0.2 * Math.sin(t * 1.8);
+        for (let side = -1; side <= 1; side += 2) {
+          const jetGrad = kCtx.createLinearGradient(
+            CX,
+            CY,
+            CX,
+            CY + side * 420,
+          );
+          jetGrad.addColorStop(0, `rgba(80,160,255,${jetAlpha})`);
+          jetGrad.addColorStop(0.3, `rgba(60,120,255,${jetAlpha * 0.5})`);
+          jetGrad.addColorStop(0.7, `rgba(40,80,200,${jetAlpha * 0.2})`);
+          jetGrad.addColorStop(1, "rgba(0,0,0,0)");
+
+          kCtx.beginPath();
+          kCtx.moveTo(CX - 10, CY);
+          kCtx.lineTo(CX, CY + side * 88);
+          kCtx.lineTo(CX + 10, CY);
+          kCtx.quadraticCurveTo(
+            CX + 40,
+            CY + side * 300,
+            CX + 5,
+            CY + side * 430,
+          );
+          kCtx.quadraticCurveTo(
+            CX - 5,
+            CY + side * 430,
+            CX - 40,
+            CY + side * 300,
+          );
+          kCtx.closePath();
+          kCtx.fillStyle = jetGrad;
+          kCtx.fill();
+        }
+
+        // ── LIGHT BENDING ARCS
+        for (let arc = 0; arc < 6; arc++) {
+          const angle = (arc / 6) * Math.PI * 2 + t * 0.05;
+          const startDist = 320 + Math.sin(arc * 1.7) * 40;
+          const cx1 = CX + Math.cos(angle) * startDist;
+          const cy1 = CY + Math.sin(angle) * startDist * 0.22;
+          const alpha = 0.15 + 0.08 * Math.sin(t + arc);
+
+          kCtx.beginPath();
+          kCtx.arc(CX, CY, startDist, angle - 0.6, angle + 0.6);
+          kCtx.strokeStyle = `rgba(255,200,100,${alpha})`;
+          kCtx.lineWidth = 1.2;
+          kCtx.stroke();
+        }
+
+        // ── ANIMATED PLASMA PARTICLES in disk
+        for (let p = 0; p < 25; p++) {
+          const phase = (p / 25) * Math.PI * 2 + t * (0.4 + p * 0.018);
+          const dist = 110 + p * 10 + Math.sin(phase * 3) * 8;
+          const tilt = 0.22;
+          const px = CX + Math.cos(phase) * dist;
+          const py = CY + Math.sin(phase) * dist * tilt;
+          const alpha = 0.6 - p * 0.02;
+          const sz = 1.5 - p * 0.03;
+
+          const hue =
+            p < 8
+              ? `rgba(255,255,200,${alpha})`
+              : p < 16
+                ? `rgba(255,160,60,${alpha})`
+                : `rgba(200,60,20,${alpha * 0.5})`;
+
+          kCtx.beginPath();
+          kCtx.arc(px, py, Math.max(0.5, sz), 0, Math.PI * 2);
+          kCtx.fillStyle = hue;
+          kCtx.fill();
+        }
+      }
+
+      // ══════════════════════════════ STRUCTURE CANVAS
+      const sCanvas = document.getElementById("structCanvas");
+      const sc = sCanvas.getContext("2d");
+      const SW = sCanvas.width,
+        SH = sCanvas.height;
+      const SCX = SW / 2,
+        SCY = SH / 2;
+
+      function drawStructure(t) {
+        sc.clearRect(0, 0, SW, SH);
+
+        // BG
+        sc.fillStyle = "rgba(0,0,5,0.3)";
+        sc.fillRect(0, 0, SW, SH);
+
+        // Singularity ring
+        sc.beginPath();
+        sc.ellipse(SCX, SCY, 18, 6, 0, 0, Math.PI * 2);
+        sc.strokeStyle = `rgba(255,100,50,${0.8 + 0.2 * Math.sin(t * 3)})`;
+        sc.lineWidth = 3;
+        sc.stroke();
+        sc.beginPath();
+        sc.ellipse(SCX, SCY, 18, 6, 0, 0, Math.PI * 2);
+        sc.strokeStyle = `rgba(255,200,100,0.3)`;
+        sc.lineWidth = 8;
+        sc.stroke();
+
+        // Inner horizon
+        sc.beginPath();
+        sc.ellipse(SCX, SCY, 55, 50, 0, 0, Math.PI * 2);
+        sc.strokeStyle = "rgba(80,140,255,0.5)";
+        sc.lineWidth = 2;
+        sc.setLineDash([5, 5]);
+        sc.stroke();
+        sc.setLineDash([]);
+
+        // Outer horizon
+        sc.beginPath();
+        sc.arc(SCX, SCY, 88, 0, Math.PI * 2);
+        sc.strokeStyle = "rgba(255,255,255,0.7)";
+        sc.lineWidth = 2;
+        sc.stroke();
+
+        // Ergosphere
+        sc.beginPath();
+        sc.ellipse(SCX, SCY, 130, 100, 0, 0, Math.PI * 2);
+        sc.strokeStyle = "rgba(100,160,255,0.4)";
+        sc.lineWidth = 1.5;
+        sc.setLineDash([8, 6]);
+        sc.stroke();
+        sc.setLineDash([]);
+
+        // Accretion disk
+        for (let i = 0; i < 15; i++) {
+          const r = 100 + i * 8;
+          const a = 0.4 - i * 0.025;
+          sc.beginPath();
+          sc.ellipse(SCX, SCY, r, r * 0.18, 0, 0, Math.PI * 2);
+          const g = sc.createLinearGradient(SCX - r, SCY, SCX + r, SCY);
+          g.addColorStop(0, `rgba(200,100,30,${a})`);
+          g.addColorStop(0.5, `rgba(255,200,60,${a * 1.5})`);
+          g.addColorStop(1, `rgba(200,100,30,${a})`);
+          sc.strokeStyle = g;
+          sc.lineWidth = 3;
+          sc.stroke();
+        }
+
+        // Black hole
+        const bhg = sc.createRadialGradient(SCX, SCY, 0, SCX, SCY, 88);
+        bhg.addColorStop(0, "rgba(0,0,0,1)");
+        bhg.addColorStop(1, "rgba(0,0,10,1)");
+        sc.beginPath();
+        sc.arc(SCX, SCY, 87, 0, Math.PI * 2);
+        sc.fillStyle = bhg;
+        sc.fill();
+
+        // Labels
+        const labels = [
+          {
+            r: 22,
+            a: -Math.PI * 0.3,
+            text: "Singularidade",
+            color: "rgba(255,150,80,0.9)",
+          },
+          {
+            r: 60,
+            a: Math.PI * 0.2,
+            text: "H. Interno",
+            color: "rgba(100,160,255,0.8)",
+          },
+          {
+            r: 95,
+            a: -Math.PI * 0.15,
+            text: "H. Externo",
+            color: "rgba(220,220,255,0.8)",
+          },
+          {
+            r: 140,
+            a: Math.PI * 0.1,
+            text: "Ergosfera",
+            color: "rgba(80,140,255,0.7)",
+          },
+        ];
+
+        labels.forEach((l) => {
+          const lx = SCX + Math.cos(l.a) * l.r;
+          const ly = SCY + Math.sin(l.a) * l.r * 0.5;
+          const ex = SCX + Math.cos(l.a) * (l.r + 70);
+          const ey = SCY + Math.sin(l.a) * (l.r * 0.5 + 30);
+
+          sc.beginPath();
+          sc.moveTo(lx, ly);
+          sc.lineTo(ex, ey);
+          sc.strokeStyle = l.color;
+          sc.lineWidth = 0.8;
+          sc.stroke();
+
+          sc.font = `11px 'Rajdhani', sans-serif`;
+          sc.fillStyle = l.color;
+          sc.fillText(
+            l.text,
+            ex + (Math.cos(l.a) > 0 ? 5 : -sc.measureText(l.text).width - 5),
+            ey + 4,
+          );
+        });
+
+        // Polar jets
+        for (let s = -1; s <= 1; s += 2) {
+          const jg = sc.createLinearGradient(SCX, SCY, SCX, SCY + s * 220);
+          jg.addColorStop(0, "rgba(80,160,255,0.6)");
+          jg.addColorStop(1, "rgba(0,40,200,0)");
+          sc.beginPath();
+          sc.moveTo(SCX - 6, SCY + s * 88);
+          sc.quadraticCurveTo(SCX + 25, SCY + s * 160, SCX + 3, SCY + s * 220);
+          sc.quadraticCurveTo(SCX - 3, SCY + s * 220, SCX - 25, SCY + s * 160);
+          sc.closePath();
+          sc.fillStyle = jg;
+          sc.fill();
+        }
+      }
+
+      // ══════════════════════════════ ANIMATE
+      function animate(ts) {
+        kTime = ts / 1000;
+        drawStars(kTime);
+        drawKerr(kTime);
+        drawStructure(kTime);
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener("resize", initStars);
+      initStars();
+      requestAnimationFrame(animate);
+
+      // ══════════════════════════════ INTERSECTION OBSERVER
+      const reveals = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -60px 0px" },
+      );
+      reveals.forEach((el) => io.observe(el));
+
+      // ══════════════════════════════ SPIN BARS
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.querySelectorAll(".spin-fill").forEach((el) => {
+            const w = el.dataset.w;
+            el.style.width = w + "%";
+          });
+        }, 500);
+      });
+    </script>
+  </body>
+</html>

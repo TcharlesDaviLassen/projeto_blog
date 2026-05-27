@@ -1,0 +1,2513 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hélio-3 Lunar — O Combustível do Futuro</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@300;400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --void: #03050a;
+        --deep: #080d1a;
+        --cosmos: #0d1529;
+        --nebula: #111e38;
+        --dust: #1a2a4a;
+        --horizon: #1e3a5f;
+        --plasma: #0ea5e9;
+        --helium: #38bdf8;
+        --fusion: #7dd3fc;
+        --glow: #bae6fd;
+        --gold: #f59e0b;
+        --amber: #fbbf24;
+        --cream: #fef3c7;
+        --moon: #e2e8f0;
+        --lunar: #cbd5e1;
+        --silver: #94a3b8;
+        --dim: #475569;
+        --accent-red: #ef4444;
+        --accent-green: #10b981;
+        --accent-purple: #8b5cf6;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--void);
+        color: var(--moon);
+        font-family: "Crimson Pro", Georgia, serif;
+        font-size: 18px;
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+
+      /* STARFIELD */
+      .starfield {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background:
+          radial-gradient(
+            1px 1px at 10% 15%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 25% 40%,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1.5px 1.5px at 40% 10%,
+            rgba(255, 255, 255, 0.7) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 55% 60%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 70% 25%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            2px 2px at 80% 70%,
+            rgba(255, 255, 255, 0.3) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 90% 45%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 15% 80%,
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 35% 90%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1.5px 1.5px at 60% 85%,
+            rgba(255, 255, 255, 0.3) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 45% 55%,
+            rgba(14, 165, 233, 0.4) 0%,
+            transparent 100%
+          ),
+          radial-gradient(
+            1px 1px at 75% 15%,
+            rgba(251, 191, 36, 0.3) 0%,
+            transparent 100%
+          );
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(3, 5, 10, 0.85);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        height: 56px;
+        gap: 0.5rem;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      nav a {
+        color: var(--silver);
+        text-decoration: none;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+        padding: 0.3rem 0.7rem;
+        border-radius: 4px;
+        white-space: nowrap;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+      }
+      nav a:hover {
+        color: var(--helium);
+        border-color: rgba(14, 165, 233, 0.3);
+        background: rgba(14, 165, 233, 0.08);
+      }
+      .nav-brand {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--plasma);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        margin-right: 1rem;
+        flex-shrink: 0;
+      }
+      .nav-sep {
+        color: var(--dim);
+        margin: 0 0.2rem;
+      }
+
+      /* HERO */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 4rem 2rem 6rem;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          ellipse,
+          rgba(14, 165, 233, 0.12) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: pulse-glow 6s ease-in-out infinite;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 800px;
+        height: 400px;
+        background: radial-gradient(
+          ellipse,
+          rgba(245, 158, 11, 0.06) 0%,
+          transparent 70%
+        );
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+      }
+
+      .hero-isotope {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.8rem;
+        color: var(--plasma);
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .hero h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(3rem, 8vw, 7rem);
+        font-weight: 900;
+        line-height: 1;
+        color: var(--moon);
+        margin-bottom: 0.3rem;
+        position: relative;
+      }
+
+      .hero h1 sup {
+        font-size: 0.45em;
+        color: var(--plasma);
+        vertical-align: super;
+      }
+
+      .hero-subtitle {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+        color: var(--silver);
+        font-style: italic;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .hero-meta {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      .meta-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(14, 165, 233, 0.2);
+        border-radius: 8px;
+        padding: 1rem 1.5rem;
+        text-align: center;
+      }
+
+      .meta-card .val {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1.4rem;
+        color: var(--gold);
+        font-weight: 600;
+        display: block;
+      }
+
+      .meta-card .lbl {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--dim);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        display: block;
+        margin-top: 0.2rem;
+      }
+
+      .scroll-hint {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        animation: bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(6px);
+        }
+      }
+
+      .scroll-arrow {
+        width: 20px;
+        height: 20px;
+        border-right: 1px solid var(--dim);
+        border-bottom: 1px solid var(--dim);
+        transform: rotate(45deg);
+      }
+
+      /* LAYOUT */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 2rem 6rem;
+      }
+
+      /* SECTIONS */
+      .chapter {
+        margin-bottom: 6rem;
+        scroll-margin-top: 80px;
+      }
+
+      .chapter-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+      }
+
+      .chapter-number {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--plasma);
+        letter-spacing: 0.15em;
+        background: rgba(14, 165, 233, 0.1);
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        white-space: nowrap;
+        margin-top: 0.5rem;
+      }
+
+      .chapter h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 700;
+        color: var(--moon);
+        line-height: 1.2;
+      }
+
+      .chapter h2 em {
+        color: var(--plasma);
+        font-style: normal;
+      }
+
+      /* SUBSECTIONS */
+      .section {
+        margin-bottom: 3rem;
+      }
+
+      .section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--fusion);
+        margin-bottom: 1rem;
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      .section h4 {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.85rem;
+        color: var(--gold);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin: 1.5rem 0 0.8rem;
+      }
+
+      p {
+        margin-bottom: 1.2rem;
+        color: var(--lunar);
+      }
+
+      strong {
+        color: var(--moon);
+        font-weight: 600;
+      }
+
+      em {
+        color: var(--fusion);
+        font-style: italic;
+      }
+
+      /* CALLOUT BOXES */
+      .callout {
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        margin: 2rem 0;
+        border-left: 3px solid;
+        position: relative;
+      }
+
+      .callout-science {
+        background: rgba(14, 165, 233, 0.06);
+        border-color: var(--plasma);
+      }
+
+      .callout-warning {
+        background: rgba(245, 158, 11, 0.06);
+        border-color: var(--gold);
+      }
+
+      .callout-philosophy {
+        background: rgba(139, 92, 246, 0.06);
+        border-color: var(--accent-purple);
+      }
+
+      .callout-data {
+        background: rgba(16, 185, 129, 0.06);
+        border-color: var(--accent-green);
+      }
+
+      .callout-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 0.7rem;
+        display: block;
+      }
+
+      .callout-science .callout-label {
+        color: var(--plasma);
+      }
+      .callout-warning .callout-label {
+        color: var(--gold);
+      }
+      .callout-philosophy .callout-label {
+        color: var(--accent-purple);
+      }
+      .callout-data .callout-label {
+        color: var(--accent-green);
+      }
+
+      .callout p {
+        margin: 0;
+      }
+
+      /* DATA TABLE */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        font-size: 0.9rem;
+      }
+
+      .data-table th {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--plasma);
+        padding: 0.8rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(14, 165, 233, 0.3);
+        background: rgba(14, 165, 233, 0.05);
+      }
+
+      .data-table td {
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--lunar);
+        vertical-align: top;
+      }
+
+      .data-table tr:hover td {
+        background: rgba(14, 165, 233, 0.04);
+      }
+
+      .data-table td:first-child {
+        color: var(--moon);
+        font-weight: 600;
+      }
+
+      /* FORMULA BOX */
+      .formula {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(14, 165, 233, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0;
+        text-align: center;
+      }
+
+      .formula-eq {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1.2rem;
+        color: var(--fusion);
+        letter-spacing: 0.05em;
+      }
+
+      .formula-caption {
+        font-size: 0.85rem;
+        color: var(--silver);
+        margin-top: 0.7rem;
+        font-style: italic;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        position: relative;
+        margin: 2rem 0;
+        padding-left: 2rem;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          var(--plasma),
+          var(--accent-purple),
+          transparent
+        );
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+        padding-left: 1.5rem;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -2rem;
+        top: 0.5rem;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--plasma);
+        border: 2px solid var(--void);
+        box-shadow: 0 0 8px var(--plasma);
+      }
+
+      .timeline-period {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--gold);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+      }
+
+      .timeline-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.1rem;
+        color: var(--moon);
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+
+      .timeline-body {
+        font-size: 0.95rem;
+      }
+
+      /* COMPARISON BARS */
+      .compare-grid {
+        margin: 2rem 0;
+      }
+
+      .compare-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .compare-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--silver);
+        width: 120px;
+        flex-shrink: 0;
+        text-align: right;
+      }
+
+      .compare-bar-wrap {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+        height: 24px;
+        overflow: hidden;
+      }
+
+      .compare-bar {
+        height: 100%;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        padding: 0 0.7rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--void);
+        transition: width 1s ease;
+      }
+
+      .bar-blue {
+        background: linear-gradient(90deg, var(--plasma), var(--helium));
+      }
+      .bar-gold {
+        background: linear-gradient(90deg, var(--gold), var(--amber));
+      }
+      .bar-green {
+        background: linear-gradient(90deg, #059669, var(--accent-green));
+      }
+      .bar-red {
+        background: linear-gradient(90deg, #dc2626, var(--accent-red));
+      }
+      .bar-purple {
+        background: linear-gradient(90deg, #7c3aed, var(--accent-purple));
+      }
+
+      /* ATOMIC DIAGRAM */
+      .atom-diagram {
+        display: flex;
+        justify-content: center;
+        gap: 4rem;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+      }
+
+      .atom-wrap {
+        text-align: center;
+      }
+
+      .atom-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--silver);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+      }
+
+      .atom-svg {
+        display: block;
+        margin: 0 auto;
+      }
+
+      /* QUOTE */
+      blockquote {
+        border-left: 3px solid var(--accent-purple);
+        margin: 2.5rem 0;
+        padding: 1.5rem 2rem;
+        background: rgba(139, 92, 246, 0.05);
+        border-radius: 0 8px 8px 0;
+      }
+
+      blockquote p {
+        font-family: "Playfair Display", serif;
+        font-size: 1.15rem;
+        font-style: italic;
+        color: var(--glow);
+        margin: 0 0 0.5rem;
+      }
+
+      blockquote cite {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--dim);
+        letter-spacing: 0.1em;
+      }
+
+      /* GRID CARDS */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 1.5rem;
+        transition: all 0.3s;
+      }
+
+      .card:hover {
+        border-color: rgba(14, 165, 233, 0.3);
+        background: rgba(14, 165, 233, 0.04);
+        transform: translateY(-2px);
+      }
+
+      .card-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.8rem;
+        display: block;
+      }
+
+      .card h4 {
+        font-family: "Playfair Display", serif;
+        font-size: 1rem;
+        color: var(--moon);
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        font-style: normal;
+        letter-spacing: normal;
+        text-transform: none;
+      }
+
+      .card p {
+        font-size: 0.9rem;
+        color: var(--silver);
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      /* PROCESS FLOW */
+      .process-flow {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+      }
+
+      .process-step {
+        flex: 1;
+        min-width: 130px;
+        background: rgba(14, 165, 233, 0.06);
+        border: 1px solid rgba(14, 165, 233, 0.2);
+        padding: 1.2rem;
+        position: relative;
+        text-align: center;
+      }
+
+      .process-step:not(:last-child)::after {
+        content: "→";
+        position: absolute;
+        right: -14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--plasma);
+        font-size: 1.2rem;
+        z-index: 2;
+        background: var(--void);
+        padding: 0 2px;
+      }
+
+      .process-step .step-num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.6rem;
+        color: var(--plasma);
+        letter-spacing: 0.15em;
+        margin-bottom: 0.4rem;
+      }
+
+      .process-step .step-title {
+        font-family: "Playfair Display", serif;
+        font-size: 0.9rem;
+        color: var(--moon);
+        font-weight: 700;
+      }
+
+      .process-step .step-desc {
+        font-size: 0.75rem;
+        color: var(--silver);
+        margin-top: 0.3rem;
+      }
+
+      /* DIVIDER */
+      .divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(14, 165, 233, 0.3),
+          transparent
+        );
+        margin: 4rem 0;
+      }
+
+      /* VERDICT BOX */
+      .verdict {
+        background: linear-gradient(
+          135deg,
+          rgba(14, 165, 233, 0.08),
+          rgba(139, 92, 246, 0.08)
+        );
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin: 3rem 0;
+      }
+
+      .verdict h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        color: var(--moon);
+        margin-bottom: 1rem;
+        font-style: normal;
+        color: var(--helium);
+      }
+
+      /* FOOTER */
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid rgba(14, 165, 233, 0.15);
+        padding: 3rem 2rem;
+        text-align: center;
+        color: var(--dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+      }
+
+      footer .footer-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: rgba(14, 165, 233, 0.3);
+        margin-bottom: 1rem;
+      }
+
+      /* UTILITY */
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+      .text-plasma {
+        color: var(--plasma);
+      }
+      .text-gold {
+        color: var(--gold);
+      }
+      .text-green {
+        color: var(--accent-green);
+      }
+      .text-red {
+        color: var(--accent-red);
+      }
+      .text-purple {
+        color: var(--accent-purple);
+      }
+      .text-silver {
+        color: var(--silver);
+      }
+
+      ul,
+      ol {
+        padding-left: 1.5rem;
+        margin-bottom: 1.2rem;
+        color: var(--lunar);
+      }
+
+      li {
+        margin-bottom: 0.4rem;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 600px) {
+        body {
+          font-size: 16px;
+        }
+        .process-flow {
+          flex-direction: column;
+        }
+        .process-step:not(:last-child)::after {
+          content: "↓";
+          right: 50%;
+          top: auto;
+          bottom: -14px;
+          transform: translateX(50%);
+        }
+        .atom-diagram {
+          gap: 2rem;
+        }
+        .hero h1 {
+          font-size: 3rem;
+        }
+        .chapter-header {
+          flex-direction: column;
+        }
+      }
+
+      /* SCROLL FADE IN */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="starfield"></div>
+
+    <nav>
+      <span class="nav-brand">³He LUNAR</span>
+      <a href="#fundamentos">Fundamentos</a>
+      <a href="#lunar">Lua</a>
+      <a href="#fusao">Fusão</a>
+      <a href="#mineracao">Mineração</a>
+      <a href="#transporte">Transporte</a>
+      <a href="#aplicacoes">Aplicações</a>
+      <a href="#geopolitica">Geopolítica</a>
+      <a href="#filosofia">Filosofia</a>
+      <a href="#futuro">Futuro</a>
+      <a href="#critica">Crítica</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-isotope">Hélio · Isótopo 3 · Número Atômico 2</div>
+      <h1>
+        ³He<br /><span
+          style="font-size: 0.5em; color: var(--silver); font-weight: 400"
+          >Hélio-3</span
+        >
+      </h1>
+      <p class="hero-subtitle">
+        O combustível do cosmos guardado na poeira da Lua
+      </p>
+
+      <div class="hero-meta">
+        <div class="meta-card">
+          <span class="val">~1M ton</span>
+          <span class="lbl">Estimativa no rególito</span>
+        </div>
+        <div class="meta-card">
+          <span class="val">18.4 MeV</span>
+          <span class="lbl">Energia por fusão ³He</span>
+        </div>
+        <div class="meta-card">
+          <span class="val">~25 ton/ano</span>
+          <span class="lbl">Energia mundial total</span>
+        </div>
+        <div class="meta-card">
+          <span class="val">3 protons</span>
+          <span class="lbl">2p + 1n (núcleo)</span>
+        </div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>EXPLORAR</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <main>
+      <!-- INTRODUÇÃO -->
+      <div class="chapter fade-in">
+        <div class="callout callout-science">
+          <span class="callout-label">⚡ Contextualização</span>
+          <p>
+            Este documento constitui uma análise multidisciplinar sobre o
+            hélio-3 lunar — desde a física nuclear de suas reações de fusão até
+            as implicações filosóficas aristotélicas e platônicas de dominar
+            esse recurso. O material combina rigor técnico com pensamento
+            estratégico, servindo tanto como referência científica quanto como
+            base para reflexão sobre o futuro energético da civilização humana.
+          </p>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 1: FUNDAMENTOS -->
+      <div class="chapter fade-in" id="fundamentos">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 01</span>
+          <h2>Fundamentos <em>Científicos</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>O que é o Hélio-3?</h3>
+          <p>
+            O hélio-3 (³He) é um isótopo estável do elemento hélio — segundo
+            elemento mais leve do universo, com número atômico 2. Enquanto o
+            hélio convencional que conhecemos (hélio-4, ⁴He) possui dois prótons
+            e dois nêutrons em seu núcleo, o hélio-3 carrega
+            <strong>dois prótons e apenas um nêutron</strong>. Essa diferença de
+            um único nêutron altera dramaticamente sua interação com outros
+            núcleos e campos magnéticos, tornando-o extraordinariamente valioso
+            para a física de fusão nuclear.
+          </p>
+
+          <div class="atom-diagram">
+            <div class="atom-wrap">
+              <div class="atom-label">Hélio-3 (³He)</div>
+              <svg
+                class="atom-svg"
+                width="140"
+                height="140"
+                viewBox="0 0 140 140"
+              >
+                <!-- Electron orbits -->
+                <ellipse
+                  cx="70"
+                  cy="70"
+                  rx="55"
+                  ry="22"
+                  stroke="rgba(14,165,233,0.3)"
+                  stroke-width="1"
+                  fill="none"
+                />
+                <ellipse
+                  cx="70"
+                  cy="70"
+                  rx="55"
+                  ry="22"
+                  stroke="rgba(14,165,233,0.3)"
+                  stroke-width="1"
+                  fill="none"
+                  transform="rotate(60 70 70)"
+                />
+                <!-- Nucleus -->
+                <circle
+                  cx="70"
+                  cy="70"
+                  r="18"
+                  fill="rgba(14,165,233,0.15)"
+                  stroke="rgba(14,165,233,0.5)"
+                  stroke-width="1.5"
+                />
+                <!-- 2 protons -->
+                <circle cx="63" cy="67" r="7" fill="#ef4444" opacity="0.9" />
+                <circle cx="77" cy="73" r="7" fill="#ef4444" opacity="0.9" />
+                <!-- 1 neutron -->
+                <circle cx="70" cy="60" r="7" fill="#94a3b8" opacity="0.9" />
+                <!-- Labels inside nucleus -->
+                <text
+                  x="63"
+                  y="71"
+                  text-anchor="middle"
+                  font-size="8"
+                  fill="white"
+                  font-family="monospace"
+                >
+                  p
+                </text>
+                <text
+                  x="77"
+                  y="77"
+                  text-anchor="middle"
+                  font-size="8"
+                  fill="white"
+                  font-family="monospace"
+                >
+                  p
+                </text>
+                <text
+                  x="70"
+                  y="64"
+                  text-anchor="middle"
+                  font-size="8"
+                  fill="white"
+                  font-family="monospace"
+                >
+                  n
+                </text>
+                <!-- Electrons -->
+                <circle cx="122" cy="65" r="4" fill="#38bdf8" />
+                <circle cx="18" cy="75" r="4" fill="#38bdf8" />
+              </svg>
+              <div
+                style="
+                  font-family:
+                    JetBrains Mono,
+                    monospace;
+                  font-size: 0.7rem;
+                  color: var(--silver);
+                  margin-top: 0.5rem;
+                "
+              >
+                2p + 1n | 2e⁻
+              </div>
+            </div>
+
+            <div class="atom-wrap">
+              <div class="atom-label">Hélio-4 (⁴He)</div>
+              <svg
+                class="atom-svg"
+                width="140"
+                height="140"
+                viewBox="0 0 140 140"
+              >
+                <ellipse
+                  cx="70"
+                  cy="70"
+                  rx="55"
+                  ry="22"
+                  stroke="rgba(245,158,11,0.3)"
+                  stroke-width="1"
+                  fill="none"
+                />
+                <ellipse
+                  cx="70"
+                  cy="70"
+                  rx="55"
+                  ry="22"
+                  stroke="rgba(245,158,11,0.3)"
+                  stroke-width="1"
+                  fill="none"
+                  transform="rotate(60 70 70)"
+                />
+                <circle
+                  cx="70"
+                  cy="70"
+                  r="20"
+                  fill="rgba(245,158,11,0.1)"
+                  stroke="rgba(245,158,11,0.5)"
+                  stroke-width="1.5"
+                />
+                <!-- 2 protons + 2 neutrons -->
+                <circle cx="62" cy="65" r="7" fill="#ef4444" opacity="0.9" />
+                <circle cx="78" cy="65" r="7" fill="#ef4444" opacity="0.9" />
+                <circle cx="62" cy="77" r="7" fill="#94a3b8" opacity="0.9" />
+                <circle cx="78" cy="77" r="7" fill="#94a3b8" opacity="0.9" />
+                <text
+                  x="62"
+                  y="69"
+                  text-anchor="middle"
+                  font-size="8"
+                  fill="white"
+                  font-family="monospace"
+                >
+                  p
+                </text>
+                <text
+                  x="78"
+                  y="69"
+                  text-anchor="middle"
+                  font-size="8"
+                  fill="white"
+                  font-family="monospace"
+                >
+                  p
+                </text>
+                <text
+                  x="62"
+                  y="81"
+                  text-anchor="middle"
+                  font-size="8"
+                  fill="white"
+                  font-family="monospace"
+                >
+                  n
+                </text>
+                <text
+                  x="78"
+                  y="81"
+                  text-anchor="middle"
+                  font-size="8"
+                  fill="white"
+                  font-family="monospace"
+                >
+                  n
+                </text>
+                <circle cx="122" cy="65" r="4" fill="#fbbf24" />
+                <circle cx="18" cy="75" r="4" fill="#fbbf24" />
+              </svg>
+              <div
+                style="
+                  font-family:
+                    JetBrains Mono,
+                    monospace;
+                  font-size: 0.7rem;
+                  color: var(--silver);
+                  margin-top: 0.5rem;
+                "
+              >
+                2p + 2n | 2e⁻
+              </div>
+            </div>
+          </div>
+
+          <p>
+            A massa atômica do ³He é de aproximadamente
+            <strong class="mono">3,0160 u</strong> (unidades de massa atômica),
+            contra <strong class="mono">4,0026 u</strong> do ⁴He. Essa diferença
+            de massa não é trivial: ela determina a densidade do gás, sua
+            difusividade, sua propriedade de superfluido a baixíssimas
+            temperaturas (o ³He torna-se superfluido abaixo de
+            <strong>2,5 mK</strong>, temperatura ainda mais baixa que os 2,17 K
+            do ⁴He) e, crucialmente, sua reatividade em reações de fusão
+            nuclear.
+          </p>
+
+          <div class="callout callout-data">
+            <span class="callout-label">📊 Propriedades Comparativas</span>
+            <table class="data-table">
+              <tr>
+                <th>Propriedade</th>
+                <th>³He</th>
+                <th>⁴He</th>
+              </tr>
+              <tr>
+                <td>Nêutrons no núcleo</td>
+                <td>1</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Massa atômica (u)</td>
+                <td>3,0160</td>
+                <td>4,0026</td>
+              </tr>
+              <tr>
+                <td>Temperatura de superfluido</td>
+                <td>~2,5 mK</td>
+                <td>~2,17 K</td>
+              </tr>
+              <tr>
+                <td>Abundância terrestre</td>
+                <td>~0,0002% do He</td>
+                <td>~99,9998% do He</td>
+              </tr>
+              <tr>
+                <td>Spin nuclear</td>
+                <td>1/2 (férmion)</td>
+                <td>0 (bóson)</td>
+              </tr>
+              <tr>
+                <td>Utilidade em fusão</td>
+                <td>Alta (DD+³He)</td>
+                <td>Nula como combustível</td>
+              </tr>
+            </table>
+          </div>
+
+          <p>
+            Um detalhe físico profundamente relevante: o ³He possui
+            <strong>spin nuclear ½</strong>, classificando-o como
+            <em>férmion</em>, enquanto o ⁴He tem spin 0 e é um <em>bóson</em>.
+            Isso significa que dois átomos de ³He não podem ocupar o mesmo
+            estado quântico (Princípio de Exclusão de Pauli), ao passo que ⁴He
+            pode — daí o fenômeno de superfluido de Bose-Einstein no ⁴He e o
+            comportamento de fluido de Fermi no ³He. Essa distinção quântica tem
+            implicações diretas em criogenia e computação quântica, como veremos
+            mais adiante.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3>Origem no Universo</h3>
+          <p>
+            O ³He possui duas origens principais, separadas por bilhões de anos
+            de história cósmica:
+          </p>
+
+          <h4>1. Nucleossíntese Primordial (Big Bang)</h4>
+          <p>
+            Nos primeiros <strong>3 a 20 minutos</strong> após o Big Bang,
+            quando o universo esfriava de temperaturas superiores a 10¹⁰ K para
+            abaixo de 10⁹ K, ocorreu a nucleossíntese primordial. Prótons e
+            nêutrons livres se combinaram formando núcleos leves: hidrogênio,
+            deutério, ³He, ⁴He e traços de lítio-7. Aproximadamente
+            <strong>~10⁻⁵</strong> da massa total do universo primitivo é ³He —
+            uma proporção modesta mas cosmologicamente significativa como
+            assinatura observacional do Big Bang.
+          </p>
+
+          <h4>2. Vento Solar (Fonte Dominante para a Lua)</h4>
+          <p>
+            Estrelas como o nosso Sol produzem ³He em seu interior, tanto por
+            reações de fusão na cadeia próton-próton (onde deutério fusiona com
+            prótons formando ³He antes de gerar ⁴He) quanto por captura de
+            nêutrons. O Sol expele continuamente partículas carregadas —
+            elétrons, prótons, íons — a velocidades de 400–800 km/s: o
+            <strong>vento solar</strong>. Esse fluxo carrega uma fração de ³He
+            que representa cerca de
+            <strong>1 parte em 2.000 a 3.000</strong> dos núcleos de hélio
+            emitidos.
+          </p>
+
+          <div class="callout callout-science">
+            <span class="callout-label"
+              >🌬️ Por que a Terra não acumula ³He do vento solar?</span
+            >
+            <p>
+              A resposta está no
+              <strong>campo magnético terrestre (magnetosfera)</strong>. A Terra
+              possui um dínamo interno gerado pela rotação de seu núcleo de
+              ferro líquido, criando um campo magnético que deflete partículas
+              carregadas ao redor do planeta. O vento solar é essencialmente
+              redirecionado pelas linhas de campo, concentrando-se em anéis de
+              Van Allen e gerando auroras boreais, mas
+              <em>nunca atingindo a superfície</em>. A atmosfera espessa
+              adiciona outra camada de proteção. Resultado: a Terra quase não
+              acumula ³He implantado pelo vento solar, com concentrações da
+              ordem de apenas <strong>10⁻¹² por grama</strong> de rocha.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 2: CONTEXTO LUNAR -->
+      <div class="chapter fade-in" id="lunar">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 02</span>
+          <h2>Contexto <em>Lunar</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>A Lua como Coletora Perfeita</h3>
+          <p>
+            A Lua é, em essência, um detector cósmico de alta fidelidade.
+            Durante <strong>~4 bilhões de anos</strong>, sem campo magnético
+            global significativo (o campo lunar extinguiu-se há cerca de 3,6
+            Ga), sem atmosfera e com gravidade suficiente para reter materiais
+            implantados no solo, ela acumulou silenciosamente o fluxo do vento
+            solar — incluindo ³He — em sua camada superficial chamada
+            <em>rególito</em>.
+          </p>
+
+          <h4>O Rególito Lunar</h4>
+          <p>
+            O rególito é a camada de rocha pulverizada, vidro de impacto,
+            fragmentos minerais e partículas finas que cobre toda a superfície
+            lunar. Sua espessura varia de <strong>2 a 8 metros</strong> nos
+            mares (planícies basálticas escuras) e até
+            <strong>10–15 metros</strong> nas terras altas (highlands). Ele é
+            produto de bilhões de anos de bombardeamento meteorítico: cada
+            impacto pulveriza e mistura o material, aprofundando gradualmente a
+            camada.
+          </p>
+
+          <p>
+            As partículas do vento solar penetram tipicamente
+            <strong>~100 nm</strong> de profundidade nos grãos de rególito — uma
+            escala nanométrica, mas que ao longo de eras geológicas resulta em
+            concentrações detectáveis. As concentrações médias de ³He no
+            rególito lunar são da ordem de
+            <strong>10–30 ppb (partes por bilhão em massa)</strong>, com picos
+            de até 50–60 ppb em regiões expostas por mais tempo.
+          </p>
+
+          <div class="callout callout-data">
+            <span class="callout-label">📍 Distribuição Geográfica</span>
+            <p>
+              As maiores concentrações de ³He tendem a ocorrer:
+              <strong>(a)</strong> em regiões equatoriais e de médias latitudes,
+              que recebem o vento solar em ângulo mais favorável;
+              <strong>(b)</strong> nos mares lunares (basaltos ricos em ilmenita
+              — FeTiO₃), que são melhores implantadores de ³He;
+              <strong>(c)</strong> em superfícies com menor taxa de impacto
+              recente, onde o rególito é mais maduro. As missões Apollo e as
+              amostras soviéticas das sondas Luna confirmaram concentrações
+              entre <strong>4 e 50 ppb</strong> em diferentes sítios, com médias
+              globais estimadas próximas de <strong>20 ppb</strong>.
+            </p>
+          </div>
+
+          <h4>Estimativas de Quantidade Total</h4>
+          <p>
+            Considerando uma profundidade média de extração de
+            <strong>3 metros</strong>, densidade do rególito de ~1,5 g/cm³ e
+            concentração média de 20 ppb, físicos como
+            <strong>Gerald Kulcinski</strong> (Universidade de Wisconsin)
+            estimam entre <strong>1 a 5 milhões de toneladas</strong> de ³He no
+            rególito lunar acessível. Esse número, embora impressionante,
+            precisa ser contextualizado: extraí-lo eficientemente é o verdadeiro
+            desafio.
+          </p>
+
+          <div class="compare-grid">
+            <div class="compare-item">
+              <span class="compare-label">Mare Tranquill.</span>
+              <div class="compare-bar-wrap">
+                <div class="compare-bar bar-blue" style="width: 65%">
+                  ~30 ppb
+                </div>
+              </div>
+            </div>
+            <div class="compare-item">
+              <span class="compare-label">Mare Imbrium</span>
+              <div class="compare-bar-wrap">
+                <div class="compare-bar bar-blue" style="width: 75%">
+                  ~35 ppb
+                </div>
+              </div>
+            </div>
+            <div class="compare-item">
+              <span class="compare-label">Mare Serenitatis</span>
+              <div class="compare-bar-wrap">
+                <div class="compare-bar bar-gold" style="width: 85%">
+                  ~40 ppb
+                </div>
+              </div>
+            </div>
+            <div class="compare-item">
+              <span class="compare-label">Highlands</span>
+              <div class="compare-bar-wrap">
+                <div class="compare-bar bar-purple" style="width: 30%">
+                  ~12 ppb
+                </div>
+              </div>
+            </div>
+            <div class="compare-item">
+              <span class="compare-label">Rocha Terra</span>
+              <div class="compare-bar-wrap">
+                <div class="compare-bar bar-red" style="width: 2%">~0,001</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 3: FUSÃO NUCLEAR -->
+      <div class="chapter fade-in" id="fusao">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 03</span>
+          <h2>Energia e <em>Fusão Nuclear</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>A Reação de Fusão com Hélio-3</h3>
+          <p>
+            A fusão nuclear ocorre quando dois núcleos leves superam a barreira
+            de repulsão eletrostática (barreira Coulombiana) e se unem,
+            liberando a diferença de energia de ligação na forma de partículas
+            energéticas. Existem duas reações principais envolvendo ³He:
+          </p>
+
+          <div class="formula">
+            <div class="formula-eq">D + ³He → ⁴He (3,5 MeV) + p (14,7 MeV)</div>
+            <div class="formula-caption">
+              Reação Deutério-Hélio-3: produz prótons carregados (sem nêutrons
+              livres)
+            </div>
+          </div>
+
+          <div class="formula">
+            <div class="formula-eq">³He + ³He → ⁴He + 2p + 12,9 MeV</div>
+            <div class="formula-caption">
+              Reação Hélio-3 + Hélio-3: totalmente livre de nêutrons, liberando
+              dois prótons
+            </div>
+          </div>
+
+          <p>
+            Contrastando com a reação padrão dos reatores de fusão atuais (tipo
+            ITER):
+          </p>
+
+          <div class="formula">
+            <div class="formula-eq">D + T → ⁴He (3,5 MeV) + n (14,1 MeV)</div>
+            <div class="formula-caption">
+              Reação Deutério-Trítio: produz nêutron de 14,1 MeV — altamente
+              penetrante e radioativo
+            </div>
+          </div>
+
+          <div class="callout callout-science">
+            <span class="callout-label">🔑 A Diferença que Muda Tudo</span>
+            <p>
+              Na reação D-T,
+              <strong>80% da energia é carregada por nêutrons</strong> —
+              partículas eletricamente neutras que atravessam qualquer campo
+              magnético, ativam os materiais estruturais do reator tornando-os
+              radioativos, e exigem blindagem massiva. Na reação D-³He,
+              <strong>os produtos são prótons e partículas alfa</strong> — ambos
+              eletricamente carregados, capturáveis por campos magnéticos e
+              conversíveis diretamente em eletricidade sem geração de vapor.
+              Isso promete reatores compactos, limpos e com conversão direta de
+              energia.
+            </p>
+          </div>
+
+          <h4>Comparação Técnica das Reações</h4>
+
+          <table class="data-table">
+            <tr>
+              <th>Critério</th>
+              <th>D-T (atual)</th>
+              <th>D-³He (futuro)</th>
+              <th>³He-³He (ideal)</th>
+            </tr>
+            <tr>
+              <td>Temperatura de ignição</td>
+              <td>~100 M°C</td>
+              <td>~500 M°C</td>
+              <td>~1 B°C</td>
+            </tr>
+            <tr>
+              <td>Nêutrons produzidos</td>
+              <td>Alto (80% energia)</td>
+              <td>Traços (~4%)</td>
+              <td>Zero</td>
+            </tr>
+            <tr>
+              <td>Ativação do reator</td>
+              <td>Alta</td>
+              <td>Muito baixa</td>
+              <td>Nula</td>
+            </tr>
+            <tr>
+              <td>Disponibilidade de combustível</td>
+              <td>Deutério: ilimitado; Trítio: escasso</td>
+              <td>Deutério: ilimitado; ³He: escasso</td>
+              <td>³He: muito escasso</td>
+            </tr>
+            <tr>
+              <td>Maturidade tecnológica</td>
+              <td>Alta (ITER, NIF)</td>
+              <td>Baixa a média</td>
+              <td>Muito baixa</td>
+            </tr>
+            <tr>
+              <td>Conversão direta de energia</td>
+              <td>Impossível (nêutrons)</td>
+              <td>Parcialmente possível</td>
+              <td>Totalmente possível</td>
+            </tr>
+          </table>
+
+          <h4>A Barreira de Temperatura</h4>
+          <p>
+            A principal limitação física da fusão com ³He é a necessidade de
+            temperaturas de plasma extraordinariamente altas. A reação D-T tem
+            sua taxa de reação máxima em torno de <strong>70 keV</strong> (~700
+            milhões de graus), enquanto D-³He requer o pico em
+            <strong>200–300 keV</strong> — temperaturas 3 a 4 vezes maiores.
+            Isso impõe exigências brutais sobre os sistemas de confinamento
+            magnético (tokamaks e stellarators precisam ser substancialmente
+            mais potentes) ou alternativas como laser de altíssima potência em
+            fusão por confinamento inercial.
+          </p>
+
+          <blockquote>
+            <p>
+              "A fusão com hélio-3 não é apenas uma fonte de energia — é uma
+              filosofia de engenharia. Força-nos a construir máquinas mais
+              perfeitas para obter resultados mais limpos."
+            </p>
+            <cite
+              >— Adaptado das reflexões de Gerald Kulcinski, Laboratório de
+              Fusão de Wisconsin</cite
+            >
+          </blockquote>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 4: MINERAÇÃO -->
+      <div class="chapter fade-in" id="mineracao">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 04</span>
+          <h2>Engenharia de <em>Mineração Lunar</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>O Processo de Extração</h3>
+          <p>
+            Extrair ³He do rególito lunar é um processo que combina mineração,
+            processamento térmico e separação química. O princípio é simples; a
+            execução, extraordinariamente complexa.
+          </p>
+
+          <h4>Etapa 1: Escavação e Coleta</h4>
+          <p>
+            Máquinas escavatórias precisam processar volumes imensos de
+            rególito. Para obter <strong>1 kg de ³He</strong>, é necessário
+            processar aproximadamente
+            <strong>20.000 a 50.000 toneladas</strong> de rególito (a
+            concentrações de 20–50 ppb). Isso equivale a escavar uma área de ~1
+            km² até 3 metros de profundidade para produzir poucas dezenas de
+            quilogramas. Robôs autônomos com instrumentação de alta eficiência
+            são essenciais — nenhum humano pode operar continuamente no ambiente
+            lunar.
+          </p>
+
+          <h4>Etapa 2: Aquecimento (Desgaseificação Térmica)</h4>
+          <p>
+            O ³He está implantado nos grãos de rególito a profundidades
+            nanométricas. Para liberá-lo, é necessário aquecer o material a
+            temperaturas entre <strong>600°C e 800°C</strong> — acima desse
+            ponto, o ³He (junto com H₂, N₂, CO e outros gases do vento solar) é
+            expelido dos grãos. O calor pode ser fornecido por painéis de
+            concentração solar ou por reatores nucleares de pequena escala.
+          </p>
+
+          <div class="process-flow">
+            <div class="process-step">
+              <div class="step-num">ETAPA 01</div>
+              <div class="step-title">Escavação</div>
+              <div class="step-desc">
+                Robôs escavam e coletam rególito superficial (0–3m)
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">ETAPA 02</div>
+              <div class="step-title">Aquecimento</div>
+              <div class="step-desc">
+                Desgaseificação a 700°C libera ³He e gases associados
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">ETAPA 03</div>
+              <div class="step-title">Separação</div>
+              <div class="step-desc">
+                Cromatografia + criogenia separa ³He dos demais gases
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">ETAPA 04</div>
+              <div class="step-title">Purificação</div>
+              <div class="step-desc">
+                Filtros moleculares atingem pureza >99,99%
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">ETAPA 05</div>
+              <div class="step-title">Compressão</div>
+              <div class="step-desc">
+                Liquefação criogênica para transporte eficiente
+              </div>
+            </div>
+          </div>
+
+          <h4>Etapa 3: Separação e Purificação</h4>
+          <p>
+            O gás liberado contém hidrogênio (~50% por volume), nitrogênio
+            (~25%), CO (~10%), ⁴He (~8%), argônio (~5%) e apenas traços de ³He
+            (~0,01% ou menos). A separação exige
+            <strong>cromatografia gasosa</strong> e
+            <strong>destilação criogênica</strong>: os gases são resfriados
+            progressivamente, e cada componente liquefaz em temperaturas
+            características diferentes, permitindo a separação por diferença de
+            temperatura de ebulição. O ³He, com ponto de ebulição de
+            <strong>3,19 K</strong>, é o mais difícil de liquefazer e separa-se
+            por último.
+          </p>
+
+          <h4>Infraestrutura Necessária</h4>
+          <div class="card-grid">
+            <div class="card">
+              <span class="card-icon">🤖</span>
+              <h4>Frota Robótica</h4>
+              <p>
+                Dezenas de mineradores autônomos com braços escavadores,
+                alimentados por painéis solares e capazes de operação autônoma
+                por meses.
+              </p>
+            </div>
+            <div class="card">
+              <span class="card-icon">⚡</span>
+              <h4>Geração de Energia</h4>
+              <p>
+                Reatores nucleares de fissão de pequena escala (tipo Kilopower
+                da NASA) ou campos solares de grande área para alimentar os
+                fornos e criogênicos.
+              </p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🏗️</span>
+              <h4>Base de Processamento</h4>
+              <p>
+                Estruturas pressurizadas com fornos contínuos, sistemas de
+                separação de gases e tanques criogênicos de armazenamento.
+              </p>
+            </div>
+            <div class="card">
+              <span class="card-icon">📡</span>
+              <h4>Comunicação e Controle</h4>
+              <p>
+                Redes de satélites ao redor da Lua para coordenar operações e
+                transmissão de dados em tempo real à Terra.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 5: TRANSPORTE -->
+      <div class="chapter fade-in" id="transporte">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 05</span>
+          <h2>Transporte e <em>Cadeia de Suprimento</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>A Logística do Combustível Cósmico</h3>
+          <p>
+            Trazer hélio-3 da Lua para a Terra exige resolver um dos mais
+            elegantes problemas de engenharia da história: transportar um gás
+            nobre ultrapuro e criogênico através de 384.400 km de vácuo espacial
+            de forma economicamente viável.
+          </p>
+
+          <h4>Opções de Transporte</h4>
+          <p>
+            O ³He seria transportado em forma
+            <strong>líquida criogênica</strong> (a ~3 K, em tanques de Dewar com
+            isolamento a vácuo) ou
+            <strong>comprimido em cilindros de alta pressão</strong>. A
+            densidade energética favorece o ³He líquido: em termos de energia de
+            fusão por volume, supera qualquer combustível terrestre por muitas
+            ordens de grandeza.
+          </p>
+
+          <div class="callout callout-warning">
+            <span class="callout-label"
+              >⚠️ EROI — Retorno Energético sobre Investimento</span
+            >
+            <p>
+              O grande questionamento econômico é o
+              <strong>EROI (Energy Return on Investment)</strong>. Para fazer
+              sentido, a energia obtida da fusão com ³He deve superar
+              significativamente a energia gasta em: (1) construção e operação
+              da base lunar, (2) aquecimento e processamento do rególito, (3)
+              separação e liquefação criogênica, (4) lançamento do ³He da Lua
+              (delta-v lunar é ~2,4 km/s — muito menor que os ~11 km/s da
+              Terra), (5) transferência orbital e reentrada. Estimativas
+              preliminares sugerem que um EROI positivo é
+              <em>teoricamente alcançável</em>, mas requer escala industrial e
+              reatores de fusão eficientes — ambos ainda inexistentes.
+            </p>
+          </div>
+
+          <h4>Cálculo Aproximado de Carga por Missão</h4>
+          <p>
+            Uma cápsula de carga tipo SpaceX Starship HLS pode carregar ~100
+            toneladas para órbita lunar e talvez 20–30 toneladas de retorno. Se
+            carregasse ³He líquido: 20 kg de ³He correspondem à energia de fusão
+            teórica de cerca de <strong>600 GWh</strong> — suficiente para
+            abastecer uma cidade de 500.000 pessoas por um mês. Isso transforma
+            cada missão de retorno em um evento energético de proporção
+            nacional.
+          </p>
+
+          <h4>Gargalos Tecnológicos</h4>
+          <ul>
+            <li>
+              <strong>Tanques criogênicos para longa duração espacial</strong> —
+              evitar boil-off (evaporação) do hélio-3 líquido durante semanas de
+              trânsito
+            </li>
+            <li>
+              <strong>Sistemas de reabastecimento em órbita</strong> —
+              combustível para a descida e retorno das naves cargueiras
+            </li>
+            <li>
+              <strong>Certificação e padronização</strong> — protocolos de
+              segurança para transporte de matéria criogênica em veículos
+              reutilizáveis
+            </li>
+            <li>
+              <strong>Cadência de missões</strong> — para sustentar 25
+              toneladas/ano de fornecimento, seriam necessárias centenas de
+              missões de carga com as capacidades atuais
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 6: APLICAÇÕES -->
+      <div class="chapter fade-in" id="aplicacoes">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 06</span>
+          <h2>Aplicações <em>Práticas</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>Além da Fusão Nuclear</h3>
+          <p>
+            Embora a fusão nuclear seja a aplicação mais citada, o ³He é um
+            material com uma gama surpreendente de usos de alta tecnologia —
+            muitos dos quais já são relevantes hoje, com o pouco que existe
+            disponível na Terra.
+          </p>
+
+          <div class="card-grid">
+            <div class="card">
+              <span class="card-icon">⚛️</span>
+              <h4>Reatores de Fusão</h4>
+              <p>
+                Aplicação definitiva: reatores D-³He produziriam energia limpa
+                com mínima radioatividade, produtos capturáveis magneticamente e
+                conversão direta em eletricidade via convertidores de prótons
+                energéticos.
+              </p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🖥️</span>
+              <h4>Computação Quântica</h4>
+              <p>
+                O ³He superfluido é o meio criogênico preferencial para resfriar
+                processadores quânticos abaixo de 10 mK. Computadores quânticos
+                da IBM, Google e D-Wave dependem de sistemas de refrigeração
+                baseados em ³He.
+              </p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🔬</span>
+              <h4>Detectores Nucleares</h4>
+              <p>
+                Tubos contadores de ³He são os detectores de nêutrons mais
+                sensíveis existentes, usados em controle de fronteiras,
+                verificação de tratados nucleares e pesquisa fundamental em
+                física de partículas.
+              </p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🏥</span>
+              <h4>Imagem Médica</h4>
+              <p>
+                Pulmões hiperpolarizados com ³He produzem imagens de MRI de
+                órgãos ocos com resolução sem precedente, permitindo diagnóstico
+                precoce de enfisema, fibrose e doenças pulmonares obstrutivas.
+              </p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🔭</span>
+              <h4>Telescópios Espaciais</h4>
+              <p>
+                Detectores infravermelhos de altíssima sensibilidade em missões
+                como o JWST utilizam sistemas criogênicos que anteriormente
+                dependiam de ³He para atingir temperaturas de operação (~7 K).
+              </p>
+            </div>
+            <div class="card">
+              <span class="card-icon">🛡️</span>
+              <h4>Defesa e Segurança</h4>
+              <p>
+                Detectores portáteis de ³He são usados em portos e aeroportos
+                para identificar materiais físseis contrabandeados — a escassez
+                de ³He tem motivado pesquisa intensa em detectores alternativos.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout callout-warning">
+            <span class="callout-label">⚠️ A Crise do ³He Terrestre</span>
+            <p>
+              A Terra produz ³He principalmente como subproduto do decaimento
+              radioativo do <strong>trítio (³H)</strong> em armas nucleares. Com
+              o Tratado de Redução de Armas Estratégicas (START) e a desmontagem
+              de ogivas, a produção de trítio (e portanto de ³He) caiu
+              drasticamente. Em 2008–2010, o mundo enfrentou uma
+              <strong>crise global de ³He</strong>, com demanda triplicando e
+              estoques do Departamento de Energia dos EUA se esgotando. O preço
+              disparou de ~$100/litro para mais de $2.000/litro. Hoje, a
+              escassez permanece. Isso torna a fonte lunar ainda mais
+              estrategicamente relevante — mesmo antes de qualquer reator de
+              fusão existir.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 7: GEOPOLÍTICA -->
+      <div class="chapter fade-in" id="geopolitica">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 07</span>
+          <h2>Geopolítica e <em>Economia</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>A Nova Corrida para a Lua</h3>
+          <p>
+            O potencial do ³He lunar não passou despercebido por nações e
+            corporações. Estamos na aurora de uma nova era geopolítica espacial
+            — onde a Lua, antes símbolo de exploração científica, torna-se
+            território de interesse estratégico-econômico de primeira ordem.
+          </p>
+
+          <h4>Os Principais Atores</h4>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-period">EUA / NASA + Empresas Privadas</div>
+              <div class="timeline-title">
+                Artemis Program & Commercial Partners
+              </div>
+              <p class="timeline-body">
+                O programa Artemis visa estabelecer presença humana permanente
+                no polo sul lunar até ~2030. A NASA trabalha com SpaceX
+                (Starship HLS), Blue Origin e outros. Empresas como
+                <strong>Interlune</strong> (fundada por ex-engenheiros da Blue
+                Origin) foram criadas especificamente para mineração de ³He
+                lunar, com planos de missão robótica para 2028. O Tratado de
+                Artemis (já assinado por >40 países) estabelece quadros legais
+                para exploração de recursos, mas deixa questões de propriedade
+                fundamentalmente abertas.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-period">China / CNSA</div>
+              <div class="timeline-title">
+                Programa Lunar Chang'e & Meta 2030
+              </div>
+              <p class="timeline-body">
+                A China é explicitamente focada em recursos lunares. O programa
+                Chang'e — que já trouxe amostras do lado oculto da Lua
+                (Chang'e-6, 2024) — inclui análise de ³He no rególito.
+                Documentos oficiais chineses mencionam o ³He como um dos
+                recursos estratégicos de interesse. Moscou e Beijing assinaram
+                um acordo de estação lunar internacional (ILRS) para construção
+                de uma base permanente conjunta. O objetivo declarado inclui
+                mineração de recursos.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-period">ESA / Europa</div>
+              <div class="timeline-title">Parceria e Tecnologia</div>
+              <p class="timeline-body">
+                A Agência Espacial Europeia foca em desenvolvimento de
+                tecnologias de fusão (EUROfusion, ITER) e em parcerias para
+                exploração lunar. Países como Alemanha, França e Itália possuem
+                fortes capacidades em reatores de fusão e sistemas criogênicos —
+                poderiam ser atores essenciais na cadeia de valor do ³He mesmo
+                sem missões próprias de mineração.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-period">Rússia / Roscosmos</div>
+              <div class="timeline-title">
+                Interesse histórico e realidade atual
+              </div>
+              <p class="timeline-body">
+                A Rússia foi pioneira nos estudos de ³He lunar — o acadêmico
+                <strong>Krafft Ehricke</strong> e pesquisadores soviéticos
+                discutiram o potencial do ³He nos anos 1980. Após a fracassada
+                missão Luna-25 (2023), a Rússia enfrenta limitações sérias, mas
+                mantém aspirações declaradas de mineração lunar como parte da
+                parceria com a China.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-period">Empresas Privadas</div>
+              <div class="timeline-title">A Nova Corrida do Ouro</div>
+              <p class="timeline-body">
+                Além da Interlune, empresas como
+                <strong>Helion Energy</strong> (com investimento de bilhões de
+                Sam Altman) estão desenvolvendo reatores de fusão que usariam
+                ³He como combustível. A convergência de investimento privado em
+                fusão + exploração lunar cria uma dinâmica de mercado que pode
+                antecipar o interesse governamental.
+              </p>
+            </div>
+          </div>
+
+          <h4>Cenários Geopolíticos</h4>
+
+          <div class="callout callout-warning">
+            <span class="callout-label">🌍 Risco de Monopolização</span>
+            <p>
+              O maior risco geopolítico é que uma única potência — ou consórcio
+              fechado — controle as regiões lunares mais ricas em ³He (Mare
+              Imbrium, Mare Serenitatis) e estabeleça <em>de facto</em> um
+              monopólio sobre o combustível do futuro. O Tratado do Espaço
+              Exterior de 1967 proíbe soberania nacional sobre corpos celestes,
+              mas não regula explicitamente <em>extração de recursos</em> — uma
+              lacuna legal que os EUA e outros países têm explorado com leis
+              domésticas (US Commercial Space Launch Competitiveness Act, 2015).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 8: FILOSOFIA -->
+      <div class="chapter fade-in" id="filosofia">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 08</span>
+          <h2>Análise <em>Filosófica</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>Aristóteles, Platão e o Átomo Lunar</h3>
+          <p>
+            A filosofia grega antiga, aparentemente distante das realidades da
+            física nuclear, oferece categorias conceituais surpreendentemente
+            ricas para interpretar o hélio-3 e seu potencial para a civilização
+            humana.
+          </p>
+
+          <h4>Hélio-3 como Potência Aristotélica (δύναμις)</h4>
+          <p>
+            Aristóteles distinguia entre <em>potência (dynamis)</em> — o que uma
+            coisa pode vir a ser — e <em>ato (energeia)</em> — o que ela
+            efetivamente é. Uma semente é, em potência, uma árvore; um bloco de
+            mármore é, em potência, uma estátua. O hélio-3 enterrado no rególito
+            lunar é, em potência, civilização. Durante bilhões de anos, esse
+            isótopo repousou inerte — dynamis absoluta, energia latente
+            esperando o agente capaz de atualizá-la.
+          </p>
+
+          <p>
+            A filosofia aristotélica também introduz o conceito de
+            <em>telos</em> — a finalidade intrínseca de uma coisa. Qual é o
+            telos do ³He lunar? Aristóteles diria que uma entidade realiza seu
+            telos quando sua natureza é plenamente expressa. A natureza do ³He é
+            ser combustível de fusão — sua estrutura nuclear é otimizada pela
+            física para reagir com deutério liberando energia máxima com mínimo
+            resíduo radioativo. Nesse sentido, a exploração do ³He não seria uma
+            imposição humana arbitrária, mas a
+            <em>realização de seu telos natural</em>.
+          </p>
+
+          <blockquote>
+            <p>"A natureza não faz nada sem propósito, nem em vão."</p>
+            <cite>— Aristóteles, De Anima</cite>
+          </blockquote>
+
+          <h4>Energia como Forma Pura — A Visão Platônica</h4>
+          <p>
+            Platão via o mundo sensível como reflexo imperfeito de
+            <em>Formas</em> eternas e imutáveis — o mundo das Ideias. A energia,
+            em sentido platônico, seria uma dessas Formas: não a energia física
+            mensurável, mas o princípio de atividade e mudança que sustenta o
+            cosmos. O hélio-3 seria, nessa leitura, a materialização mais
+            próxima da Forma Pura de energia que o mundo físico pode oferecer —
+            uma reação de fusão quase isenta de resíduos, convertendo massa em
+            energia com eficiência próxima ao limite fundamental.
+          </p>
+
+          <p>
+            A Alegoria da Caverna de Platão ressoa aqui de forma inquietante: a
+            humanidade, presa à queima de combustíveis fósseis, está vivendo
+            entre sombras na parede da caverna. O Sol que ilumina o exterior — a
+            fonte última de toda a energia terrestre — é o próprio Sol que
+            produziu o ³He que a Lua coletou. Alcançar o ³He lunar seria,
+            metaforicamente, sair da caverna e contemplar a Forma da energia
+            diretamente.
+          </p>
+
+          <div class="callout callout-philosophy">
+            <span class="callout-label">🏛️ Questão Filosófica Central</span>
+            <p>
+              <strong>Dominar o hélio-3 é evolução ou risco?</strong>
+              Aristóteles nos lembraria que toda virtude é moderação —
+              <em>mesotes</em> — entre dois extremos viciosos. O excesso de
+              ambição tecnológica (hybris) e a falta de iniciativa (covardia
+              intelectual) são igualmente problemáticos. A questão não é se
+              devemos explorar o ³He, mas <em>como</em> — com que propósito, com
+              que governança, para benefício de quem. Platão acrescentaria:
+              somente filósofos-reis — governantes com compreensão do Bem maior
+              — deveriam ter autoridade sobre recursos com esse poder de
+              transformação. A democracia do mercado, sem sabedoria filosófica
+              incorporada, corre o risco de converter uma bênção cósmica em nova
+              fonte de conflito.
+            </p>
+          </div>
+
+          <h4>Tecnologia, Natureza e Finalidade</h4>
+          <p>
+            Heidegger, em diálogo imaginário com os gregos, nos alertaria sobre
+            o risco da <em>Gestell</em> — a imposição tecnológica sobre a
+            natureza como pura reserva de recursos. A Lua, para Heidegger, não
+            deveria ser reduzida a um depósito de combustível. Mas Aristóteles
+            responderia: usar a natureza de acordo com sua natureza
+            <em>é</em> seguir o logos. O problema não está na tecnologia, mas na
+            ausência de sabedoria que orienta seu uso.
+          </p>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 9: CENÁRIO FUTURISTA -->
+      <div class="chapter fade-in" id="futuro">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 09</span>
+          <h2>Cenário <em>Futurista</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>Projeto de Engenharia Completo</h3>
+          <p>
+            Vamos projetar um sistema funcional e realista, incorporando as
+            melhores tecnologias projetáveis dentro de horizontes temporais
+            plausíveis.
+          </p>
+
+          <h4>
+            Fase 1: Curto Prazo (2025–2035) — Reconhecimento e Prova de Conceito
+          </h4>
+          <div class="callout callout-data">
+            <span class="callout-label">🚀 Marco Tecnológico</span>
+            <p>
+              <strong>Missões robóticas de mapeamento fino:</strong> Satélites
+              com espectrômetros de nêutrons e sensores de partículas alfa
+              mapeiam a concentração de ³He com resolução de 10 km². Missões
+              tipo lander com extratores experimentais processam 100 toneladas
+              de rególito e verificam a viabilidade do processo
+              térmico-criogênico em ambiente lunar real. Custo estimado: $5–15
+              bilhões. Entregável: mapa completo de concentração + demonstração
+              de extração em pequena escala (gramas de ³He).
+            </p>
+          </div>
+
+          <h4>Fase 2: Médio Prazo (2035–2050) — Infraestrutura Pioneira</h4>
+          <p>
+            Uma base robótica permanente é estabelecida em região de alta
+            concentração (candidato: norte do Mare Serenitatis ou entorno do
+            polo sul). A base consiste em:
+          </p>
+          <ul>
+            <li>
+              <strong>Reator nuclear Kilopower de 10 kWe</strong> para operação
+              contínua (independente de ciclos solares)
+            </li>
+            <li>
+              <strong>12 mineradores autônomos</strong>, cada um processando 500
+              toneladas/dia a 700°C
+            </li>
+            <li>
+              <strong>Sistema de separação criogênica</strong> com capacidade de
+              10 kg ³He/mês
+            </li>
+            <li>
+              <strong>Depósito de armazenamento criogênico</strong> com
+              capacidade de 500 kg
+            </li>
+            <li>
+              <strong>Plataforma de lançamento</strong> para veículos de retorno
+              tipo CLPS+ ou Starship lunar
+            </li>
+          </ul>
+          <p>
+            Produção esperada: <strong>~100 kg de ³He/ano</strong>. Suficiente
+            para alimentar detectores de nêutrons, computadores quânticos e
+            demonstradores de fusão em escala laboratorial.
+          </p>
+
+          <h4>Fase 3: Longo Prazo (2050–2075) — Escala Industrial</h4>
+          <p>
+            Com reatores de fusão D-³He funcionais na Terra (provavelmente
+            baseados em stellarators avançados ou configurações de campo reverso
+            como a Helion Energy), a demanda por ³He torna a operação lunar
+            economicamente viável. A frota expande-se para:
+          </p>
+          <ul>
+            <li>
+              <strong>200+ mineradores</strong> em operação contínua em
+              múltiplos sítios
+            </li>
+            <li>
+              <strong>Missões de retorno mensais</strong> com 500 kg de ³He por
+              viagem (via Starship ou equivalente de nova geração)
+            </li>
+            <li><strong>Produção de ~5–10 toneladas/ano</strong></li>
+            <li>
+              <strong>EROI estimado:</strong> 20:1 (para cada unidade energética
+              investida, 20 são geradas pela fusão)
+            </li>
+          </ul>
+
+          <h4>O Reator de Fusão D-³He</h4>
+          <p>
+            O reator de referência seria um
+            <strong>tokamak de alto campo magnético</strong> ou um
+            <strong>stellarator compacto</strong> operando com plasma a ~300 keV
+            (temperatura de íon central). Parâmetros de projeto:
+          </p>
+
+          <table class="data-table">
+            <tr>
+              <th>Parâmetro</th>
+              <th>Valor Projetado</th>
+            </tr>
+            <tr>
+              <td>Temperatura do plasma</td>
+              <td>200–400 keV (~2–4 × 10⁹ K)</td>
+            </tr>
+            <tr>
+              <td>Densidade do plasma</td>
+              <td>~10²⁰ m⁻³</td>
+            </tr>
+            <tr>
+              <td>Campo magnético</td>
+              <td>10–15 Tesla</td>
+            </tr>
+            <tr>
+              <td>Potência de fusão</td>
+              <td>500 MWth (megawatts térmicos)</td>
+            </tr>
+            <tr>
+              <td>Conversão direta (prótons)</td>
+              <td>~60% eficiência elétrica</td>
+            </tr>
+            <tr>
+              <td>Potência elétrica líquida</td>
+              <td>~200–250 MWe</td>
+            </tr>
+            <tr>
+              <td>Consumo de ³He</td>
+              <td>~100 kg/ano</td>
+            </tr>
+            <tr>
+              <td>Ativação radiativa do reator</td>
+              <td>Mínima — descomissão em anos, não séculos</td>
+            </tr>
+          </table>
+
+          <h4>Impacto Energético Global</h4>
+          <p>
+            O consumo energético global atual é de aproximadamente
+            <strong>580 EJ/ano</strong> (exajoules). Para fornecer 10% desse
+            total com reatores D-³He (considerando 60% de eficiência elétrica),
+            seriam necessárias ~25 toneladas de ³He por ano — menos de 1% do que
+            se estima existir na Lua.
+            <em
+              >A Lua possui energia potencial suficiente para abastecer a
+              civilização humana por milênios.</em
+            >
+          </p>
+        </div>
+      </div>
+
+      <!-- CAPÍTULO 10: CRÍTICA -->
+      <div class="chapter fade-in" id="critica">
+        <div class="chapter-header">
+          <span class="chapter-number">CAP. 10</span>
+          <h2>Análise <em>Crítica Final</em></h2>
+        </div>
+
+        <div class="section">
+          <h3>O Hélio-3 é Solução Real ou Superestimada?</h3>
+          <p>
+            Após percorrer os fundamentos científicos, a engenharia de
+            mineração, as implicações geopolíticas e filosóficas, é imperativo
+            confrontar a questão com honestidade intelectual: estamos diante de
+            uma solução real para a crise energética, ou de mais um caso de hype
+            tecnológico alimentado por números impressionantes fora de contexto?
+          </p>
+
+          <div class="verdict">
+            <h3>Veredicto Multidimensional</h3>
+            <p>
+              O hélio-3 lunar é simultaneamente
+              <strong>real em seu potencial físico</strong> e
+              <strong
+                >prematuramente celebrado em sua viabilidade prática</strong
+              >. Não é nem o elixir mágico que resolverá todos os problemas
+              energéticos da humanidade, nem uma fantasia científica sem
+              fundamento. É, com precisão,
+              <em
+                >um recurso extraordinário aguardando tecnologias que ainda não
+                existem.</em
+              >
+            </p>
+          </div>
+
+          <h4>Pontos Fortes Inegáveis</h4>
+          <ul>
+            <li>
+              A física da fusão D-³He é <strong>demonstrada e sólida</strong> —
+              as reações ocorrem conforme previsto
+            </li>
+            <li>
+              A quantidade de ³He lunar é <strong>vasta e real</strong>,
+              confirmada por amostras Apollo e análise remota
+            </li>
+            <li>
+              A escassez de ³He terrestre já
+              <strong>cria mercado imediato</strong> mesmo sem fusão
+            </li>
+            <li>
+              A ausência de nêutrons energéticos é uma
+              <strong>vantagem física genuína</strong> sobre a fusão D-T
+            </li>
+            <li>
+              O delta-v lunar favorável torna o transporte
+              <strong>energeticamente viável em princípio</strong>
+            </li>
+          </ul>
+
+          <h4>Obstáculos Críticos e Realistas</h4>
+          <ul>
+            <li>
+              <strong>Sem reator de fusão funcional:</strong> nenhum reator de
+              fusão — D-T ou D-³He — produz energia líquida em escala comercial
+              hoje. O ITER prevê first plasma em 2025, mas energia líquida
+              apenas em 2035+. D-³He exige temperaturas 3× maiores, ainda não
+              demonstradas em confinamento estável
+            </li>
+            <li>
+              <strong>Volumes de mineração absurdos:</strong> 50.000 toneladas
+              de rególito por kg de ³He — em ambiente lunar, sem atmosfera, com
+              gravidade reduzida, temperaturas extremas e sem humanos presentes
+            </li>
+            <li>
+              <strong>Custo de acesso ao espaço:</strong> mesmo com SpaceX
+              reduzindo o custo por kg para órbita, o retorno da Lua ainda custa
+              ordens de magnitude mais que qualquer combustível terrestre por
+              unidade de energia entregue <em>hoje</em>
+            </li>
+            <li>
+              <strong>Competição com energia solar e fissão:</strong> energia
+              solar fotovoltaica reduziu custos 90% em uma década; reatores de
+              fissão de 4ª geração (SMRs) oferecem caminho mais curto para
+              energia nuclear limpa
+            </li>
+            <li>
+              <strong>Horizonte temporal:</strong> qualquer sistema comercial de
+              ³He requer >30 anos de desenvolvimento em múltiplas frentes
+              simultâneas — fusão, espaço e mineração
+            </li>
+          </ul>
+
+          <h4>Comparação com Alternativas</h4>
+
+          <table class="data-table">
+            <tr>
+              <th>Fonte de Energia</th>
+              <th>Maturidade</th>
+              <th>Custo Atual</th>
+              <th>Emissões</th>
+              <th>Escala Global</th>
+              <th>Prazo</th>
+            </tr>
+            <tr>
+              <td>Solar + Eólica</td>
+              <td>Alta</td>
+              <td>$30–60/MWh</td>
+              <td>Zero operacional</td>
+              <td>Alta</td>
+              <td>Hoje</td>
+            </tr>
+            <tr>
+              <td>Fissão (SMR)</td>
+              <td>Média-Alta</td>
+              <td>$80–120/MWh</td>
+              <td>Resíduos radioativos</td>
+              <td>Alta</td>
+              <td>2030–2035</td>
+            </tr>
+            <tr>
+              <td>Fusão D-T (ITER/DEMO)</td>
+              <td>Baixa-Média</td>
+              <td>Desconhecido</td>
+              <td>Mínima</td>
+              <td>Alta</td>
+              <td>2050+</td>
+            </tr>
+            <tr>
+              <td>Fusão D-³He</td>
+              <td>Muito Baixa</td>
+              <td>Altíssimo</td>
+              <td>Quase nula</td>
+              <td>Alta (se escalar)</td>
+              <td>2060–2080</td>
+            </tr>
+            <tr>
+              <td>Hidrogênio Verde</td>
+              <td>Média</td>
+              <td>$4–8/kg H₂</td>
+              <td>Zero</td>
+              <td>Média-Alta</td>
+              <td>2030–2040</td>
+            </tr>
+          </table>
+
+          <h4>Síntese Final: Por que o Hélio-3 Importa Agora</h4>
+          <p>
+            O maior equívoco seria descartar o hélio-3 por não ser a solução de
+            curto prazo — ou superestimá-lo como solução imediata. Seu valor
+            real está em múltiplas dimensões paralelas:
+          </p>
+
+          <ol>
+            <li>
+              <strong>Como catalisador de desenvolvimento tecnológico:</strong>
+              a busca pelo ³He força avanços em fusão nuclear, robótica
+              espacial, criogenia e propulsão que beneficiam dezenas de outras
+              aplicações
+            </li>
+            <li>
+              <strong>Como reserva estratégica para o século XXII:</strong>
+              quando a fusão nuclear inevitavelmente madurar, ter mapeado,
+              projetado e iniciado a cadeia de suprimento de ³He lunar será uma
+              vantagem de décadas
+            </li>
+            <li>
+              <strong>Como combustível de aplicações críticas hoje:</strong>
+              detectores nucleares, computação quântica e diagnóstico médico já
+              sofrem com a escassez — qualquer aumento no suprimento tem impacto
+              imediato
+            </li>
+            <li>
+              <strong>Como símbolo geopolítico de capacidade:</strong> nações
+              que dominarem a extração lunar de ³He demonstrarão capacidade
+              tecnológica civilizacional — o equivalente moderno do Projeto
+              Manhattan, mas para criação de energia, não destruição
+            </li>
+          </ol>
+
+          <blockquote>
+            <p>
+              "O progresso não requer que todos os problemas estejam resolvidos
+              antes de começar — requer que o próximo passo seja dado com
+              clareza sobre onde se quer chegar."
+            </p>
+            <cite>— Síntese do autor, inspirada em Aristóteles e Bacon</cite>
+          </blockquote>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="callout callout-science">
+          <span class="callout-label">🌕 Conclusão Final</span>
+          <p>
+            O hélio-3 lunar é um dos mais extraordinários casos de convergência
+            entre física fundamental, engenharia de fronteira, filosofia da
+            natureza e estratégia geopolítica. Ele representa o combustível que
+            o cosmos preparou para a civilização humana durante bilhões de anos
+            — e que agora, pela primeira vez na história, temos capacidade
+            técnica rudimentar de alcançar. Não é uma solução para hoje. Não é
+            hype vazio. É um horizonte que justifica investimento contínuo,
+            pesquisa séria e governança sábia — porque quando os reatores de
+            fusão finalmente existirem e a humanidade olhar para a Lua, ela terá
+            a chance de encontrar lá não apenas poeira e crateras, mas a chave
+            para uma civilização energeticamente soberana e tecnicamente madura.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-logo">³He</div>
+      <div>Hélio-3 Lunar — Análise Multidisciplinar Avançada</div>
+      <div style="margin-top: 0.5rem; color: rgba(71, 85, 105, 0.7)">
+        Engenharia Aeroespacial · Física Nuclear · Geopolítica Energética ·
+        Filosofia da Ciência
+      </div>
+    </footer>
+
+    <script>
+      // Intersection Observer for fade-in
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+
+      // Animate bars on scroll
+      const barObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const bars = entry.target.querySelectorAll(".compare-bar");
+              bars.forEach((bar) => {
+                const target = bar.style.width;
+                bar.style.width = "0";
+                setTimeout(() => {
+                  bar.style.width = target;
+                }, 100);
+              });
+              barObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+
+      document
+        .querySelectorAll(".compare-grid")
+        .forEach((el) => barObserver.observe(el));
+    </script>
+  </body>
+</html>

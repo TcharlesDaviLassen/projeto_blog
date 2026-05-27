@@ -1,0 +1,1900 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Tesla — Tratado sobre Eletricidade, Visão e os Limites do Mundo Físico
+    </title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0a0a12;
+        --paper: #f5f0e8;
+        --gold: #c8a84b;
+        --gold-light: #e8d08a;
+        --spark: #4af0ff;
+        --spark-dim: rgba(74, 240, 255, 0.15);
+        --arc: #7b5fff;
+        --rust: #8b3a2a;
+        --margin: clamp(1.5rem, 5vw, 6rem);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--ink);
+        color: var(--paper);
+        /* font-family: "Cormorant Garamond", Georgia, serif; */
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+        line-height: 1.85;
+        overflow-x: hidden;
+      }
+
+      /* ── NOISE GRAIN ── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.35;
+      }
+
+      /* ── LIGHTNING BG ── */
+      .lightning-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .lightning-bg svg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.04;
+      }
+
+      /* ── COVER ── */
+      .cover {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem var(--margin);
+        text-align: center;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .cover-arc {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(900px, 120vw);
+        height: min(900px, 120vw);
+        border-radius: 50%;
+        border: 1px solid rgba(74, 240, 255, 0.07);
+        box-shadow:
+          0 0 80px rgba(74, 240, 255, 0.04),
+          inset 0 0 80px rgba(74, 240, 255, 0.04);
+        animation: pulseArc 6s ease-in-out infinite;
+      }
+      .cover-arc:nth-child(2) {
+        width: min(650px, 90vw);
+        height: min(650px, 90vw);
+        border-color: rgba(123, 95, 255, 0.08);
+        animation-delay: -2s;
+      }
+      .cover-arc:nth-child(3) {
+        width: min(400px, 60vw);
+        height: min(400px, 60vw);
+        border-color: rgba(200, 168, 75, 0.1);
+        animation-delay: -4s;
+      }
+
+      @keyframes pulseArc {
+        0%,
+        100% {
+          opacity: 0.4;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.02);
+        }
+      }
+
+      .cover-label {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2rem;
+        animation: fadeUp 1.2s ease both;
+      }
+
+      .cover-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(3rem, 8vw, 7rem);
+        font-weight: 700;
+        font-style: italic;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: var(--paper);
+        text-shadow: 0 0 60px rgba(74, 240, 255, 0.3);
+        animation: fadeUp 1.2s 0.2s ease both;
+        margin-bottom: 0.3em;
+      }
+
+      .cover-title em {
+        font-style: normal;
+        color: var(--spark);
+        display: block;
+        font-size: 0.55em;
+        letter-spacing: 0.05em;
+      }
+
+      .cover-subtitle {
+        font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+        font-style: italic;
+        color: rgba(245, 240, 232, 0.55);
+        max-width: 600px;
+        animation: fadeUp 1.2s 0.4s ease both;
+        margin-bottom: 3rem;
+      }
+
+      .cover-divider {
+        width: 120px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        margin: 0 auto 3rem;
+        animation: fadeUp 1.2s 0.6s ease both;
+      }
+
+      .cover-meta {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        color: rgba(245, 240, 232, 0.3);
+        text-transform: uppercase;
+        animation: fadeUp 1.2s 0.8s ease both;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── NAV ── */
+      .toc {
+        position: relative;
+        z-index: 1;
+        background: rgba(10, 10, 18, 0.85);
+        border-top: 1px solid rgba(200, 168, 75, 0.2);
+        border-bottom: 1px solid rgba(200, 168, 75, 0.2);
+        padding: 3rem var(--margin);
+        backdrop-filter: blur(10px);
+      }
+
+      .toc-title {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.5em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .toc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .toc-item {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        color: rgba(245, 240, 232, 0.6);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+        border-left: 2px solid transparent;
+        transition: all 0.3s;
+      }
+      .toc-item:hover {
+        color: var(--spark);
+        border-left-color: var(--spark);
+        background: rgba(74, 240, 255, 0.05);
+      }
+      .toc-num {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.65rem;
+        color: var(--gold);
+        opacity: 0.7;
+        flex-shrink: 0;
+      }
+
+      /* ── MAIN ── */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 var(--margin) 8rem;
+      }
+
+      /* ── CHAPTER ── */
+      .chapter {
+        margin-top: 7rem;
+        padding-top: 4rem;
+        border-top: 1px solid rgba(200, 168, 75, 0.15);
+        animation: revealChapter linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+
+      @keyframes revealChapter {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .chapter-tag {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.45em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .chapter-tag::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(200, 168, 75, 0.3),
+          transparent
+        );
+      }
+
+      .chapter-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        font-weight: 700;
+        line-height: 1.15;
+        margin-bottom: 0.5rem;
+        color: var(--paper);
+      }
+
+      .chapter-epigraph {
+        font-style: italic;
+        color: rgba(245, 240, 232, 0.4);
+        font-size: 0.92rem;
+        border-left: 2px solid rgba(200, 168, 75, 0.3);
+        padding-left: 1.2rem;
+        margin: 1.5rem 0 2.5rem;
+      }
+
+      p {
+        margin-bottom: 1.4rem;
+        color: rgba(245, 240, 232, 0.82);
+      }
+
+      strong {
+        color: var(--paper);
+        font-weight: 600;
+      }
+
+      em {
+        color: var(--gold-light);
+        font-style: italic;
+      }
+
+      /* ── EQUATIONS ── */
+      .equation-block {
+        background: rgba(10, 10, 18, 0.7);
+        border: 1px solid rgba(74, 240, 255, 0.12);
+        border-left: 3px solid var(--spark);
+        padding: 1.2rem 1.8rem;
+        margin: 2rem 0;
+        border-radius: 0 4px 4px 0;
+        font-family: "Courier Prime", monospace;
+        font-size: 1.05rem;
+        color: var(--spark);
+        overflow-x: auto;
+      }
+
+      .equation-block .eq-label {
+        font-size: 0.62rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(74, 240, 255, 0.4);
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .equation-block .eq-main {
+        font-size: 1.2rem;
+        color: var(--spark);
+        display: block;
+        margin-bottom: 0.4rem;
+      }
+
+      .equation-block .eq-explain {
+        font-size: 0.78rem;
+        color: rgba(245, 240, 232, 0.45);
+        font-family: "Courier Prime", monospace;
+        display: block;
+        margin-top: 0.3rem;
+      }
+
+      /* ── DIAGRAMS ── */
+      .diagram {
+        background: rgba(5, 5, 15, 0.8);
+        border: 1px solid rgba(200, 168, 75, 0.15);
+        border-radius: 6px;
+        padding: 2rem;
+        margin: 2.5rem 0;
+        font-family: "Courier Prime", monospace;
+        font-size: 0.78rem;
+        color: rgba(245, 240, 232, 0.5);
+        line-height: 1.5;
+        overflow-x: auto;
+        position: relative;
+      }
+      .diagram::before {
+        content: "DIAGRAMA";
+        position: absolute;
+        top: -0.55rem;
+        left: 1.5rem;
+        background: var(--ink);
+        padding: 0 0.5rem;
+        font-size: 0.55rem;
+        letter-spacing: 0.4em;
+        color: var(--gold);
+      }
+
+      /* ── CALLOUT ── */
+      .callout {
+        background: linear-gradient(
+          135deg,
+          rgba(123, 95, 255, 0.08),
+          rgba(74, 240, 255, 0.05)
+        );
+        border: 1px solid rgba(123, 95, 255, 0.2);
+        border-radius: 6px;
+        padding: 1.5rem 2rem;
+        margin: 2.5rem 0;
+        position: relative;
+      }
+      .callout::before {
+        content: attr(data-label);
+        position: absolute;
+        top: -0.55rem;
+        left: 1.5rem;
+        background: var(--ink);
+        padding: 0 0.5rem;
+        font-family: "Courier Prime", monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--arc);
+      }
+      .callout p {
+        color: rgba(245, 240, 232, 0.7);
+        margin-bottom: 0;
+      }
+
+      /* ── BLOCKQUOTE ── */
+      blockquote {
+        border-left: 3px solid var(--gold);
+        padding: 1rem 1.5rem 1rem 2rem;
+        margin: 2.5rem 0;
+        font-style: italic;
+        font-size: 1.15rem;
+        color: rgba(245, 240, 232, 0.65);
+        position: relative;
+      }
+      blockquote::before {
+        content: '"';
+        position: absolute;
+        top: -0.3em;
+        left: 0.3rem;
+        font-size: 4rem;
+        color: var(--gold);
+        opacity: 0.2;
+        font-family: Georgia, serif;
+        line-height: 1;
+      }
+      blockquote cite {
+        display: block;
+        margin-top: 0.8rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        font-style: normal;
+        color: var(--gold);
+        font-family: "Courier Prime", monospace;
+      }
+
+      /* ── PRINCIPLE LIST ── */
+      .principle-list {
+        list-style: none;
+        margin: 1.5rem 0;
+      }
+      .principle-list li {
+        padding: 0.7rem 0 0.7rem 2rem;
+        border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+        position: relative;
+        color: rgba(245, 240, 232, 0.78);
+      }
+      .principle-list li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--spark);
+        font-family: "Courier Prime", monospace;
+      }
+
+      /* ── TABLE ── */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        font-size: 0.88rem;
+      }
+      .data-table th {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold);
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(200, 168, 75, 0.3);
+        text-align: left;
+      }
+      .data-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+        color: rgba(245, 240, 232, 0.7);
+      }
+      .data-table tr:hover td {
+        background: rgba(74, 240, 255, 0.03);
+        color: rgba(245, 240, 232, 0.9);
+      }
+
+      /* ── SPARK ANIMATION ── */
+      .spark-icon {
+        display: inline-block;
+        color: var(--spark);
+        animation: sparkle 2s ease-in-out infinite;
+      }
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+          text-shadow: 0 0 10px var(--spark);
+        }
+      }
+
+      /* ── SYSTEM DIAGRAM (Tesla system) ── */
+      .system-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: rgba(200, 168, 75, 0.15);
+        border: 1px solid rgba(200, 168, 75, 0.15);
+        border-radius: 6px;
+        overflow: hidden;
+        margin: 2.5rem 0;
+      }
+      .system-cell {
+        background: rgba(5, 5, 15, 0.9);
+        padding: 1.2rem 1rem;
+        text-align: center;
+      }
+      .system-cell .sc-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      .system-cell .sc-label {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.3rem;
+      }
+      .system-cell .sc-value {
+        font-size: 0.82rem;
+        color: rgba(245, 240, 232, 0.55);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid rgba(200, 168, 75, 0.15);
+        padding: 3rem var(--margin);
+        text-align: center;
+      }
+      footer p {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: rgba(245, 240, 232, 0.2);
+        margin-bottom: 0.5rem;
+      }
+
+      /* ── PROGRESS BAR ── */
+      #progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--spark), var(--arc));
+        z-index: 10000;
+        transition: width 0.1s linear;
+        box-shadow: 0 0 8px var(--spark);
+      }
+
+      /* ── STICKY NAV ── */
+      .sticky-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(10, 10, 18, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(200, 168, 75, 0.1);
+        padding: 0.7rem var(--margin);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+      }
+      .sticky-nav.visible {
+        transform: translateY(0);
+      }
+      .sticky-nav-title {
+        font-family: "Courier Prime", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      /* ── SECTION HEADING ── */
+      h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        font-style: italic;
+        color: var(--paper);
+        margin: 2.5rem 0 1rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid rgba(245, 240, 232, 0.08);
+      }
+
+      /* ── HIGHLIGHT ── */
+      mark {
+        background: rgba(200, 168, 75, 0.15);
+        color: var(--gold-light);
+        padding: 0.1em 0.3em;
+        border-radius: 2px;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 600px) {
+        .system-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .toc-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="progress"></div>
+
+    <div class="sticky-nav" id="stickyNav">
+      <span class="sticky-nav-title"
+        >Nikola Tesla — Tratado Filosófico e Científico</span
+      >
+      <span
+        style="
+          font-family: &quot;Courier Prime&quot;, monospace;
+          font-size: 0.65rem;
+          color: rgba(245, 240, 232, 0.3);
+        "
+        >⚡ 2025</span
+      >
+    </div>
+
+    <!-- BG -->
+    <div class="lightning-bg">
+      <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="glow1" cx="30%" cy="50%">
+            <stop offset="0%" stop-color="#4af0ff" stop-opacity="0.15" />
+            <stop offset="100%" stop-color="transparent" />
+          </radialGradient>
+          <radialGradient id="glow2" cx="80%" cy="30%">
+            <stop offset="0%" stop-color="#7b5fff" stop-opacity="0.12" />
+            <stop offset="100%" stop-color="transparent" />
+          </radialGradient>
+        </defs>
+        <ellipse cx="430" cy="450" rx="600" ry="450" fill="url(#glow1)" />
+        <ellipse cx="1150" cy="270" rx="500" ry="370" fill="url(#glow2)" />
+        <!-- decorative lines -->
+        <path
+          d="M200,100 L220,160 L210,160 L240,230"
+          stroke="#4af0ff"
+          stroke-width="1"
+          fill="none"
+          opacity="0.4"
+        />
+        <path
+          d="M1100,50 L1130,130 L1115,130 L1160,220"
+          stroke="#7b5fff"
+          stroke-width="1"
+          fill="none"
+          opacity="0.3"
+        />
+        <path
+          d="M700,700 L730,770 L715,770 L750,840"
+          stroke="#c8a84b"
+          stroke-width="0.8"
+          fill="none"
+          opacity="0.25"
+        />
+      </svg>
+    </div>
+
+    <!-- COVER -->
+    <header class="cover">
+      <div class="cover-arc"></div>
+      <div class="cover-arc"></div>
+      <div class="cover-arc"></div>
+
+      <p class="cover-label">Tratado Filosófico & Científico</p>
+
+      <h1 class="cover-title">
+        Nikola Tesla
+        <em>Eletricidade, Visão e os Limites do Real</em>
+      </h1>
+
+      <p class="cover-subtitle">
+        Uma análise técnica e filosófica das ideias de Tesla — seus fundamentos
+        rigorosos, suas aplicações modernas e os horizontes onde a ciência
+        encontra a imaginação.
+      </p>
+
+      <div class="cover-divider"></div>
+
+      <p class="cover-meta">
+        Engenharia · Física · Filosofia Natural · 9 Capítulos
+      </p>
+    </header>
+
+    <!-- TOC -->
+    <nav class="toc">
+      <p class="toc-title">Índice do Tratado</p>
+      <div class="toc-grid">
+        <a href="#cap1" class="toc-item"
+          ><span class="toc-num">I</span> Fundamentos Científicos</a
+        >
+        <a href="#cap2" class="toc-item"
+          ><span class="toc-num">II</span> Transmissão de Energia Sem Fio</a
+        >
+        <a href="#cap3" class="toc-item"
+          ><span class="toc-num">III</span> Magnetismo e Movimento</a
+        >
+        <a href="#cap4" class="toc-item"
+          ><span class="toc-num">IV</span> Energia "Livre"</a
+        >
+        <a href="#cap5" class="toc-item"
+          ><span class="toc-num">V</span> A Terra como Condutor</a
+        >
+        <a href="#cap6" class="toc-item"
+          ><span class="toc-num">VI</span> Alta Frequência e Alta Tensão</a
+        >
+        <a href="#cap7" class="toc-item"
+          ><span class="toc-num">VII</span> Aplicação em Engenharia Moderna</a
+        >
+        <a href="#cap8" class="toc-item"
+          ><span class="toc-num">VIII</span> Limites Físicos</a
+        >
+        <a href="#cap9" class="toc-item"
+          ><span class="toc-num">IX</span> Reflexão Filosófica</a
+        >
+      </div>
+    </nav>
+
+    <!-- PREÂMBULO -->
+    <main>
+      <section class="chapter" style="margin-top: 5rem">
+        <div class="chapter-tag">Prolegômena</div>
+        <h2 class="chapter-title">
+          Antes do Raio: A Necessidade de um Tratado
+        </h2>
+        <div class="chapter-epigraph">
+          "O presente é deles; o futuro, pelo qual eu trabalhei, é meu." —
+          Nikola Tesla
+        </div>
+
+        <p>
+          Poucas figuras na história da ciência encarnaram com tanta intensidade
+          a tensão entre <em>o ideal e o real</em>, entre a visão arquitetural
+          de um espírito e a obstinação das leis físicas, quanto Nikola Tesla.
+          Inventor, engenheiro, filósofo natural avant la lettre, Tesla operava
+          numa fronteira perigosa: aquela onde a imaginação se precipita sobre o
+          mundo físico e exige uma resposta.
+        </p>
+
+        <p>
+          Este tratado não é uma hagiografia. Não se trata de glorificar um
+          gênio perseguido, nem de desmontá-lo com o ceticismo fácil do
+          presentismo. O que aqui se propõe é
+          <strong>uma leitura dupla</strong>: rigorosa nos fundamentos da
+          física, honesta sobre os limites, mas também filosófica o bastante
+          para reconhecer que as ideias de Tesla — mesmo as incompletas —
+          moldaram o mundo elétrico em que vivemos.
+        </p>
+
+        <p>
+          Seguiremos o método aristotélico das <em>quatro causas</em> —
+          material, formal, eficiente e final — para dissecar cada conceito. E
+          invocaremos Platão sempre que uma ideia tesleana transcender os fatos
+          para revelar a <em>forma</em> que ela persegue: a utopia de uma
+          civilização banhada de energia abundante, limpa e universal.
+        </p>
+
+        <blockquote>
+          Se você quer descobrir os segredos do universo, pense em termos de
+          energia, frequência e vibração.
+          <cite>— Nikola Tesla</cite>
+        </blockquote>
+      </section>
+
+      <!-- CAP 1 -->
+      <section class="chapter" id="cap1">
+        <div class="chapter-tag">Capítulo I</div>
+        <h2 class="chapter-title">Fundamentos Científicos</h2>
+        <div class="chapter-epigraph">
+          Da causa material: o que é feito o universo elétrico?
+        </div>
+
+        <h3>
+          1.1 — Indução Eletromagnética: A Descoberta que Alimentou o Mundo
+        </h3>
+
+        <p>
+          A pedra angular do legado tesleano — e do mundo elétrico moderno —
+          está num princípio descoberto por Michael Faraday em 1831 e
+          formalizado matematicamente por James Clerk Maxwell:
+          <strong>a indução eletromagnética</strong>. Quando um campo magnético
+          varia no tempo através de uma superfície delimitada por um condutor
+          fechado, uma força eletromotriz (FEM) é induzida nesse condutor.
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label">Lei de Faraday-Lenz</span>
+          <span class="eq-main">ε = −dΦ_B / dt</span>
+          <span class="eq-explain">
+            ε = força eletromotriz induzida (Volts)<br />
+            Φ_B = fluxo magnético = ∫∫ B · dA (Weber)<br />
+            O sinal negativo (Lei de Lenz) indica que a FEM induzida se opõe à
+            variação que a gerou.
+          </span>
+        </div>
+
+        <p>
+          Tesla compreendia isso profundamente, mas seu gênio foi perceber que,
+          ao <em>rodar</em> um campo magnético — em vez de simplesmente variar
+          sua intensidade — era possível criar uma máquina auto-sustentada de
+          conversão de energia. Essa intuição gerou o motor de corrente
+          alternada polifásico, patenteado em 1888 e ainda hoje o princípio de
+          90% dos motores industriais do planeta.
+        </p>
+
+        <h3>1.2 — Corrente Alternada: A Guerra das Correntes</h3>
+
+        <p>
+          A disputa entre Edison (corrente contínua, CC) e Tesla/Westinghouse
+          (corrente alternada, CA) não era apenas técnica — era filosófica.
+          Edison entendia eletricidade como um fluido linear, controlado,
+          parecido com o vapor. Tesla via-a como <em>onda</em>: periódica,
+          transformável, capaz de viajar distâncias enormes sem perda
+          proporcional.
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label">Potência em CA trifásica</span>
+          <span class="eq-main">P = √3 · V_L · I_L · cos(φ)</span>
+          <span class="eq-explain">
+            V_L = tensão de linha | I_L = corrente de linha<br />
+            cos(φ) = fator de potência (eficiência de transferência)<br />
+            A transmissão em alta tensão reduz I_L e, portanto, perdas ôhmicas P
+            = I²R
+          </span>
+        </div>
+
+        <p>
+          A vantagem da CA é o <strong>transformador</strong>: um dispositivo
+          puramente indutivo que eleva ou reduz tensões com eficiência superior
+          a 99%. Elevar a tensão para 500 kV durante transmissão reduz a
+          corrente — e as perdas ôhmicas (P = I²R) — por um fator de 10⁴. Edison
+          jamais pôde fazer isso com CC. Tesla ganhou, e o mundo foi
+          eletrificado.
+        </p>
+
+        <h3>1.3 — Ressonância Elétrica: Quando o Circuito "Canta"</h3>
+
+        <p>
+          A ressonância é um dos conceitos mais poderosos e também mais mal
+          compreendidos no legado tesleano. Um circuito LC (indutor-capacitor)
+          possui uma frequência natural de oscilação:
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label">Frequência de Ressonância</span>
+          <span class="eq-main">f₀ = 1 / (2π√(LC))</span>
+          <span class="eq-explain">
+            L = indutância (Henry) | C = capacitância (Farad)<br />
+            Na ressonância, a reatância indutiva cancela a capacitiva: X_L =
+            X_C<br />
+            Resultado: impedância mínima, máxima transferência de corrente
+          </span>
+        </div>
+
+        <p>
+          Tesla usou ressonância extensivamente na Bobina Tesla — um
+          transformador ressonante de alta frequência e alta tensão — e na
+          concepção da Torre Wardenclyffe. A ressonância permite
+          <strong>transferência seletiva de energia</strong>: dois circuitos
+          sintonizados na mesma frequência trocam energia eficientemente,
+          enquanto circuitos fora de sintonia praticamente não interagem. Este é
+          o princípio hoje explorado no carregamento sem fio WPT (<em
+            >Wireless Power Transfer</em
+          >).
+        </p>
+
+        <div class="callout" data-label="Distinção Crítica">
+          <p>
+            Ressonância amplifica a transferência de energia entre sistemas
+            acoplados, mas <strong>não cria energia</strong>. O fator de
+            qualidade Q do circuito determina as perdas. Em sistemas reais, Q
+            &lt; ∞ e há sempre dissipação. A crença popular de que Tesla "criava
+            energia da ressonância" confunde amplitude com criação — um erro
+            categorico.
+          </p>
+        </div>
+
+        <h3>1.4 — Campos Eletromagnéticos e Ondas de Maxwell</h3>
+
+        <p>
+          A síntese de Maxwell (1865) unificou eletricidade, magnetismo e luz
+          numa única estrutura: as quatro equações que levam seu nome. Em forma
+          diferencial:
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label">Equações de Maxwell (forma diferencial)</span>
+          <span class="eq-main">
+            ∇·E = ρ/ε₀ &nbsp;&nbsp;&nbsp; (Lei de Gauss elétrica)<br />
+            ∇·B = 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (inexistência de
+            monopólos magnéticos)<br />
+            ∇×E = −∂B/∂t &nbsp; (Lei de Faraday)<br />
+            ∇×B = μ₀J + μ₀ε₀∂E/∂t &nbsp; (Lei de Ampère-Maxwell)
+          </span>
+          <span class="eq-explain">
+            A última equação contém a grande contribuição de Maxwell: o
+            "deslocamento" ε₀∂E/∂t,<br />
+            que permite que ondas eletromagnéticas se propaguem no vácuo à
+            velocidade c = 1/√(μ₀ε₀) ≈ 3×10⁸ m/s
+          </span>
+        </div>
+
+        <p>
+          Tesla absorveu Maxwell e foi além: intuiu que se o campo
+          eletromagnético era ondulatório e se propagava no espaço, então era
+          possível usá-lo como meio de transmissão de energia — não apenas de
+          informação (como Marconi já fazia com o rádio), mas de potência útil.
+          Esta intuição era fisicamente correta em princípio, mas apresentava
+          desafios terríveis em escala.
+        </p>
+      </section>
+
+      <!-- CAP 2 -->
+      <section class="chapter" id="cap2">
+        <div class="chapter-tag">Capítulo II</div>
+        <h2 class="chapter-title">Transmissão de Energia Sem Fio</h2>
+        <div class="chapter-epigraph">
+          Da causa eficiente: como a energia atravessa o vazio?
+        </div>
+
+        <h3>2.1 — Mecanismos de Transmissão Sem Fio</h3>
+
+        <p>
+          Existem três mecanismos físicos distintos para transmissão sem fio de
+          energia, frequentemente confundidos no discurso popular sobre Tesla:
+        </p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Mecanismo</th>
+              <th>Alcance</th>
+              <th>Eficiência</th>
+              <th>Aplicação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Indução eletromagnética (campo próximo)</td>
+              <td>&lt; 10 cm</td>
+              <td>85–95%</td>
+              <td>Qi, RFID, NFC</td>
+            </tr>
+            <tr>
+              <td>Ressonância magnética (campo próximo ressonante)</td>
+              <td>até ~2 m</td>
+              <td>40–90%</td>
+              <td>Carregamento EV, implantes</td>
+            </tr>
+            <tr>
+              <td>Radiação EM (microondas / laser)</td>
+              <td>Quilômetros</td>
+              <td>2–50%</td>
+              <td>Satélites, experimentos militares</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          A tecnologia moderna de carregamento sem fio (WPT) utiliza o segundo
+          mecanismo — exatamente o que Tesla vislumbrou. O grupo do MIT liderado
+          por Marin Soljačić demonstrou em 2007 a transferência de 60 W a 2
+          metros com eficiência de ~45%, batizando o método de
+          <em>WiTricity</em>. Tesla teria reconhecido o princípio imediatamente.
+        </p>
+
+        <h3>2.2 — A Torre Wardenclyffe: Grandiosidade e Fracasso Técnico</h3>
+
+        <p>
+          A Torre Wardenclyffe (1901–1917), em Long Island, Nova York, foi o
+          projeto mais ambicioso de Tesla. Seu objetivo declarado: criar um
+          sistema global de transmissão de energia sem fio, usando a Terra como
+          condutor e a ionosfera como retorno. A torre tinha 57 metros de altura
+          e uma estrutura hemisférica de aço no topo, acoplada a um poço de 36
+          metros que descia ao solo para "ancorar" o sistema.
+        </p>
+
+        <div class="diagram">
+          ┌─────────────────────────────────────────────────────────────┐ │
+          TORRE WARDENCLYFFE │ │ (esquema conceitual) │ │ │ │ ╔═══╗ ← Cúpula de
+          aço (57m) │ │ ╔╩═══╩╗ │ │ ╔╩═════╩╗ ← Bobina ressonante │ │
+          ╔╩═══════╩╗ │ │ ╔╩═════════╩╗ │ │ ════════╩═══════════╩════════ ←
+          Nível do solo │ │ │ │ │ │ ← Poço de terra (36m) │ │ │ condutores
+          enterrados │ │ ▼ │ │ [ TERRA ] ← condutor de retorno (hipótese) │ │ │
+          │ Princípio: onda estacionária Schumann + condução │ │ Frequência de
+          projeto: ~8 Hz (ELF) │ │ Potência projetada: ~200 MW │
+          └─────────────────────────────────────────────────────────────┘
+        </div>
+
+        <h3>2.3 — Por que o Projeto Global Não Funcionaria</h3>
+
+        <p>
+          Tesla subestimou — ou ignorou — três limitações físicas fundamentais:
+        </p>
+
+        <ul class="principle-list">
+          <li>
+            <strong>Divergência esférica:</strong> A intensidade de uma onda que
+            se propaga em esfera cai com 1/r². Para atingir receptores em todo o
+            globo, a potência transmitida precisaria ser absurda — e a maior
+            parte nunca chegaria ao destino.
+          </li>
+          <li>
+            <strong>Condutividade heterogênea da Terra:</strong> A Terra não é
+            um condutor uniforme. Rochas, oceanos e camadas do manto têm
+            resistividades radicalmente diferentes. As perdas de dissipação
+            seriam enormes e completamente inespecíficas — todos "receberiam"
+            energia, mas ninguém poderia cobrar por isso (problema que J. P.
+            Morgan levantou antes de retirar o financiamento).
+          </li>
+          <li>
+            <strong>Ausência de direcionamento:</strong> Ao contrário de um
+            transformador acoplado, uma onda esférica não pode ser "endereçada"
+            a um receptor específico. O sistema seria inteiramente broadcast —
+            eficiente para rádio, mas inutilizável para distribuição comercial
+            de potência.
+          </li>
+        </ul>
+
+        <div class="callout" data-label="Perspectiva Moderna">
+          <p>
+            A ressonância Schumann — frequências naturais da cavidade
+            Terra-ionosfera (~7.83 Hz, 14.3 Hz...) — existe exatamente como
+            Tesla previu. Mas usar essas frequências para transmissão de
+            potência implicaria gerar campos ELF de intensidade biologicamente
+            perigosa para transferências de escala industrial. O conceito
+            existe; a escala é o problema.
+          </p>
+        </div>
+      </section>
+
+      <!-- CAP 3 -->
+      <section class="chapter" id="cap3">
+        <div class="chapter-tag">Capítulo III</div>
+        <h2 class="chapter-title">Magnetismo e Movimento</h2>
+        <div class="chapter-epigraph">
+          Da causa formal: a forma que faz o motor girar.
+        </div>
+
+        <h3>
+          3.1 — O Campo Magnético Rotativo: A Ideia Mais Revolucionária de Tesla
+        </h3>
+
+        <p>
+          Em 1882, em Budapest, Tesla tuvo a visão — literal, como ele
+          descreveria — do campo magnético rotativo. Caminhando num parque ao
+          entardecer, recitando Fausto, viu de repente a solução: duas correntes
+          alternadas desfasadas em 90° produzem um campo magnético que
+          <em>gira no espaço</em> sem qualquer parte móvel. Coloque um rotor
+          metálico nesse campo e ele girará por indução, perseguindo o campo
+          como uma agulha persegue um imã.
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label">Campo Girante Bifásico</span>
+          <span class="eq-main">
+            B_x(t) = B₀·cos(ωt)<br />
+            B_y(t) = B₀·sin(ωt)<br />
+            |B| = B₀ = constante
+          </span>
+          <span class="eq-explain">
+            A magnitude do campo é constante; apenas sua direção gira com
+            velocidade angular ω = 2πf.<br />
+            Em sistemas trifásicos: B_a,b,c defasados de 120°, produzindo campo
+            igualmente girante com menor ripple.
+          </span>
+        </div>
+
+        <p>
+          A elegância desse princípio é profunda:
+          <strong>não há comutador, não há escovas, não há faíscas</strong>. O
+          motor de indução é essencialmente livre de manutenção e opera com
+          eficiências superiores a 95% em condições nominais. É a máquina de
+          conversão de energia mais utilizada pela humanidade.
+        </p>
+
+        <h3>3.2 — Do Motor Elétrico à Levitação Magnética</h3>
+
+        <p>
+          O mesmo princípio do campo rotativo — forças entre campos variantes e
+          condutores — alimenta tecnologias contemporâneas que Tesla apenas
+          antecipou intelectualmente:
+        </p>
+
+        <ul class="principle-list">
+          <li>
+            <strong>Trens Maglev (levitação por supercondutores):</strong> como
+            o Shinkansen SCMaglev japonês, que atingiu 603 km/h em 2015, usa
+            forças de repulsão entre imãs supercondutores e correntes induzidas
+            nos trilhos.
+          </li>
+          <li>
+            <strong>Motores de relutância variável (SRM):</strong> eliminam ímãs
+            permanentes de terras raras, reduzindo custos e dependência
+            geopolítica.
+          </li>
+          <li>
+            <strong>Motores lineares:</strong> desdobram o motor rotativo num
+            plano, gerando força linear — usados em trilhos de lançamento
+            eletromagnético (railguns) e elevadores modernos.
+          </li>
+          <li>
+            <strong>Freios regenerativos (EVs):</strong> o motor funciona como
+            gerador na desaceleração, recuperando 15–25% da energia cinética.
+          </li>
+        </ul>
+
+        <h3>3.3 — O Papel do Magnetismo na Redução de Perdas</h3>
+
+        <p>
+          Tesla tinha uma intuição correta sobre magnetismo e perdas: o projeto
+          cuidadoso dos circuitos magnéticos é central para a eficiência. Perdas
+          magnéticas são de dois tipos: <em>perdas por histerese</em> (energia
+          dissipada ao ciclar o material magnético) e
+          <em>correntes de Foucault</em> (correntes parasitas induzidas no
+          núcleo de ferro).
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label"
+            >Perdas no Núcleo Magnético (Equação de Steinmetz)</span
+          >
+          <span class="eq-main"
+            >P_core = k_h · f · B_max^α + k_e · f² · B_max²</span
+          >
+          <span class="eq-explain">
+            k_h, k_e = constantes do material | f = frequência | B_max = indução
+            de pico<br />
+            α ≈ 1.6–2.0 (expoente de Steinmetz, empírico por material)<br />
+            Núcleos laminados e ferrites modernos reduzem k_e por ordens de
+            magnitude.
+          </span>
+        </div>
+
+        <p>
+          Materiais modernos — ferrites, aços de grão orientado ao silício,
+          amorfo metálico e nanocristalino — reduzem essas perdas a frações do
+          que era possível na era de Tesla, realizando seu sonho de máquinas
+          cada vez mais eficientes.
+        </p>
+      </section>
+
+      <!-- CAP 4 -->
+      <section class="chapter" id="cap4">
+        <div class="chapter-tag">Capítulo IV</div>
+        <h2 class="chapter-title">Energia "Livre"</h2>
+        <div class="chapter-epigraph">
+          O perigo da metáfora: quando a abundância é confundida com a
+          infinidade.
+        </div>
+
+        <h3>4.1 — O que Tesla Realmente Queria Dizer</h3>
+
+        <p>
+          Poucos conceitos tesleanos foram tão deturpados quanto "energia
+          livre". Tesla nunca afirmou que havia energia sem fonte ou sem custo.
+          O que ele propunha — e isso é fisicamente legítimo e visionário — é
+          que a natureza contém
+          <em>reservatórios imensos de energia não aproveitada</em>, acessíveis
+          a quem soubesse como extraí-los.
+        </p>
+
+        <blockquote>
+          Minha principal ambição é aproveitar as forças da natureza a serviço
+          da humanidade. Se eu tiver sucesso, nenhum homem terá que trabalhar
+          para se aquecer, iluminar sua casa ou mover qualquer máquina.
+          <cite>— Nikola Tesla, c. 1900</cite>
+        </blockquote>
+
+        <p>
+          Tesla falava de fontes como a energia solar (irradiação ~1.361 W/m² no
+          topo da atmosfera), o diferencial térmico entre camadas atmosféricas,
+          as correntes do vento, e — mais especulativamente — a eletricidade
+          estática da atmosfera e a energia do "éter" (um conceito
+          pré-relativístico que Tesla nunca abandonou).
+        </p>
+
+        <h3>4.2 — O Equívoco Popular: Energia Infinita</h3>
+
+        <div class="callout" data-label="Erro Conceitual Crítico">
+          <p>
+            A ideia de "energia livre infinita" — popular em círculos
+            conspiratórios — viola a Primeira e Segunda Leis da Termodinâmica.
+            Não existe sistema que produza mais energia do que consome (motor de
+            movimento perpétuo). Tesla nunca defendeu isso. Quem o faz deturpa
+            sua memória e faz um desserviço à física e ao pensamento crítico.
+          </p>
+        </div>
+
+        <h3>4.3 — Fontes Reais de Energia Abundante: O Sonho Realizado</h3>
+
+        <p>
+          O verdadeiro legado filosófico de Tesla nessa área é que seu sonho foi
+          parcialmente realizado — por caminhos que ele não previu com exatidão:
+        </p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Fonte</th>
+              <th>Potencial Global</th>
+              <th>Status Atual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Energia solar (fotovoltaica + térmica)</td>
+              <td>~1.7×10¹⁷ W incidentes</td>
+              <td>~1.6 TW instalados (2024)</td>
+            </tr>
+            <tr>
+              <td>Energia eólica</td>
+              <td>~4×10¹³ W aproveitáveis</td>
+              <td>~1 TW instalado (2024)</td>
+            </tr>
+            <tr>
+              <td>Energia geotérmica</td>
+              <td>~4.4×10¹³ W fluxo interno</td>
+              <td>~15 GW instalados</td>
+            </tr>
+            <tr>
+              <td>Energia das marés / ondas</td>
+              <td>~1–3 TW aproveitáveis</td>
+              <td>Fase experimental</td>
+            </tr>
+            <tr>
+              <td>Energia atmosférica eletrostática</td>
+              <td>Baixíssima densidade</td>
+              <td>Inviável em escala</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          A diferença entre o sonho de Tesla e a realidade não é que o sonho
+          estava errado — é que ele subestimou a engenharia necessária e a
+          importância dos custos de conversão, armazenamento e distribuição. A
+          energia solar é de fato "gratuita" na fonte; o custo está no painel,
+          no inversor, na bateria e na rede. Tesla entendia a fonte; subestimou
+          a infraestrutura.
+        </p>
+      </section>
+
+      <!-- CAP 5 -->
+      <section class="chapter" id="cap5">
+        <div class="chapter-tag">Capítulo V</div>
+        <h2 class="chapter-title">A Terra como Condutor</h2>
+        <div class="chapter-epigraph">
+          Uma hipótese audaciosa entre a poesia e a física.
+        </div>
+
+        <h3>5.1 — A Hipótese Tesleana da Condução Terrestre</h3>
+
+        <p>
+          Tesla acreditava que a Terra poderia funcionar como um grande condutor
+          em frequências extremamente baixas (ELF, abaixo de 100 Hz), e que a
+          ionosfera — a camada ionizada da atmosfera a 60–1000 km de altitude —
+          formaria o "retorno" desse circuito global. A cavidade formada entre a
+          superfície terrestre e a ionosfera seria como uma guia de onda
+          esférica gigante.
+        </p>
+
+        <div class="diagram">
+          ┌──────────────────────────────────────────────────────────────────┐ │
+          CAVIDADE TERRA-IONOSFERA │ │ │ │ ~~~~~ IONOSFERA (60–80 km)
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ │ │ ↕ reflexão/refração de ondas ELF │ │
+          │ │ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - │ │
+          (propagação de ondas eletromagnéticas ELF neste espaço) │ │ - - - - -
+          - - - - - - - - - - - - - - - - - - - - - - - - - │ │ │ │
+          ═══════════════ SUPERFÍCIE TERRESTRE ══════════════════ │ │ σ_solo ≈
+          10⁻⁴ a 10⁻² S/m (varia por composição) │ │ σ_oceano ≈ 4 S/m (muito
+          melhor condutor) │ │ │ │ Ressonâncias de Schumann: f_n ≈ 7.83, 14.3,
+          20.8... Hz │ │ Circunferência Terra / velocidade da luz ≈ 7.5 Hz │
+          └──────────────────────────────────────────────────────────────────┘
+        </div>
+
+        <h3>5.2 — O que a Física Confirma e o que Limita</h3>
+
+        <p>
+          Tesla estava correto sobre a existência das ressonâncias de Schumann —
+          demonstradas experimentalmente por W. O. Schumann em 1952. Também
+          estava correto que a Terra conduz eletricidade e que a ionosfera
+          reflete certas frequências. Mas havia limitações que inviabilizam sua
+          visão de uso prático:
+        </p>
+
+        <ul class="principle-list">
+          <li>
+            <strong>Resistividade do solo:</strong> Varia de ~1 Ω·m (solo úmido)
+            a ~10⁶ Ω·m (granito seco). Perdas de dissipação em escala global
+            seriam imensas e impossíveis de prever.
+          </li>
+          <li>
+            <strong>Atenuação com distância:</strong> Ondas ELF se atenuam ~1–2
+            dB/Mm. Para transmissão global, a potência disponível no receptor
+            seria uma fração ínfima da emitida.
+          </li>
+          <li>
+            <strong>Impossibilidade de endereçamento:</strong> Ondas ELF se
+            propagam omnidriecionalmente. Qualquer receptor sintonizado
+            receberia energia — um sistema economicamente incoerente.
+          </li>
+          <li>
+            <strong>Biossegurança:</strong> Campos ELF de alta intensidade têm
+            efeitos biológicos estudados (interação com sistemas nervosos).
+            Potências industriais seriam problemáticas.
+          </li>
+        </ul>
+
+        <h3>5.3 — Aplicações Modernas que Homenageiam a Intuição</h3>
+
+        <p>
+          Comunicações ELF são usadas hoje para comunicação com submarinos (a
+          única forma de alcançá-los sem que emerjam), pois as ondas ELF
+          penetram a água do mar. A Marinha americana operou o sistema
+          <em>Project ELF</em> em Wisconsin de 1989 a 2004, transmitindo a
+          apenas 76 Hz. É o irmão modesto do sonho tesleano — funcional,
+          limitado, mas real.
+        </p>
+      </section>
+
+      <!-- CAP 6 -->
+      <section class="chapter" id="cap6">
+        <div class="chapter-tag">Capítulo VI</div>
+        <h2 class="chapter-title">Alta Frequência e Alta Tensão</h2>
+        <div class="chapter-epigraph">
+          Quando a eletricidade abandona o circuito e abraça o espaço.
+        </div>
+
+        <h3>6.1 — O Regime de Alta Frequência: Uma Física Diferente</h3>
+
+        <p>
+          Conforme a frequência aumenta, a física elétrica muda radicalmente. O
+          <em>efeito pelicular</em> (<em>skin effect</em>) concentra a corrente
+          na superfície dos condutores, aumentando a resistência efetiva. A
+          impedância de linha deixa de ser simplesmente R e passa a envolver L e
+          C distribuídos. Os campos deixam de ser quasiestáticos e passam a
+          irradiar energia.
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label"
+            >Profundidade de Penetração (Efeito Pelicular)</span
+          >
+          <span class="eq-main">δ = √(2ρ / ωμ) = √(ρ / πfμ)</span>
+          <span class="eq-explain">
+            δ = profundidade de penetração (m)<br />
+            ρ = resistividade do condutor | ω = 2πf | μ = permeabilidade<br />
+            Para cobre a 60 Hz: δ ≈ 8.5 mm. A 1 MHz: δ ≈ 66 μm. A 1 GHz: δ ≈ 2
+            μm.
+          </span>
+        </div>
+
+        <p>
+          Tesla explorou frequências na faixa de kHz a MHz com suas bobinas
+          ressonantes — muito acima do que qualquer laboratório de sua época
+          ousava. O resultado era espetacular: faíscas silenciosas, lâmpadas
+          fluorescentes que acendiam sem fio, descargas em corona azuladas que
+          pareciam magia.
+        </p>
+
+        <h3>6.2 — A Bobina Tesla: Engenharia da Descarga</h3>
+
+        <p>
+          A Bobina Tesla é um transformador de ar ressonante de dois estágios. O
+          circuito primário oscila em ressonância, transferindo energia para o
+          secundário por acoplamento magnético. Na ressonância, as tensões se
+          somam construtivamente:
+        </p>
+
+        <div class="diagram">
+          FONTE CA → TRANSFORMADOR STEP-UP → CAPACITOR (C₁) │ ┌────────────┘ │
+          FAISCADOR ← dispara quando V ≥ V_breakdown │ BOBINA PRIMÁRIA (L₁,
+          poucas espiras) │ acoplamento magnético M BOBINA SECUNDÁRIA (L₂,
+          muitas espiras) │ CAPACITOR TOPO (esfera/toróide) │ DESCARGA NA PONTA
+          → raios de 1–10 m Relação de tensão (ressonância): V₂/V₁ = Q ·
+          √(L₂/L₁) Q típico: 50–500. Tensão de saída: 100 kV a vários MV.
+        </div>
+
+        <h3>6.3 — Plasma, Ionização e Fronteiras da Matéria</h3>
+
+        <p>
+          Nas tensões e frequências que Tesla gerava, o ar ao redor dos
+          eletrodos se ioniza, tornando-se plasma — o quarto estado da matéria.
+          Ele observou com fascínio como o plasma conduz, como emite luz, como
+          responde a campos. Hoje, esse regime é explorado em:
+        </p>
+
+        <ul class="principle-list">
+          <li>
+            <strong>Reatores de fusão nuclear:</strong> Tokamaks como o ITER
+            usam campos magnéticos toroidais — herdeiros diretos das ideias de
+            confinamento de plasma — para sustentar plasma a 150 milhões de °C.
+          </li>
+          <li>
+            <strong>Propulsão por plasma (thrusters iônicos):</strong> usados em
+            sondas espaciais como a Dawn e o Starlink.
+          </li>
+          <li>
+            <strong>Esterilização e tratamento de superfícies:</strong> plasma
+            frio a pressão atmosférica é usado em medicina e indústria
+            alimentícia.
+          </li>
+          <li>
+            <strong>Transmissão de energia por microondas:</strong> beamed power
+            em satélites solares — campo ativo de pesquisa com conceitos de
+            Tesla modernizados.
+          </li>
+        </ul>
+
+        <h3>6.4 — Vantagens e Riscos</h3>
+
+        <p>
+          Alta tensão e alta frequência permitem transmissão de energia mais
+          eficiente, transformadores menores e sistemas mais compactos — mas
+          trazem riscos sérios:
+          <mark>dielétricos podem falhar catastróficamente</mark>,
+          interferências eletromagnéticas (EMI) aumentam, e os campos ionizantes
+          em potências elevadas têm implicações biológicas que requerem
+          regulamentação cuidadosa.
+        </p>
+      </section>
+
+      <!-- CAP 7 -->
+      <section class="chapter" id="cap7">
+        <div class="chapter-tag">Capítulo VII</div>
+        <h2 class="chapter-title">Aplicação em Engenharia Moderna</h2>
+        <div class="chapter-epigraph">
+          Da causa final: o propósito que organiza o projeto.
+        </div>
+
+        <h3>
+          7.1 — Proposta: Rede de Transmissão de Energia Sem Fio para Veículos
+          Elétricos em Movimento
+        </h3>
+
+        <p>
+          Inspirado nos princípios tesleanos — ressonância, campo magnético
+          rotativo e transmissão sem fio — propõe-se um sistema de carregamento
+          dinâmico por indução para veículos elétricos em rodovias (<em
+            >Dynamic Wireless Charging, DWC</em
+          >). O veículo recarrega enquanto se move, eliminando a ansiedade de
+          autonomia sem necessidade de baterias de grande capacidade.
+        </p>
+
+        <div class="system-grid">
+          <div class="system-cell">
+            <span class="sc-icon">⚡</span>
+            <span class="sc-label">Fonte</span>
+            <span class="sc-value"
+              >Rede CA + inversores de frequência dedicados por segmento</span
+            >
+          </div>
+          <div class="system-cell">
+            <span class="sc-icon">🔲</span>
+            <span class="sc-label">Bobinas no Solo</span>
+            <span class="sc-value"
+              >Segmentos de 1–3 m, ativados apenas sob veículo detectado
+              (RFID/câmera)</span
+            >
+          </div>
+          <div class="system-cell">
+            <span class="sc-icon">📡</span>
+            <span class="sc-label">Receptor no Veículo</span>
+            <span class="sc-value"
+              >Bobina ressonante acoplada, retificador e carregador de
+              bateria</span
+            >
+          </div>
+          <div class="system-cell">
+            <span class="sc-icon">🔄</span>
+            <span class="sc-label">Frequência</span>
+            <span class="sc-value"
+              >85 kHz (padrão SAE J2954) ou 20–100 kHz conforme
+              regulamento</span
+            >
+          </div>
+          <div class="system-cell">
+            <span class="sc-icon">📊</span>
+            <span class="sc-label">Eficiência</span>
+            <span class="sc-value"
+              >85–94% a gap de 20 cm (laboratório); ~75–85% em rodovia com
+              folgas</span
+            >
+          </div>
+          <div class="system-cell">
+            <span class="sc-icon">💰</span>
+            <span class="sc-label">Custo Estimado</span>
+            <span class="sc-value"
+              >€ 1–3 M por km de rodovia (estimativa 2024, projetos-piloto
+              europeus)</span
+            >
+          </div>
+        </div>
+
+        <h3>7.2 — Funcionamento Detalhado</h3>
+
+        <p>
+          O sistema utiliza ressonância magnética no regime de campo próximo. As
+          bobinas primárias (no asfalto) e secundárias (no veículo) são
+          sintonizadas na mesma frequência f₀ com alto fator de qualidade Q. A
+          eficiência de acoplamento depende do coeficiente k:
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label">Eficiência de Transferência Ressonante</span>
+          <span class="eq-main">η = (k²Q₁Q₂) / (1 + k²Q₁Q₂)</span>
+          <span class="eq-explain">
+            k = coeficiente de acoplamento magnético (0 a 1, cai com
+            distância)<br />
+            Q₁, Q₂ = fatores de qualidade das bobinas primária e secundária<br />
+            Para k = 0.2 e Q₁Q₂ = 1000: η ≈ 97.6% teoricamente — perdas práticas
+            reduzem.
+          </span>
+        </div>
+
+        <h3>7.3 — Viabilidade Técnica e Econômica</h3>
+
+        <p>
+          Projetos-piloto reais estão em operação: a Suécia inaugurou o primeiro
+          trecho de estrada com carregamento dinâmico sem fio (eRoad) em 2022. A
+          Coreia do Sul operou o sistema OLEV (Online Electric Vehicle) no
+          campus KAIST desde 2013. A Itália tem o projeto Stellantis-Arena em
+          testes. A viabilidade técnica está demonstrada; o desafio é econômico
+          — o custo de infraestrutura por quilômetro ainda supera, por um fator
+          de 5–10x, a alternativa de pontos de carregamento rápido.
+        </p>
+
+        <p>
+          Tesla teria amado saber que seu sonho não é ficção, mas uma questão de
+          custo de engenharia civil e regulamentação — não de física impossível.
+        </p>
+      </section>
+
+      <!-- CAP 8 -->
+      <section class="chapter" id="cap8">
+        <div class="chapter-tag">Capítulo VIII</div>
+        <h2 class="chapter-title">Limites Físicos</h2>
+        <div class="chapter-epigraph">
+          O mundo ideal não é o mundo real: as leis que nenhum gênio revoga.
+        </div>
+
+        <h3>8.1 — A Primeira Lei da Termodinâmica: Conservação de Energia</h3>
+
+        <p>
+          A lei mais básica e mais violada nas promessas de charlatões
+          inspirados em Tesla:
+          <strong
+            >a energia não é criada nem destruída, apenas convertida</strong
+          >. Formalmente, para qualquer sistema termodinâmico:
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label">Primeira Lei da Termodinâmica</span>
+          <span class="eq-main">ΔU = Q − W</span>
+          <span class="eq-explain">
+            ΔU = variação da energia interna | Q = calor absorvido | W =
+            trabalho realizado<br />
+            Nenhum dispositivo pode ter W_saída &gt; Q_entrada + ΔU_inicial.<br />
+            Um "motor de movimento perpétuo" teria ΔU = 0, Q = 0 e W &gt; 0 —
+            impossível.
+          </span>
+        </div>
+
+        <h3>8.2 — A Segunda Lei: A Inevitabilidade da Dissipação</h3>
+
+        <p>
+          Mais sutil e mais profunda, a Segunda Lei afirma que processos reais
+          são irreversíveis — a entropia total de um sistema isolado jamais
+          diminui. Em termos práticos: toda conversão energética produz algum
+          calor "desperdiçado" que não pode ser completamente recuperado.
+        </p>
+
+        <div class="equation-block">
+          <span class="eq-label">Eficiência Máxima de Carnot</span>
+          <span class="eq-main">η_Carnot = 1 − (T_frio / T_quente)</span>
+          <span class="eq-explain">
+            T em Kelvin. Nenhuma máquina térmica real supera η_Carnot.<br />
+            Para T_quente = 600 K e T_frio = 300 K: η_max = 50%.<br />
+            Este limite não é tecnológico — é uma lei da natureza.
+          </span>
+        </div>
+
+        <p>
+          A Segunda Lei é o "imposto de realidade" sobre toda visão utópica
+          energética. Tesla intuitivamente queria contorná-la acessando fontes
+          primárias tão grandes (o sol, o campo elétrico atmosférico) que as
+          perdas pareceriam irrelevantes. A intuição não era errada — a escala é
+          que importa. A terra recebe 1.7×10¹⁷ W do sol; usar uma fração ínfima
+          é a civilização solar. As perdas de conversão são reais, mas a fonte é
+          imensurável na escala humana.
+        </p>
+
+        <h3>8.3 — Limites Específicos das Ideias Tesleanas</h3>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Ideia</th>
+              <th>Status Físico</th>
+              <th>Limitação Principal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Transmissão global sem fio</td>
+              <td>Parcialmente viável</td>
+              <td>Eficiência cai com 1/r² + perdas dielétricas</td>
+            </tr>
+            <tr>
+              <td>Energia gratuita ilimitada</td>
+              <td>Impossível (mito)</td>
+              <td>Viola 1ª lei da termodinâmica</td>
+            </tr>
+            <tr>
+              <td>Terra como condutor global</td>
+              <td>Fisicamente possível em ELF</td>
+              <td>Inviável comercialmente: perdas e irradiação difusa</td>
+            </tr>
+            <tr>
+              <td>Motor de indução sem perdas</td>
+              <td>Impossível em temperatura finita</td>
+              <td>Resistência ôhmica + perdas magnéticas (2ª lei)</td>
+            </tr>
+            <tr>
+              <td>Ressonância para WPT de curto alcance</td>
+              <td>Plenamente viável</td>
+              <td>Eficiência cai com distância e misalinhamento</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- CAP 9 -->
+      <section class="chapter" id="cap9">
+        <div class="chapter-tag">Capítulo IX</div>
+        <h2 class="chapter-title">Reflexão Filosófica</h2>
+        <div class="chapter-epigraph">
+          Entre a Forma de Platão e a Matéria de Aristóteles: onde habitava
+          Tesla?
+        </div>
+
+        <h3>9.1 — O Mundo das Formas Ideais e o Mundo do Ferro e Cobre</h3>
+
+        <p>
+          Platão distinguia dois mundos: o mundo das <em>formas ideais</em> —
+          perfeitas, imutáveis, acessíveis apenas ao intelecto — e o mundo
+          sensível — imperfeito, transitório, mera sombra das formas. A
+          epistemologia platônica sugere que o conhecimento verdadeiro reside
+          nas formas, não nos objetos físicos.
+        </p>
+
+        <p>
+          Tesla parecia habitar o mundo platônico de modo excepcionalmente
+          vívido. Ele afirmava construir e testar máquinas inteiramente na mente
+          antes de tocá-las fisicamente — e que as máquinas mentais funcionavam
+          com a mesma clareza que as reais. Sua crise nervosa em Budapest,
+          quando "viu" o motor de campo rotativo, sugere uma mente em que as
+          formas matemáticas tinham presença sensorial. Isso é raro,
+          possivelmente único na história da engenharia.
+        </p>
+
+        <blockquote>
+          Meu método é diferente. Não me apresso com a construção rude de uma
+          ideia. Quando tenho uma ideia, começo a construí-la em minha
+          imaginação. Mudo a construção, faço melhorias, e opero o dispositivo
+          em minha mente.
+          <cite>— Nikola Tesla</cite>
+        </blockquote>
+
+        <p>
+          Mas o mundo físico — o mundo aristotélico da <em>matéria</em>, da
+          resistência, da viscosidade, da Segunda Lei — invariavelmente
+          apresenta suas contas. Tesla encontrou-as: no financiamento que secou,
+          na eficiência que não alcançou, na Torre que nunca operou como
+          previsto. O gênio platônico colidiu com a matéria aristotélica, e o
+          resultado foi tragicamente incompleto — mas também extraordinariamente
+          frutífero.
+        </p>
+
+        <h3>9.2 — Tesla como Pensador Liminar</h3>
+
+        <p>
+          Tesla viveu numa zona liminar:
+          <strong
+            >demasiado visionário para ser apenas engenheiro, demasiado técnico
+            para ser apenas filósofo</strong
+          >. Sua grandeza não está apenas no que inventou, mas no que tornou
+          <em>pensável</em>. A eletricidade sem fio, a rede de energia global, o
+          campo rotativo, a ressonância como meio de comunicação — estas ideias
+          habitavam o regime do impossível antes de Tesla. Depois dele,
+          tornaram-se problemas de engenharia, não questões filosóficas.
+        </p>
+
+        <p>
+          Esse é o papel do visionário na história da ciência: não resolver o
+          problema, mas <em>reformulá-lo</em> de modo que passe a admitir
+          solução. Tesla não construiu a internet das coisas, mas a antecipou.
+          Não construiu o WPT comercial, mas o enunciou. Não construiu a rede
+          elétrica inteligente, mas a sonhou. O sonho veio antes — e o mundo
+          técnico veio depois, preenchendo o espaço que ele havia aberto.
+        </p>
+
+        <h3>9.3 — O Papel da Imaginação na Inovação Tecnológica</h3>
+
+        <p>
+          A filosofia da ciência de Kuhn fala em <em>paradigmas</em>: estruturas
+          conceituais que determinam quais questões são legítimas e quais
+          soluções são aceitáveis. A imaginação do gênio — de Tesla, de Maxwell,
+          de Faraday, de Einstein — opera numa zona pré-paradigmática, onde as
+          regras ainda não foram escritas.
+        </p>
+
+        <p>
+          Há um paradoxo fecundo: a imaginação mais poderosa é aquela que ignora
+          as limitações atuais sem ignorar as leis fundamentais. Tesla ignorava
+          frequentemente as limitações econômicas, tecnológicas e práticas de
+          sua época — e estava certo em ignorá-las, pois eram temporárias. Mas
+          quando ignorava a conservação de energia, estava errado — pois essa
+          lei não é temporal, é estrutural.
+        </p>
+
+        <p>
+          A lição para o engenheiro e para o cientista do século XXI é dupla:
+          <mark
+            >sonhe grande o suficiente para ver além das limitações
+            contingentes</mark
+          >, mas conheça profundamente as leis fundamentais para não perder
+          tempo combatendo o imutável.
+        </p>
+
+        <h3>9.4 — O Legado como Espelho</h3>
+
+        <p>
+          O que nossa fascinação por Tesla nos revela sobre nós? Talvez que
+          sentimos, coletivamente, que o mundo elétrico em que vivemos — de
+          smartphones, de redes sem fio, de carros elétricos, de energia
+          renovável — ainda não realizou seu potencial. Tesla é o símbolo de uma
+          promessa incumprida: uma civilização energética diferente, mais justa,
+          mais distribuída, mais elegante.
+        </p>
+
+        <p>
+          Essa promessa não é ilusória. As ferramentas existem. A física
+          permite. O que falta é, talvez, o que faltou ao próprio Tesla: não
+          imaginação, mas a paciência arquitetônica de construir sistema por
+          sistema, instituição por instituição, regulamento por regulamento — o
+          trabalho lento e pouco glamoroso que transforma uma visão platônica
+          numa civilização aristotélica.
+        </p>
+
+        <blockquote>
+          A ciência não é nada mais do que a purificação do senso comum pela
+          imaginação.
+          <cite>— Ernst Mach (contemporâneo de Tesla)</cite>
+        </blockquote>
+      </section>
+
+      <!-- CONCLUSÃO -->
+      <section class="chapter">
+        <div class="chapter-tag">Conclusão</div>
+        <h2 class="chapter-title">O Raio que Ilumina Dois Mundos</h2>
+
+        <p>
+          Ao percorrer os nove domínios deste tratado — dos fundamentos
+          eletromagnéticos à reflexão filosófica — emerge uma figura complexa:
+          Tesla não era o místico que alguns adoram nem o charlatão que certos
+          céticos descartam. Era um engenheiro de gênio matemático raro, com uma
+          capacidade visionária que frequentemente superava a física disponível
+          de sua época, mas que em poucos casos — os mais populares entre os
+          leigos — ultrapassava as leis imutáveis da termodinâmica.
+        </p>
+
+        <p>
+          Os motores de indução que alimentam a civilização, os transformadores
+          que distribuem energia por continentes, os princípios de ressonância
+          que carregam nossos telefones sem fio — esses são os raios reais de
+          Tesla, silenciosos e onipresentes. A Torre Wardenclyffe é o raio
+          espetacular que nunca chegou, o símbolo de uma ambição que a física
+          não podia, ainda, sustentar.
+        </p>
+
+        <p>
+          A lição final não é de humildade científica apenas — é de
+          <strong>humildade filosófica</strong>: reconhecer que entre a forma
+          ideal e a matéria real existe sempre uma distância a ser percorrida
+          pela paciência, pela experimentação e pelo tempo. Tesla abriu o mapa.
+          Cabe a cada geração de engenheiros e cientistas percorrer os caminhos.
+        </p>
+
+        <div class="callout" data-label="Síntese Final">
+          <p>
+            As ideias de Tesla são mais valiosas como <em>perguntas</em> do que
+            como respostas. Por que não podemos transmitir energia com mais
+            eficiência? Por que não podemos usar fontes naturais abundantes sem
+            perdas prohibitivas? Por que a eletricidade ainda viaja em fios
+            enterrados quando poderia, em alguma medida, viajar no ar? Essas
+            perguntas continuam urgentes — e o mundo que as responder será, em
+            algum sentido profundo, o mundo que Tesla sonhou.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>Tratado Filosófico e Científico sobre Nikola Tesla</p>
+      <p>Engenharia · Física · Filosofia Natural · 2025</p>
+      <p style="margin-top: 1.5rem; font-size: 0.55rem; letter-spacing: 0.1em">
+        "Se você soubesse a magnificência do 3, 6 e 9, teria a chave para o
+        universo." — Atribuído a Tesla
+      </p>
+    </footer>
+
+    <script>
+      // Progress bar
+      const progress = document.getElementById("progress");
+      const nav = document.getElementById("stickyNav");
+      let ticking = false;
+
+      window.addEventListener("scroll", () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const scrollTop = window.scrollY;
+            const docHeight =
+              document.documentElement.scrollHeight - window.innerHeight;
+            const pct = Math.min((scrollTop / docHeight) * 100, 100);
+            progress.style.width = pct + "%";
+
+            // Show sticky nav after cover
+            if (scrollTop > window.innerHeight * 0.8) {
+              nav.classList.add("visible");
+            } else {
+              nav.classList.remove("visible");
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // Spark animation for lightning in SVG BG
+      const svgPaths = document.querySelectorAll(".lightning-bg path");
+      svgPaths.forEach((path, i) => {
+        setInterval(
+          () => {
+            path.style.opacity = (Math.random() * 0.5 + 0.1).toFixed(2);
+          },
+          2000 + i * 700,
+        );
+      });
+    </script>
+  </body>
+</html>

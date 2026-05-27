@@ -1,0 +1,3690 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Os Livros Que Não Deveriam Existir · Mistérios Ocultos da Humanidade
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --void: #040302;
+        --ink: #0a0807;
+        --parchment: #e6d8b8;
+        --parchment-warm: #d4c294;
+        --parchment-dark: #a18d63;
+        --ember: #c4811c;
+        --ember-deep: #8a5012;
+        --gold: #b8902f;
+        --gold-deep: #7a5d18;
+        --gold-bright: #dcb04a;
+        --blood: #5e1818;
+        --blood-deep: #3a0e0e;
+        --bone: #d9c9a8;
+        --shadow: #1a1410;
+        --smoke: rgba(232, 220, 196, 0.05);
+        --rune: #ddbf6a;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #030201;
+        color: var(--parchment);
+        font-family: "Cardo", "Cormorant Garamond", serif;
+        font-size: 19px;
+        line-height: 1.85;
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+      }
+
+      /* Textura global de pergaminho com ruído */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        background-image:
+          radial-gradient(
+            ellipse at center,
+            transparent 0%,
+            rgba(0, 0, 0, 0.35) 65%,
+            rgba(0, 0, 0, 0.85) 100%
+          ),
+          url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+        mix-blend-mode: overlay;
+        opacity: 0.55;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 25%,
+          rgba(0, 0, 0, 0.6) 100%
+        );
+      }
+
+      /* ===================== HERO ===================== */
+      .hero {
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 2rem;
+        background:
+          radial-gradient(
+            ellipse at 50% 35%,
+            rgba(196, 129, 28, 0.22) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse at 80% 80%,
+            rgba(94, 24, 24, 0.15) 0%,
+            transparent 60%
+          ),
+          linear-gradient(180deg, #0a0805 0%, #1c0e07 50%, #050403 100%);
+      }
+
+      /* Símbolo do hero — Mandala alquímica complexa */
+      .hero-mandala {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(96vw, 800px);
+        height: min(96vw, 800px);
+        opacity: 0.15;
+        z-index: 3;
+        animation: slowRotate 240s linear infinite;
+      }
+
+      .hero-mandala-counter {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(60vw, 500px);
+        height: min(60vw, 500px);
+        opacity: 0.18;
+        z-index: 3;
+        animation: slowRotateRev 180s linear infinite;
+      }
+
+      @keyframes slowRotate {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+      @keyframes slowRotateRev {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(-360deg);
+        }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 5;
+        text-align: center;
+        max-width: 980px;
+      }
+
+      .hero-eyebrow {
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.8em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 1.6s ease-out 0.3s forwards;
+      }
+
+      .hero-title {
+        font-family: "UnifrakturMaguntia", "Cinzel", serif;
+        font-size: clamp(2.8rem, 9vw, 6.5rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--parchment);
+        margin-bottom: 1.2rem;
+        text-shadow:
+          0 0 60px rgba(196, 129, 28, 0.45),
+          0 0 120px rgba(196, 129, 28, 0.2),
+          0 4px 0 rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        animation: fadeUp 2.2s ease-out 0.7s forwards;
+      }
+
+      .hero-roman {
+        font-family: "IM Fell English SC", serif;
+        font-size: clamp(0.9rem, 1.7vw, 1.2rem);
+        letter-spacing: 0.35em;
+        color: var(--ember);
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeUp 2s ease-out 1.1s forwards;
+      }
+
+      .hero-subtitle {
+        font-family: "Cinzel", serif;
+        font-size: clamp(0.75rem, 1.3vw, 0.95rem);
+        letter-spacing: 0.45em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: fadeUp 2s ease-out 1.4s forwards;
+      }
+
+      .hero-quote {
+        font-family: "IM Fell English", serif;
+        font-style: italic;
+        font-size: clamp(1.1rem, 2vw, 1.45rem);
+        color: var(--bone);
+        max-width: 680px;
+        margin: 0 auto 1rem;
+        opacity: 0;
+        animation: fadeUp 2s ease-out 1.7s forwards;
+        line-height: 1.6;
+      }
+
+      .hero-quote-author {
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-top: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 2s ease-out 2s forwards;
+      }
+
+      .hero-quote::before,
+      .hero-quote::after {
+        content: "❦";
+        display: block;
+        color: var(--gold);
+        font-size: 1.6rem;
+        margin: 1.2rem auto;
+        opacity: 0.55;
+      }
+
+      .scroll-hint {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.5em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+        z-index: 5;
+        opacity: 0;
+        animation:
+          fadeUp 2s ease-out 2.3s forwards,
+          slowBob 3.5s ease-in-out 2.5s infinite;
+      }
+
+      @keyframes slowBob {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(10px);
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ===================== NAV ===================== */
+      .side-nav {
+        position: fixed;
+        top: 50%;
+        right: 1.5rem;
+        transform: translateY(-50%);
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+      }
+
+      .side-nav a {
+        width: 9px;
+        height: 9px;
+        border: 1px solid var(--gold);
+        border-radius: 50%;
+        background: transparent;
+        transition: all 0.4s;
+        position: relative;
+      }
+
+      .side-nav a:hover,
+      .side-nav a.active {
+        background: var(--ember);
+        box-shadow: 0 0 14px var(--ember);
+        transform: scale(1.3);
+      }
+
+      .side-nav a span {
+        position: absolute;
+        right: 22px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        background: rgba(10, 8, 5, 0.85);
+        padding: 4px 10px;
+        border: 1px solid rgba(184, 144, 47, 0.3);
+      }
+
+      .side-nav a:hover span {
+        opacity: 1;
+      }
+
+      @media (max-width: 900px) {
+        .side-nav {
+          display: none;
+        }
+      }
+
+      /* ===================== BOOK DIVIDER ===================== */
+      .book-divider {
+        padding: 6rem 2rem 3rem;
+        text-align: center;
+        position: relative;
+        z-index: 5;
+      }
+
+      .book-label {
+        font-family: "IM Fell English SC", serif;
+        font-size: 0.85rem;
+        letter-spacing: 0.6em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.5rem;
+      }
+
+      .book-title {
+        font-family: "UnifrakturMaguntia", serif;
+        font-size: clamp(2.2rem, 5vw, 3.5rem);
+        color: var(--parchment);
+        margin-bottom: 2rem;
+        text-shadow: 0 0 30px rgba(196, 129, 28, 0.3);
+      }
+
+      .ornament-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 560px;
+        color: var(--gold);
+      }
+
+      .ornament-divider svg {
+        width: 100%;
+        height: 40px;
+        opacity: 0.75;
+      }
+
+      /* ===================== CHAPTERS ===================== */
+      .chapter {
+        position: relative;
+        z-index: 5;
+        padding: 5rem 2rem;
+        max-width: 920px;
+        margin: 0 auto;
+      }
+
+      .chapter-number {
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.6em;
+        text-transform: uppercase;
+        color: var(--gold);
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .chapter-title {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+        color: var(--parchment);
+        text-align: center;
+        margin-bottom: 0.8rem;
+        letter-spacing: 0.04em;
+        line-height: 1.15;
+      }
+
+      .chapter-subtitle {
+        font-family: "IM Fell English", serif;
+        font-style: italic;
+        font-size: clamp(1rem, 1.8vw, 1.25rem);
+        color: var(--ember);
+        text-align: center;
+        margin-bottom: 3.5rem;
+        opacity: 0.9;
+      }
+
+      .chapter-body {
+        color: var(--bone);
+        font-family: "Cardo", serif;
+      }
+
+      .chapter-body p {
+        margin-bottom: 1.5rem;
+        text-align: justify;
+        hyphens: auto;
+        text-indent: 1.5em;
+      }
+
+      .chapter-body p:first-of-type {
+        text-indent: 0;
+      }
+
+      .chapter-body p:first-of-type::first-letter {
+        font-family: "UnifrakturMaguntia", serif;
+        font-size: 5.5rem;
+        float: left;
+        line-height: 0.82;
+        padding: 0.45rem 0.7rem 0 0;
+        color: var(--ember);
+        text-shadow: 0 0 25px rgba(196, 129, 28, 0.45);
+      }
+
+      .chapter-body strong,
+      .chapter-body b {
+        color: var(--gold-bright);
+        font-weight: 700;
+        letter-spacing: 0.01em;
+      }
+
+      .chapter-body em,
+      .chapter-body i {
+        color: var(--bone);
+        font-style: italic;
+      }
+
+      .pull-quote {
+        border-left: 2px solid var(--gold);
+        padding: 1.5rem 2rem;
+        margin: 3rem 0;
+        font-family: "IM Fell English", serif;
+        font-style: italic;
+        font-size: 1.3rem;
+        color: var(--parchment);
+        background: linear-gradient(
+          90deg,
+          rgba(184, 144, 47, 0.07) 0%,
+          transparent 100%
+        );
+        position: relative;
+        text-indent: 0;
+      }
+
+      .pull-quote::before {
+        content: "„";
+        font-family: "UnifrakturMaguntia", serif;
+        position: absolute;
+        top: -1.5rem;
+        left: 1rem;
+        font-size: 5rem;
+        color: var(--gold);
+        opacity: 0.4;
+      }
+
+      .pull-quote cite {
+        display: block;
+        margin-top: 1rem;
+        font-family: "Cinzel", serif;
+        font-style: normal;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      /* Latim destacado em itálico */
+      .latin {
+        font-family: "IM Fell English", serif;
+        font-style: italic;
+        color: var(--gold-bright);
+        letter-spacing: 0.02em;
+      }
+
+      /* ===================== GRIMOIRE GRID — MANUSCRITOS ===================== */
+      .grimoires-section {
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(20, 12, 8, 0.75) 15%,
+          rgba(20, 12, 8, 0.75) 85%,
+          transparent 100%
+        );
+        padding: 6rem 2rem;
+        position: relative;
+        z-index: 5;
+      }
+
+      .grimoires-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .grimoires-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+        margin-top: 4rem;
+      }
+
+      .grimoire-card {
+        background: linear-gradient(
+          135deg,
+          rgba(196, 129, 28, 0.06) 0%,
+          rgba(10, 8, 5, 0.7) 100%
+        );
+        border: 1px solid rgba(184, 144, 47, 0.3);
+        padding: 2.2rem 1.8rem;
+        position: relative;
+        transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
+        overflow: hidden;
+      }
+
+      .grimoire-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        opacity: 0.7;
+      }
+
+      .grimoire-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(196, 129, 28, 0.15) 0%,
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.5s;
+        pointer-events: none;
+      }
+
+      .grimoire-card:hover {
+        border-color: var(--ember);
+        transform: translateY(-6px);
+        box-shadow: 0 24px 50px -24px rgba(196, 129, 28, 0.4);
+      }
+
+      .grimoire-card:hover::after {
+        opacity: 1;
+      }
+
+      .grimoire-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1.5rem;
+        color: var(--gold);
+        opacity: 0.85;
+      }
+
+      .grimoire-icon svg {
+        width: 100%;
+        height: 100%;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.4;
+      }
+
+      .grimoire-name {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--parchment);
+        margin-bottom: 0.3rem;
+      }
+
+      .grimoire-date {
+        font-family: "IM Fell English SC", serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        color: var(--ember);
+        margin-bottom: 1.2rem;
+      }
+
+      .grimoire-desc {
+        font-family: "Cardo", serif;
+        font-size: 0.95rem;
+        color: var(--parchment-dark);
+        line-height: 1.65;
+      }
+
+      /* ===================== SYMBOLS — GRID EXPANDIDO ===================== */
+      .symbols-section {
+        padding: 6rem 2rem;
+        position: relative;
+        z-index: 5;
+      }
+
+      .symbols-container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .symbols-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.5rem;
+        margin-top: 4rem;
+      }
+
+      .symbol-card {
+        border: 1px solid rgba(184, 144, 47, 0.25);
+        padding: 2rem 1.2rem;
+        text-align: center;
+        background: linear-gradient(
+          180deg,
+          rgba(196, 129, 28, 0.04) 0%,
+          rgba(10, 8, 5, 0.6) 100%
+        );
+        transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .symbol-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at center,
+          rgba(196, 129, 28, 0.18) 0%,
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.5s;
+        pointer-events: none;
+      }
+
+      .symbol-card:hover {
+        border-color: var(--ember);
+        transform: translateY(-4px);
+        box-shadow: 0 18px 36px -18px rgba(196, 129, 28, 0.4);
+      }
+
+      .symbol-card:hover::before {
+        opacity: 1;
+      }
+
+      .symbol-svg {
+        width: 75px;
+        height: 75px;
+        margin: 0 auto 1.2rem;
+        color: var(--gold);
+        position: relative;
+        z-index: 2;
+        transition: all 0.5s;
+      }
+
+      .symbol-svg svg {
+        width: 100%;
+        height: 100%;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.5;
+        transition: all 0.5s;
+      }
+
+      .symbol-card:hover .symbol-svg {
+        color: var(--ember);
+        animation: symbolPulse 1.8s ease-in-out infinite;
+        transform: scale(1.05);
+      }
+
+      @keyframes symbolPulse {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 0 transparent);
+        }
+        50% {
+          filter: drop-shadow(0 0 14px var(--ember));
+        }
+      }
+
+      .symbol-name {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--parchment);
+        margin-bottom: 0.4rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .symbol-origin {
+        font-family: "IM Fell English SC", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        color: var(--ember);
+        margin-bottom: 0.6rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .symbol-desc {
+        font-family: "Cardo", serif;
+        font-size: 0.86rem;
+        color: var(--parchment-dark);
+        font-style: italic;
+        position: relative;
+        z-index: 2;
+        line-height: 1.5;
+      }
+
+      /* ===================== SEPHIROTIC TREE ===================== */
+      .sephirot-section {
+        padding: 7rem 2rem;
+        position: relative;
+        z-index: 5;
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(20, 8, 16, 0.55) 40%,
+          rgba(20, 8, 16, 0.55) 60%,
+          transparent 100%
+        );
+      }
+
+      .sephirot-container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .sephirot-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        margin-top: 4rem;
+      }
+
+      @media (max-width: 900px) {
+        .sephirot-layout {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+      }
+
+      .sephirot-diagram {
+        aspect-ratio: 0.7;
+        position: relative;
+        color: var(--gold);
+      }
+
+      .sephirot-diagram svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .sephirot-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sephirot-list li {
+        border-bottom: 1px solid rgba(184, 144, 47, 0.18);
+        padding: 0.9rem 0;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.2rem;
+        align-items: start;
+      }
+
+      .sephirot-list li:last-child {
+        border-bottom: none;
+      }
+
+      .sephirot-num {
+        font-family: "UnifrakturMaguntia", serif;
+        color: var(--ember);
+        font-size: 1.4rem;
+        width: 30px;
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      .sephirot-name {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--parchment);
+        letter-spacing: 0.1em;
+        margin-bottom: 0.15rem;
+      }
+
+      .sephirot-hebrew {
+        font-family: "Cardo", serif;
+        font-style: italic;
+        color: var(--gold);
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .sephirot-meaning {
+        font-family: "Cardo", serif;
+        color: var(--parchment-dark);
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+
+      /* ===================== TIMELINE ===================== */
+      .timeline-section {
+        padding: 7rem 2rem;
+        position: relative;
+        z-index: 5;
+      }
+
+      .timeline-container {
+        max-width: 920px;
+        margin: 0 auto;
+      }
+
+      .timeline {
+        position: relative;
+        margin-top: 4rem;
+        padding-left: 3rem;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 11px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          var(--gold) 8%,
+          var(--gold) 92%,
+          transparent
+        );
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-bottom: 2.8rem;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -2.5rem;
+        top: 0.4rem;
+        width: 24px;
+        height: 24px;
+        border: 1px solid var(--gold);
+        background: #0a0805;
+        border-radius: 50%;
+      }
+
+      .timeline-item::after {
+        content: "✦";
+        position: absolute;
+        left: -2.15rem;
+        top: 0.45rem;
+        color: var(--ember);
+        font-size: 0.85rem;
+        line-height: 1;
+      }
+
+      .timeline-date {
+        font-family: "IM Fell English SC", serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--ember);
+        margin-bottom: 0.4rem;
+      }
+
+      .timeline-title {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 1.3rem;
+        color: var(--parchment);
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-text {
+        font-family: "Cardo", serif;
+        color: var(--parchment-dark);
+        font-size: 0.98rem;
+        line-height: 1.7;
+      }
+
+      /* ===================== NEUROCIÊNCIA / TWO-COL ===================== */
+      .neuro-section {
+        padding: 6rem 2rem;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          rgba(94, 24, 24, 0.05),
+          transparent
+        );
+        position: relative;
+        z-index: 5;
+      }
+
+      .neuro-container {
+        max-width: 1080px;
+        margin: 0 auto;
+      }
+
+      .neuro-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 2rem;
+        margin-top: 4rem;
+      }
+
+      .stat-block {
+        text-align: center;
+        padding: 2.5rem 1.5rem;
+        border: 1px solid rgba(184, 144, 47, 0.2);
+        background: rgba(10, 8, 5, 0.5);
+        position: relative;
+      }
+
+      .stat-number {
+        font-family: "UnifrakturMaguntia", serif;
+        font-size: 3.2rem;
+        color: var(--ember);
+        line-height: 1;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 20px rgba(196, 129, 28, 0.4);
+      }
+
+      .stat-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.8rem;
+      }
+
+      .stat-desc {
+        font-family: "Cardo", serif;
+        font-size: 0.88rem;
+        color: var(--parchment-dark);
+        line-height: 1.55;
+        font-style: italic;
+      }
+
+      /* ===================== EPILOGUE ===================== */
+      .epilogue {
+        padding: 9rem 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 5;
+        background: radial-gradient(
+          ellipse at center bottom,
+          rgba(122, 31, 31, 0.18) 0%,
+          transparent 60%
+        );
+      }
+
+      .epilogue-altar {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-bottom: 4rem;
+      }
+
+      .candle-wrap {
+        width: 60px;
+        position: relative;
+        height: 140px;
+      }
+
+      .candle-body {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 28px;
+        height: 90px;
+        background: linear-gradient(180deg, #f4e6c8, var(--parchment-dark));
+        border-radius: 3px 3px 1px 1px;
+        box-shadow: inset -4px 0 6px rgba(0, 0, 0, 0.25);
+      }
+
+      .flame {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 18px;
+        height: 40px;
+        background: radial-gradient(
+          ellipse at center bottom,
+          #fff5a8 0%,
+          var(--ember) 40%,
+          var(--blood) 80%,
+          transparent 100%
+        );
+        border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+        filter: blur(0.5px);
+        box-shadow:
+          0 0 35px var(--ember),
+          0 0 70px rgba(196, 129, 28, 0.5);
+        animation: flicker 0.32s ease-in-out infinite alternate;
+      }
+
+      .candle-wrap:nth-child(2) .flame {
+        animation-duration: 0.4s;
+        animation-delay: 0.1s;
+      }
+      .candle-wrap:nth-child(3) .flame {
+        animation-duration: 0.28s;
+        animation-delay: 0.2s;
+      }
+
+      @keyframes flicker {
+        0% {
+          transform: translateX(-50%) scale(1, 1) skewX(0deg);
+          opacity: 0.95;
+        }
+        100% {
+          transform: translateX(-52%) scale(1.06, 0.94) skewX(2deg);
+          opacity: 1;
+        }
+      }
+
+      .epilogue-text {
+        max-width: 720px;
+        margin: 0 auto;
+        font-family: "IM Fell English", serif;
+        font-style: italic;
+        font-size: 1.25rem;
+        color: var(--bone);
+        line-height: 1.85;
+      }
+
+      .epilogue-text p {
+        margin-bottom: 1.5rem;
+      }
+
+      .epilogue-final {
+        font-family: "UnifrakturMaguntia", serif;
+        font-style: normal;
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        color: var(--ember);
+        margin-top: 3rem;
+        text-shadow: 0 0 30px rgba(196, 129, 28, 0.5);
+        line-height: 1.3;
+      }
+
+      /* ===================== FOOTER ===================== */
+      footer {
+        border-top: 1px solid rgba(184, 144, 47, 0.2);
+        padding: 3rem 2rem;
+        text-align: center;
+        color: var(--gold-deep);
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        position: relative;
+        z-index: 5;
+      }
+
+      footer .ornament-final {
+        color: var(--gold);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        letter-spacing: 1rem;
+      }
+
+      footer .footer-note {
+        margin-top: 1rem;
+        font-size: 0.6rem;
+        opacity: 0.65;
+        letter-spacing: 0.15em;
+        text-transform: none;
+        font-family: "IM Fell English", serif;
+        font-style: italic;
+      }
+
+      /* ===================== RESPONSIVO ===================== */
+      @media (max-width: 640px) {
+        body {
+          font-size: 17px;
+        }
+        .chapter {
+          padding: 3.5rem 1.25rem;
+        }
+        .chapter-body p:first-of-type::first-letter {
+          font-size: 3.8rem;
+        }
+        .pull-quote {
+          padding: 1.2rem 1.25rem;
+          font-size: 1.1rem;
+        }
+        .grimoires-grid,
+        .symbols-grid {
+          gap: 1.25rem;
+        }
+        .grimoire-card,
+        .symbol-card {
+          padding: 1.5rem 1rem;
+        }
+        .epilogue-altar {
+          gap: 1.5rem;
+        }
+        .candle-wrap {
+          transform: scale(0.85);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ NAV ============ -->
+    <nav class="side-nav" aria-label="Navegação">
+      <a href="#prologo"><span>Prólogo</span></a>
+      <a href="#alicerce"><span>O Alicerce</span></a>
+      <a href="#imperios"><span>Os Impérios do Invisível</span></a>
+      <a href="#simbolos"><span>A Gramática Oculta</span></a>
+      <a href="#sefirot"><span>A Árvore da Vida</span></a>
+      <a href="#grimoires"><span>Os Livros Proibidos</span></a>
+      <a href="#ordens"><span>As Ordens</span></a>
+      <a href="#mente"><span>A Mente e o Mistério</span></a>
+      <a href="#epilogo"><span>Epílogo</span></a>
+    </nav>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="prologo">
+      <!-- Mandala alquímica externa -->
+      <svg
+        class="hero-mandala"
+        viewBox="0 0 600 600"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <defs>
+          <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c4811c" stop-opacity="0.5" />
+            <stop offset="100%" stop-color="#c4811c" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <g stroke="#b8902f" stroke-width="1" fill="none">
+          <!-- Círculos concêntricos -->
+          <circle cx="300" cy="300" r="290" />
+          <circle cx="300" cy="300" r="260" />
+          <circle cx="300" cy="300" r="220" stroke-dasharray="2 4" />
+          <circle cx="300" cy="300" r="180" />
+          <!-- Estrela de 12 pontas / zodíaco -->
+          <g transform="translate(300 300)">
+            <g>
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+              >
+                ♈
+              </text>
+            </g>
+            <g transform="rotate(30)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(-30 0 -240)"
+              >
+                ♉
+              </text>
+            </g>
+            <g transform="rotate(60)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(-60 0 -240)"
+              >
+                ♊
+              </text>
+            </g>
+            <g transform="rotate(90)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(-90 0 -240)"
+              >
+                ♋
+              </text>
+            </g>
+            <g transform="rotate(120)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(-120 0 -240)"
+              >
+                ♌
+              </text>
+            </g>
+            <g transform="rotate(150)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(-150 0 -240)"
+              >
+                ♍
+              </text>
+            </g>
+            <g transform="rotate(180)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(180 0 -240)"
+              >
+                ♎
+              </text>
+            </g>
+            <g transform="rotate(210)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(150 0 -240)"
+              >
+                ♏
+              </text>
+            </g>
+            <g transform="rotate(240)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(120 0 -240)"
+              >
+                ♐
+              </text>
+            </g>
+            <g transform="rotate(270)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(90 0 -240)"
+              >
+                ♑
+              </text>
+            </g>
+            <g transform="rotate(300)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(60 0 -240)"
+              >
+                ♒
+              </text>
+            </g>
+            <g transform="rotate(330)">
+              <line x1="0" y1="-290" x2="0" y2="-180" stroke-width="0.6" />
+              <text
+                x="0"
+                y="-240"
+                fill="#b8902f"
+                font-family="serif"
+                font-size="14"
+                text-anchor="middle"
+                transform="rotate(30 0 -240)"
+              >
+                ♓
+              </text>
+            </g>
+          </g>
+          <!-- Pentagrama interno -->
+          <polygon
+            points="300,140 348,272 484,272 374,348 416,476 300,400 184,476 226,348 116,272 252,272"
+            stroke-width="1.2"
+          />
+          <!-- Hexagrama -->
+          <polygon
+            points="300,170 422,374 178,374"
+            stroke-width="0.8"
+            opacity="0.6"
+          />
+          <polygon
+            points="300,430 178,226 422,226"
+            stroke-width="0.8"
+            opacity="0.6"
+          />
+        </g>
+      </svg>
+
+      <!-- Mandala interna — Flor da Vida -->
+      <svg
+        class="hero-mandala-counter"
+        viewBox="0 0 400 400"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <g stroke="#c4811c" stroke-width="1" fill="none" opacity="0.9">
+          <circle cx="200" cy="200" r="50" />
+          <circle cx="200" cy="150" r="50" />
+          <circle cx="200" cy="250" r="50" />
+          <circle cx="156.7" cy="175" r="50" />
+          <circle cx="156.7" cy="225" r="50" />
+          <circle cx="243.3" cy="175" r="50" />
+          <circle cx="243.3" cy="225" r="50" />
+          <circle cx="200" cy="100" r="50" />
+          <circle cx="200" cy="300" r="50" />
+          <circle cx="113.4" cy="150" r="50" />
+          <circle cx="113.4" cy="250" r="50" />
+          <circle cx="286.6" cy="150" r="50" />
+          <circle cx="286.6" cy="250" r="50" />
+          <circle cx="156.7" cy="75" r="50" opacity="0.5" />
+          <circle cx="156.7" cy="325" r="50" opacity="0.5" />
+          <circle cx="243.3" cy="75" r="50" opacity="0.5" />
+          <circle cx="243.3" cy="325" r="50" opacity="0.5" />
+          <circle cx="200" cy="200" r="120" opacity="0.7" stroke-width="1.4" />
+        </g>
+      </svg>
+
+      <div class="hero-content">
+        <div class="hero-eyebrow">— Documento de Investigação Profunda —</div>
+        <h1 class="hero-title">Os Livros Que Não<br />Deveriam Existir</h1>
+        <div class="hero-roman">Manuscripta · Symbola · Mysteria · Ordines</div>
+        <div class="hero-subtitle">
+          Cultismo, Grimórios e Simbolismos ao longo de 40.000 anos
+        </div>
+        <div class="hero-quote">
+          Quod est inferius est sicut quod est superius, et quod est superius
+          est sicut quod est inferius, ad perpetranda miracula rei unius.
+        </div>
+        <div class="hero-quote-author">— Tabula Smaragdina, séc. IX d.C.</div>
+      </div>
+
+      <div class="scroll-hint">↓ Atravesse o véu</div>
+    </section>
+
+    <!-- ============ BOOK I — O ALICERCE ============ -->
+    <div class="book-divider" id="alicerce">
+      <div class="book-label">Liber Primus</div>
+      <div class="book-title">O Alicerce</div>
+      <div class="ornament-divider">
+        <svg
+          viewBox="0 0 560 40"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        >
+          <line
+            x1="0"
+            y1="20"
+            x2="220"
+            y2="20"
+            stroke="currentColor"
+            stroke-width="1"
+          />
+          <line
+            x1="340"
+            y1="20"
+            x2="560"
+            y2="20"
+            stroke="currentColor"
+            stroke-width="1"
+          />
+          <g fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="280" cy="20" r="14" />
+            <polygon points="280,8 286,18 280,28 274,18" />
+            <circle cx="280" cy="20" r="3" fill="currentColor" />
+            <circle cx="250" cy="20" r="2" fill="currentColor" />
+            <circle cx="310" cy="20" r="2" fill="currentColor" />
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <article class="chapter">
+      <div class="chapter-number">Capítulo I</div>
+      <h2 class="chapter-title">O Silêncio Anterior à Palavra</h2>
+      <p class="chapter-subtitle">
+        Quarenta milênios antes da escrita, a mente humana já tocava o invisível
+      </p>
+
+      <div class="chapter-body">
+        <p>
+          Em 2019, o arqueólogo Maxime Aubert e equipe publicaram na
+          <em>Nature</em> a datação de um painel rupestre em
+          <strong>Leang Bulu' Sipong 4</strong>, na ilha indonésia de Sulawesi:
+          figuras humanas com características animais — cabeças de pássaro,
+          focinhos de javali — caçando búfalos. A cena tem cerca de
+          <strong>43.900 anos</strong>. É a narrativa figurativa mais antiga
+          conhecida. E nela há <em>therianthropes</em> — seres meio humanos,
+          meio bestiais. Espíritos.
+        </p>
+
+        <p>
+          Cinco mil anos antes de qualquer civilização agrícola, antes de
+          qualquer cidade, antes de qualquer divindade nomeada que tenha chegado
+          até nós, o ser humano já estava desenhando entidades híbridas. Já
+          estava codificando, em pigmento de ocre, a intuição mais antiga e mais
+          persistente da nossa espécie: <strong>existe um outro lado.</strong>
+        </p>
+
+        <p>
+          Em Lascaux (~17.000 a.C.), Chauvet (~32.000 a.C.), Altamira (~36.000
+          a.C.), Les Trois-Frères (~13.000 a.C.) — em todas essas cavernas,
+          repete-se o padrão. Animais reais ao lado de criaturas impossíveis.
+          Mãos sopradas em negativo. E, no fundo da câmara mais profunda de
+          Trois-Frères, a figura conhecida como <em>"O Feiticeiro"</em>: um ser
+          ereto com chifres de cervo, olhos de coruja, cauda de cavalo, patas de
+          urso. O xamã. O ancestral de todos os sacerdotes.
+        </p>
+
+        <div class="pull-quote">
+          Primeiro veio o templo, depois a cidade.
+          <cite
+            >— Klaus Schmidt, arqueólogo (1953–2014), descobridor de Göbekli
+            Tepe</cite
+          >
+        </div>
+
+        <p>
+          Em 1994, no sudeste da Turquia, o arqueólogo alemão
+          <strong>Klaus Schmidt</strong> começou a escavar uma colina que os
+          locais chamavam de "colina do umbigo". O que encontrou destruiu o
+          roteiro arqueológico padrão: um complexo de templos megalíticos com
+          <strong>mais de 11.500 anos</strong> — anterior à invenção da escrita,
+          da roda, da cerâmica, e até da agricultura sistemática. Pilares em T
+          de até cinco metros de altura, dispostos em círculos, esculpidos com
+          leopardos, escorpiões, serpentes, abutres e figuras humanas
+          estilizadas.
+        </p>
+
+        <p>
+          A pergunta que <strong>Göbekli Tepe</strong> coloca é vertiginosa: e
+          se a religião veio <em>antes</em> da civilização? E se não foi a
+          cidade que criou os templos, mas os templos que criaram a cidade? E se
+          o ser humano se tornou sedentário não para plantar trigo, mas para
+          servir aos deuses?
+        </p>
+      </div>
+    </article>
+
+    <article class="chapter">
+      <div class="chapter-number">Capítulo II</div>
+      <h2 class="chapter-title">O Xamã — A Tecnologia Mais Antiga da Mente</h2>
+      <p class="chapter-subtitle">
+        Em todos os continentes, os mesmos métodos. As mesmas visões.
+      </p>
+
+      <div class="chapter-body">
+        <p>
+          Antes dos sacerdotes, dos faraós, dos brâmanes — houve o xamã. A
+          palavra vem do <em>šaman</em> dos povos tungúsicos da Sibéria, e foi
+          adotada pela antropologia para descrever uma figura presente em
+          virtualmente todas as culturas pré-modernas: do Ártico à Amazônia, das
+          estepes asiáticas à Austrália aborígene.
+        </p>
+
+        <p>
+          <strong>Mircea Eliade</strong>, em sua obra clássica
+          <em>Le Chamanisme et les techniques archaïques de l'extase</em>
+          (1951), documentou um corpus impressionante. O ponto comum: o xamã não
+          acredita no espírito — o xamã <em>viaja</em>. Por meio de privação
+          sensorial, jejum, dança rítmica, percussão (especialmente entre 4 e 7
+          Hz, frequências que sincronizam ondas cerebrais theta) e plantas
+          enteógenas, ele entra em estados que a neurociência moderna chama de
+          <em>altered states of consciousness</em>.
+        </p>
+
+        <div class="pull-quote">
+          Sacrificado eu próprio a mim mesmo, naquele árvore que ninguém sabe de
+          onde brotaram suas raízes; eu pendurei nove noites longas, ferido pela
+          lança, dedicado a Odin.
+          <cite>— Hávamál, estrofe 138 (Edda poética, séc. XIII)</cite>
+        </div>
+
+        <p>
+          Em <strong>1957</strong>, no Curdistão iraquiano, o arqueólogo Ralph
+          Solecki escavou a Caverna de Shanidar. Lá encontrou nove esqueletos de
+          Neandertais — uma outra espécie humana, não a nossa. Um deles,
+          <em>Shanidar 4</em>, foi datado em cerca de 60.000 anos. A análise de
+          pólen no sedimento ao redor do corpo revelou flores:
+          <em>Achillea, Centaurea, Senecio, Muscari</em>. Não eram flores que
+          cresciam ali. Foram trazidas.
+        </p>
+
+        <p>
+          Outra espécie humana — não nós — já carregava seus mortos com flores.
+          Já acreditava em algo além.
+          <strong
+            >O cultismo, na sua forma mais embrionária, é mais antigo do que a
+            humanidade no sentido estrito do termo.</strong
+          >
+          Ele atravessa fronteiras de espécies.
+        </p>
+      </div>
+    </article>
+
+    <!-- ============ BOOK II — OS IMPÉRIOS ============ -->
+    <div class="book-divider" id="imperios">
+      <div class="book-label">Liber Secundus</div>
+      <div class="book-title">Os Impérios do Invisível</div>
+      <div class="ornament-divider">
+        <svg
+          viewBox="0 0 560 40"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        >
+          <line
+            x1="0"
+            y1="20"
+            x2="220"
+            y2="20"
+            stroke="currentColor"
+            stroke-width="1"
+          />
+          <line
+            x1="340"
+            y1="20"
+            x2="560"
+            y2="20"
+            stroke="currentColor"
+            stroke-width="1"
+          />
+          <g fill="none" stroke="currentColor" stroke-width="1">
+            <polygon points="280,4 318,36 242,36" />
+            <line x1="262" y1="36" x2="298" y2="36" stroke-width="0.8" />
+            <circle cx="280" cy="22" r="3" fill="currentColor" />
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <article class="chapter">
+      <div class="chapter-number">Capítulo III</div>
+      <h2 class="chapter-title">Egito — A Civilização Codificada em Pedra</h2>
+      <p class="chapter-subtitle">
+        Cinco partes da alma. Três níveis de conhecimento. Uma teologia
+        operacional.
+      </p>
+
+      <div class="chapter-body">
+        <p>
+          O Egito não foi um povo religioso. Foi uma civilização
+          <strong>inteiramente construída sobre uma teologia operacional</strong
+          >. A diferença é radical: nas culturas modernas, a religião ocupa um
+          setor da vida; no Egito, ela ocupava <em>tudo</em> — a agricultura, a
+          arquitetura, a política, a medicina, a astronomia, a engenharia.
+        </p>
+
+        <p>
+          Os textos egípcios fundamentais, em ordem cronológica:
+          <strong>Textos das Pirâmides</strong> (c. 2400 a.C., as inscrições
+          religiosas mais antigas do mundo, gravadas nas paredes internas das
+          pirâmides de Saqqara em hieróglifos pintados de verde — cor da
+          regeneração); <strong>Textos dos Sarcófagos</strong> (c. 2100–1800
+          a.C.); e o famoso <span class="latin">r(ꜣ)w nw prt m hrw</span> —
+          "Fórmulas para Sair à Luz do Dia", que ocidentais conhecem como
+          <strong>Livro dos Mortos</strong> (c. 1550 a.C.).
+        </p>
+
+        <div class="pull-quote">
+          Eu não fiz o mal a homem algum. Eu não empobreci meu povo. Eu não fiz
+          nada que os deuses abominem. Eu sou puro. Eu sou puro. Eu sou puro. Eu
+          sou puro.
+          <cite
+            >— Confissão Negativa, Capítulo 125 do Livro dos Mortos, papiro de
+            Ani</cite
+          >
+        </div>
+
+        <p>
+          A alma egípcia, ao contrário da concepção moderna unitária, era
+          composta de <strong>cinco partes</strong>: o <em>Ka</em> (força
+          vital), o <em>Ba</em> (personalidade-pássaro), o
+          <em>Akh</em> (espírito glorificado), o <em>Sheut</em> (sombra) e o
+          <em>Ren</em> (nome verdadeiro). Conhecer o <em>ren</em> de algo era
+          exercer poder sobre ele — e por isso pronunciar o nome verdadeiro de
+          um deus era um ato perigoso.
+        </p>
+
+        <p>
+          Os sacerdotes operavam em <strong>três níveis</strong>, segundo
+          Heródoto, Plutarco (<em>De Iside et Osiride</em>) e Clemente de
+          Alexandria: o <em>exotérico</em> para o povo; o
+          <em>mesotérico</em> para os iniciados menores; e o
+          <em>esotérico</em> — a doutrina secreta sobre a natureza do divino —
+          reservado aos sumos hierofantes e transmitido apenas oralmente, sob
+          juramento. Plutarco relatou que sobre o pórtico do templo de Saís
+          estava inscrito:
+          <span class="latin"
+            >"Eu sou tudo o que foi, o que é e o que será. Nenhum mortal jamais
+            levantou meu véu."</span
+          >
+        </p>
+      </div>
+    </article>
+
+    <article class="chapter">
+      <div class="chapter-number">Capítulo IV</div>
+      <h2 class="chapter-title">
+        Eleusis — O Segredo Que Atravessou Dois Mil Anos
+      </h2>
+      <p class="chapter-subtitle">
+        De 1500 a.C. a 392 d.C. — e nem um único iniciado revelou jamais o que
+        viu
+      </p>
+
+      <div class="chapter-body">
+        <p>
+          Durante quase <strong>dois milênios</strong>, em uma estrada sagrada
+          de 22 quilômetros entre Atenas e Eleusis, milhares de pessoas
+          peregrinaram anualmente para participar do ritual mais sagrado do
+          mundo antigo. Os Grandes Mistérios aconteciam em setembro–outubro (mês
+          de Boedromion). Imperadores, filósofos, escravos, mulheres — todos
+          podiam ser iniciados. Mas nenhum jamais poderia revelar o que via lá
+          dentro. E nenhum jamais o fez.
+        </p>
+
+        <p>
+          Antes de entrar no <strong>Telesterion</strong>, o grande salão de
+          iniciação, os <em>mystai</em> bebiam o <strong>kykeon</strong>. Os
+          ingredientes documentados no Hino Homérico a Deméter são: cevada
+          (<em>alphi</em>), água e hortelã (<em>glechon</em>). Mas a hipótese de
+          <strong>R. Gordon Wasson</strong> (etnomicologista),
+          <strong>Albert Hofmann</strong> (químico que isolou o LSD em 1938) e
+          <strong>Carl A. P. Ruck</strong> (classicista), publicada em
+          <em>The Road to Eleusis</em> (1978), propõe que a cevada estaria
+          infectada com <em>Claviceps purpurea</em> — o ergot — e que sua
+          preparação ritual visava extrair os alcaloides solúveis em água
+          enquanto deixava de lado os tóxicos.
+        </p>
+
+        <p>
+          Em 2018, uma equipe espanhola publicou no
+          <em>Journal of Archaeological Science</em> a análise química de
+          resíduos em vasos cerâmicos de um santuário de Deméter perto de Mas
+          Castellar de Pontós (Catalunha, séc. IV a.C.).
+          <strong
+            >Encontraram traços de ergot em cálculo dentário humano.</strong
+          >
+          A hipótese psicoativa ganhou apoio empírico.
+        </p>
+
+        <div class="pull-quote">
+          Bem-aventurado é aquele que tendo visto isto desce à terra; ele
+          conhece o fim da vida, conhece também o seu princípio dado pelos
+          deuses.
+          <cite>— Píndaro, séc. V a.C., fragmento sobre os Mistérios</cite>
+        </div>
+
+        <p>
+          Em <strong>392 d.C.</strong>, o imperador Teodósio I proibiu todos os
+          cultos pagãos. Em 396 d.C., os godos de Alarico, guiados por monges
+          cristãos, queimaram o Telesterion. Os Mistérios morreram.
+          <strong>O segredo morreu com eles.</strong>
+        </p>
+      </div>
+    </article>
+
+    <article class="chapter">
+      <div class="chapter-number">Capítulo V</div>
+      <h2 class="chapter-title">Mitraísmo — A Religião dos Soldados</h2>
+      <p class="chapter-subtitle">
+        Sete graus, sete planetas, uma cena: o touro sendo sacrificado
+      </p>
+
+      <div class="chapter-body">
+        <p>
+          Enquanto Eleusis morria, outra religião mistérica florescia em todo o
+          Império Romano: o culto de <strong>Mithras</strong>. Suas ruínas — os
+          <em>mithraea</em> — foram encontradas da Inglaterra (London Mithraeum,
+          descoberto em 1954) à Síria (Dura-Europos, 240 d.C.). Estima-se que
+          <strong>mais de 680 mithraea existiram no Império</strong>.
+        </p>
+
+        <p>
+          Os iniciados — todos homens — progrediam por
+          <strong>sete graus</strong>, cada um vinculado a um planeta clássico,
+          segundo São Jerônimo (<em>Epístola 107</em>, 403 d.C.):
+          <strong>Corax</strong> (Corvo, Mercúrio),
+          <strong>Nymphus</strong> (Noivo, Vênus),
+          <strong>Miles</strong> (Soldado, Marte), <strong>Leo</strong> (Leão,
+          Júpiter), <strong>Perses</strong> (Persa, Lua),
+          <strong>Heliodromus</strong> (Corredor do Sol, Sol), e finalmente
+          <strong>Pater</strong> (Pai, Saturno).
+        </p>
+
+        <p>
+          No centro de cada mithraeum havia a <strong>tauroctonia</strong> —
+          Mithras matando o touro branco. Cada elemento da cena tem
+          correspondência astronômica precisa: touro = constelação de Touro; cão
+          = Cão Maior; serpente = Hidra; escorpião = Escorpião. O acadêmico
+          David Ulansey, em
+          <em>The Origins of the Mithraic Mysteries</em> (1989), propôs que a
+          iconografia codifica a <strong>precessão dos equinócios</strong> — o
+          lento deslocamento do ponto vernal ao longo das constelações
+          zodiacais.
+        </p>
+
+        <p>
+          Em 391 d.C., os mithraea foram fechados. Muitos foram preenchidos com
+          terra; alguns transformados em criptas cristãs. A Igreja de
+          <em>San Clemente</em>, em Roma, é uma estratigrafia perfeita: basílica
+          do séc. XII no topo, basílica do séc. IV no meio, e
+          <strong>no subsolo, um mithraeum do séc. II ainda visível.</strong>
+          Três camadas de religião empilhadas como geologia espiritual.
+        </p>
+      </div>
+    </article>
+
+    <!-- ============ SYMBOLS ============ -->
+    <section class="symbols-section" id="simbolos">
+      <div class="symbols-container">
+        <div class="book-divider" style="padding: 0 0 1rem">
+          <div class="book-label">Liber Tertius</div>
+          <div class="book-title">A Gramática Oculta dos Símbolos</div>
+          <div class="ornament-divider">
+            <svg
+              viewBox="0 0 560 40"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <line
+                x1="0"
+                y1="20"
+                x2="220"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <line
+                x1="340"
+                y1="20"
+                x2="560"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <g fill="none" stroke="currentColor" stroke-width="1">
+                <polygon points="266,12 294,12 280,32" />
+                <polygon points="266,28 294,28 280,8" opacity="0.5" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <p
+          class="chapter-subtitle"
+          style="
+            margin-top: 2rem;
+            max-width: 780px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          Vinte e quatro chaves para a mente humana — formas que reaparecem em
+          culturas que nunca se encontraram, sonhadas por pessoas que nunca as
+          viram
+        </p>
+
+        <div class="symbols-grid">
+          <!-- ANKH -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <ellipse cx="32" cy="20" rx="11" ry="14" />
+                <line x1="32" y1="34" x2="32" y2="58" />
+                <line x1="20" y1="42" x2="44" y2="42" />
+              </svg>
+            </div>
+            <div class="symbol-name">Ankh ☥</div>
+            <div class="symbol-origin">Egito · c. 3000 a.C.</div>
+            <div class="symbol-desc">
+              A chave da vida. Hieróglifo para <em>ꜥnḫ</em>. Deuses o oferecem
+              aos faraós — o sopro divino.
+            </div>
+          </div>
+
+          <!-- EYE OF HORUS -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path
+                  d="M 8 32 Q 20 18, 32 18 Q 44 18, 56 32 Q 44 46, 32 46 Q 20 46, 8 32 Z"
+                />
+                <circle cx="32" cy="32" r="6" fill="currentColor" />
+                <path d="M 32 46 L 32 56 M 36 44 Q 42 52, 50 54" />
+              </svg>
+            </div>
+            <div class="symbol-name">Olho de Hórus</div>
+            <div class="symbol-origin">Egito · Wadjet</div>
+            <div class="symbol-desc">
+              Restaurado por Thoth após a batalha contra Set. Cada parte
+              representa uma fração (½, ¼, ⅛...) usada para medir grãos e
+              medicamentos.
+            </div>
+          </div>
+
+          <!-- OUROBOROS -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="22" stroke-dasharray="120 8" />
+                <circle cx="52" cy="26" r="3.5" fill="currentColor" />
+                <path d="M 49 30 L 54 34" stroke-width="1.5" />
+                <path d="M 46 24 L 52 22" />
+              </svg>
+            </div>
+            <div class="symbol-name">Ouroboros</div>
+            <div class="symbol-origin">Egito · 1320 a.C.</div>
+            <div class="symbol-desc">
+              Primeira aparição: santuário de Tutankhamon. No papiro de
+              Cleópatra, a Alquimista (séc. III d.C.):
+              <span class="latin">ἕν τὸ πᾶν</span> — "tudo é um".
+            </div>
+          </div>
+
+          <!-- PENTAGRAMA -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <polygon
+                  points="32,6 39,26 60,26 43,38 50,58 32,46 14,58 21,38 4,26 25,26"
+                />
+                <circle cx="32" cy="32" r="26" />
+              </svg>
+            </div>
+            <div class="symbol-name">Pentagrama</div>
+            <div class="symbol-origin">Pitágoras · séc. VI a.C.</div>
+            <div class="symbol-desc">
+              Cinco pontas, cinco elementos. Os pitagóricos soletravam
+              <span class="latin">ΥΓΙΕΙΑ</span> (saúde) nas pontas. Agrippa
+              inscreveu nele o homem perfeito.
+            </div>
+          </div>
+
+          <!-- HEXAGRAMA -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <polygon points="32,6 56,48 8,48" />
+                <polygon points="32,58 8,16 56,16" />
+              </svg>
+            </div>
+            <div class="symbol-name">Hexagrama ✡</div>
+            <div class="symbol-origin">Selo de Salomão</div>
+            <div class="symbol-desc">
+              Triângulo de fogo + triângulo de água. União dos opostos. Em
+              grimórios islâmicos e europeus, controle sobre djinns e demônios.
+            </div>
+          </div>
+
+          <!-- ALL-SEEING EYE -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <polygon points="32,8 58,52 6,52" />
+                <ellipse cx="32" cy="36" rx="13" ry="6" />
+                <circle cx="32" cy="36" r="3.5" fill="currentColor" />
+                <g stroke-width="0.8" opacity="0.6">
+                  <line x1="32" y1="2" x2="32" y2="8" />
+                  <line x1="2" y1="56" x2="6" y2="52" />
+                  <line x1="62" y1="56" x2="58" y2="52" />
+                </g>
+              </svg>
+            </div>
+            <div class="symbol-name">Olho da Providência</div>
+            <div class="symbol-origin">Iconografia cristã · séc. XVII</div>
+            <div class="symbol-desc">
+              Trindade onisciente. Adotado pela maçonaria. No verso do Grande
+              Selo dos EUA, sobre pirâmide inacabada de 13 fileiras.
+            </div>
+          </div>
+
+          <!-- OUROBOROS HEXAGRAMA UNICURSAL... CRUZ -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <line x1="32" y1="8" x2="32" y2="56" />
+                <line x1="14" y1="22" x2="50" y2="22" />
+              </svg>
+            </div>
+            <div class="symbol-name">Cruz</div>
+            <div class="symbol-origin">Pré-cristã · multicultural</div>
+            <div class="symbol-desc">
+              Quatro ventos. Quatro elementos. Quatro direções. A cruz precede o
+              cristianismo em milênios — sol, axis mundi, união.
+            </div>
+          </div>
+
+          <!-- TRISKELION -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <g transform="translate(32 32)">
+                  <path
+                    d="M 0 -4 Q -8 -16, -20 -10 Q -16 -2, -8 -2 Q -4 -2, -4 0"
+                  />
+                  <g transform="rotate(120)">
+                    <path
+                      d="M 0 -4 Q -8 -16, -20 -10 Q -16 -2, -8 -2 Q -4 -2, -4 0"
+                    />
+                  </g>
+                  <g transform="rotate(240)">
+                    <path
+                      d="M 0 -4 Q -8 -16, -20 -10 Q -16 -2, -8 -2 Q -4 -2, -4 0"
+                    />
+                  </g>
+                  <circle cx="0" cy="0" r="3" fill="currentColor" />
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="26"
+                    stroke-width="0.6"
+                    opacity="0.5"
+                  />
+                </g>
+              </svg>
+            </div>
+            <div class="symbol-name">Triskelion</div>
+            <div class="symbol-origin">Newgrange · 3200 a.C.</div>
+            <div class="symbol-desc">
+              Três espirais em rotação. Passado-presente-futuro. Terra-mar-céu.
+              Símbolo celta, da Trinacria siciliana e da Ilha de Man.
+            </div>
+          </div>
+
+          <!-- VESICA PISCIS -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="24" cy="32" r="18" />
+                <circle cx="40" cy="32" r="18" />
+              </svg>
+            </div>
+            <div class="symbol-name">Vesica Piscis</div>
+            <div class="symbol-origin">Geometria sagrada</div>
+            <div class="symbol-desc">
+              Intersecção de dois círculos. Base da mandorla cristã, do peixe
+              Ichthys, de toda geometria sagrada ocidental.
+            </div>
+          </div>
+
+          <!-- FLOR DA VIDA -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="9" />
+                <circle cx="32" cy="23" r="9" />
+                <circle cx="32" cy="41" r="9" />
+                <circle cx="24" cy="28" r="9" />
+                <circle cx="40" cy="28" r="9" />
+                <circle cx="24" cy="36" r="9" />
+                <circle cx="40" cy="36" r="9" />
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="22"
+                  stroke-width="0.8"
+                  opacity="0.6"
+                />
+              </svg>
+            </div>
+            <div class="symbol-name">Flor da Vida</div>
+            <div class="symbol-origin">Abidos · Egito</div>
+            <div class="symbol-desc">
+              Gravada em pilares do Templo de Osíris. Contém a Semente da Vida,
+              o Cubo de Metatron e os cinco sólidos platônicos.
+            </div>
+          </div>
+
+          <!-- CONTINUAÇÃO DO HTML — A PARTIR DO CADUCEU -->
+          <!-- Cole esta continuação substituindo o último symbol-card incompleto -->
+
+          <!-- CADUCEUS -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <line x1="32" y1="6" x2="32" y2="58" />
+                <path
+                  d="M 22 14 Q 32 20, 42 14 Q 32 26, 22 26 Q 32 32, 42 26 Q 32 38, 22 38 Q 32 44, 42 38"
+                  fill="none"
+                />
+                <path d="M 24 10 L 32 4 L 40 10" stroke-width="1.2" />
+                <path d="M 22 8 Q 32 4, 42 8" opacity="0.6" />
+              </svg>
+            </div>
+            <div class="symbol-name">Caduceu</div>
+            <div class="symbol-origin">Hermes · psicopompo</div>
+            <div class="symbol-desc">
+              Bastão alado de Mercúrio, com duas serpentes entrelaçadas. Símbolo
+              de comércio e mensagens — não de medicina (esse é o bastão de
+              Asclépio).
+            </div>
+          </div>
+
+          <!-- TRISULA -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <line x1="32" y1="20" x2="32" y2="58" />
+                <path
+                  d="M 16 26 L 16 10 L 16 26 L 32 14 L 48 26 L 48 10 L 48 26"
+                />
+                <line x1="24" y1="58" x2="40" y2="58" stroke-width="2" />
+              </svg>
+            </div>
+            <div class="symbol-name">Trishula</div>
+            <div class="symbol-origin">Shiva · Índia</div>
+            <div class="symbol-desc">
+              Três pontas: as três gunas (sattva, rajas, tamas). Também atributo
+              de Poseidon e Netuno. Poder sobre os três mundos.
+            </div>
+          </div>
+
+          <!-- YIN YANG -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="26" />
+                <path
+                  d="M 32 6 A 26 26 0 0 1 32 58 A 13 13 0 0 1 32 32 A 13 13 0 0 0 32 6 Z"
+                  fill="currentColor"
+                />
+                <circle cx="32" cy="19" r="3.5" fill="#0a0805" />
+                <circle cx="32" cy="45" r="3.5" fill="currentColor" />
+              </svg>
+            </div>
+            <div class="symbol-name">Yin-Yang ☯</div>
+            <div class="symbol-origin">Taijitu · China</div>
+            <div class="symbol-desc">
+              Conceito do <em>I Ching</em>. Cada princípio contém a semente de
+              seu oposto. Formalização gráfica por Lai Zhide, séc. XVI.
+            </div>
+          </div>
+
+          <!-- HAMSA -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path
+                  d="M 20 28 L 20 12 Q 20 6, 26 6 L 26 24 L 28 24 L 28 8 Q 28 4, 32 4 Q 36 4, 36 8 L 36 24 L 38 24 L 38 6 Q 38 0, 44 6 L 44 28 Q 44 36, 50 38 Q 52 38, 52 36 L 52 18 Q 52 12, 58 12 L 58 38 Q 58 56, 32 56 Q 8 56, 8 38 L 8 18 Q 8 12, 14 12 L 14 36 Q 14 38, 16 38 Q 22 36, 22 28 Z"
+                />
+                <circle cx="32" cy="36" r="6" />
+                <ellipse cx="32" cy="36" rx="3" ry="2" fill="currentColor" />
+              </svg>
+            </div>
+            <div class="symbol-name">Hamsa</div>
+            <div class="symbol-origin">Mão de Fátima · Miriam</div>
+            <div class="symbol-desc">
+              Amuleto contra o mau-olhado no Oriente Médio e Norte da África. O
+              olho na palma vê e neutraliza a inveja antes de tocar o portador.
+            </div>
+          </div>
+
+          <!-- RUNA ANSUZ -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <line x1="22" y1="6" x2="22" y2="58" stroke-width="2" />
+                <line x1="22" y1="14" x2="44" y2="22" stroke-width="2" />
+                <line x1="22" y1="22" x2="42" y2="30" stroke-width="2" />
+              </svg>
+            </div>
+            <div class="symbol-name">Ansuz ᚨ</div>
+            <div class="symbol-origin">Futhark · séc. II d.C.</div>
+            <div class="symbol-desc">
+              Runa de Odin. "Deus", "palavra divina", "sopro de inspiração".
+              Odin pendurou-se nove noites em Yggdrasil para recebê-las.
+            </div>
+          </div>
+
+          <!-- BAFOMÉ -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <polygon
+                  points="32,58 8,18 16,18 22,8 32,16 42,8 48,18 56,18"
+                />
+                <circle cx="32" cy="32" r="14" />
+                <circle cx="32" cy="32" r="22" opacity="0.4" />
+                <circle cx="26" cy="30" r="2" fill="currentColor" />
+                <circle cx="38" cy="30" r="2" fill="currentColor" />
+              </svg>
+            </div>
+            <div class="symbol-name">Bafomé</div>
+            <div class="symbol-origin">Éliphas Lévi · 1854</div>
+            <div class="symbol-desc">
+              Originalmente desenhado como símbolo da
+              <em>união dos opostos</em> —
+              <span class="latin">solve et coagula</span>. A apropriação
+              satânica veio depois.
+            </div>
+          </div>
+
+          <!-- MANDALA -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="28" />
+                <circle cx="32" cy="32" r="20" />
+                <circle cx="32" cy="32" r="12" />
+                <circle cx="32" cy="32" r="4" fill="currentColor" />
+                <g stroke-width="0.8">
+                  <line x1="32" y1="4" x2="32" y2="60" />
+                  <line x1="4" y1="32" x2="60" y2="32" />
+                  <line x1="12" y1="12" x2="52" y2="52" />
+                  <line x1="52" y1="12" x2="12" y2="52" />
+                </g>
+              </svg>
+            </div>
+            <div class="symbol-name">Mandala</div>
+            <div class="symbol-origin">Sânscrito · "círculo"</div>
+            <div class="symbol-desc">
+              Diagrama cosmológico. Jung as adotou como expressões do Self — o
+              arquétipo da totalidade psíquica.
+            </div>
+          </div>
+
+          <!-- DHARMACHAKRA -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="26" />
+                <circle cx="32" cy="32" r="6" />
+                <g stroke-width="1">
+                  <line x1="32" y1="6" x2="32" y2="58" />
+                  <line x1="6" y1="32" x2="58" y2="32" />
+                  <line x1="13.6" y1="13.6" x2="50.4" y2="50.4" />
+                  <line x1="50.4" y1="13.6" x2="13.6" y2="50.4" />
+                </g>
+              </svg>
+            </div>
+            <div class="symbol-name">Dharmachakra</div>
+            <div class="symbol-origin">Buda · séc. V a.C.</div>
+            <div class="symbol-desc">
+              Roda do Dharma. Oito raios = Nobre Caminho Óctuplo. Aparece nas
+              colunas de Ashoka no séc. III a.C.
+            </div>
+          </div>
+
+          <!-- LABIRINTO -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <rect x="8" y="8" width="48" height="48" />
+                <rect x="16" y="16" width="32" height="32" />
+                <rect x="24" y="24" width="16" height="16" />
+                <line x1="32" y1="32" x2="32" y2="56" stroke-width="1.2" />
+                <line x1="40" y1="24" x2="40" y2="40" />
+              </svg>
+            </div>
+            <div class="symbol-name">Labirinto</div>
+            <div class="symbol-origin">Cnossos · Creta</div>
+            <div class="symbol-desc">
+              Da Creta de Minos às catedrais góticas (Chartres). Caminhar nele é
+              simbolicamente percorrer a própria alma.
+            </div>
+          </div>
+
+          <!-- LEMNISCATA -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path
+                  d="M 16 32 Q 24 16, 32 32 Q 40 48, 48 32 Q 40 16, 32 32 Q 24 48, 16 32 Z"
+                />
+              </svg>
+            </div>
+            <div class="symbol-name">Lemniscata ∞</div>
+            <div class="symbol-origin">Wallis · 1655</div>
+            <div class="symbol-desc">
+              Símbolo matemático do infinito. Mas aparece em iconografia mística
+              muito antes — sobre a cabeça do Mago no Tarot.
+            </div>
+          </div>
+
+          <!-- LÁBRYS -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <line x1="32" y1="10" x2="32" y2="54" stroke-width="2" />
+                <path d="M 32 16 L 12 26 Q 6 32, 12 38 L 32 28 Z" />
+                <path d="M 32 16 L 52 26 Q 58 32, 52 38 L 32 28 Z" />
+              </svg>
+            </div>
+            <div class="symbol-name">Lábrys</div>
+            <div class="symbol-origin">Minoa · 2000 a.C.</div>
+            <div class="symbol-desc">
+              Machado duplo do palácio de Cnossos. Símbolo da Grande Deusa.
+              Ressuscitado por movimentos matriarcais modernos.
+            </div>
+          </div>
+
+          <!-- SIGILLUM DEI -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="28" />
+                <circle cx="32" cy="32" r="22" />
+                <polygon
+                  points="32,12 39,28 56,28 43,38 48,54 32,46 16,54 21,38 8,28 25,28"
+                  stroke-width="0.8"
+                />
+                <polygon
+                  points="32,18 53,42 11,42"
+                  stroke-width="0.7"
+                  opacity="0.6"
+                />
+                <polygon
+                  points="32,46 11,22 53,22"
+                  stroke-width="0.7"
+                  opacity="0.6"
+                />
+              </svg>
+            </div>
+            <div class="symbol-name">Sigillum Dei</div>
+            <div class="symbol-origin">Honorius · séc. XIII</div>
+            <div class="symbol-desc">
+              "Sigilo da Verdade Divina". Aparece no
+              <em>Liber Iuratus Honorii</em>. John Dee o redesenhou para suas
+              operações enoquianas.
+            </div>
+          </div>
+
+          <!-- SUÁSTICA SOLAR -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="26" opacity="0.4" />
+                <g stroke-width="2">
+                  <line x1="32" y1="10" x2="32" y2="32" />
+                  <line x1="32" y1="10" x2="22" y2="10" />
+                  <line x1="32" y1="32" x2="54" y2="32" />
+                  <line x1="54" y1="32" x2="54" y2="22" />
+                  <line x1="32" y1="32" x2="32" y2="54" />
+                  <line x1="32" y1="54" x2="42" y2="54" />
+                  <line x1="32" y1="32" x2="10" y2="32" />
+                  <line x1="10" y1="32" x2="10" y2="42" />
+                </g>
+              </svg>
+            </div>
+            <div class="symbol-name">Suástica Solar</div>
+            <div class="symbol-origin">Pré-histórica · global</div>
+            <div class="symbol-desc">
+              <em>Svastika</em>: "bom estar" em sânscrito. Símbolo solar usado
+              na Índia, China, Grécia, civilização do Indo — milênios antes da
+              apropriação tóxica do séc. XX.
+            </div>
+          </div>
+
+          <!-- TAU CROSS -->
+          <div class="symbol-card">
+            <div class="symbol-svg">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <line x1="32" y1="18" x2="32" y2="58" stroke-width="2" />
+                <line x1="12" y1="18" x2="52" y2="18" stroke-width="2" />
+              </svg>
+            </div>
+            <div class="symbol-name">Cruz de Tau</div>
+            <div class="symbol-origin">Egito · Francisco de Assis</div>
+            <div class="symbol-desc">
+              Letra grega T. Símbolo de proteção em Ezequiel 9:4. Adotada por
+              São Francisco e os franciscanos como assinatura.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SEPHIROTIC TREE ============ -->
+    <section class="sephirot-section" id="sefirot">
+      <div class="sephirot-container">
+        <div class="book-divider" style="padding: 0 0 1rem">
+          <div class="book-label">Liber Quartus</div>
+          <div class="book-title">A Árvore Sefirótica</div>
+          <div class="ornament-divider">
+            <svg
+              viewBox="0 0 560 40"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <line
+                x1="0"
+                y1="20"
+                x2="220"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <line
+                x1="340"
+                y1="20"
+                x2="560"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <g fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="280" cy="20" r="8" />
+                <circle cx="265" cy="20" r="4" />
+                <circle cx="295" cy="20" r="4" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <p
+          class="chapter-subtitle"
+          style="
+            margin-top: 1.5rem;
+            max-width: 740px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          Dez emanações divinas — codificadas no <em>Zohar</em> por Moisés de
+          León, Espanha, séc. XIII — descrevem como o Infinito se torna mundo
+        </p>
+
+        <div class="sephirot-layout">
+          <!-- DIAGRAMA SVG DA ÁRVORE DA VIDA -->
+          <div class="sephirot-diagram">
+            <svg
+              viewBox="0 0 320 460"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <defs>
+                <radialGradient id="sephGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#dcb04a" stop-opacity="0.6" />
+                  <stop offset="100%" stop-color="#dcb04a" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Caminhos (22) -->
+              <g stroke="#b8902f" stroke-width="0.9" fill="none" opacity="0.75">
+                <!-- Pilar central -->
+                <line x1="160" y1="40" x2="160" y2="180" />
+                <line x1="160" y1="180" x2="160" y2="300" />
+                <line x1="160" y1="300" x2="160" y2="420" />
+                <!-- Pilar direito (Chesed-Netzach) -->
+                <line x1="80" y1="120" x2="80" y2="240" />
+                <line x1="80" y1="240" x2="80" y2="340" />
+                <!-- Pilar esquerdo (Binah-Gevurah-Hod) -->
+                <line x1="240" y1="120" x2="240" y2="240" />
+                <line x1="240" y1="240" x2="240" y2="340" />
+                <!-- Diagonais -->
+                <line x1="160" y1="40" x2="80" y2="120" />
+                <line x1="160" y1="40" x2="240" y2="120" />
+                <line x1="80" y1="120" x2="240" y2="120" />
+                <line x1="80" y1="120" x2="160" y2="180" />
+                <line x1="240" y1="120" x2="160" y2="180" />
+                <line x1="80" y1="240" x2="240" y2="240" />
+                <line x1="80" y1="240" x2="160" y2="180" />
+                <line x1="240" y1="240" x2="160" y2="180" />
+                <line x1="80" y1="240" x2="160" y2="300" />
+                <line x1="240" y1="240" x2="160" y2="300" />
+                <line x1="80" y1="340" x2="240" y2="340" />
+                <line x1="80" y1="340" x2="160" y2="300" />
+                <line x1="240" y1="340" x2="160" y2="300" />
+                <line x1="80" y1="340" x2="160" y2="420" />
+                <line x1="240" y1="340" x2="160" y2="420" />
+              </g>
+
+              <!-- Sefirot (10) — círculos -->
+              <g stroke="#dcb04a" stroke-width="1.4" fill="#0a0805">
+                <!-- 1 Keter -->
+                <circle cx="160" cy="40" r="24" fill="url(#sephGlow)" />
+                <circle cx="160" cy="40" r="24" />
+                <text
+                  x="160"
+                  y="38"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="9"
+                  fill="#dcb04a"
+                  letter-spacing="1"
+                >
+                  KETER
+                </text>
+                <text
+                  x="160"
+                  y="50"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  1
+                </text>
+
+                <!-- 2 Chochmah -->
+                <circle cx="80" cy="120" r="22" fill="url(#sephGlow)" />
+                <circle cx="80" cy="120" r="22" />
+                <text
+                  x="80"
+                  y="118"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="8"
+                  fill="#dcb04a"
+                >
+                  CHOCHMAH
+                </text>
+                <text
+                  x="80"
+                  y="130"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  2
+                </text>
+
+                <!-- 3 Binah -->
+                <circle cx="240" cy="120" r="22" fill="url(#sephGlow)" />
+                <circle cx="240" cy="120" r="22" />
+                <text
+                  x="240"
+                  y="118"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="9"
+                  fill="#dcb04a"
+                >
+                  BINAH
+                </text>
+                <text
+                  x="240"
+                  y="130"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  3
+                </text>
+
+                <!-- 4 Chesed -->
+                <circle cx="80" cy="240" r="22" fill="url(#sephGlow)" />
+                <circle cx="80" cy="240" r="22" />
+                <text
+                  x="80"
+                  y="238"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="9"
+                  fill="#dcb04a"
+                >
+                  CHESED
+                </text>
+                <text
+                  x="80"
+                  y="250"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  4
+                </text>
+
+                <!-- 5 Gevurah -->
+                <circle cx="240" cy="240" r="22" fill="url(#sephGlow)" />
+                <circle cx="240" cy="240" r="22" />
+                <text
+                  x="240"
+                  y="238"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="8"
+                  fill="#dcb04a"
+                >
+                  GEVURAH
+                </text>
+                <text
+                  x="240"
+                  y="250"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  5
+                </text>
+
+                <!-- 6 Tiferet -->
+                <circle cx="160" cy="180" r="24" fill="url(#sephGlow)" />
+                <circle cx="160" cy="180" r="24" />
+                <text
+                  x="160"
+                  y="178"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="9"
+                  fill="#dcb04a"
+                >
+                  TIFERET
+                </text>
+                <text
+                  x="160"
+                  y="190"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  6
+                </text>
+
+                <!-- 7 Netzach -->
+                <circle cx="80" cy="340" r="22" fill="url(#sephGlow)" />
+                <circle cx="80" cy="340" r="22" />
+                <text
+                  x="80"
+                  y="338"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="8"
+                  fill="#dcb04a"
+                >
+                  NETZACH
+                </text>
+                <text
+                  x="80"
+                  y="350"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  7
+                </text>
+
+                <!-- 8 Hod -->
+                <circle cx="240" cy="340" r="22" fill="url(#sephGlow)" />
+                <circle cx="240" cy="340" r="22" />
+                <text
+                  x="240"
+                  y="338"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="9"
+                  fill="#dcb04a"
+                >
+                  HOD
+                </text>
+                <text
+                  x="240"
+                  y="350"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  8
+                </text>
+
+                <!-- 9 Yesod -->
+                <circle cx="160" cy="300" r="22" fill="url(#sephGlow)" />
+                <circle cx="160" cy="300" r="22" />
+                <text
+                  x="160"
+                  y="298"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="9"
+                  fill="#dcb04a"
+                >
+                  YESOD
+                </text>
+                <text
+                  x="160"
+                  y="310"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  9
+                </text>
+
+                <!-- 10 Malkhut -->
+                <circle cx="160" cy="420" r="24" fill="url(#sephGlow)" />
+                <circle cx="160" cy="420" r="24" />
+                <text
+                  x="160"
+                  y="418"
+                  text-anchor="middle"
+                  font-family="Cinzel,serif"
+                  font-size="9"
+                  fill="#dcb04a"
+                >
+                  MALKHUT
+                </text>
+                <text
+                  x="160"
+                  y="430"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="8"
+                  fill="#b8902f"
+                >
+                  10
+                </text>
+              </g>
+
+              <!-- Ein Sof acima -->
+              <text
+                x="160"
+                y="14"
+                text-anchor="middle"
+                font-family="IM Fell English SC,serif"
+                font-size="11"
+                fill="#b8902f"
+                letter-spacing="3"
+              >
+                EIN SOF
+              </text>
+              <line
+                x1="120"
+                y1="18"
+                x2="200"
+                y2="18"
+                stroke="#b8902f"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+            </svg>
+          </div>
+
+          <!-- LISTA DAS SEFIROT -->
+          <ul class="sephirot-list">
+            <li>
+              <span class="sephirot-num">I</span>
+              <div>
+                <div class="sephirot-name">Keter</div>
+                <div class="sephirot-hebrew">כֶּתֶר · "Coroa"</div>
+                <div class="sephirot-meaning">
+                  A vontade pura, "Eu Sou". Pura consciência. Frequentemente
+                  chamada de "Luz Oculta", "Nada".
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">II</span>
+              <div>
+                <div class="sephirot-name">Chochmah</div>
+                <div class="sephirot-hebrew">חָכְמָה · "Sabedoria"</div>
+                <div class="sephirot-meaning">
+                  Sabedoria intuitiva, fagulha primeira. O Pai. Princípio
+                  masculino do entendimento súbito.
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">III</span>
+              <div>
+                <div class="sephirot-name">Binah</div>
+                <div class="sephirot-hebrew">בִּינָה · "Entendimento"</div>
+                <div class="sephirot-meaning">
+                  Entendimento analítico que dá forma à fagulha. A Mãe. Útero
+                  cósmico.
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">IV</span>
+              <div>
+                <div class="sephirot-name">Chesed</div>
+                <div class="sephirot-hebrew">חֶסֶד · "Misericórdia"</div>
+                <div class="sephirot-meaning">
+                  Amor expansivo. <span class="latin">Loving-kindness</span>.
+                  Atributo de Abraão. Mão direita de Deus.
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">V</span>
+              <div>
+                <div class="sephirot-name">Gevurah</div>
+                <div class="sephirot-hebrew">גְּבוּרָה · "Severidade"</div>
+                <div class="sephirot-meaning">
+                  Disciplina, juízo, contração. Atributo de Isaac. A força que
+                  impõe limites.
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">VI</span>
+              <div>
+                <div class="sephirot-name">Tiferet</div>
+                <div class="sephirot-hebrew">תִּפְאֶרֶת · "Beleza"</div>
+                <div class="sephirot-meaning">
+                  Harmonia, equilíbrio, coração da Árvore. Atributo de Jacó. O
+                  Sol no centro do sistema.
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">VII</span>
+              <div>
+                <div class="sephirot-name">Netzach</div>
+                <div class="sephirot-hebrew">
+                  נֶצַח · "Vitória / Eternidade"
+                </div>
+                <div class="sephirot-meaning">
+                  Perseverança, paixão criativa. Atributo de Moisés. Vênus.
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">VIII</span>
+              <div>
+                <div class="sephirot-name">Hod</div>
+                <div class="sephirot-hebrew">הוֹד · "Esplendor / Glória"</div>
+                <div class="sephirot-meaning">
+                  Clareza intelectual, comunicação. Atributo de Arão. Mercúrio.
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">IX</span>
+              <div>
+                <div class="sephirot-name">Yesod</div>
+                <div class="sephirot-hebrew">יְסוֹד · "Fundamento"</div>
+                <div class="sephirot-meaning">
+                  O inconsciente. Subestrutura. Sonhos, sexualidade, imagens
+                  primárias. Atributo de José. A Lua.
+                </div>
+              </div>
+            </li>
+            <li>
+              <span class="sephirot-num">X</span>
+              <div>
+                <div class="sephirot-name">Malkhut</div>
+                <div class="sephirot-hebrew">מַלְכוּת · "Reino"</div>
+                <div class="sephirot-meaning">
+                  Manifestação física. O mundo material. A <em>Shekhinah</em> —
+                  presença divina exilada na matéria. Atributo de Davi.
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BOOK V — GRIMOIRES ============ -->
+    <section class="grimoires-section" id="grimoires">
+      <div class="grimoires-container">
+        <div class="book-divider" style="padding: 0 0 1rem">
+          <div class="book-label">Liber Quintus</div>
+          <div class="book-title">Os Livros Que Queimaram</div>
+          <div class="ornament-divider">
+            <svg
+              viewBox="0 0 560 40"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <line
+                x1="0"
+                y1="20"
+                x2="220"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <line
+                x1="340"
+                y1="20"
+                x2="560"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <g fill="none" stroke="currentColor" stroke-width="1">
+                <rect x="268" y="10" width="24" height="20" />
+                <line x1="268" y1="14" x2="292" y2="14" stroke-width="0.6" />
+                <line x1="268" y1="18" x2="292" y2="18" stroke-width="0.6" />
+                <line x1="268" y1="22" x2="292" y2="22" stroke-width="0.6" />
+                <line x1="268" y1="26" x2="292" y2="26" stroke-width="0.6" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <p
+          class="chapter-subtitle"
+          style="
+            margin-top: 1.5rem;
+            max-width: 780px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          Manuscritos copiados à mão sob luz de vela, acorrentados em
+          bibliotecas, escondidos sob assoalhos — alguns parcialmente
+          decifrados, outros ainda mudos
+        </p>
+
+        <div class="grimoires-grid">
+          <!-- CORPUS HERMETICUM -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <rect x="10" y="8" width="44" height="48" rx="2" />
+                <line x1="32" y1="8" x2="32" y2="56" stroke-width="2" />
+                <circle cx="22" cy="22" r="3" />
+                <circle cx="42" cy="22" r="3" />
+                <path d="M 16 32 L 28 32 M 36 32 L 48 32" />
+                <path d="M 16 40 L 28 40 M 36 40 L 48 40" />
+                <path d="M 16 48 L 28 48 M 36 48 L 48 48" />
+              </svg>
+            </div>
+            <div class="grimoire-name">Corpus Hermeticum</div>
+            <div class="grimoire-date">séc. I–III d.C. · Alexandria</div>
+            <div class="grimoire-desc">
+              Dezessete tratados em grego atribuídos a Hermes Trismegisto.
+              Trazidos da Macedônia em 1460 por Leonardo de Pistoia; traduzidos
+              por Marsilio Ficino sob ordens de Cosimo de' Medici — que pausou
+              sua tradução de Platão para que Hermes viesse primeiro.
+            </div>
+          </div>
+
+          <!-- TABULA SMARAGDINA -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <rect x="14" y="10" width="36" height="44" rx="1" />
+                <line x1="20" y1="20" x2="44" y2="20" stroke-width="0.8" />
+                <line x1="20" y1="26" x2="44" y2="26" stroke-width="0.8" />
+                <line x1="20" y1="32" x2="44" y2="32" stroke-width="0.8" />
+                <line x1="20" y1="38" x2="44" y2="38" stroke-width="0.8" />
+                <line x1="20" y1="44" x2="38" y2="44" stroke-width="0.8" />
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="22"
+                  stroke-width="0.5"
+                  opacity="0.4"
+                />
+              </svg>
+            </div>
+            <div class="grimoire-name">Tabula Smaragdina</div>
+            <div class="grimoire-date">séc. IX · árabe</div>
+            <div class="grimoire-desc">
+              A Tábua Esmeralda. Primeira aparição no
+              <em>Kitāb sirr al-ḫalīqa</em>. Treze linhas. Pedra angular de toda
+              a alquimia europeia. <strong>Isaac Newton</strong> dedicou anos à
+              sua tradução manuscrita, hoje na King's College Library.
+            </div>
+          </div>
+
+          <!-- ZOHAR -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path
+                  d="M 12 14 Q 12 8, 18 8 L 46 8 Q 52 8, 52 14 L 52 52 Q 52 56, 46 56 L 18 56 Q 12 56, 12 52 Z"
+                />
+                <path d="M 12 14 Q 12 18, 18 18 L 46 18 Q 52 18, 52 14" />
+                <path
+                  d="M 24 30 L 40 30 M 24 36 L 40 36 M 24 42 L 36 42"
+                  stroke-width="0.8"
+                />
+                <circle cx="32" cy="46" r="2" fill="currentColor" />
+              </svg>
+            </div>
+            <div class="grimoire-name">Sefer Ha-Zohar</div>
+            <div class="grimoire-date">1280–1286 · Espanha</div>
+            <div class="grimoire-desc">
+              "O Livro do Esplendor". Redigido por
+              <strong>Moisés de León</strong> em Castela, embora atribuído a
+              Shimon bar Yochai do séc. II. Texto-mãe da cabala. Comentário
+              místico sobre o Pentateuco — base da Árvore da Vida sefirótica.
+            </div>
+          </div>
+
+          <!-- CHAVE DE SALOMÃO -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="22" cy="32" r="10" />
+                <line x1="32" y1="32" x2="56" y2="32" stroke-width="2" />
+                <line x1="48" y1="32" x2="48" y2="40" />
+                <line x1="54" y1="32" x2="54" y2="38" />
+                <circle cx="22" cy="32" r="3" fill="currentColor" />
+              </svg>
+            </div>
+            <div class="grimoire-name">Clavicula Salomonis</div>
+            <div class="grimoire-date">séc. XIV–XV · Itália / latim</div>
+            <div class="grimoire-desc">
+              A Chave de Salomão. Atribuída ficticiamente ao rei de Israel, mas
+              compilada na Idade Média. Edição inglesa por
+              <strong>MacGregor Mathers</strong> em 1889. Forneceu base para a
+              Wicca de Gerald Gardner.
+            </div>
+          </div>
+
+          <!-- LEMEGETON / GOETIA -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <polygon points="32,8 56,48 8,48" />
+                <polygon points="32,56 8,16 56,16" opacity="0.5" />
+                <circle cx="32" cy="32" r="4" fill="currentColor" />
+              </svg>
+            </div>
+            <div class="grimoire-name">Lemegeton</div>
+            <div class="grimoire-date">séc. XVII · anônimo</div>
+            <div class="grimoire-desc">
+              "A Chave Menor de Salomão". Cinco livros, incluindo a famosa
+              <em>Ars Goetia</em> com seus
+              <strong>72 demônios</strong> aprisionados em vaso de bronze: Bael,
+              Agares, Vassago, Marbas, Asmodeus, Astaroth, Paimon...
+            </div>
+          </div>
+
+          <!-- PICATRIX -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="24" />
+                <circle cx="32" cy="32" r="16" />
+                <g stroke-width="0.7" opacity="0.7">
+                  <line x1="32" y1="8" x2="32" y2="56" />
+                  <line x1="8" y1="32" x2="56" y2="32" />
+                  <line x1="15" y1="15" x2="49" y2="49" />
+                  <line x1="49" y1="15" x2="15" y2="49" />
+                </g>
+                <circle cx="32" cy="32" r="3" fill="currentColor" />
+              </svg>
+            </div>
+            <div class="grimoire-name">Picatrix</div>
+            <div class="grimoire-date">séc. XI · al-Andalus</div>
+            <div class="grimoire-desc">
+              <em>Ghāyat al-Ḥakīm</em>, "O Objetivo do Sábio". Manual árabe de
+              magia astral. Traduzido em 1256 para Afonso X de Castela.
+              Influenciou diretamente Ficino, Pico, Agrippa e Giordano Bruno.
+            </div>
+          </div>
+
+          <!-- VOYNICH -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <rect x="12" y="10" width="40" height="44" rx="2" />
+                <path
+                  d="M 20 22 Q 24 18, 28 22 M 20 28 Q 26 24, 32 28 Q 38 32, 44 28"
+                  stroke-width="0.8"
+                />
+                <path
+                  d="M 20 36 Q 24 32, 28 36 M 22 42 L 30 42 M 34 42 L 42 42"
+                  stroke-width="0.8"
+                />
+                <text
+                  x="32"
+                  y="50"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="6"
+                  fill="currentColor"
+                  font-style="italic"
+                >
+                  ?
+                </text>
+              </svg>
+            </div>
+            <div class="grimoire-name">Manuscrito Voynich</div>
+            <div class="grimoire-date">c. 1404–1438 · indecifrado</div>
+            <div class="grimoire-desc">
+              Datado por radiocarbono. Pergaminho com alfabeto desconhecido,
+              plantas inexistentes, mulheres em banhos conectados a tubulações
+              orgânicas. Nem os criptógrafos da Enigma conseguiram.
+              <em>"O livro-limite do ocultismo ocidental"</em> — Terence
+              McKenna.
+            </div>
+          </div>
+
+          <!-- CODEX GIGAS -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <rect
+                  x="14"
+                  y="6"
+                  width="36"
+                  height="52"
+                  rx="1"
+                  stroke-width="2"
+                />
+                <line x1="32" y1="6" x2="32" y2="58" stroke-width="1.2" />
+                <path
+                  d="M 22 24 L 26 30 L 22 36 M 38 24 L 42 30 L 38 36"
+                  stroke-width="1.2"
+                />
+                <path d="M 18 44 L 30 44 M 34 44 L 46 44" stroke-width="0.8" />
+              </svg>
+            </div>
+            <div class="grimoire-name">Codex Gigas</div>
+            <div class="grimoire-date">séc. XIII · Boêmia</div>
+            <div class="grimoire-desc">
+              "O Livro do Diabo". Maior manuscrito medieval do mundo: 75 kg, 92
+              cm de altura. Lenda diz que um monge condenado o escreveu em uma
+              noite com ajuda do próprio Diabo, cujo retrato em página inteira
+              está no fólio 290v.
+            </div>
+          </div>
+
+          <!-- BOOK OF SOYGA -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <rect x="14" y="10" width="36" height="44" />
+                <g stroke-width="0.5">
+                  <line x1="18" y1="18" x2="46" y2="18" />
+                  <line x1="18" y1="24" x2="46" y2="24" />
+                  <line x1="18" y1="30" x2="46" y2="30" />
+                  <line x1="18" y1="36" x2="46" y2="36" />
+                  <line x1="18" y1="42" x2="46" y2="42" />
+                  <line x1="22" y1="14" x2="22" y2="50" />
+                  <line x1="28" y1="14" x2="28" y2="50" />
+                  <line x1="34" y1="14" x2="34" y2="50" />
+                  <line x1="40" y1="14" x2="40" y2="50" />
+                </g>
+              </svg>
+            </div>
+            <div class="grimoire-name">Liber Soyga</div>
+            <div class="grimoire-date">séc. XVI · Aldaraia</div>
+            <div class="grimoire-desc">
+              Estudado por <strong>John Dee</strong> a partir de 1582. Contém 36
+              tabelas de letras 36×36. Perdido por séculos, redescoberto em 1994
+              por Deborah Harkness. Decifrado em 2006 por Jim Reeds: nomes de
+              anjos e demônios codificados.
+            </div>
+          </div>
+
+          <!-- LIBER ENOCHIANO -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="24" />
+                <g stroke-width="0.8" opacity="0.8">
+                  <line x1="20" y1="22" x2="44" y2="22" />
+                  <line x1="20" y1="28" x2="44" y2="28" />
+                  <line x1="20" y1="34" x2="44" y2="34" />
+                  <line x1="20" y1="40" x2="44" y2="40" />
+                  <line x1="26" y1="18" x2="26" y2="46" />
+                  <line x1="38" y1="18" x2="38" y2="46" />
+                </g>
+                <text
+                  x="32"
+                  y="56"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="7"
+                  fill="currentColor"
+                >
+                  ∴
+                </text>
+              </svg>
+            </div>
+            <div class="grimoire-name">Liber Loagaeth</div>
+            <div class="grimoire-date">1583–1585 · Dee & Kelley</div>
+            <div class="grimoire-desc">
+              Registrado por <strong>John Dee</strong> a partir das comunicações
+              de Edward Kelley com entidades angélicas. Contém o
+              <em>alfabeto enoquiano</em> e as 49 Chamadas. Crowley as
+              utilizaria quatro séculos depois.
+            </div>
+          </div>
+
+          <!-- SEFER YETZIRAH -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <polygon points="32,8 56,52 8,52" />
+                <text
+                  x="32"
+                  y="32"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="11"
+                  fill="currentColor"
+                >
+                  א
+                </text>
+                <text
+                  x="20"
+                  y="46"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="9"
+                  fill="currentColor"
+                >
+                  מ
+                </text>
+                <text
+                  x="44"
+                  y="46"
+                  text-anchor="middle"
+                  font-family="serif"
+                  font-size="9"
+                  fill="currentColor"
+                >
+                  ש
+                </text>
+              </svg>
+            </div>
+            <div class="grimoire-name">Sefer Yetzirah</div>
+            <div class="grimoire-date">séc. II–VI d.C.</div>
+            <div class="grimoire-desc">
+              "Livro da Formação". Texto cabalístico mais antigo conhecido.
+              Descreve como Deus criou o universo através das 22 letras do
+              alfabeto hebraico e dos 10 sefirot. Base da lenda do
+              <strong>Golem de Praga</strong>.
+            </div>
+          </div>
+
+          <!-- NAG HAMMADI -->
+          <div class="grimoire-card">
+            <div class="grimoire-icon">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M 16 20 L 24 12 L 40 12 L 48 20 L 48 52 L 16 52 Z" />
+                <line x1="24" y1="12" x2="24" y2="20" stroke-width="0.8" />
+                <line x1="40" y1="12" x2="40" y2="20" stroke-width="0.8" />
+                <line x1="16" y1="20" x2="48" y2="20" stroke-width="0.8" />
+                <path
+                  d="M 22 28 L 42 28 M 22 34 L 42 34 M 22 40 L 38 40"
+                  stroke-width="0.7"
+                />
+              </svg>
+            </div>
+            <div class="grimoire-name">Biblioteca de Nag Hammadi</div>
+            <div class="grimoire-date">séc. IV · Egito (achada 1945)</div>
+            <div class="grimoire-desc">
+              Treze códices em papiro desenterrados por um fellah em uma jarra
+              de barro. Contêm o <em>Evangelho de Tomé</em>, o
+              <em>Evangelho de Filipe</em>, o <em>Apócrifo de João</em> — uma
+              biblioteca gnóstica soterrada e preservada por 1.600 anos.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BOOK VI — AS ORDENS (TIMELINE) ============ -->
+    <section class="timeline-section" id="ordens">
+      <div class="timeline-container">
+        <div class="book-divider" style="padding: 0 0 1rem">
+          <div class="book-label">Liber Sextus</div>
+          <div class="book-title">As Ordens</div>
+          <div class="ornament-divider">
+            <svg
+              viewBox="0 0 560 40"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <line
+                x1="0"
+                y1="20"
+                x2="220"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <line
+                x1="340"
+                y1="20"
+                x2="560"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <g fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M 268 8 L 280 32 L 292 8 Z" />
+                <line x1="268" y1="22" x2="292" y2="22" stroke-width="0.8" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <p
+          class="chapter-subtitle"
+          style="
+            margin-top: 1.5rem;
+            max-width: 740px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          Irmandades onde homens encapuzados juraram morrer antes de revelar uma
+          única palavra
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">~1500 a.C. — 392 d.C.</div>
+            <div class="timeline-title">Mistérios de Elêusis</div>
+            <div class="timeline-text">
+              Quase dois milênios. Imperadores, escravos, filósofos e mulheres
+              iniciados juntos. Cícero escreveu:
+              <span class="latin"
+                >"Eles civilizaram a humanidade e nos ensinaram a morrer com uma
+                esperança melhor."</span
+              >
+              O segredo do que se via no Telesterion morreu intacto com os
+              últimos hierofantes.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">Séculos I — IV d.C.</div>
+            <div class="timeline-title">Cultos Mistéricos Romanos</div>
+            <div class="timeline-text">
+              Mithraísmo (sete graus, da Corax ao Pater), Ísis, Cibele, Sabázio.
+              Mais de 680 mithraea espalhados de Londres a Dura-Europos.
+              Encerrados pelo decreto teodosiano de 391 d.C.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">1119 — 1312</div>
+            <div class="timeline-title">Cavaleiros Templários</div>
+            <div class="timeline-text">
+              Nove monges-guerreiros sobre as ruínas do Templo de Salomão. Em
+              200 anos: 9.000 propriedades, banco internacional, frota própria.
+              <strong>Sexta-feira, 13 de outubro de 1307</strong>: prisão em
+              massa pelo rei Felipe IV, o Belo. Em 2001, no Arquivo Secreto do
+              Vaticano, Barbara Frale descobriu o <em>Pergaminho de Chinon</em>:
+              o Papa Clemente V os havia absolvido em segredo.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">1380 — 1880</div>
+            <div class="timeline-title">Alquimistas Europeus</div>
+            <div class="timeline-text">
+              Da Espanha aos Países Baixos, do Sacro Império à Boêmia de Rodolfo
+              II. <strong>Nicolas Flamel</strong>, <strong>Paracelso</strong>,
+              <strong>John Dee</strong>, <strong>Edward Kelley</strong>. Isaac
+              Newton dedicou-lhes mais de um milhão de palavras manuscritas.
+              Keynes: "Newton não foi o primeiro da era da razão. Foi o último
+              dos magos."
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">1614 — 1617</div>
+            <div class="timeline-title">Os Manifestos Rosacruzes</div>
+            <div class="timeline-text">
+              Três textos publicados anonimamente em Kassel:
+              <em>Fama Fraternitatis</em>, <em>Confessio Fraternitatis</em>,
+              <em>As Núpcias Químicas</em>. Provável autor:
+              <strong>Johann Valentin Andreae</strong>. Resultado:
+              <em>furor rosicrucianus</em> em toda a Europa. Cartas dirigidas
+              aos "Irmãos Invisíveis" afixadas em postes de Paris.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">24 de junho de 1717</div>
+            <div class="timeline-title">Grande Loja de Londres</div>
+            <div class="timeline-text">
+              Festa de São João Batista. Quatro lojas londrinas —
+              <em>Goose and Gridiron</em>, <em>Crown</em>, <em>Apple Tree</em>,
+              <em>Rummer and Grapes</em> — formam a primeira Grande Loja
+              maçônica do mundo. Em 1723,
+              <strong>James Anderson</strong> codifica as Constituições. Três
+              graus: Aprendiz, Companheiro, Mestre Maçom — culminando na lenda
+              de Hiram Abiff.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">1888 — c. 1903</div>
+            <div class="timeline-title">Hermetic Order of the Golden Dawn</div>
+            <div class="timeline-text">
+              Fundada em Londres por <strong>Westcott</strong>,
+              <strong>Woodman</strong> e <strong>Mathers</strong>. Síntese sem
+              precedentes de cabala, tarô, alquimia, magia enoquiana, mitologia
+              egípcia. Dez graus correspondendo aos sefirot. Membros:
+              <strong>W. B. Yeats</strong>, <strong>Arthur Machen</strong>,
+              <strong>Algernon Blackwood</strong>, Florence Farr, e — em 18 de
+              novembro de 1898 — <strong>Aleister Crowley</strong> como
+              <em>Frater Perdurabo</em>.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">8, 9, 10 de abril de 1904</div>
+            <div class="timeline-title">O Livro da Lei — Cairo</div>
+            <div class="timeline-text">
+              Em três sessões consecutivas,
+              <strong>Aleister Crowley</strong> anota as palavras de uma
+              entidade autodenominada <em>Aiwass</em>. Nasce o
+              <em>Liber AL vel Legis</em>. A frase central:
+              <span class="latin"
+                >"Do what thou wilt shall be the whole of the Law"</span
+              >
+              — não licença para hedonismo, mas o imperativo de descobrir a
+              Vontade Verdadeira. Fundamento da Thelema.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">1947 — Hoje</div>
+            <div class="timeline-title">Diáspora Esotérica Contemporânea</div>
+            <div class="timeline-text">
+              Wicca de Gerald Gardner (1954). Igreja de Satã de Anton LaVey
+              (1966). Templo da Juventude Psíquica (1981). Caos magia.
+              Neo-paganismo. E a internet — onde tarô viraliza no TikTok,
+              astrologia se torna aplicativo, e cada adolescente conhece seu
+              Saturno em Retrogresso.
+              <em>O cultismo não morreu. Ele apenas mudou de máscara.</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEUROCIÊNCIA ============ -->
+    <section class="neuro-section" id="mente">
+      <div class="neuro-container">
+        <div class="book-divider" style="padding: 0 0 1rem">
+          <div class="book-label">Liber Septimus</div>
+          <div class="book-title">A Mente e o Mistério</div>
+          <div class="ornament-divider">
+            <svg
+              viewBox="0 0 560 40"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <line
+                x1="0"
+                y1="20"
+                x2="220"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <line
+                x1="340"
+                y1="20"
+                x2="560"
+                y2="20"
+                stroke="currentColor"
+                stroke-width="1"
+              />
+              <g fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="280" cy="20" r="10" />
+                <path
+                  d="M 274 18 Q 280 14, 286 18 Q 280 24, 274 18"
+                  fill="currentColor"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="chapter-body" style="max-width: 780px; margin: 2rem auto 0">
+          <p>
+            A neurociência contemporânea oferece respostas que perturbam tanto
+            religiosos quanto céticos. O cérebro humano é, literalmente, uma
+            máquina de detectar padrões e atribuir agência —
+            <strong>Justin Barrett</strong> cunhou o termo
+            <em>HADD</em> (Hyperactive Agency Detection Device): vemos rostos em
+            nuvens, sentimos presenças em quartos vazios, atribuímos intenção a
+            fenômenos aleatórios. Evolutivamente, falsos positivos custavam
+            pouco; falsos negativos custavam a vida. Selecionamos cérebros
+            paranoicos.
+          </p>
+
+          <p>
+            Mas reduzir o cultismo a um erro neural seria desonesto.
+            <strong>Andrew Newberg</strong> e <strong>Eugene d'Aquili</strong>,
+            em <em>Why God Won't Go Away</em> (2001), mostraram que durante
+            orações profundas em freiras franciscanas e meditações em monges
+            budistas, o lobo parietal posterior — responsável pela orientação
+            espaço-corporal — apresenta atividade reduzida. O fiel se
+            <em>sente</em> fundido ao cosmos. Não é alucinação no sentido
+            patológico: é uma operação neurológica documentada.
+          </p>
+
+          <p>
+            Pesquisas com psilocibina no
+            <strong>Imperial College London</strong>, lideradas por Robin
+            Carhart-Harris desde 2010, demonstram que doses sob supervisão
+            clínica produzem em até 70% dos voluntários experiências
+            classificadas como "místicas completas". A ressonância funcional
+            mostra <strong>desativação da Default Mode Network</strong> — a rede
+            do ego narrativo.
+            <em>O "eu" se dissolve em padrões observáveis no scanner.</em>
+          </p>
+        </div>
+
+        <div class="neuro-stats">
+          <div class="stat-block">
+            <div class="stat-number">4–7</div>
+            <div class="stat-label">Hertz Theta</div>
+            <div class="stat-desc">
+              Frequência da percussão xamânica que sincroniza ondas cerebrais
+              associadas a transe e visões em todos os continentes
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-number">60k</div>
+            <div class="stat-label">Anos de Cultismo</div>
+            <div class="stat-desc">
+              Idade aproximada do enterro ritual com flores em Shanidar — uma
+              espécie humana que não era a nossa já carregava seus mortos com
+              cuidado
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-number">72</div>
+            <div class="stat-label">Demônios Goéticos</div>
+            <div class="stat-desc">
+              Aprisionados por Salomão em um vaso de bronze, segundo o
+              <em>Lemegeton</em>. Cada um com nome, sigilo, hierarquia e
+              atributos próprios
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-number">680</div>
+            <div class="stat-label">Mithraea Identificados</div>
+            <div class="stat-desc">
+              Templos subterrâneos do culto de Mithras espalhados pelo Império
+              Romano, de Londres a Dura-Europos
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-number">10</div>
+            <div class="stat-label">Sefirot na Árvore</div>
+            <div class="stat-desc">
+              Emanações divinas conectadas por 22 caminhos. Cada uma corresponde
+              a um arcanjo, um nome divino, um planeta, um metal
+            </div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-number">~70%</div>
+            <div class="stat-label">Experiências Místicas</div>
+            <div class="stat-desc">
+              Proporção de voluntários que relatam experiência mística completa
+              em ensaios clínicos com psilocibina (Imperial College, MEQ)
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-body" style="max-width: 780px; margin: 5rem auto 0">
+          <div class="pull-quote">
+            Os xamãs sabiam. Os iniciados de Elêusis sabiam. Em todos os
+            continentes, em culturas isoladas — desenvolveram tecnologias para
+            desligar temporariamente o ego e acessar estados ampliados. A
+            neurociência agora descreve, em linguagem mecanicista, o que esses
+            ritualistas faziam empiricamente há milênios.
+          </div>
+
+          <p>
+            Em 1912, <strong>Carl Gustav Jung</strong> começou a anotar sonhos
+            de seus pacientes — pessoas comuns de Zurique que nunca haviam
+            estudado mitologia. Encontrou neles serpentes mordendo a própria
+            cauda, círculos quadrangulados, árvores cósmicas, gêmeos divinos.
+            Sonhavam com símbolos que jamais haviam visto. Jung concluiu, em
+            <em>Psicologia e Alquimia</em> (1944) e
+            <em>Os Arquétipos e o Inconsciente Coletivo</em> (1959), que existe
+            uma camada da psique humana que é <strong>transindividual</strong> —
+            herdada estruturalmente, não culturalmente.
+          </p>
+
+          <p>
+            Por que o oculto seduz? Por que o segredo atrai mais que a verdade
+            aberta? <strong>Daniel Kahneman</strong>, em
+            <em>Rápido e Devagar</em> (2011), mostrou que humanos são pensadores
+            de Sistema 1 (rápido, intuitivo, emocional) primários — e que
+            Sistema 2 (lento, analítico) é exceção custosa. Crenças místicas são
+            naturais ao Sistema 1; ceticismo científico exige esforço sustentado
+            contra a corrente natural da cognição.
+            <strong>Não é à toa que cultos sempre existirão.</strong> Eles
+            correspondem ao modo padrão da mente humana, não ao modo treinado.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EPÍLOGO ============ -->
+    <section class="epilogue" id="epilogo">
+      <div class="epilogue-altar" aria-hidden="true">
+        <div class="candle-wrap">
+          <div class="candle-body"></div>
+          <div class="flame"></div>
+        </div>
+        <div class="candle-wrap">
+          <div class="candle-body"></div>
+          <div class="flame"></div>
+        </div>
+        <div class="candle-wrap">
+          <div class="candle-body"></div>
+          <div class="flame"></div>
+        </div>
+      </div>
+
+      <div class="epilogue-text">
+        <p>Imagine, ao fim desta travessia, uma sequência de imagens.</p>
+
+        <p>
+          Em algum lugar do deserto do Saara, há colunas de granito sob a areia
+          que ninguém mais lerá. As inscrições foram esculpidas por mãos cujos
+          nomes esquecemos, em uma língua cujas palavras sopramos com nosso
+          silêncio.
+        </p>
+
+        <p>
+          Em algum cofre da Biblioteca Beinecke, em Yale, o Manuscrito Voynich
+          repousa sob temperatura controlada. Suas páginas falam, mas em
+          alfabeto que ninguém entende. Sete séculos de criptógrafos quebraram a
+          cabeça contra ele. Ele continua mudo, sorrindo, como se soubesse que
+          sobreviveu a todos os que tentaram lê-lo, e sobreviverá ainda a
+          muitos.
+        </p>
+
+        <p>
+          Em algum porão de uma cidade qualquer — Buenos Aires, Praga,
+          Bangalore, Porto Alegre — alguém risca um sigilo num caderno antes de
+          dormir, declara uma intenção, sopra a vela. Não sabe que está
+          repetindo um gesto idêntico ao de um sacerdote sumério no terceiro
+          milênio antes de Cristo. Não sabe que o gesto se transmite sem
+          manuscrito, sem doutrina, sem mestre — porque está inscrito em algo
+          mais profundo do que escrita.
+        </p>
+
+        <p>
+          Não importa se a porta existe. Importa que, depois de cem mil anos,
+          ainda acendemos velas.
+        </p>
+
+        <div class="epilogue-final">
+          Eles não eram primitivos.<br />Eram nós, antes de esquecermos.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+      <div class="ornament-final">✦ ❦ ✦</div>
+      <div>
+        Os Livros Que Não Deveriam Existir · Documento de Investigação Profunda
+      </div>
+      <div class="footer-note">
+        <span class="latin">Sicut superius, sic inferius.</span><br />
+        O leitor agora carrega as velas — e elas pesam mais do que ele imagina.
+      </div>
+    </footer>
+
+    <script>
+      // Navegação lateral ativa
+      const sections = document.querySelectorAll("section[id], div[id]");
+      const navLinks = document.querySelectorAll(".side-nav a");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              navLinks.forEach((link) => {
+                link.classList.toggle(
+                  "active",
+                  link.getAttribute("href") === "#" + id,
+                );
+              });
+            }
+          });
+        },
+        { threshold: 0.4 },
+      );
+
+      sections.forEach((s) => observer.observe(s));
+
+      // Revelação suave dos blocos
+      const revealItems = document.querySelectorAll(
+        ".chapter, .symbol-card, .timeline-item, .grimoire-card, .stat-block, .book-divider",
+      );
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      revealItems.forEach((el, i) => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(36px)";
+        el.style.transition = `opacity 1.2s ease-out ${Math.min(i * 0.04, 0.6)}s, transform 1.2s ease-out ${Math.min(i * 0.04, 0.6)}s`;
+        revealObserver.observe(el);
+      });
+    </script>
+  </body>
+</html>

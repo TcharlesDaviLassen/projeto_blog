@@ -1,0 +1,1803 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bateria de Bagdá — O Fogo Invisível da Antiguidade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --clay: #c49a6c;
+        --clay-dark: #8b6340;
+        --clay-light: #e8c99a;
+        --copper: #b87333;
+        --copper-light: #d4956a;
+        --iron: #6b7280;
+        --parchment: #f5edd8;
+        --parchment-dark: #e8d9b8;
+        --ink: #1a1208;
+        --ink-light: #3d2e1a;
+        --ember: #c44b1b;
+        --ember-glow: #e8732a;
+        --gold: #c9932a;
+        --gold-light: #e4b84a;
+        --void: #0a0704;
+        --ash: #9b8e7c;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--void);
+        color: var(--parchment);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 300;
+        overflow-x: hidden;
+        cursor: default;
+      }
+
+      /* ── NOISE OVERLAY ── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        opacity: 0.35;
+        pointer-events: none;
+        z-index: 1000;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        position: relative;
+        overflow: hidden;
+        padding: 0 6vw;
+      }
+
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 80% at 75% 50%,
+            rgba(196, 155, 108, 0.08) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 40% 60% at 20% 80%,
+            rgba(196, 75, 27, 0.06) 0%,
+            transparent 50%
+          ),
+          linear-gradient(180deg, #0a0704 0%, #110c06 50%, #0d0906 100%);
+      }
+
+      .hero-lines {
+        position: absolute;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 79px,
+            rgba(196, 155, 108, 0.04) 80px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 79px,
+            rgba(196, 155, 108, 0.025) 80px
+          );
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 10vh;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .eyebrow {
+        font-family: "Courier Prime", monospace;
+        font-size: clamp(10px, 1.1vw, 13px);
+        letter-spacing: 0.35em;
+        color: var(--copper);
+        text-transform: uppercase;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeUp 1s ease 0.3s forwards;
+      }
+
+      .hero-title {
+        font-size: clamp(52px, 8.5vw, 130px);
+        font-weight: 300;
+        line-height: 0.9;
+        letter-spacing: -0.02em;
+        margin-bottom: 2rem;
+      }
+
+      .hero-title .line1 {
+        display: block;
+        color: var(--parchment);
+        opacity: 0;
+        animation: fadeUp 1.1s ease 0.5s forwards;
+      }
+      .hero-title .line2 {
+        display: block;
+        color: var(--clay-light);
+        font-style: italic;
+        opacity: 0;
+        animation: fadeUp 1.1s ease 0.7s forwards;
+      }
+      .hero-title .line3 {
+        display: block;
+        color: var(--copper);
+        font-size: 0.38em;
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        margin-top: 1.2rem;
+        opacity: 0;
+        animation: fadeUp 1.1s ease 0.9s forwards;
+      }
+
+      .hero-divider {
+        width: 80px;
+        height: 1px;
+        background: linear-gradient(90deg, var(--copper), transparent);
+        margin: 2rem 0;
+        opacity: 0;
+        animation: fadeUp 1s ease 1.1s forwards;
+      }
+
+      .hero-lead {
+        font-size: clamp(17px, 1.6vw, 22px);
+        line-height: 1.65;
+        color: var(--ash);
+        max-width: 600px;
+        font-style: italic;
+        opacity: 0;
+        animation: fadeUp 1s ease 1.2s forwards;
+      }
+
+      .hero-artifact {
+        position: absolute;
+        right: 4vw;
+        top: 50%;
+        transform: translateY(-50%);
+        width: min(380px, 35vw);
+        opacity: 0;
+        animation: fadeIn 2s ease 1.5s forwards;
+      }
+
+      .hero-bottom {
+        position: relative;
+        z-index: 10;
+        padding-bottom: 4rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .scroll-hint {
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        color: var(--ash);
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .scroll-hint::after {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 1px;
+        background: var(--ash);
+        animation: pulse 2s infinite;
+      }
+
+      /* ── SECTION BASE ── */
+      section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 8rem 6vw;
+      }
+
+      .section-number {
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        color: var(--copper);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-size: clamp(36px, 4vw, 64px);
+        font-weight: 300;
+        line-height: 1.05;
+        color: var(--parchment);
+        margin-bottom: 3rem;
+      }
+
+      .section-title em {
+        color: var(--clay-light);
+        font-style: italic;
+      }
+
+      /* ── INTRO STRIP ── */
+      .intro-strip {
+        background: linear-gradient(
+          135deg,
+          rgba(196, 155, 108, 0.06),
+          rgba(196, 75, 27, 0.04)
+        );
+        border-top: 1px solid rgba(196, 155, 108, 0.12);
+        border-bottom: 1px solid rgba(196, 155, 108, 0.12);
+        padding: 5rem 6vw;
+      }
+
+      .intro-strip-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+
+      .intro-quote {
+        font-size: clamp(22px, 2.8vw, 40px);
+        font-weight: 300;
+        font-style: italic;
+        line-height: 1.4;
+        color: var(--clay-light);
+        position: relative;
+        padding-left: 2rem;
+      }
+
+      .intro-quote::before {
+        content: '"';
+        position: absolute;
+        left: 0;
+        top: -0.3em;
+        font-size: 4em;
+        color: var(--copper);
+        opacity: 0.3;
+        line-height: 1;
+      }
+
+      .intro-text p {
+        font-size: clamp(15px, 1.3vw, 18px);
+        line-height: 1.8;
+        color: var(--ash);
+        margin-bottom: 1.5rem;
+      }
+
+      /* ── COMPONENTS SECTION ── */
+      .components-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0;
+        border: 1px solid rgba(196, 155, 108, 0.15);
+        margin-top: 4rem;
+      }
+
+      .component-item {
+        padding: 2.5rem 1.5rem;
+        border-right: 1px solid rgba(196, 155, 108, 0.12);
+        position: relative;
+        overflow: hidden;
+        transition: background 0.4s;
+      }
+      .component-item:last-child {
+        border-right: none;
+      }
+      .component-item:hover {
+        background: rgba(196, 155, 108, 0.04);
+      }
+
+      .component-item::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        transform: scaleX(0);
+        transition: transform 0.4s;
+      }
+      .c-clay::after {
+        background: var(--clay);
+      }
+      .c-bitumen::after {
+        background: #444;
+      }
+      .c-copper::after {
+        background: var(--copper);
+      }
+      .c-iron::after {
+        background: var(--iron);
+      }
+      .c-acid::after {
+        background: #5a8a2a;
+      }
+      .component-item:hover::after {
+        transform: scaleX(1);
+      }
+
+      .comp-symbol {
+        font-family: "Courier Prime", monospace;
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1;
+      }
+      .c-clay .comp-symbol {
+        color: var(--clay);
+      }
+      .c-bitumen .comp-symbol {
+        color: #777;
+      }
+      .c-copper .comp-symbol {
+        color: var(--copper);
+      }
+      .c-iron .comp-symbol {
+        color: var(--iron);
+      }
+      .c-acid .comp-symbol {
+        color: #7ab040;
+      }
+
+      .comp-name {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--parchment);
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.02em;
+      }
+      .comp-role {
+        font-family: "Courier Prime", monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ash);
+        margin-bottom: 1rem;
+      }
+      .comp-desc {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--ash);
+        font-style: italic;
+      }
+
+      /* ── SCIENCE SECTION ── */
+      .science-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8rem;
+        align-items: start;
+        margin-top: 4rem;
+      }
+
+      .science-text p {
+        font-size: clamp(15px, 1.3vw, 18px);
+        line-height: 1.85;
+        color: var(--ash);
+        margin-bottom: 1.5rem;
+      }
+
+      .formula-block {
+        background: rgba(196, 155, 108, 0.04);
+        border: 1px solid rgba(196, 155, 108, 0.12);
+        border-left: 3px solid var(--copper);
+        padding: 2rem 2.5rem;
+        margin: 2.5rem 0;
+        font-family: "Courier Prime", monospace;
+      }
+
+      .formula-label {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--copper);
+        margin-bottom: 1rem;
+      }
+
+      .formula {
+        font-size: 20px;
+        color: var(--clay-light);
+        margin-bottom: 0.5rem;
+      }
+
+      .formula-desc {
+        font-size: 13px;
+        color: var(--ash);
+        font-style: italic;
+      }
+
+      /* VOLT INTERACTIVE */
+      .volt-interactive {
+        background: rgba(10, 7, 4, 0.8);
+        border: 1px solid rgba(196, 155, 108, 0.15);
+        padding: 3rem;
+        position: sticky;
+        top: 2rem;
+      }
+
+      .volt-title {
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--copper);
+        margin-bottom: 2rem;
+      }
+
+      .liquid-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .liquid-btn {
+        padding: 1rem 1.2rem;
+        background: none;
+        border: none;
+        border-bottom: 1px solid rgba(196, 155, 108, 0.1);
+        text-align: left;
+        cursor: pointer;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 16px;
+        color: var(--ash);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s;
+      }
+      .liquid-btn:hover {
+        color: var(--parchment);
+        padding-left: 1.6rem;
+      }
+      .liquid-btn.active {
+        color: var(--clay-light);
+        background: rgba(196, 155, 108, 0.06);
+        padding-left: 1.6rem;
+        border-left: 2px solid var(--copper);
+      }
+
+      .liquid-btn .volt-num {
+        font-family: "Courier Prime", monospace;
+        font-size: 14px;
+        color: var(--copper);
+      }
+
+      .volt-display {
+        margin-top: 2.5rem;
+        padding-top: 2.5rem;
+        border-top: 1px solid rgba(196, 155, 108, 0.12);
+      }
+
+      .volt-big {
+        font-size: 72px;
+        font-weight: 300;
+        color: var(--parchment);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+      }
+      .volt-big sup {
+        font-size: 0.35em;
+        color: var(--copper);
+        vertical-align: super;
+      }
+      .volt-bar-track {
+        height: 3px;
+        background: rgba(196, 155, 108, 0.15);
+        margin: 1.5rem 0 0.75rem;
+        position: relative;
+      }
+      .volt-bar-fill {
+        height: 3px;
+        background: linear-gradient(90deg, var(--ember), var(--gold));
+        transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .volt-note {
+        font-size: 14px;
+        font-style: italic;
+        color: var(--ash);
+        line-height: 1.6;
+      }
+
+      /* ── TIMELINE ── */
+      .timeline-section {
+        background: rgba(196, 155, 108, 0.02);
+      }
+
+      .timeline-track {
+        position: relative;
+        margin-top: 5rem;
+        padding-left: 3rem;
+      }
+
+      .timeline-track::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          var(--copper) 10%,
+          var(--copper) 90%,
+          transparent
+        );
+      }
+
+      .tl-entry {
+        position: relative;
+        padding-bottom: 4rem;
+        padding-left: 2rem;
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: all 0.6s ease;
+      }
+      .tl-entry.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .tl-entry::before {
+        content: "";
+        position: absolute;
+        left: -3.5rem;
+        top: 6px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--copper);
+        box-shadow: 0 0 12px rgba(184, 115, 51, 0.5);
+      }
+
+      .tl-year {
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        color: var(--copper);
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+      }
+
+      .tl-heading {
+        font-size: clamp(20px, 2vw, 30px);
+        font-weight: 300;
+        color: var(--parchment);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .tl-body {
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--ash);
+        max-width: 680px;
+        font-style: italic;
+      }
+
+      /* ── DEBATE ── */
+      .debate-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin-top: 4rem;
+      }
+
+      .debate-column {
+      }
+      .debate-col-title {
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(196, 155, 108, 0.15);
+        margin-bottom: 2rem;
+      }
+      .favor-title {
+        color: #7ab040;
+      }
+      .contra-title {
+        color: var(--ember);
+      }
+
+      .debate-point {
+        display: flex;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+        align-items: flex-start;
+      }
+
+      .debate-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+        font-family: "Courier Prime", monospace;
+      }
+      .icon-favor {
+        background: rgba(122, 176, 64, 0.1);
+        color: #7ab040;
+        border: 1px solid rgba(122, 176, 64, 0.2);
+      }
+      .icon-contra {
+        background: rgba(196, 75, 27, 0.1);
+        color: var(--ember);
+        border: 1px solid rgba(196, 75, 27, 0.2);
+      }
+
+      .debate-point-text {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--ash);
+      }
+      .debate-point-text strong {
+        display: block;
+        color: var(--parchment);
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+
+      /* ── HYPOTHESES ── */
+      .hyp-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border: 1px solid rgba(196, 155, 108, 0.12);
+        margin-top: 4rem;
+      }
+
+      .hyp-card {
+        padding: 3rem 2rem;
+        border-right: 1px solid rgba(196, 155, 108, 0.1);
+        position: relative;
+        transition: background 0.4s;
+      }
+      .hyp-card:last-child {
+        border-right: none;
+      }
+      .hyp-card:hover {
+        background: rgba(196, 155, 108, 0.03);
+      }
+
+      .hyp-number {
+        font-family: "Courier Prime", monospace;
+        font-size: 48px;
+        font-weight: 700;
+        color: rgba(196, 155, 108, 0.1);
+        line-height: 1;
+        margin-bottom: 1.5rem;
+      }
+
+      .hyp-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--clay-light);
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+
+      .hyp-text {
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--ash);
+        font-style: italic;
+      }
+
+      .hyp-likelihood {
+        margin-top: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .like-label {
+        font-family: "Courier Prime", monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ash);
+      }
+      .like-dots {
+        display: flex;
+        gap: 4px;
+      }
+      .like-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(196, 155, 108, 0.2);
+      }
+      .like-dot.on {
+        background: var(--copper);
+      }
+
+      /* ── CLOSING ── */
+      .closing {
+        text-align: center;
+        padding: 12rem 6vw;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .closing-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 50% 100%,
+            rgba(196, 75, 27, 0.08),
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 60% 40% at 50% 80%,
+            rgba(196, 155, 108, 0.05),
+            transparent 50%
+          );
+      }
+
+      .closing-inner {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .closing-eyebrow {
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--copper);
+        margin-bottom: 3rem;
+      }
+
+      .closing-title {
+        font-size: clamp(36px, 5vw, 72px);
+        font-weight: 300;
+        line-height: 1.1;
+        color: var(--parchment);
+        margin-bottom: 3rem;
+      }
+      .closing-title em {
+        color: var(--clay-light);
+        font-style: italic;
+      }
+
+      .closing-text {
+        font-size: clamp(16px, 1.5vw, 20px);
+        line-height: 1.8;
+        color: var(--ash);
+        font-style: italic;
+        margin-bottom: 4rem;
+      }
+
+      .closing-line {
+        width: 120px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--copper),
+          transparent
+        );
+        margin: 0 auto;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        border-top: 1px solid rgba(196, 155, 108, 0.1);
+        padding: 3rem 6vw;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-left {
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        color: var(--ash);
+      }
+
+      .footer-right {
+        font-size: 13px;
+        color: var(--ash);
+        font-style: italic;
+      }
+
+      /* ── ANIMATIONS ── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 0.85;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @keyframes flicker {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        92% {
+          opacity: 0.95;
+        }
+        94% {
+          opacity: 0.6;
+        }
+        96% {
+          opacity: 0.9;
+        }
+      }
+      @keyframes rotate {
+        from {
+          transform: translateY(-50%) rotate(0deg);
+        }
+        to {
+          transform: translateY(-50%) rotate(360deg);
+        }
+      }
+
+      .fade-in-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+      }
+      .fade-in-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ── ARTIFACT SVG GLOW ── */
+      .artifact-glow {
+        animation: flicker 8s infinite;
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        padding: 1.5rem 6vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(180deg, rgba(10, 7, 4, 0.9), transparent);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      .nav-logo {
+        font-family: "Courier Prime", monospace;
+        font-size: 13px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--copper);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        font-family: "Courier Prime", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ash);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .nav-links a:hover {
+        color: var(--parchment);
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 900px) {
+        .hero-artifact {
+          display: none;
+        }
+        .intro-strip-inner {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .components-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .component-item {
+          border-bottom: 1px solid rgba(196, 155, 108, 0.12);
+        }
+        .science-layout {
+          grid-template-columns: 1fr;
+          gap: 4rem;
+        }
+        .debate-grid {
+          grid-template-columns: 1fr;
+        }
+        .hyp-grid {
+          grid-template-columns: 1fr;
+        }
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="nav-logo">Bateria de Bagdá</a>
+      <ul class="nav-links">
+        <li><a href="#componentes">Componentes</a></li>
+        <li><a href="#ciencia">Ciência</a></li>
+        <li><a href="#historia">Linha do Tempo</a></li>
+        <li><a href="#debate">Debate</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-lines"></div>
+
+      <div class="hero-content">
+        <p class="eyebrow">
+          250 a.C. — 224 d.C. &nbsp;·&nbsp; Império Parta &nbsp;·&nbsp;
+          Mesopotâmia
+        </p>
+        <h1 class="hero-title">
+          <span class="line1">O Fogo</span>
+          <span class="line2">Invisível</span>
+          <span class="line3"
+            >A civilização antiga e o enigma da eletricidade</span
+          >
+        </h1>
+        <div class="hero-divider"></div>
+        <p class="hero-lead">
+          Um vaso de argila. Um cilindro de cobre. Uma haste de ferro.<br />
+          E uma pergunta que ressoa através de dois milênios.
+        </p>
+      </div>
+
+      <!-- ARTIFACT ILLUSTRATION -->
+      <svg
+        class="hero-artifact"
+        viewBox="0 0 320 480"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient id="glowGrad" cx="50%" cy="60%" r="50%">
+            <stop offset="0%" stop-color="#C9932A" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#C9932A" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="clayGrad" cx="40%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#D4A870" />
+            <stop offset="100%" stop-color="#8B5E35" />
+          </radialGradient>
+          <radialGradient id="copperGrad" cx="40%" cy="20%" r="70%">
+            <stop offset="0%" stop-color="#D4956A" />
+            <stop offset="100%" stop-color="#8B4C1F" />
+          </radialGradient>
+        </defs>
+
+        <!-- Glow base -->
+        <ellipse
+          cx="160"
+          cy="380"
+          rx="100"
+          ry="30"
+          fill="url(#glowGrad)"
+          class="artifact-glow"
+        />
+
+        <!-- Clay vessel body -->
+        <path
+          d="M95 160 Q80 260 85 360 Q115 400 160 405 Q205 400 235 360 Q240 260 225 160 Z"
+          fill="url(#clayGrad)"
+          opacity="0.9"
+        />
+        <!-- Vessel highlight -->
+        <path
+          d="M105 170 Q92 255 96 345"
+          stroke="#E8C99A"
+          stroke-width="1.5"
+          fill="none"
+          opacity="0.3"
+        />
+        <!-- Vessel texture lines -->
+        <path
+          d="M92 200 Q160 195 228 200"
+          stroke="#8B5E35"
+          stroke-width="0.5"
+          fill="none"
+          opacity="0.4"
+        />
+        <path
+          d="M89 240 Q160 234 231 240"
+          stroke="#8B5E35"
+          stroke-width="0.5"
+          fill="none"
+          opacity="0.4"
+        />
+        <path
+          d="M88 280 Q160 274 232 280"
+          stroke="#8B5E35"
+          stroke-width="0.5"
+          fill="none"
+          opacity="0.4"
+        />
+        <path
+          d="M89 320 Q160 314 231 320"
+          stroke="#8B5E35"
+          stroke-width="0.5"
+          fill="none"
+          opacity="0.4"
+        />
+
+        <!-- Neck / shoulder -->
+        <path
+          d="M110 160 Q100 140 105 120 Q120 100 160 98 Q200 100 215 120 Q220 140 210 160 Z"
+          fill="url(#clayGrad)"
+          opacity="0.95"
+        />
+
+        <!-- Bitumen cap -->
+        <ellipse
+          cx="160"
+          cy="100"
+          rx="52"
+          ry="14"
+          fill="#1A1208"
+          opacity="0.95"
+        />
+        <ellipse
+          cx="160"
+          cy="97"
+          rx="48"
+          ry="10"
+          fill="#2C2416"
+          opacity="0.9"
+        />
+
+        <!-- Copper cylinder (peeking out) -->
+        <rect
+          x="143"
+          y="65"
+          width="34"
+          height="38"
+          rx="4"
+          fill="url(#copperGrad)"
+          opacity="0.95"
+        />
+        <rect
+          x="143"
+          y="65"
+          width="34"
+          height="4"
+          rx="2"
+          fill="#D4956A"
+          opacity="0.6"
+        />
+        <!-- Copper sheen -->
+        <rect
+          x="147"
+          y="68"
+          width="6"
+          height="28"
+          rx="2"
+          fill="#E8A070"
+          opacity="0.25"
+        />
+
+        <!-- Iron rod -->
+        <rect x="157" y="38" width="7" height="70" rx="2" fill="#7A7A7A" />
+        <rect
+          x="158"
+          y="38"
+          width="2"
+          height="70"
+          fill="#A0A0A0"
+          opacity="0.4"
+        />
+        <!-- Rod top -->
+        <rect x="154" y="34" width="13" height="8" rx="2" fill="#888" />
+
+        <!-- Electron flow hint -->
+        <g class="artifact-glow">
+          <circle cx="160" cy="30" r="2.5" fill="#C9932A" opacity="0.8" />
+          <circle cx="148" cy="20" r="1.5" fill="#C9932A" opacity="0.5" />
+          <circle cx="172" cy="18" r="1.5" fill="#C9932A" opacity="0.4" />
+          <circle cx="142" cy="10" r="1" fill="#C9932A" opacity="0.3" />
+          <circle cx="178" cy="8" r="1" fill="#C9932A" opacity="0.25" />
+        </g>
+
+        <!-- Label lines -->
+        <line
+          x1="220"
+          y1="90"
+          x2="270"
+          y2="70"
+          stroke="#C49A6C"
+          stroke-width="0.5"
+          opacity="0.5"
+        />
+        <text
+          x="275"
+          y="67"
+          font-family="'Courier Prime', monospace"
+          font-size="10"
+          fill="#C49A6C"
+          opacity="0.7"
+        >
+          Betume
+        </text>
+
+        <line
+          x1="177"
+          y1="82"
+          x2="270"
+          y2="110"
+          stroke="#B87333"
+          stroke-width="0.5"
+          opacity="0.5"
+        />
+        <text
+          x="275"
+          y="113"
+          font-family="'Courier Prime', monospace"
+          font-size="10"
+          fill="#B87333"
+          opacity="0.8"
+        >
+          Cobre
+        </text>
+
+        <line
+          x1="164"
+          y1="58"
+          x2="270"
+          y2="48"
+          stroke="#9B9B9B"
+          stroke-width="0.5"
+          opacity="0.4"
+        />
+        <text
+          x="275"
+          y="51"
+          font-family="'Courier Prime', monospace"
+          font-size="10"
+          fill="#9B9B9B"
+          opacity="0.6"
+        >
+          Ferro
+        </text>
+
+        <line
+          x1="235"
+          y1="280"
+          x2="275"
+          y2="260"
+          stroke="#C49A6C"
+          stroke-width="0.5"
+          opacity="0.4"
+        />
+        <text
+          x="278"
+          y="263"
+          font-family="'Courier Prime', monospace"
+          font-size="10"
+          fill="#C49A6C"
+          opacity="0.6"
+        >
+          Argila
+        </text>
+
+        <!-- Base shadow -->
+        <ellipse cx="160" cy="402" rx="75" ry="8" fill="#000" opacity="0.4" />
+      </svg>
+
+      <div class="hero-bottom">
+        <p class="scroll-hint">Explorar</p>
+      </div>
+    </div>
+
+    <!-- INTRO STRIP -->
+    <div class="intro-strip">
+      <div class="intro-strip-inner">
+        <div class="intro-quote">
+          Seria possível que civilizações antigas compreendessem os princípios
+          da eletricidade muito antes da era moderna?
+        </div>
+        <div class="intro-text">
+          <p>
+            Em 1936, próximo às ruínas de antigas cidades do Império Parta no
+            atual Iraque, arqueólogos encontraram um artefato de aparência
+            simples. Um pequeno vaso de argila, selado com betume, contendo um
+            cilindro de cobre e uma haste de ferro.
+          </p>
+          <p>
+            Ao analisar sua estrutura, pesquisadores perceberam algo
+            extraordinário: aquele conjunto possuía os mesmos princípios básicos
+            de uma célula galvânica moderna. Em outras palavras — uma bateria.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPONENTS -->
+    <section id="componentes" class="fade-in-section">
+      <p class="section-number">01 — Anatomia</p>
+      <h2 class="section-title">Os quatro <em>elementos</em><br />do enigma</h2>
+      <div class="components-grid">
+        <div class="component-item c-clay">
+          <div class="comp-symbol">Ar</div>
+          <div class="comp-name">Vaso de argila</div>
+          <div class="comp-role">Contêiner externo</div>
+          <div class="comp-desc">
+            ~13 cm de altura. Recipiente principal de terracota modelado à mão
+            pelos artesãos partas.
+          </div>
+        </div>
+        <div class="component-item c-bitumen">
+          <div class="comp-symbol">Bt</div>
+          <div class="comp-name">Tampa de betume</div>
+          <div class="comp-role">Isolante natural</div>
+          <div class="comp-desc">
+            Asfalto natural funcionando como vedante e isolante entre os
+            componentes metálicos.
+          </div>
+        </div>
+        <div class="component-item c-copper">
+          <div class="comp-symbol">Cu</div>
+          <div class="comp-name">Cilindro de cobre</div>
+          <div class="comp-role">Cátodo</div>
+          <div class="comp-desc">
+            Condutor principal. No processo eletroquímico, recebe os elétrons
+            gerados pela oxidação.
+          </div>
+        </div>
+        <div class="component-item c-iron">
+          <div class="comp-symbol">Fe</div>
+          <div class="comp-name">Haste de ferro</div>
+          <div class="comp-role">Ânodo</div>
+          <div class="comp-desc">
+            Electrode central. Tende a oxidar quando em contato com solução
+            ácida, liberando elétrons.
+          </div>
+        </div>
+        <div class="component-item c-acid">
+          <div class="comp-symbol">H⁺</div>
+          <div class="comp-name">Eletrólito ácido</div>
+          <div class="comp-role">Hipótese · ausente</div>
+          <div class="comp-desc">
+            Vinagre, vinho ou suco cítrico completariam o circuito. Nenhum
+            resíduo foi confirmado.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCIENCE -->
+    <section id="ciencia" class="fade-in-section">
+      <p class="section-number">02 — Eletroquímica</p>
+      <h2 class="section-title">A ciência<br /><em>oculta no barro</em></h2>
+      <div class="science-layout">
+        <div class="science-text">
+          <p>
+            Quando dois metais diferentes entram em contato indireto através de
+            uma solução ácida, ocorre uma reação eletroquímica espontânea. O
+            ferro tende a oxidar; o cobre atua como condutor; o líquido ácido
+            torna-se um eletrólito.
+          </p>
+          <p>
+            Deste movimento invisível de partículas nasce uma diferença de
+            potencial elétrico — o mesmo princípio que Volta formalizou em 1800,
+            e que hoje alimenta desde smartphones até sondas espaciais.
+          </p>
+
+          <div class="formula-block">
+            <div class="formula-label">Reação de oxidação</div>
+            <div class="formula">Fe → Fe²⁺ + 2e⁻</div>
+            <div class="formula-desc">O ferro libera elétrons ao se oxidar</div>
+          </div>
+
+          <div class="formula-block">
+            <div class="formula-label">Deposição catódica</div>
+            <div class="formula">Cu²⁺ + 2e⁻ → Cu</div>
+            <div class="formula-desc">
+              Base da galvanoplastia — douração elétrica
+            </div>
+          </div>
+
+          <div class="formula-block">
+            <div class="formula-label">Energia livre de Gibbs</div>
+            <div class="formula">ΔG = −nFE</div>
+            <div class="formula-desc">
+              A mesma equação do barro ao lítio moderno
+            </div>
+          </div>
+
+          <p>
+            Mudaram os materiais ao longo dos milênios. O princípio permaneceu
+            quase eterno.
+          </p>
+        </div>
+
+        <!-- INTERACTIVE VOLT -->
+        <div class="volt-interactive">
+          <div class="volt-title">Tensão gerada · simulação</div>
+          <div class="liquid-options">
+            <button
+              class="liquid-btn"
+              onclick="
+                setLiquid(
+                  0.5,
+                  'Água salgada',
+                  'Tensão mínima. Uso eletroquímico muito limitado.',
+                  this,
+                )
+              "
+            >
+              Água salgada <span class="volt-num">0,5 V</span>
+            </button>
+            <button
+              class="liquid-btn active"
+              onclick="
+                setLiquid(
+                  0.8,
+                  'Vinagre',
+                  'Suficiente para galvanoplastia simples em objetos pequenos.',
+                  this,
+                )
+              "
+            >
+              Vinagre <span class="volt-num">0,8 V</span>
+            </button>
+            <button
+              class="liquid-btn"
+              onclick="
+                setLiquid(
+                  1.0,
+                  'Suco de limão',
+                  'Viável para revestimentos metálicos leves de joias e artefatos.',
+                  this,
+                )
+              "
+            >
+              Suco de limão <span class="volt-num">1,0 V</span>
+            </button>
+            <button
+              class="liquid-btn"
+              onclick="
+                setLiquid(
+                  1.1,
+                  'Vinho fermentado',
+                  'Tensão razoável. Compatível com aplicações artesanais sofisticadas.',
+                  this,
+                )
+              "
+            >
+              Vinho fermentado <span class="volt-num">1,1 V</span>
+            </button>
+            <button
+              class="liquid-btn"
+              onclick="
+                setLiquid(
+                  1.4,
+                  'Solução ácida forte',
+                  'Tensão máxima estimada. Aplicações mais amplas possíveis.',
+                  this,
+                )
+              "
+            >
+              Ácido concentrado <span class="volt-num">1,4 V</span>
+            </button>
+          </div>
+          <div class="volt-display">
+            <div class="volt-big" id="voltVal">0,8<sup>V</sup></div>
+            <div
+              id="liquidName"
+              style="
+                font-family: &quot;Courier Prime&quot;, monospace;
+                font-size: 11px;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--copper);
+                margin-bottom: 1.5rem;
+              "
+            >
+              Vinagre
+            </div>
+            <div class="volt-bar-track">
+              <div class="volt-bar-fill" id="voltBar" style="width: 57%"></div>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-family: &quot;Courier Prime&quot;, monospace;
+                font-size: 10px;
+                color: var(--ash);
+                margin-bottom: 1.5rem;
+              "
+            >
+              <span>0 V</span><span>1,4 V</span>
+            </div>
+            <p class="volt-note" id="voltNote">
+              Suficiente para galvanoplastia simples em objetos pequenos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section
+      id="historia"
+      style="
+        background: rgba(196, 155, 108, 0.015);
+        padding: 8rem 6vw;
+        max-width: none;
+      "
+    >
+      <div style="max-width: 1200px; margin: 0 auto" class="fade-in-section">
+        <p class="section-number">03 — Linha do Tempo</p>
+        <h2 class="section-title">Do barro<br />ao <em>lítio</em></h2>
+        <div class="timeline-track">
+          <div class="tl-entry">
+            <div class="tl-year">~250 a.C. – 224 d.C.</div>
+            <h3 class="tl-heading">Bateria de Bagdá — Império Parta</h3>
+            <p class="tl-body">
+              Artesãos partas criam o artefato nas proximidades de Ctesifonte.
+              Sua função permanece desconhecida. O objeto seria redescoberto
+              1700 anos depois.
+            </p>
+          </div>
+          <div class="tl-entry">
+            <div class="tl-year">Séc. VI a.C. — Grécia Antiga</div>
+            <h3 class="tl-heading">O âmbar e a força invisível</h3>
+            <p class="tl-body">
+              Filósofos gregos observam que o âmbar esfregado atrai pequenos
+              objetos. Da palavra grega <em>elektron</em> (âmbar) nascerá,
+              séculos depois, o termo "eletricidade".
+            </p>
+          </div>
+          <div class="tl-entry">
+            <div class="tl-year">1780 — Bolonha, Itália</div>
+            <h3 class="tl-heading">Galvani e a "eletricidade animal"</h3>
+            <p class="tl-body">
+              Luigi Galvani observa pernas de rã se contraindo ao contato
+              metálico. Acredita ter descoberto uma força vital intrínseca aos
+              organismos vivos.
+            </p>
+          </div>
+          <div class="tl-entry">
+            <div class="tl-year">1800 — Como, Itália</div>
+            <h3 class="tl-heading">Alessandro Volta — A primeira pilha</h3>
+            <p class="tl-body">
+              Discordando de Galvani, Volta percebe que a eletricidade vem da
+              interação entre metais diferentes. Constrói a primeira pilha
+              voltaica: discos alternados de cobre e zinco com eletrólito. A
+              humanidade obtém sua primeira fonte contínua de corrente elétrica.
+            </p>
+          </div>
+          <div class="tl-entry">
+            <div class="tl-year">1936 — Iraque</div>
+            <h3 class="tl-heading">Redescoberta do artefato</h3>
+            <p class="tl-body">
+              O arqueólogo alemão Wilhelm König encontra o vaso perto de Bagdá e
+              propõe a hipótese de que se trata de uma célula galvânica
+              primitiva. A controvérsia científica começa.
+            </p>
+          </div>
+          <div class="tl-entry">
+            <div class="tl-year">Hoje</div>
+            <h3 class="tl-heading">Baterias de íons de lítio</h3>
+            <p class="tl-body">
+              O mesmo princípio — transformar reação química em fluxo elétrico —
+              agora alimenta smartphones, veículos elétricos, satélites e o
+              futuro das colônias interplanetárias. O vaso de barro e a bateria
+              de lítio compartilham o mesmo coração invisível.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HYPOTHESES -->
+    <section class="fade-in-section">
+      <p class="section-number">04 — Hipóteses</p>
+      <h2 class="section-title">Três teorias,<br /><em>um mistério</em></h2>
+      <div class="hyp-grid">
+        <div class="hyp-card">
+          <div class="hyp-number">01</div>
+          <div class="hyp-title">Galvanoplastia</div>
+          <p class="hyp-text">
+            Pequenas correntes elétricas poderiam dourar objetos de prata ou
+            cobre. Réplicas modernas do artefato conseguiram gerar energia
+            suficiente para revestimentos metálicos simples. Artesãos da
+            antiguidade talvez dominassem técnicas eletroquímicas rudimentares.
+          </p>
+          <div class="hyp-likelihood">
+            <span class="like-label">Plausível</span>
+            <div class="like-dots">
+              <div class="like-dot on"></div>
+              <div class="like-dot on"></div>
+              <div class="like-dot on"></div>
+              <div class="like-dot on"></div>
+              <div class="like-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="hyp-card">
+          <div class="hyp-number">02</div>
+          <div class="hyp-title">Rituais e magia sagrada</div>
+          <p class="hyp-text">
+            Sacerdotes antigos poderiam usar pequenos choques elétricos em
+            cerimônias religiosas. Em um mundo onde relâmpagos eram
+            manifestações divinas, a capacidade de produzir energia invisível
+            seria percebida como poderes sobrenaturais.
+          </p>
+          <div class="hyp-likelihood">
+            <span class="like-label">Especulativo</span>
+            <div class="like-dots">
+              <div class="like-dot on"></div>
+              <div class="like-dot on"></div>
+              <div class="like-dot on"></div>
+              <div class="like-dot"></div>
+              <div class="like-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="hyp-card">
+          <div class="hyp-number">03</div>
+          <div class="hyp-title">Recipiente comum</div>
+          <p class="hyp-text">
+            A hipótese mais cética: o vaso pode ter sido apenas um recipiente
+            para armazenar pergaminhos, óleos medicinais ou substâncias
+            alquímicas. A semelhança com uma célula galvânica seria mera
+            coincidência morfológica.
+          </p>
+          <div class="hyp-likelihood">
+            <span class="like-label">Conservador</span>
+            <div class="like-dots">
+              <div class="like-dot on"></div>
+              <div class="like-dot on"></div>
+              <div class="like-dot"></div>
+              <div class="like-dot"></div>
+              <div class="like-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEBATE -->
+    <section id="debate" class="fade-in-section" style="padding-top: 0">
+      <p class="section-number">05 — O Debate</p>
+      <h2 class="section-title">Evidências<br />em <em>conflito</em></h2>
+      <div class="debate-grid">
+        <div class="debate-column">
+          <div class="debate-col-title favor-title">
+            A favor da hipótese elétrica
+          </div>
+          <div class="debate-point">
+            <div class="debate-icon icon-favor">+</div>
+            <div class="debate-point-text">
+              <strong>Estrutura galvânica confirmada</strong>
+              A configuração cobre-ferro-betume é idêntica aos princípios de uma
+              célula eletroquímica moderna. Não parece acidental.
+            </div>
+          </div>
+          <div class="debate-point">
+            <div class="debate-icon icon-favor">+</div>
+            <div class="debate-point-text">
+              <strong>Experimentos bem-sucedidos</strong>
+              Réplicas modernas preenchidas com ácidos naturais geraram entre
+              0,5 e 1,4 volts — suficiente para galvanoplastia.
+            </div>
+          </div>
+          <div class="debate-point">
+            <div class="debate-icon icon-favor">+</div>
+            <div class="debate-point-text">
+              <strong>Ausência não é negação</strong>
+              Materiais orgânicos como fios ou conectores de fibra vegetal
+              desaparecem com o tempo. Sua ausência não prova que não existiram.
+            </div>
+          </div>
+          <div class="debate-point">
+            <div class="debate-icon icon-favor">+</div>
+            <div class="debate-point-text">
+              <strong>Tradição de objetos dourados</strong>
+              A região produzia artefatos metálicos muito mais elaborados do que
+              a tecnologia convencional da época explicaria facilmente.
+            </div>
+          </div>
+        </div>
+        <div class="debate-column">
+          <div class="debate-col-title contra-title">
+            Contra a hipótese elétrica
+          </div>
+          <div class="debate-point">
+            <div class="debate-icon icon-contra">−</div>
+            <div class="debate-point-text">
+              <strong>Silêncio dos registros</strong>
+              Não há nenhum texto da época mencionando eletricidade,
+              galvanoplastia ou qualquer fenômeno relacionado ao artefato.
+            </div>
+          </div>
+          <div class="debate-point">
+            <div class="debate-icon icon-contra">−</div>
+            <div class="debate-point-text">
+              <strong>Ausência de infraestrutura</strong>
+              Nenhum fio, conector, instrumento elétrico ou sistema complementar
+              foi encontrado nas proximidades do artefato.
+            </div>
+          </div>
+          <div class="debate-point">
+            <div class="debate-icon icon-contra">−</div>
+            <div class="debate-point-text">
+              <strong>Contexto arqueológico incompleto</strong>
+              O artefato foi encontrado isolado, sem contexto cultural ou
+              funcional claro que aponte para uso elétrico deliberado.
+            </div>
+          </div>
+          <div class="debate-point">
+            <div class="debate-icon icon-contra">−</div>
+            <div class="debate-point-text">
+              <strong>Coincidência morfológica</strong>
+              A semelhança com uma célula galvânica pode ser resultado de
+              necessidades práticas de armazenamento, não de conhecimento
+              elétrico.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <div class="closing">
+      <div class="closing-bg"></div>
+      <div class="closing-inner fade-in-section">
+        <p class="closing-eyebrow">Reflexão final</p>
+        <h2 class="closing-title">
+          A centelha<br /><em>permaneceu</em><br />a mesma
+        </h2>
+        <p class="closing-text">
+          Talvez nunca descubramos a verdadeira função da Bateria de Bagdá.<br />
+          Mas ela permanece como um pequeno objeto de barro envolto em um oceano
+          de perguntas —<br />
+          capaz de provocar uma das reflexões mais profundas da história da
+          ciência:<br /><br />
+          <strong style="color: var(--clay-light); font-style: normal"
+            >Quantas vezes a humanidade já descobriu os segredos da natureza,<br />apenas
+            para esquecê-los novamente?</strong
+          >
+        </p>
+        <div class="closing-line"></div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-left">
+        Bateria de Bagdá &nbsp;·&nbsp; 250 a.C. — Presente
+      </div>
+      <div class="footer-right">O fio invisível entre ruínas e circuitos</div>
+    </footer>
+
+    <script>
+      // Voltage interactive
+      function setLiquid(v, name, note, btn) {
+        document
+          .querySelectorAll(".liquid-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const pct = Math.round((v / 1.4) * 100);
+        document.getElementById("voltVal").innerHTML =
+          v.toFixed(1).replace(".", ",") + "<sup>V</sup>";
+        document.getElementById("voltBar").style.width = pct + "%";
+        document.getElementById("liquidName").textContent = name;
+        document.getElementById("voltNote").textContent = note;
+      }
+
+      // Scroll animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      document.querySelectorAll(".fade-in-section, .tl-entry").forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Staggered timeline
+      const tlObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => entry.target.classList.add("visible"), i * 150);
+            }
+          });
+        },
+        { threshold: 0.05 },
+      );
+
+      document.querySelectorAll(".tl-entry").forEach((el) => tlObs.observe(el));
+    </script>
+  </body>
+</html>

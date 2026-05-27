@@ -1,0 +1,1807 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Por que o Capitalismo "Funciona"? — Feynman · Use Cases · Mental Models
+    </title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0f0d;
+        --surface: #121a15;
+        --surface2: #1a2420;
+        --border: #1e2e28;
+        --green: #2ecc71;
+        --green-dark: #1a7a44;
+        --green-soft: rgba(46, 204, 113, 0.08);
+        --gold: #f0b429;
+        --gold-soft: rgba(240, 180, 41, 0.08);
+        --red: #e74c3c;
+        --text: #d8ede4;
+        --muted: #5a7a68;
+        --dim: #1e3028;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 16px;
+        line-height: 1.7;
+        min-height: 100vh;
+      }
+
+      /* NAV */
+      .nav-bar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 15, 13, 0.96);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        overflow-x: auto;
+      }
+
+      .nav-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 14px;
+        color: var(--green);
+        white-space: nowrap;
+        padding-right: 24px;
+        border-right: 1px solid var(--border);
+        margin-right: 16px;
+      }
+
+      .nav-tab {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 16px 18px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        background: none;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .nav-tab:hover {
+        color: var(--text);
+      }
+      .nav-tab.active {
+        color: var(--green);
+        border-bottom-color: var(--green);
+      }
+
+      /* PANELS */
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+
+      /* HERO */
+      .hero {
+        padding: 80px 40px 60px;
+        max-width: 900px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-label {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        color: var(--green);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+
+      .hero h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(34px, 6.5vw, 64px);
+        line-height: 1.05;
+        color: #fff;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .hero-lead {
+        font-size: 18px;
+        color: #8ab89a;
+        max-width: 640px;
+        line-height: 1.65;
+      }
+
+      .method-badges {
+        display: flex;
+        gap: 10px;
+        margin-top: 28px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        padding: 5px 12px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        border-radius: 2px;
+      }
+      .badge.green {
+        border-color: var(--green);
+        color: var(--green);
+      }
+      .badge.gold {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .badge.red {
+        border-color: var(--red);
+        color: var(--red);
+      }
+
+      /* CONTENT */
+      .content-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 40px 100px;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 32px;
+        padding-top: 48px;
+        border-top: 1px solid var(--border);
+      }
+      .section-head:first-child {
+        border-top: none;
+      }
+
+      .section-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 48px;
+        color: var(--dim);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      .section-meta {
+        flex: 1;
+      }
+      .section-tag {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 4px;
+      }
+      .section-meta h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: 26px;
+        color: #fff;
+        font-weight: 400;
+      }
+
+      /* FEYNMAN BLOCKS */
+      .feynman-block {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--green);
+        padding: 28px 32px;
+        margin-bottom: 20px;
+      }
+
+      .feynman-block h3 {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 14px;
+      }
+
+      .feynman-block p {
+        color: #b0ccc0;
+        margin-bottom: 12px;
+      }
+      .feynman-block p:last-child {
+        margin-bottom: 0;
+      }
+      .feynman-block strong {
+        color: #e0ede8;
+      }
+
+      /* PILLAR GRID */
+      .pillar-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .pillar-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 24px;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .pillar-card:hover {
+        border-color: var(--green);
+        transform: translateY(-2px);
+      }
+
+      .pillar-card .pill-icon {
+        font-size: 26px;
+        margin-bottom: 12px;
+        display: block;
+      }
+      .pillar-card .pill-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 18px;
+        color: var(--gold);
+        margin-bottom: 10px;
+      }
+      .pillar-card p {
+        font-size: 14px;
+        color: #7a9e8c;
+        line-height: 1.6;
+      }
+
+      /* ACCORDION */
+      .accordion-item {
+        border: 1px solid var(--border);
+        margin-bottom: 8px;
+      }
+      .accordion-trigger {
+        width: 100%;
+        background: var(--surface);
+        border: none;
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.2s;
+      }
+      .accordion-trigger:hover {
+        background: var(--surface2);
+      }
+      .trig-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .acc-num {
+        font-family: "Fira Code", monospace;
+        font-size: 12px;
+        color: var(--green);
+        width: 24px;
+      }
+      .acc-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 18px;
+        color: #d0e8dc;
+      }
+      .acc-arrow {
+        font-size: 12px;
+        color: var(--muted);
+        transition: transform 0.3s;
+      }
+      .accordion-item.open .acc-arrow {
+        transform: rotate(180deg);
+      }
+      .accordion-body {
+        display: none;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        padding: 28px 32px;
+      }
+      .accordion-item.open .accordion-body {
+        display: block;
+      }
+      .accordion-body p {
+        color: #90b0a0;
+        margin-bottom: 14px;
+        font-size: 15px;
+      }
+      .accordion-body p:last-child {
+        margin-bottom: 0;
+      }
+      .accordion-body strong {
+        color: var(--gold);
+      }
+      .example-box {
+        background: var(--surface);
+        border-left: 3px solid var(--gold);
+        padding: 16px 20px;
+        margin: 16px 0;
+        font-size: 14px;
+        color: #8a9e90;
+        font-style: italic;
+        line-height: 1.6;
+      }
+
+      /* USE CASES */
+      .usecase-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      .usecase-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 28px 24px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+        cursor: default;
+      }
+      .usecase-card:hover {
+        border-color: var(--green);
+        transform: translateY(-2px);
+      }
+      .usecase-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--green);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s;
+      }
+      .usecase-card:hover::before {
+        transform: scaleX(1);
+      }
+      .uc-icon {
+        font-size: 28px;
+        margin-bottom: 14px;
+        display: block;
+      }
+      .uc-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 18px;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+      .uc-desc {
+        font-size: 14px;
+        color: #6a8e7c;
+        line-height: 1.6;
+        margin-bottom: 14px;
+      }
+      .uc-tag {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        color: var(--green);
+        background: var(--green-soft);
+        padding: 5px 10px;
+        border-radius: 2px;
+      }
+
+      /* MENTAL MODELS */
+      .mental-model {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 32px;
+        margin-bottom: 20px;
+      }
+      .mm-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+      .mm-icon-wrap {
+        width: 52px;
+        height: 52px;
+        background: var(--green-soft);
+        border: 1px solid var(--green-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+        border-radius: 2px;
+      }
+      .mm-info {
+        flex: 1;
+      }
+      .mm-tag {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        color: var(--green);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 4px;
+      }
+      .mm-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 22px;
+        color: #fff;
+      }
+      .mm-body p {
+        font-size: 15px;
+        color: #8aaa98;
+        margin-bottom: 14px;
+        line-height: 1.7;
+      }
+      .mm-body strong {
+        color: var(--text);
+      }
+      .mm-diagram {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 20px 24px;
+        margin: 16px 0;
+        font-family: "Fira Code", monospace;
+        font-size: 12px;
+        color: var(--green);
+        line-height: 2;
+        white-space: pre;
+        overflow-x: auto;
+      }
+      .mm-apply {
+        background: var(--green-soft);
+        border: 1px solid rgba(46, 204, 113, 0.15);
+        padding: 16px 20px;
+        margin-top: 16px;
+      }
+      .mm-apply .apply-label {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--green);
+        display: block;
+        margin-bottom: 8px;
+      }
+      .mm-apply p {
+        font-size: 14px;
+        color: #90b0a0;
+        margin: 0;
+      }
+
+      /* CRITIQUE */
+      .critique-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .critique-col {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 24px;
+      }
+      .crit-header {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .crit-header.pro {
+        color: var(--green);
+      }
+      .crit-header.con {
+        color: var(--red);
+      }
+      .crit-item {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+        color: #7a9a88;
+        line-height: 1.6;
+      }
+      .crit-item:last-child {
+        border-bottom: none;
+      }
+      .crit-item strong {
+        color: var(--text);
+        font-weight: 500;
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        position: relative;
+        padding-left: 32px;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--border);
+      }
+      .tl-item {
+        position: relative;
+        padding: 0 0 36px 24px;
+      }
+      .tl-item::before {
+        content: "";
+        position: absolute;
+        left: -26px;
+        top: 8px;
+        width: 8px;
+        height: 8px;
+        background: var(--green);
+        border-radius: 50%;
+      }
+      .tl-year {
+        font-family: "Fira Code", monospace;
+        font-size: 12px;
+        color: var(--gold);
+        margin-bottom: 4px;
+      }
+      .tl-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 18px;
+        color: #d0e8dc;
+        margin-bottom: 8px;
+      }
+      .tl-text {
+        font-size: 14px;
+        color: #6a8a78;
+        line-height: 1.65;
+      }
+
+      /* STAT CARDS */
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 24px 0;
+      }
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 24px;
+        text-align: center;
+      }
+      .stat-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 36px;
+        color: var(--green);
+        display: block;
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+      .stat-label {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
+      /* SUMMARY */
+      .summary-block {
+        background: linear-gradient(
+          135deg,
+          #060f09 0%,
+          #0a0f0d 50%,
+          #080d0b 100%
+        );
+        border: 1px solid var(--green-dark);
+        padding: 40px;
+        margin-top: 48px;
+      }
+      .sum-label {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 20px;
+        display: block;
+      }
+      .summary-block h3 {
+        font-family: "DM Serif Display", serif;
+        font-size: 26px;
+        color: #fff;
+        margin-bottom: 20px;
+        font-style: italic;
+      }
+      .summary-block p {
+        font-size: 16px;
+        color: #8aaa98;
+        margin-bottom: 14px;
+        line-height: 1.75;
+      }
+      .summary-block strong {
+        color: var(--gold);
+      }
+
+      /* VERSUS TABLE */
+      .vs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+      }
+      .vs-table th {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 10px 14px;
+        border-bottom: 2px solid var(--border);
+        text-align: left;
+      }
+      .vs-table th.cap {
+        color: var(--green);
+      }
+      .vs-table th.alt {
+        color: var(--red);
+      }
+      .vs-table th.dim {
+        color: var(--muted);
+      }
+      .vs-table td {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border);
+        color: #8aaa98;
+        vertical-align: top;
+        line-height: 1.55;
+      }
+      .vs-table td:first-child {
+        color: var(--text);
+        font-weight: 500;
+        width: 22%;
+      }
+      .vs-table td.cap-cell {
+        color: #6ab88a;
+      }
+      .vs-table td.alt-cell {
+        color: #c07a72;
+      }
+
+      @media (max-width: 640px) {
+        .hero,
+        .content-wrap {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .pillar-grid,
+        .critique-row,
+        .stat-row {
+          grid-template-columns: 1fr;
+        }
+        .usecase-grid {
+          grid-template-columns: 1fr;
+        }
+        .nav-title {
+          display: none;
+        }
+        .mm-diagram {
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav-bar">
+      <span class="nav-title">Capitalismo</span>
+      <button class="nav-tab active" onclick="switchPanel('feynman', this)">
+        / feynman
+      </button>
+      <button class="nav-tab" onclick="switchPanel('usecases', this)">
+        / use cases
+      </button>
+      <button class="nav-tab" onclick="switchPanel('mental', this)">
+        / mental models
+      </button>
+      <button class="nav-tab" onclick="switchPanel('critica', this)">
+        / crítica
+      </button>
+      <button class="nav-tab" onclick="switchPanel('timeline', this)">
+        / timeline
+      </button>
+    </nav>
+
+    <!-- ======= FEYNMAN ======= -->
+    <div id="panel-feynman" class="panel active">
+      <div class="hero">
+        <p class="hero-label">/ Método Feynman · Análise Profunda</p>
+        <h1>Por que o capitalismo<br /><em>"dá certo"?</em></h1>
+        <p class="hero-lead">
+          Uma pergunta honesta merece uma resposta honesta — com rigor
+          intelectual, sem propaganda nem ingenuidade.
+        </p>
+        <div class="method-badges">
+          <span class="badge green">Feynman</span>
+          <span class="badge gold">Use Cases</span>
+          <span class="badge gold">Mental Models</span>
+          <span class="badge red">Crítica</span>
+        </div>
+      </div>
+
+      <div class="content-wrap">
+        <div class="section-head" style="padding-top: 0; border-top: none">
+          <span class="section-num">00</span>
+          <div class="section-meta">
+            <span class="section-tag">Ponto de Partida</span>
+            <h2>O que significa "dar certo"?</h2>
+          </div>
+        </div>
+
+        <div class="feynman-block">
+          <h3>Precisamos definir o critério</h3>
+          <p>
+            "Dar certo" é uma afirmação carregada.
+            <strong>Certo para quem? Em que dimensão? Comparado a quê?</strong>
+            O capitalismo "dá certo" se o critério for crescimento de PIB,
+            inovação tecnológica, e produção de bens materiais. Não "dá certo"
+            se o critério for igualdade de distribuição, sustentabilidade
+            ambiental ou bem-estar subjetivo.
+          </p>
+          <p>
+            A resposta honesta é:
+            <strong
+              >o capitalismo é o sistema que, até hoje, se mostrou mais eficaz
+              em coordenar produção em larga escala, gerar inovação e elevar o
+              padrão material de vida médio</strong
+            >
+            — com custos enormes e distribuição profundamente desigual. Entender
+            por que isso acontece é o objetivo desta análise.
+          </p>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card">
+            <span class="stat-num">90%</span>
+            <span class="stat-label"
+              >Redução da pobreza extrema global desde 1800 — correlacionada à
+              expansão capitalista</span
+            >
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">8×</span>
+            <span class="stat-label"
+              >Aumento na expectativa de vida média global nos últimos 200
+              anos</span
+            >
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">∞</span>
+            <span class="stat-label"
+              >Nenhum sistema alternativo sustentou escala global por mais de 70
+              anos sem colapso ou reformas capitalistas</span
+            >
+          </div>
+        </div>
+
+        <!-- ETAPA 1 -->
+        <div class="section-head">
+          <span class="section-num">01</span>
+          <div class="section-meta">
+            <span class="section-tag">Etapa I — Linguagem Simples</span>
+            <h2>A ideia central em palavras diretas</h2>
+          </div>
+        </div>
+
+        <div class="feynman-block">
+          <h3>O Problema que o capitalismo resolve</h3>
+          <p>
+            Imagine uma cidade com 10 padeiros.
+            <strong
+              >Como decidir quantos pães fazer? Que sabores? A que preço
+              vender?</strong
+            >
+            Num sistema planificado, um comitê central decide. O problema: o
+            comitê não sabe o que cada pessoa quer, onde está, quanto pode
+            pagar, nem como os gostos mudam. Inevitavelmente erra — falta pão
+            aqui, sobra ali.
+          </p>
+          <p>
+            No capitalismo, o
+            <strong
+              >preço resolve esse problema sem que ninguém precise coordenar
+              conscientemente</strong
+            >. Se falta pão, o preço sobe — padeiros ganham mais fazendo pão,
+            então fazem mais. Se sobra, o preço cai — padeiros mudam para outro
+            produto. Ninguém precisou de reunião. O preço carrega informação de
+            milhões de decisões individuais de forma instantânea.
+          </p>
+          <p>
+            Esse é o mecanismo fundamental. O capitalismo não é "bom" ou "justo"
+            por natureza — ele é
+            <strong>eficiente na alocação de recursos dispersos</strong> de um
+            jeito que nenhum sistema centralizado conseguiu replicar em escala.
+          </p>
+        </div>
+
+        <!-- ETAPA 2 -->
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <div class="section-meta">
+            <span class="section-tag">Etapa II — Os 5 Pilares</span>
+            <h2>Por que especificamente ele "funciona"</h2>
+          </div>
+        </div>
+
+        <div class="accordion-item open">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">1.</span
+              ><span class="acc-title"
+                >O Sistema de Preços como Processador de Informação</span
+              >
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Friedrich Hayek formulou o argumento mais poderoso em favor do
+              capitalismo:
+              <strong
+                >o conhecimento econômico relevante é disperso, local e
+                tácito</strong
+              >
+              — nenhum planejador central pode possuí-lo. O preço de mercado
+              agrega esse conhecimento automaticamente.
+            </p>
+            <p>
+              Quando o preço do cobre sobe em Santiago, mineradores no Chile,
+              fabricantes de fios em São Paulo e engenheiros em Tóquio — sem se
+              comunicarem — passam a economizar cobre, buscar substitutos e
+              aumentar produção. O preço coordenou tudo sem nenhuma instrução
+              central.
+            </p>
+            <div class="example-box">
+              Hayek chamou isso de "ordem espontânea" — não planejada por
+              ninguém, mas mais eficiente do que qualquer planejamento
+              consciente poderia ser. O mercado como computador descentralizado
+              de preferências humanas.
+            </div>
+            <p>
+              Isso explica as
+              <strong>crises de abastecimento do socialismo soviético</strong>:
+              sem preços reais, o comitê central não sabia o que era escasso, o
+              que era abundante, onde alocar esforço. Resultado: filas para pão,
+              excesso de foguetes.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">2.</span
+              ><span class="acc-title"
+                >Incentivos de Lucro & Inovação Schumpeteriana</span
+              >
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Joseph Schumpeter identificou o motor do capitalismo:
+              <strong>"destruição criativa"</strong>. Empresas que não inovam
+              são destruídas por concorrentes melhores. Esse mecanismo brutal é
+              também o que força inovação contínua.
+            </p>
+            <p>
+              O lucro não é apenas recompensa — é
+              <strong
+                >sinal de que você está criando valor que as pessoas
+                querem</strong
+              >. E é combustível para reinvestimento. Nenhum sistema encontrou
+              incentivo comparável: no socialismo soviético, fábricas eficientes
+              e ineficientes recebiam o mesmo orçamento estatal.
+            </p>
+            <div class="example-box">
+              Em 30 anos de capitalismo de Silicon Valley: transistores passaram
+              de tamanho de grão de arroz para 3 nanômetros. A URSS levou 70
+              anos para passar de carroça para carro — e mesmo assim com fila de
+              espera de anos.
+            </div>
+            <p>
+              Paradoxo:
+              <strong
+                >a ganância individual, canalizada pelo mercado, produz
+                benefícios coletivos</strong
+              >
+              — não porque capitalistas são altruístas, mas porque só ganham se
+              entregarem algo que outros querem mais do que o dinheiro que têm.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">3.</span
+              ><span class="acc-title"
+                >Propriedade Privada como Fundamento Institucional</span
+              >
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Douglass North (Nobel de Economia, 1993) mostrou que
+              <strong
+                >crescimento econômico sustentado requer instituições que
+                protejam direitos de propriedade</strong
+              >. Por quê? Porque ninguém investe em algo que pode ser confiscado
+              amanhã.
+            </p>
+            <p>
+              Propriedade privada cria horizonte temporal longo:
+              <strong
+                >você planta uma árvore cujos frutos só colherá em 20 anos se
+                tiver certeza de que a árvore ainda será sua em 20 anos</strong
+              >. Sem essa certeza, o comportamento racional é consumir tudo
+              agora — a "tragédia dos comuns".
+            </p>
+            <div class="example-box">
+              Experimento natural: Coreia do Norte vs. Coreia do Sul. Mesma
+              língua, mesma cultura, mesmo território em 1950. 70 anos depois:
+              Sul tem PIB per capita 25× maior. A diferença é o sistema
+              institucional — propriedade, mercados, rule of law.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">4.</span
+              ><span class="acc-title"
+                >Liberdade Econômica e Pluralismo de Poder</span
+              >
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Milton Friedman argumentou que
+              <strong
+                >liberdade econômica e liberdade política são
+                indissociáveis</strong
+              >. Quando o Estado controla a economia, controla os meios de
+              subsistência de todos — e portanto o dissenso político se torna
+              suicídio econômico.
+            </p>
+            <p>
+              O capitalismo dispersa poder econômico por múltiplos agentes
+              privados, criando <strong>contraforças ao poder estatal</strong>.
+              Nenhuma democracia liberal sustentada historicamente existiu sem
+              algum grau de mercado privado — e nenhum socialismo de comando
+              manteve pluralismo político por longo tempo.
+            </p>
+            <div class="example-box">
+              Mesmo imperfeito: num país capitalista, um jornalista demitido
+              pelo jornal A pode ser contratado pelo jornal B, C ou D — ou criar
+              o seu. Num Estado socialista de partido único, um jornalista
+              demitido não tem para onde ir.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">5.</span
+              ><span class="acc-title"
+                >Adaptabilidade e Autocorreção pelo Fracasso</span
+              >
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              O capitalismo tem um mecanismo que sistemas planificados não
+              possuem: <strong>a falência</strong>. Empresas que erram morrem.
+              Capital flui para onde funciona. Erros são corrigidos sem depender
+              de vontade política.
+            </p>
+            <p>
+              Sistemas planificados não têm esse mecanismo. Uma empresa estatal
+              ineficiente recebe subsídio — politicamente é difícil fechá-la
+              porque há empregos e grupos de interesse.
+              <strong>O erro se perpetua e é amplificado</strong>, não
+              corrigido.
+            </p>
+            <div class="example-box">
+              O capitalismo "aprende" através da destruição de valor: bolhas
+              estouram, empresas quebram, setores inteiros somem. Doloroso — mas
+              o capital liberado vai para usos mais eficientes. A URSS nunca
+              admitiu setores inteiros como fracasso.
+            </div>
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div class="section-head">
+          <span class="section-num">03</span>
+          <div class="section-meta">
+            <span class="section-tag">Etapa III — O Que Confunde</span>
+            <h2>Equívocos sobre o "sucesso" capitalista</h2>
+          </div>
+        </div>
+
+        <div class="pillar-grid">
+          <div class="pillar-card">
+            <span class="pill-icon">⚠️</span>
+            <div class="pill-title">
+              "O capitalismo cria riqueza para todos"
+            </div>
+            <p>
+              Cria riqueza agregada — e enormes desigualdades na distribuição. O
+              PIB global cresceu, mas a maioria dos ganhos foi capturada pelo 1%
+              superior. "Maré que sobe levanta todos os barcos" só funciona se
+              você tiver barco.
+            </p>
+          </div>
+          <div class="pillar-card">
+            <span class="pill-icon">⚠️</span>
+            <div class="pill-title">"Capitalismo = democracia"</div>
+            <p>
+              Historicamente falso. Chile de Pinochet, Singapura, China
+              pós-1978, Emirados — todos têm mercados capitalistas sem
+              democracia plena. O capitalismo é compatível com autoritarismo
+              quando conveniente às elites.
+            </p>
+          </div>
+          <div class="pillar-card">
+            <span class="pill-icon">⚠️</span>
+            <div class="pill-title">"O mercado é natural e neutro"</div>
+            <p>
+              Mercados são construções sociais que dependem de leis, contratos,
+              moeda, tribunais — tudo criado e mantido pelo Estado. Não há
+              capitalismo sem aparato institucional público robusto. "Livre
+              mercado" puro não existe.
+            </p>
+          </div>
+          <div class="pillar-card">
+            <span class="pill-icon">⚠️</span>
+            <div class="pill-title">
+              "O fracasso das alternativas prova que é o melhor"
+            </div>
+            <p>
+              Argumento por eliminação é fraco. O socialismo soviético falhou —
+              mas existem modelos escandinavos, econômias mistas, cooperativas
+              que funcionam. "Melhor sistema existente" ≠ "sistema ideal
+              possível".
+            </p>
+          </div>
+        </div>
+
+        <div class="summary-block">
+          <span class="sum-label">Síntese Feynman</span>
+          <h3>
+            "O capitalismo não é bom — é o que melhor usamos nossa natureza
+            imperfeita."
+          </h3>
+          <p>
+            O capitalismo funciona não porque os humanos são bons, mas porque
+            <strong
+              >usa a ganância, a competição e o interesse próprio como
+              combustível produtivo</strong
+            >
+            — em vez de tentar suprimi-los. Não precisa de pessoas virtuosas
+            para funcionar; precisa de instituições que canalizem vícios
+            individuais em resultados coletivos.
+          </p>
+          <p>
+            Sistemas alternativos
+            <strong>exigem virtude que raramente existe em escala</strong>:
+            planejadores honestos e oniscientes, cidadãos que priorizam o
+            coletivo sobre si mesmos, elites que abrem mão voluntariamente do
+            poder. O capitalismo pressupõe o pior e produz o razoável. O
+            socialismo pressupõe o melhor — e quando não encontra, degenera.
+          </p>
+          <p>
+            A questão real não é <strong>capitalismo sim ou não</strong> — é
+            <strong
+              >que tipo de capitalismo, com que regulação, que Estado de
+              bem-estar, que limites ao poder corporativo</strong
+            >. É uma conversa de graus, não de opostos absolutos.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= USE CASES ======= -->
+    <div id="panel-usecases" class="panel">
+      <div class="hero">
+        <p class="hero-label">/ Casos de Uso Concretos</p>
+        <h1>Capitalismo<br /><em>em Ação</em></h1>
+        <p class="hero-lead">
+          Onde os mecanismos capitalistas produzem resultados concretos — e onde
+          falham sistematicamente.
+        </p>
+      </div>
+
+      <div class="content-wrap">
+        <div class="section-head" style="padding-top: 0; border-top: none">
+          <span class="section-tag">Sucessos do Mecanismo de Mercado</span>
+          <h2 style="margin-top: 4px">Onde funciona de forma inegável</h2>
+        </div>
+
+        <div class="usecase-grid">
+          <div class="usecase-card">
+            <span class="uc-icon">💊</span>
+            <div class="uc-title">Vacinas em Tempo Recorde</div>
+            <p class="uc-desc">
+              A vacina contra Covid-19 foi desenvolvida em 11 meses — antes, o
+              recorde era 4 anos. O mecanismo? Bilhões em capital privado +
+              incentivos de lucro + competição entre Pfizer, Moderna, J&J. O
+              risco foi compartilhado com o Estado, o lucro ficou com as
+              empresas.
+            </p>
+            <span class="uc-tag">→ Incentivo de lucro + risco socializado</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">📱</span>
+            <div class="uc-title">Smartphones</div>
+            <p class="uc-desc">
+              Em 1990, um computador do tamanho de uma sala custava o
+              equivalente a um apartamento. Hoje, um celular de US$300 tem mais
+              poder de processamento. Competição entre Apple, Samsung, Huawei +
+              mercado global forçou inovação incessante e redução de preços.
+            </p>
+            <span class="uc-tag">→ Destruição criativa Schumpeteriana</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">✈️</span>
+            <div class="uc-title">Aviação Acessível</div>
+            <p class="uc-desc">
+              Nos anos 1970, voar era luxo de elite. A desregulamentação da
+              aviação americana em 1978 introduziu competição real — o preço
+              médio de passagens caiu 40% em termos reais em 20 anos.
+              Concorrência forçou eficiência.
+            </p>
+            <span class="uc-tag">→ Desregulação + concorrência</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">🌾</span>
+            <div class="uc-title">Revolução Verde Agrícola</div>
+            <p class="uc-desc">
+              Entre 1960 e 2000, a produção global de alimentos triplicou
+              enquanto a área cultivada cresceu apenas 12%. Sementes híbridas,
+              fertilizantes, mecanização — desenvolvidos por empresas privadas
+              em busca de lucro, alimentaram bilhões a mais.
+            </p>
+            <span class="uc-tag">→ P&D privado + mercado global</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">🔋</span>
+            <div class="uc-title">Energia Solar</div>
+            <p class="uc-desc">
+              O custo de painéis solares caiu 99% em 40 anos. Combinação:
+              pesquisa pública inicial + competição global (China, EUA, Europa)
+              + economias de escala via mercado. Hoje é a fonte mais barata de
+              eletricidade da história humana.
+            </p>
+            <span class="uc-tag">→ Escala + competição global</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">🛒</span>
+            <div class="uc-title">Logística de Consumo</div>
+            <p class="uc-desc">
+              A Amazon entrega em 1 dia para centenas de milhões de pessoas.
+              Walmart move 1 bilhão de produtos ao dia. Nenhum sistema de
+              planejamento central jamais coordenou algo comparável. Preços e
+              incentivos de lucro fizeram o que nenhum algoritmo de planejamento
+              conseguiu.
+            </p>
+            <span class="uc-tag">→ Coordenação via preço + escala</span>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <span class="section-tag"
+            >Falhas Sistemáticas — Onde O Mercado Não Funciona</span
+          >
+          <h2 style="margin-top: 4px">As limitações estruturais</h2>
+        </div>
+
+        <div class="usecase-grid">
+          <div class="usecase-card">
+            <span class="uc-icon">🌡️</span>
+            <div class="uc-title">Crise Climática</div>
+            <p class="uc-desc">
+              O mercado não precifica externalidades negativas. Emitir CO₂ é
+              gratuito para a empresa, mas custoso para a humanidade. Sem preço
+              no carbono, o mercado destrói o planeta eficientemente. Falha de
+              mercado clássica — exige intervenção estatal.
+            </p>
+            <span class="uc-tag">→ Externalidade negativa não precificada</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">🏥</span>
+            <div class="uc-title">Saúde nos EUA</div>
+            <p class="uc-desc">
+              O sistema mais capitalizado do mundo desenvolvido gasta 2× mais
+              per capita que a Europa — e produz piores resultados em
+              expectativa de vida. Saúde tem falhas de mercado intrínsecas:
+              informação assimétrica, demanda inelástica, seleção adversa.
+            </p>
+            <span class="uc-tag">→ Mercado falha em bens essenciais</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">📚</span>
+            <div class="uc-title">Pesquisa Básica</div>
+            <p class="uc-desc">
+              A internet, o GPS, o touchscreen, a IA — todos tiveram base em
+              pesquisa financiada pelo governo americano (DARPA, NSF). O mercado
+              não financia pesquisa básica: retorno incerto, longo prazo,
+              benefícios não privatizáveis. O Estado faz o que o mercado não
+              faz.
+            </p>
+            <span class="uc-tag">→ Bem público — mercado subinveste</span>
+          </div>
+        </div>
+
+        <table class="vs-table">
+          <thead>
+            <tr>
+              <th class="dim">Situação</th>
+              <th class="cap">Capitalismo Funciona</th>
+              <th class="alt">Capitalismo Falha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Informação</td>
+              <td class="cap-cell">
+                Muitos compradores e vendedores bem informados
+              </td>
+              <td class="alt-cell">
+                Assimetria de informação (saúde, seguros, crédito)
+              </td>
+            </tr>
+            <tr>
+              <td>Concorrência</td>
+              <td class="cap-cell">
+                Muitos competidores, fácil entrada e saída
+              </td>
+              <td class="alt-cell">
+                Monopólios naturais (energia, telecom, água)
+              </td>
+            </tr>
+            <tr>
+              <td>Externalidades</td>
+              <td class="cap-cell">
+                Custo e benefício internalizados pelo produtor
+              </td>
+              <td class="alt-cell">
+                Poluição, carbono, antibióticos — custos externos
+              </td>
+            </tr>
+            <tr>
+              <td>Horizonte temporal</td>
+              <td class="cap-cell">Retorno no curto/médio prazo</td>
+              <td class="alt-cell">
+                Infraestrutura de 50 anos, pesquisa básica, clima
+              </td>
+            </tr>
+            <tr>
+              <td>Bens essenciais</td>
+              <td class="cap-cell">
+                Demanda elástica e alternativas disponíveis
+              </td>
+              <td class="alt-cell">
+                Insulina, água, moradia — inelásticos e sem alternativa
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ======= MENTAL MODELS ======= -->
+    <div id="panel-mental" class="panel">
+      <div class="hero">
+        <p class="hero-label">/ Modelos Mentais</p>
+        <h1>Frameworks para<br /><em>Entender o Sistema</em></h1>
+        <p class="hero-lead">
+          4 ferramentas de pensamento para analisar quando e por que o
+          capitalismo funciona — e quando não funciona.
+        </p>
+      </div>
+
+      <div class="content-wrap">
+        <div class="mental-model">
+          <div class="mm-header">
+            <div class="mm-icon-wrap">📡</div>
+            <div class="mm-info">
+              <span class="mm-tag">Mental Model 01</span>
+              <div class="mm-title">Preço como Sistema de Informação</div>
+            </div>
+          </div>
+          <div class="mm-body">
+            <p>
+              O preço não é apenas um número — é um
+              <strong
+                >sinal comprimido de informação de milhões de agentes</strong
+              >. Quando o preço sobe, comunica escassez sem precisar que ninguém
+              declare isso. Quando cai, comunica abundância. É um sistema de
+              comunicação descentralizado que nenhum planejamento consegue
+              replicar.
+            </p>
+            <div class="mm-diagram">
+              Problema: Distribuir 10.000 produtos para 50.000 pessoas em 100
+              cidades com preferências diferentes, que mudam todo dia. Solução
+              centralizada: Comitê precisa de informação perfeita → impossível
+              Decide errado → escassez ou desperdício Demora para corrigir →
+              problema se acumula Solução de mercado: Preço sobe onde há falta →
+              vendedores migram Preço cai onde há excesso → compradores migram
+              Ajuste ocorre em horas, sem reunião, sem decreto
+            </div>
+            <div class="mm-apply">
+              <span class="apply-label">Limitação do modelo</span>
+              <p>
+                O preço só funciona bem quando todos os custos e benefícios
+                estão incluídos nele. Quando há externalidades (poluição,
+                carbono), o preço mente — e o mercado aloca mal. Aí é necessária
+                correção via imposto ou regulação.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mental-model">
+          <div class="mm-header">
+            <div class="mm-icon-wrap">🌀</div>
+            <div class="mm-info">
+              <span class="mm-tag">Mental Model 02</span>
+              <div class="mm-title">Destruição Criativa (Schumpeter)</div>
+            </div>
+          </div>
+          <div class="mm-body">
+            <p>
+              O capitalismo avança destruindo o que existia.
+              <strong>Inovação não é adição — é substituição.</strong> O
+              automóvel destruiu a indústria de carroças. O streaming destruiu a
+              locadora. O e-commerce está destruindo o varejo físico. Cada
+              destruição libera capital e trabalho para novos usos.
+            </p>
+            <div class="mm-diagram">
+              Ciclo da Destruição Criativa: Indústria estabelecida (lucros
+              altos) ↓ Atrai entrante inovador com tecnologia melhor ↓ Entrante
+              captura mercado → incumbente perde receita ↓ Incumbente falha ou
+              se adapta ↓ Capital e talentos migram para o novo ↓ Nova indústria
+              estabelecida (ciclo recomeça) Exemplos reais: Kodak → câmeras
+              digitais → smartphones Blockbuster → Netflix → streaming Banco →
+              fintech → banco digital
+            </div>
+            <div class="mm-apply">
+              <span class="apply-label">Como usar</span>
+              <p>
+                Ao analisar qualquer setor: quem está sendo "schumpeterizado"
+                agora? Quem tem o modelo de negócio que será destruído nos
+                próximos 10 anos? Táxis, hotéis, varejo físico, bancos
+                tradicionais, advogados de revisão de texto — todos sob pressão.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mental-model">
+          <div class="mm-header">
+            <div class="mm-icon-wrap">🎯</div>
+            <div class="mm-info">
+              <span class="mm-tag">Mental Model 03</span>
+              <div class="mm-title">Incentivos > Intenções</div>
+            </div>
+          </div>
+          <div class="mm-body">
+            <p>
+              O insight mais importante do pensamento econômico liberal:
+              <strong
+                >o que importa não é o que as pessoas querem fazer — é o que os
+                incentivos as fazem fazer</strong
+              >. Boas intenções em sistemas de incentivos ruins produzem
+              resultados ruins. Incentivos ruins em pessoas más produzem o pior.
+              Incentivos bons em pessoas más produzem resultados toleráveis.
+            </p>
+            <div class="mm-diagram">
+              Sistema de Saúde — mesmo problema, incentivos diferentes: EUA
+              (fee-for-service capitalista): Incentivo do médico → mais
+              procedimentos = mais receita Resultado → excesso de exames,
+              cirurgias, custos explosivos Cuba (planejamento central):
+              Incentivo do médico → cumprir metas do Estado Resultado →
+              prevenção excelente, inovação zero Escandinávia (misto regulado):
+              Incentivo → salário fixo + metas de saúde populacional Resultado →
+              equilíbrio razoável entre custo e qualidade
+            </div>
+            <div class="mm-apply">
+              <span class="apply-label">Como usar</span>
+              <p>
+                Antes de propor qualquer política ou reforma, pergunte: "Que
+                comportamento esse incentivo vai produzir na prática — não no
+                papel?" A diferença entre política boa e ruim geralmente está
+                nos incentivos que ela cria, não nas intenções de quem a propôs.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mental-model">
+          <div class="mm-header">
+            <div class="mm-icon-wrap">⚖️</div>
+            <div class="mm-info">
+              <span class="mm-tag">Mental Model 04</span>
+              <div class="mm-title">
+                Capitalismo de Mercado vs. Capitalismo de Compadres
+              </div>
+            </div>
+          </div>
+          <div class="mm-body">
+            <p>
+              Nem todo capitalismo é igual.
+              <strong>Capitalismo de mercado competitivo</strong> (onde qualquer
+              um pode entrar e competir) produz inovação e queda de preços.
+              <strong>Capitalismo de compadres</strong> (crony capitalism) usa o
+              Estado para proteger incumbentes da concorrência — e é tão
+              ineficiente quanto o socialismo.
+            </p>
+            <div class="mm-diagram">
+              Capitalismo Competitivo: → Empresa vence porque é melhor → Lucro
+              atrai concorrentes → preços caem → Falha é punida pelo mercado
+              Capitalismo de Compadres (Crony): → Empresa vence porque tem
+              conexões políticas → Lobbying para bloquear concorrentes → Falha é
+              resgatada pelo Estado (bail-out) → Privatização dos lucros,
+              socialização dos prejuízos Brasil, Rússia, Indonésia → capitalismo
+              fortemente de compadres Dinamarca, Suíça, Singapura → capitalismo
+              mais competitivo e institucionalizado
+            </div>
+            <div class="mm-apply">
+              <span class="apply-label">Como usar</span>
+              <p>
+                Ao criticar "o capitalismo" por resultados ruins, pergunte:
+                estamos criticando o mecanismo de mercado competitivo — ou o
+                sistema de compadres que capturou o Estado? São problemas
+                diferentes com soluções diferentes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= CRÍTICA ======= -->
+    <div id="panel-critica" class="panel">
+      <div class="hero">
+        <p class="hero-label">/ Análise Crítica</p>
+        <h1>O Que o Capitalismo<br /><em>Não Resolve</em></h1>
+        <p class="hero-lead">
+          Reconhecer os sucessos do capitalismo não exige ignorar suas
+          contradições estruturais — e elas são graves.
+        </p>
+      </div>
+
+      <div class="content-wrap">
+        <div class="section-head" style="padding-top: 0; border-top: none">
+          <span class="section-tag">Forças & Falhas Estruturais</span>
+          <h2 style="margin-top: 4px">O balanço honesto</h2>
+        </div>
+
+        <div class="critique-row">
+          <div class="critique-col">
+            <div class="crit-header pro">✓ O que efetivamente funciona</div>
+            <div class="crit-item">
+              <strong>Coordenação descentralizada</strong>
+              Resolve o problema do cálculo econômico sem precisar de autoridade
+              central. Escala para bilhões de transações diárias.
+            </div>
+            <div class="crit-item">
+              <strong>Inovação contínua</strong>
+              Nenhum sistema gerou tanta inovação tecnológica em tão pouco
+              tempo. Incentivo de lucro canaliza inteligência humana para
+              resolver problemas.
+            </div>
+            <div class="crit-item">
+              <strong>Autocorreção pelo fracasso</strong>
+              Erros são punidos e corrigidos. Recursos fluem para usos mais
+              eficientes sem precisar de decisão política.
+            </div>
+            <div class="crit-item">
+              <strong>Pluralismo de poder</strong>
+              Propriedade privada dispersa cria centros de poder independentes
+              do Estado — condição necessária (não suficiente) para liberdade
+              política.
+            </div>
+          </div>
+          <div class="critique-col">
+            <div class="crit-header con">✗ O que falha estruturalmente</div>
+            <div class="crit-item">
+              <strong>Desigualdade composta</strong>
+              Capital gera capital. Quem começa com mais acumula
+              proporcionalmente mais. Sem redistribuição, a desigualdade cresce
+              até romper o contrato social.
+            </div>
+            <div class="crit-item">
+              <strong>Externalidades negativas</strong>
+              Custos não precificados (carbono, poluição, saúde mental) são
+              externalizados para a sociedade. O mercado destrói bens comuns
+              eficientemente.
+            </div>
+            <div class="crit-item">
+              <strong>Bens não-mercadorizáveis</strong>
+              Democracia, ecossistemas, cultura, saúde pública — não têm preço
+              de mercado. O capitalismo os destrói ao tentar mercadorizá-los.
+            </div>
+            <div class="crit-item">
+              <strong>Captura do Estado</strong>
+              Capital concentrado compra legisladores, regula reguladores e
+              captura a democracia. A concorrência que justifica o sistema é
+              sabotada pelos vencedores.
+            </div>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <span class="section-tag">O Espectro Real</span>
+          <h2 style="margin-top: 4px">Não é binário — é um gradiente</h2>
+        </div>
+
+        <div class="feynman-block">
+          <h3>Os Capitalismos que existem no mundo</h3>
+          <p>
+            Não existe "o capitalismo" — existem variantes com resultados muito
+            diferentes. A Dinamarca e os Estados Unidos são ambos capitalistas.
+            A diferença nos resultados sociais é enorme.
+          </p>
+          <p>
+            <strong>Capitalismo Escandinavo:</strong> Mercados competitivos +
+            Estado de bem-estar robusto + sindicatos fortes + alta tributação +
+            educação pública universal. IDH mais alto do mundo.
+          </p>
+          <p>
+            <strong>Capitalismo Liberal Americano:</strong> Mercados mais livres
+            + Estado de bem-estar menor + maior desigualdade + maior inovação +
+            maior PIB per capita nominal — mas menor mobilidade social que a
+            Dinamarca.
+          </p>
+          <p>
+            <strong>Capitalismo de Estado Chinês:</strong> Propriedade mista +
+            partido único dirige estratégia + mercados internos competitivos em
+            alguns setores. Tirou 800 milhões da pobreza em 40 anos — com custo
+            enorme em liberdades civis.
+          </p>
+          <p>
+            A pergunta real não é <strong>"capitalismo ou socialismo"</strong> —
+            é
+            <strong
+              >"que mix de mercado, Estado e regulação produz o melhor
+              equilíbrio entre eficiência e equidade?"</strong
+            >
+            Essa é uma questão empírica, não ideológica.
+          </p>
+        </div>
+
+        <div class="summary-block">
+          <span class="sum-label">Conclusão Honesta</span>
+          <h3>
+            O capitalismo "dá certo" porque é o único sistema que usa o que
+            somos — não o que gostaríamos de ser.
+          </h3>
+          <p>
+            Humanos são
+            <strong
+              >egoístas, competitivos, orientados a incentivos de curto
+              prazo</strong
+            >. O capitalismo não tenta mudar isso — usa essas características
+            como combustível. Por isso escala. Por isso inova. Por isso
+            sobreviveu.
+          </p>
+          <p>
+            Mas humanos também são
+            <strong
+              >cooperativos, solidários, capazes de sacrifício coletivo</strong
+            >. Essas características são suprimidas pelo capitalismo puro — e é
+            por isso que nenhuma sociedade bem-sucedida tem capitalismo puro.
+            Todas as democracias ricas têm estados de bem-estar, regulação,
+            direitos trabalhistas e serviços públicos.
+          </p>
+          <p>
+            <strong
+              >O capitalismo não é a resposta final — é o melhor ponto de
+              partida que encontramos.</strong
+            >
+            O debate real não é sobre abolir o mercado, mas sobre onde ele deve
+            ser o organizador principal e onde outras lógicas — solidariedade,
+            direitos, commons — devem prevalecer.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= TIMELINE ======= -->
+    <div id="panel-timeline" class="panel">
+      <div class="hero">
+        <p class="hero-label">/ Linha do Tempo</p>
+        <h1>Como o Capitalismo<br /><em>Evoluiu</em></h1>
+        <p class="hero-lead">
+          Do mercantilismo ao capitalismo de plataforma — 500 anos de mutação,
+          crise e adaptação.
+        </p>
+      </div>
+
+      <div class="content-wrap">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-year">Séc. XV–XVII</div>
+            <div class="tl-title">Mercantilismo — Proto-capitalismo</div>
+            <p class="tl-text">
+              Comércio transatlântico, companhias das Índias, acumulação
+              primitiva de capital. O Estado dirige a economia para maximizar
+              ouro e poder nacional. Base para o capitalismo industrial
+              posterior.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1776</div>
+            <div class="tl-title">A Riqueza das Nações — Adam Smith</div>
+            <p class="tl-text">
+              Smith formula a "mão invisível": a busca do interesse próprio,
+              canalizada pelo mercado, produz bem-estar coletivo. Fundação
+              teórica do capitalismo liberal. Mas Smith também alertava contra
+              monopólios e a ganância dos comerciantes capturando o Estado.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1760–1850</div>
+            <div class="tl-title">
+              Revolução Industrial — Capitalismo Industrial
+            </div>
+            <p class="tl-text">
+              Fábricas, trabalho assalariado em massa, urbanização acelerada.
+              Produção explode. Também: trabalho infantil, jornadas de 16h,
+              condições insalubres. O capitalismo industrial cria a classe
+              trabalhadora — e as condições que Marx analisará.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1929–1933</div>
+            <div class="tl-title">Grande Depressão — Primeira Grande Crise</div>
+            <p class="tl-text">
+              Colapso de 1929 demonstra que mercados não se autocorrigem
+              rapidamente — podem ficar deprimidos por anos. Desemprego de 25%
+              nos EUA. Keynes desenvolve a resposta: o Estado deve intervir com
+              gastos para sustentar demanda. Fim do laissez-faire puro.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1945–1975</div>
+            <div class="tl-title">
+              Capitalismo Keynesiano — Os "30 Gloriosos"
+            </div>
+            <p class="tl-text">
+              Estado de bem-estar robusto + mercados regulados + sindicatos
+              fortes = maior período de crescimento com redução de desigualdade
+              da história. França, Alemanha, EUA: classes médias expandem,
+              mobilidade social alta. O capitalismo mais igualitário já visto.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1979–1991</div>
+            <div class="tl-title">
+              Neoliberalismo — Thatcher, Reagan, Consenso de Washington
+            </div>
+            <p class="tl-text">
+              Reação ao keynesianismo estagnado dos anos 70. Privatização,
+              desregulação, corte de impostos para ricos, enfraquecimento de
+              sindicatos. PIB cresce — desigualdade também. O 1% começa a
+              capturar proporção crescente da renda nacional.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2008</div>
+            <div class="tl-title">Crise Financeira Global</div>
+            <p class="tl-text">
+              Desregulação financeira + inovação em derivativos + incentivos
+              perversos = colapso sistêmico. Bancos privados salvos com dinheiro
+              público. Lucros eram privados; o prejuízo foi socializado.
+              Credibilidade do capitalismo financeiro nunca se recuperou
+              completamente.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2010–hoje</div>
+            <div class="tl-title">Capitalismo de Plataforma</div>
+            <p class="tl-text">
+              Google, Amazon, Meta, Apple controlam infraestrutura digital.
+              Modelo de negócio: extrair dados de usuários, vender atenção a
+              anunciantes. Monopólios naturais de rede, vigilância como
+              commodidade, trabalhadores sem direitos (gig economy). O
+              capitalismo mais concentrado da história.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2020–hoje</div>
+            <div class="tl-title">Capitalismo pós-pandemia & IA</div>
+            <p class="tl-text">
+              Covid revelou fragilidade das cadeias globais de suprimento. IA
+              generativa ameaça trabalho cognitivo em escala inédita. Retorno do
+              Estado como ator econômico estratégico (chips, energia verde,
+              saúde). O debate sobre "que capitalismo?" mais vivo do que nunca.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function switchPanel(name, btn) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document.getElementById("panel-" + name).classList.add("active");
+        btn.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function toggleAcc(btn) {
+        btn.closest(".accordion-item").classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

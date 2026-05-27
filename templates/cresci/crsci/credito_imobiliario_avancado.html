@@ -1,0 +1,4133 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crédito Imobiliário PRO — Plataforma Avançada</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0c0f;
+        --surface: #111318;
+        --surface2: #181c22;
+        --surface3: #1e2330;
+        --border: rgba(255, 255, 255, 0.07);
+        --border2: rgba(255, 255, 255, 0.13);
+        --text: #e8eaf0;
+        --text2: #9aa0b2;
+        --text3: #5a6070;
+        --accent: #3d8ef0;
+        --accent2: #2d6cc0;
+        --gold: #e8a820;
+        --gold2: #c48a10;
+        --green: #2ecc71;
+        --red: #e74c3c;
+        --orange: #e67e22;
+        --purple: #9b59b6;
+        --teal: #1abc9c;
+        --glow: rgba(61, 142, 240, 0.12);
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Source Serif 4", serif;
+        font-size: 16px;
+        line-height: 1.7;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--surface3);
+        border-radius: 4px;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 60px 60px;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.35;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 258px;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .sidebar-logo {
+        padding: 1.4rem 1.4rem 0.9rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .logo-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--glow);
+        border: 1px solid rgba(61, 142, 240, 0.3);
+        border-radius: 4px;
+        padding: 0.2rem 0.6rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.58rem;
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+      .sidebar-logo h1 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+      .sidebar-logo h1 span {
+        color: var(--accent);
+      }
+      .xp-section {
+        padding: 0.8rem 1.4rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .xp-label {
+        display: flex;
+        justify-content: space-between;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.6rem;
+        color: var(--text3);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.35rem;
+      }
+      .xp-label span:last-child {
+        color: var(--gold);
+      }
+      .xp-bar {
+        height: 4px;
+        background: var(--surface3);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .xp-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--gold2), var(--gold));
+        width: 0%;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 4px;
+      }
+      .xp-level {
+        margin-top: 0.35rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.6rem;
+        color: var(--gold);
+      }
+      .sidebar-nav {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0.7rem 0;
+      }
+      .nav-group-label {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.57rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text3);
+        padding: 0.55rem 1.4rem 0.25rem;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.52rem 1.4rem;
+        cursor: pointer;
+        transition: all 0.15s;
+        border-left: 2px solid transparent;
+      }
+      .nav-item:hover {
+        background: var(--surface2);
+      }
+      .nav-item.active {
+        background: var(--glow);
+        border-left-color: var(--accent);
+      }
+      .nav-item .icon {
+        font-size: 0.88rem;
+        width: 1.2rem;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .nav-item .label {
+        font-family: "Syne", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text2);
+        flex: 1;
+      }
+      .nav-item.active .label {
+        color: var(--text);
+      }
+      .nav-item .badge {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.57rem;
+        background: var(--surface3);
+        color: var(--text3);
+        padding: 0.1rem 0.35rem;
+        border-radius: 3px;
+      }
+      .nav-item.active .badge {
+        background: var(--accent2);
+        color: #fff;
+      }
+      .nav-item .done-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--green);
+        flex-shrink: 0;
+        display: none;
+      }
+      .nav-item.nav-done .done-dot {
+        display: block;
+      }
+      .sidebar-footer {
+        padding: 1rem 1.4rem;
+        border-top: 1px solid var(--border);
+      }
+      .stats-row {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .stat-pill {
+        flex: 1;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.4rem;
+        text-align: center;
+      }
+      .stat-pill .val {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.82rem;
+        font-weight: 500;
+        display: block;
+      }
+      .stat-pill .lbl {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.54rem;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      /* MAIN */
+      .main {
+        margin-left: 258px;
+        min-height: 100vh;
+        position: relative;
+        z-index: 1;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 12, 15, 0.88);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        padding: 0.7rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .topbar-title {
+        font-family: "Syne", sans-serif;
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+      .topbar-methods {
+        display: flex;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+      }
+      .method-chip {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.22rem 0.55rem;
+        border-radius: 3px;
+        border: 1px solid;
+      }
+      .chip-feynman {
+        color: var(--teal);
+        border-color: rgba(26, 188, 156, 0.3);
+        background: rgba(26, 188, 156, 0.07);
+      }
+      .chip-case {
+        color: var(--gold);
+        border-color: rgba(232, 168, 32, 0.3);
+        background: rgba(232, 168, 32, 0.07);
+      }
+      .chip-spaced {
+        color: var(--purple);
+        border-color: rgba(155, 89, 182, 0.3);
+        background: rgba(155, 89, 182, 0.07);
+      }
+      .chip-active {
+        color: var(--orange);
+        border-color: rgba(230, 126, 34, 0.3);
+        background: rgba(230, 126, 34, 0.07);
+      }
+
+      /* CONTENT */
+      .content {
+        padding: 2rem;
+        max-width: 920px;
+      }
+      .panel {
+        display: none;
+        animation: panelIn 0.35s ease;
+      }
+      .panel.active {
+        display: block;
+      }
+      @keyframes panelIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* SECTION HEADER */
+      .section-header {
+        margin-bottom: 1.8rem;
+      }
+      .eyebrow {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.63rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.45rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .eyebrow::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border2);
+        max-width: 120px;
+      }
+      .section-header h2 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.9rem;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+      .section-header h2 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .section-header p {
+        margin-top: 0.45rem;
+        color: var(--text2);
+        font-size: 0.92rem;
+        max-width: 600px;
+      }
+
+      /* CARDS */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.35rem 1.55rem;
+        margin-bottom: 1.1rem;
+        transition: border-color 0.2s;
+      }
+      .card:hover {
+        border-color: var(--border2);
+      }
+      .card-title {
+        font-family: "Syne", sans-serif;
+        font-size: 0.97rem;
+        font-weight: 700;
+        margin-bottom: 0.7rem;
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        flex-wrap: wrap;
+      }
+      .tag {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.57rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.14rem 0.42rem;
+        border-radius: 3px;
+      }
+      .tag-blue {
+        background: rgba(61, 142, 240, 0.15);
+        color: var(--accent);
+      }
+      .tag-gold {
+        background: rgba(232, 168, 32, 0.15);
+        color: var(--gold);
+      }
+      .tag-green {
+        background: rgba(46, 204, 113, 0.15);
+        color: var(--green);
+      }
+      .tag-red {
+        background: rgba(231, 76, 60, 0.15);
+        color: var(--red);
+      }
+      .tag-purple {
+        background: rgba(155, 89, 182, 0.15);
+        color: var(--purple);
+      }
+      .tag-teal {
+        background: rgba(26, 188, 156, 0.15);
+        color: var(--teal);
+      }
+      .tag-orange {
+        background: rgba(230, 126, 34, 0.15);
+        color: var(--orange);
+      }
+
+      /* FEYNMAN */
+      .feynman {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 188, 156, 0.07),
+          rgba(26, 188, 156, 0.02)
+        );
+        border: 1px solid rgba(26, 188, 156, 0.2);
+        border-radius: 8px;
+        padding: 1.25rem 1.45rem;
+        margin-bottom: 1.1rem;
+        position: relative;
+      }
+      .feynman::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: var(--teal);
+        border-radius: 3px 0 0 3px;
+      }
+      .feynman-header {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--teal);
+        margin-bottom: 0.65rem;
+      }
+      .feynman p {
+        color: var(--text2);
+        font-size: 0.93rem;
+        line-height: 1.75;
+      }
+      .feynman strong {
+        color: var(--teal);
+        font-weight: 600;
+      }
+
+      /* USE CASE */
+      .usecase {
+        background: linear-gradient(
+          135deg,
+          rgba(232, 168, 32, 0.06),
+          rgba(232, 168, 32, 0.02)
+        );
+        border: 1px solid rgba(232, 168, 32, 0.2);
+        border-radius: 8px;
+        padding: 1.25rem 1.45rem;
+        margin-bottom: 1.1rem;
+        position: relative;
+      }
+      .usecase::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: var(--gold);
+        border-radius: 3px 0 0 3px;
+      }
+      .usecase-header {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.65rem;
+      }
+      .usecase p {
+        color: var(--text2);
+        font-size: 0.9rem;
+        line-height: 1.7;
+      }
+      .usecase strong {
+        color: var(--text);
+      }
+
+      /* INSIGHT */
+      .insight {
+        background: rgba(61, 142, 240, 0.08);
+        border: 1px solid rgba(61, 142, 240, 0.2);
+        border-radius: 6px;
+        padding: 0.75rem 1rem;
+        margin-top: 0.75rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        color: var(--accent);
+        line-height: 1.6;
+      }
+      .insight::before {
+        content: "💡 ";
+      }
+
+      /* TABLE */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.86rem;
+        margin: 0.75rem 0;
+      }
+      .data-table th {
+        background: var(--surface3);
+        color: var(--text2);
+        padding: 0.52rem 0.85rem;
+        text-align: left;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 400;
+      }
+      .data-table td {
+        padding: 0.58rem 0.85rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text2);
+        vertical-align: top;
+      }
+      .data-table tr:hover td {
+        background: var(--surface2);
+        color: var(--text);
+      }
+      .data-table .pos {
+        color: var(--green);
+        font-weight: 600;
+      }
+      .data-table .neg {
+        color: var(--red);
+      }
+      .data-table .hi {
+        color: var(--gold);
+        font-weight: 600;
+      }
+
+      /* FORMULA */
+      .formula {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.95rem 1.15rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem;
+        line-height: 2;
+        color: var(--text2);
+        margin: 0.75rem 0;
+      }
+      .formula .var {
+        color: var(--accent);
+        font-weight: 500;
+      }
+      .formula .eq {
+        color: var(--gold);
+      }
+      .formula .result {
+        color: var(--green);
+        font-weight: 500;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        display: flex;
+        flex-direction: column;
+      }
+      .tl-item {
+        display: flex;
+        gap: 1rem;
+      }
+      .tl-connector {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 2.1rem;
+      }
+      .tl-dot {
+        width: 2.1rem;
+        height: 2.1rem;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        background: var(--surface3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--accent);
+        flex-shrink: 0;
+      }
+      .tl-line {
+        width: 1px;
+        flex: 1;
+        background: var(--border2);
+        min-height: 1rem;
+      }
+      .tl-item:last-child .tl-line {
+        display: none;
+      }
+      .tl-body {
+        padding-bottom: 1.2rem;
+        flex: 1;
+      }
+      .tl-body strong {
+        font-family: "Syne", sans-serif;
+        font-size: 0.92rem;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+      .tl-body p {
+        font-size: 0.86rem;
+        color: var(--text2);
+      }
+
+      /* FLASHCARDS */
+      .fc-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+      .fc-counter {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.73rem;
+        color: var(--text3);
+      }
+      .fc-controls {
+        display: flex;
+        gap: 0.4rem;
+      }
+      .fc-btn {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text2);
+        padding: 0.38rem 0.75rem;
+        border-radius: 4px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.7rem;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .fc-btn:hover {
+        background: var(--surface3);
+        color: var(--text);
+      }
+      .fc-btn.primary {
+        background: var(--accent2);
+        border-color: var(--accent);
+        color: #fff;
+      }
+      .flashcard-wrap {
+        position: relative;
+        height: 270px;
+        cursor: pointer;
+        user-select: none;
+        perspective: 1000px;
+      }
+      .flashcard {
+        position: absolute;
+        inset: 0;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d;
+      }
+      .flashcard.flipped {
+        transform: rotateY(180deg);
+      }
+      .fc-front,
+      .fc-back {
+        position: absolute;
+        inset: 0;
+        border-radius: 10px;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.8rem;
+        text-align: center;
+      }
+      .fc-front {
+        background: var(--surface);
+        border: 1px solid var(--border2);
+      }
+      .fc-back {
+        background: linear-gradient(135deg, var(--surface3), var(--surface2));
+        border: 1px solid rgba(61, 142, 240, 0.25);
+        transform: rotateY(180deg);
+      }
+      .fc-label-tag {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 0.9rem;
+      }
+      .fc-question {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .fc-hint {
+        margin-top: 0.9rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.62rem;
+        color: var(--text3);
+      }
+      .fc-answer {
+        font-size: 0.92rem;
+        color: var(--text);
+        line-height: 1.7;
+      }
+      .fc-answer strong {
+        color: var(--accent);
+      }
+      .fc-simple-tag {
+        margin-top: 0.75rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--teal);
+        background: rgba(26, 188, 156, 0.1);
+        border-radius: 4px;
+        padding: 0.38rem 0.75rem;
+        border: 1px solid rgba(26, 188, 156, 0.2);
+      }
+      .fc-rating {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        justify-content: center;
+      }
+      .fc-rating button {
+        flex: 1;
+        max-width: 130px;
+        padding: 0.5rem;
+        border-radius: 4px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.68rem;
+        cursor: pointer;
+        border: 1px solid;
+        transition: all 0.15s;
+        line-height: 1.5;
+      }
+      .fc-easy {
+        background: rgba(46, 204, 113, 0.1);
+        border-color: rgba(46, 204, 113, 0.3);
+        color: var(--green);
+      }
+      .fc-easy:hover {
+        background: rgba(46, 204, 113, 0.2);
+      }
+      .fc-medium {
+        background: rgba(232, 168, 32, 0.1);
+        border-color: rgba(232, 168, 32, 0.3);
+        color: var(--gold);
+      }
+      .fc-medium:hover {
+        background: rgba(232, 168, 32, 0.2);
+      }
+      .fc-hard {
+        background: rgba(231, 76, 60, 0.1);
+        border-color: rgba(231, 76, 60, 0.3);
+        color: var(--red);
+      }
+      .fc-hard:hover {
+        background: rgba(231, 76, 60, 0.2);
+      }
+
+      /* SR GRID */
+      .sr-labels {
+        display: flex;
+        justify-content: space-between;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.54rem;
+        color: var(--text3);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+      }
+      .sr-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.28rem;
+        margin: 0.7rem 0;
+      }
+      .sr-day {
+        aspect-ratio: 1;
+        border-radius: 3px;
+        background: var(--surface3);
+      }
+      .sr-day.done {
+        background: rgba(61, 142, 240, 0.5);
+      }
+      .sr-day.full {
+        background: var(--accent);
+      }
+      .sr-day.today {
+        outline: 2px solid var(--gold);
+        outline-offset: 1px;
+      }
+
+      /* QUIZ */
+      .quiz-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.4rem;
+        padding: 0.95rem 1.15rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        gap: 0.8rem;
+      }
+      .quiz-timer {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        color: var(--text2);
+        min-width: 3.5rem;
+      }
+      .quiz-timer.urgent {
+        color: var(--red);
+        animation: pulse 0.5s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .quiz-pbar {
+        height: 3px;
+        background: var(--surface3);
+        border-radius: 3px;
+        overflow: hidden;
+        flex: 1;
+      }
+      .quiz-pfill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent), var(--teal));
+        transition: width 0.4s ease;
+        border-radius: 3px;
+      }
+      .quiz-score-disp {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.73rem;
+        color: var(--gold);
+        white-space: nowrap;
+      }
+      .q-block {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.45rem;
+        margin-bottom: 0.9rem;
+      }
+      .q-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .q-num {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.6rem;
+        color: var(--text3);
+        letter-spacing: 0.12em;
+      }
+      .q-topic {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.56rem;
+        padding: 0.13rem 0.42rem;
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .q-diff {
+        margin-left: auto;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.58rem;
+        padding: 0.13rem 0.48rem;
+        border-radius: 3px;
+      }
+      .diff-easy {
+        background: rgba(46, 204, 113, 0.1);
+        color: var(--green);
+      }
+      .diff-med {
+        background: rgba(232, 168, 32, 0.1);
+        color: var(--gold);
+      }
+      .diff-hard {
+        background: rgba(231, 76, 60, 0.1);
+        color: var(--red);
+      }
+      .q-text {
+        font-size: 0.97rem;
+        line-height: 1.6;
+        margin-bottom: 0.9rem;
+      }
+      .q-context {
+        background: var(--surface2);
+        border-left: 2px solid var(--accent);
+        padding: 0.65rem 0.95rem;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.83rem;
+        color: var(--text2);
+        margin-bottom: 0.9rem;
+        line-height: 1.6;
+      }
+      .options-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .opt-btn {
+        width: 100%;
+        text-align: left;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.65rem 0.95rem;
+        color: var(--text2);
+        font-family: "Source Serif 4", serif;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.15s;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.65rem;
+        line-height: 1.5;
+      }
+      .opt-btn:hover:not(:disabled) {
+        background: var(--surface3);
+        border-color: var(--border2);
+        color: var(--text);
+      }
+      .opt-btn:disabled {
+        cursor: default;
+      }
+      .opt-letter {
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 3px;
+        background: var(--surface3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.63rem;
+        color: var(--text3);
+        flex-shrink: 0;
+        margin-top: 0.05rem;
+      }
+      .opt-btn.correct {
+        background: rgba(46, 204, 113, 0.08);
+        border-color: rgba(46, 204, 113, 0.35);
+        color: var(--green);
+      }
+      .opt-btn.correct .opt-letter {
+        background: var(--green);
+        color: #fff;
+      }
+      .opt-btn.wrong {
+        background: rgba(231, 76, 60, 0.08);
+        border-color: rgba(231, 76, 60, 0.35);
+        color: var(--red);
+      }
+      .opt-btn.wrong .opt-letter {
+        background: var(--red);
+        color: #fff;
+      }
+      .opt-btn.dim {
+        opacity: 0.3;
+      }
+      .q-exp {
+        display: none;
+        margin-top: 0.9rem;
+        background: var(--surface2);
+        border: 1px solid rgba(61, 142, 240, 0.2);
+        border-radius: 6px;
+        padding: 0.95rem 1.1rem;
+        font-size: 0.86rem;
+        color: var(--text2);
+        line-height: 1.7;
+        animation: panelIn 0.3s ease;
+      }
+      .q-exp.show {
+        display: block;
+      }
+      .q-exp strong {
+        color: var(--text);
+      }
+
+      /* CALC */
+      .calc-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 1.1rem;
+      }
+      .calc-tabs {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .calc-tab {
+        flex: 1;
+        padding: 0.6rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-align: center;
+        cursor: pointer;
+        color: var(--text3);
+        border-bottom: 2px solid transparent;
+        transition: all 0.15s;
+      }
+      .calc-tab.active {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      .calc-body {
+        padding: 1.4rem;
+      }
+      .calc-panel {
+        display: none;
+      }
+      .calc-panel.active {
+        display: block;
+      }
+      .ig {
+        margin-bottom: 0.9rem;
+      }
+      .ig label {
+        display: block;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 0.32rem;
+      }
+      .ig input,
+      .ig select {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.58rem 0.85rem;
+        color: var(--text);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.86rem;
+        transition: border-color 0.15s;
+      }
+      .ig input:focus,
+      .ig select:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+      .ig select option {
+        background: var(--surface2);
+      }
+      .ig-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.9rem;
+      }
+      @media (max-width: 580px) {
+        .ig-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 0.72rem;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-family: "Syne", sans-serif;
+        font-size: 0.86rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+        margin-top: 0.2rem;
+      }
+      .btn-primary:hover {
+        background: var(--accent2);
+      }
+      .btn-primary:active {
+        transform: scale(0.98);
+      }
+      .result-panel {
+        display: none;
+        margin-top: 1.1rem;
+        padding-top: 1.1rem;
+        border-top: 1px solid var(--border);
+        animation: panelIn 0.3s ease;
+      }
+      .result-panel.show {
+        display: block;
+      }
+      .result-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.65rem;
+        margin-bottom: 0.9rem;
+      }
+      @media (max-width: 480px) {
+        .result-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ri {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.75rem 0.95rem;
+      }
+      .ri .rl {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 0.28rem;
+      }
+      .ri .rv {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.97rem;
+        color: var(--text);
+        font-weight: 500;
+      }
+      .ri.hi .rv {
+        color: var(--gold);
+      }
+      .ri.ok .rv {
+        color: var(--green);
+      }
+      .ri.bad .rv {
+        color: var(--red);
+      }
+      .alert-bar {
+        border-radius: 6px;
+        padding: 0.65rem 0.95rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.76rem;
+        margin-top: 0.45rem;
+        line-height: 1.5;
+      }
+      .alert-ok {
+        background: rgba(46, 204, 113, 0.08);
+        border: 1px solid rgba(46, 204, 113, 0.25);
+        color: var(--green);
+      }
+      .alert-warn {
+        background: rgba(232, 168, 32, 0.08);
+        border: 1px solid rgba(232, 168, 32, 0.25);
+        color: var(--gold);
+      }
+      .alert-danger {
+        background: rgba(231, 76, 60, 0.08);
+        border: 1px solid rgba(231, 76, 60, 0.25);
+        color: var(--red);
+      }
+      .amort-wrap {
+        max-height: 290px;
+        overflow-y: auto;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+      }
+      .amort-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.78rem;
+      }
+      .amort-table th {
+        background: var(--surface3);
+        padding: 0.48rem 0.68rem;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text3);
+        text-align: right;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+      .amort-table th:first-child {
+        text-align: center;
+      }
+      .amort-table td {
+        padding: 0.42rem 0.68rem;
+        border-bottom: 1px solid var(--border);
+        text-align: right;
+        color: var(--text2);
+        font-family: "IBM Plex Mono", monospace;
+      }
+      .amort-table td:first-child {
+        text-align: center;
+        color: var(--text3);
+      }
+      .amort-table tr:hover td {
+        background: var(--surface2);
+      }
+
+      /* SCENARIOS */
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        margin: 1rem 0;
+      }
+      @media (max-width: 620px) {
+        .scenario-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .sc-card {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.05rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .sc-card:hover {
+        border-color: var(--border2);
+        transform: translateY(-2px);
+      }
+      .sc-card.selected {
+        border-color: var(--accent);
+        background: var(--glow);
+      }
+      .sc-icon {
+        font-size: 1.4rem;
+        margin-bottom: 0.45rem;
+      }
+      .sc-name {
+        font-family: "Syne", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .sc-desc {
+        font-size: 0.76rem;
+        color: var(--text3);
+        line-height: 1.45;
+      }
+      .sc-result {
+        display: none;
+        margin-top: 1rem;
+        animation: panelIn 0.3s ease;
+      }
+      .sc-result.show {
+        display: block;
+      }
+
+      /* DECISION TREE */
+      .dt-question {
+        background: var(--surface2);
+        border: 1px solid var(--border2);
+        border-radius: 8px;
+        padding: 1.05rem 1.25rem;
+        margin-bottom: 0.75rem;
+      }
+      .dt-q-text {
+        font-family: "Syne", sans-serif;
+        font-size: 0.92rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+      }
+      .dt-options {
+        display: flex;
+        gap: 0.55rem;
+        flex-wrap: wrap;
+      }
+      .dt-opt {
+        padding: 0.48rem 0.85rem;
+        border-radius: 20px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.7rem;
+        cursor: pointer;
+        border: 1px solid var(--border2);
+        color: var(--text2);
+        background: var(--surface3);
+        transition: all 0.15s;
+      }
+      .dt-opt:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .dt-opt.chosen {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+      .dt-result {
+        display: none;
+        background: linear-gradient(
+          135deg,
+          rgba(61, 142, 240, 0.08),
+          rgba(26, 188, 156, 0.05)
+        );
+        border: 1px solid rgba(61, 142, 240, 0.2);
+        border-radius: 8px;
+        padding: 1.15rem 1.35rem;
+        margin-top: 0.75rem;
+        animation: panelIn 0.3s ease;
+      }
+      .dt-result.show {
+        display: block;
+      }
+      .dt-result h4 {
+        font-family: "Syne", sans-serif;
+        font-size: 0.97rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 0.45rem;
+      }
+      .dt-result p {
+        font-size: 0.86rem;
+        color: var(--text2);
+        line-height: 1.7;
+      }
+      .dt-result strong {
+        color: var(--text);
+      }
+
+      /* CHECKLISTS */
+      .cl-section {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+      .cl-header {
+        padding: 0.75rem 1.15rem;
+        background: var(--surface2);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .cl-title {
+        font-family: "Syne", sans-serif;
+        font-size: 0.86rem;
+        font-weight: 700;
+      }
+      .cl-count {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.63rem;
+        color: var(--text3);
+      }
+      .cl-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.75rem 1.15rem;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: background 0.12s;
+      }
+      .cl-item:last-child {
+        border-bottom: none;
+      }
+      .cl-item:hover {
+        background: var(--surface2);
+      }
+      .cl-item.done {
+        opacity: 0.6;
+      }
+      .cl-chk {
+        width: 1.05rem;
+        height: 1.05rem;
+        border: 1.5px solid var(--border2);
+        border-radius: 3px;
+        flex-shrink: 0;
+        margin-top: 0.18rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.62rem;
+        transition: all 0.15s;
+      }
+      .cl-item.done .cl-chk {
+        background: var(--green);
+        border-color: var(--green);
+        color: #fff;
+      }
+      .cl-chk::after {
+        content: "";
+      }
+      .cl-item.done .cl-chk::after {
+        content: "✓";
+      }
+      .cl-text {
+        font-size: 0.88rem;
+        color: var(--text2);
+        line-height: 1.5;
+        flex: 1;
+      }
+      .cl-item.done .cl-text {
+        text-decoration: line-through;
+        color: var(--text3);
+      }
+      .cl-pts {
+        margin-left: auto;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.6rem;
+        color: var(--gold);
+        white-space: nowrap;
+      }
+
+      /* SCORE FINAL */
+      .score-final {
+        display: none;
+        text-align: center;
+        padding: 2.5rem 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-top: 1.4rem;
+        animation: panelIn 0.5s ease;
+      }
+      .score-final.show {
+        display: block;
+      }
+      .score-big {
+        font-family: "Syne", sans-serif;
+        font-size: 4rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--accent), var(--teal));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+      }
+      .score-msg {
+        color: var(--text2);
+        font-size: 0.92rem;
+        margin-top: 0.45rem;
+      }
+      .score-breakdown {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1.4rem;
+        flex-wrap: wrap;
+      }
+      .sb-item {
+        text-align: center;
+      }
+      .sb-val {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+      .sb-lbl {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.58rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text3);
+        margin-top: 0.2rem;
+      }
+      .review-mode {
+        display: none;
+        margin-top: 1rem;
+      }
+      .review-mode.show {
+        display: block;
+        animation: panelIn 0.4s ease;
+      }
+      .review-item {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.95rem;
+        margin-bottom: 0.65rem;
+        background: var(--surface);
+      }
+      .review-item.cr {
+        border-color: rgba(46, 204, 113, 0.25);
+      }
+      .review-item.wr {
+        border-color: rgba(231, 76, 60, 0.25);
+      }
+      .review-q {
+        font-size: 0.86rem;
+        color: var(--text2);
+        margin-bottom: 0.45rem;
+        line-height: 1.5;
+      }
+      .review-a {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+      }
+      .review-a.ok {
+        color: var(--green);
+      }
+      .review-a.fail {
+        color: var(--red);
+      }
+      .review-correct {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        color: var(--green);
+        margin-top: 0.25rem;
+      }
+
+      /* TOAST */
+      .toast {
+        position: fixed;
+        bottom: 1.4rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--surface3);
+        border: 1px solid var(--border2);
+        color: var(--text);
+        padding: 0.65rem 1.15rem;
+        border-radius: 6px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.76rem;
+        z-index: 500;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        white-space: nowrap;
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* MOBILE */
+      .mob-btn {
+        display: none;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 300;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(61, 142, 240, 0.4);
+        align-items: center;
+        justify-content: center;
+      }
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s;
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .main {
+          margin-left: 0;
+        }
+        .content {
+          padding: 1rem;
+        }
+        .mob-btn {
+          display: flex;
+        }
+        .topbar {
+          padding: 0.7rem 1rem;
+        }
+        .topbar-methods {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-badge">● PRO</div>
+        <h1>Crédito<br /><span>Imobiliário</span></h1>
+      </div>
+      <div class="xp-section">
+        <div class="xp-label">
+          <span>XP Total</span><span id="xpDisp">0 XP</span>
+        </div>
+        <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
+        <div class="xp-level" id="xpLevel">Nível 1 — Iniciante</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">Teoria</div>
+        <div class="nav-item active" onclick="goPanel('fund', this)">
+          <div class="icon">🏗</div>
+          <div class="label">Fundamentos</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('amort', this)">
+          <div class="icon">📉</div>
+          <div class="label">Amortização</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('taxas', this)">
+          <div class="icon">📊</div>
+          <div class="label">Taxas & Índices</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('gar', this)">
+          <div class="icon">⚖</div>
+          <div class="label">Garantias & Lei</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('fgts', this)">
+          <div class="icon">💼</div>
+          <div class="label">FGTS & MCMV</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-group-label" style="margin-top: 0.5rem">Prática</div>
+        <div class="nav-item" onclick="goPanel('flash', this)">
+          <div class="icon">🃏</div>
+          <div class="label">Flashcards</div>
+          <div class="badge">20</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('quiz', this)">
+          <div class="icon">⚡</div>
+          <div class="label">Quiz 30 Questões</div>
+          <div class="badge">30</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('calc', this)">
+          <div class="icon">🧮</div>
+          <div class="label">Calculadora</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('sim', this)">
+          <div class="icon">🎮</div>
+          <div class="label">Simulador</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('tree', this)">
+          <div class="icon">🌳</div>
+          <div class="label">Árvore Decisão</div>
+          <div class="done-dot"></div>
+        </div>
+        <div class="nav-item" onclick="goPanel('check', this)">
+          <div class="icon">✅</div>
+          <div class="label">Checklist</div>
+          <div class="done-dot"></div>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="stats-row">
+          <div class="stat-pill">
+            <span class="val" id="stAcertos">0</span
+            ><span class="lbl">Acertos</span>
+          </div>
+          <div class="stat-pill">
+            <span class="val" id="stStreak">0🔥</span
+            ><span class="lbl">Streak</span>
+          </div>
+          <div class="stat-pill">
+            <span class="val" id="stProg">0%</span
+            ><span class="lbl">Progresso</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-title" id="topTitle">
+          Fundamentos do Crédito Imobiliário
+        </div>
+        <div class="topbar-methods">
+          <span class="method-chip chip-feynman">Feynman</span>
+          <span class="method-chip chip-case">Use Cases</span>
+          <span class="method-chip chip-spaced">Spaced Rep.</span>
+          <span class="method-chip chip-active">Active Recall</span>
+        </div>
+      </div>
+      <div class="content">
+        <!-- PANEL FUNDAMENTOS -->
+        <div class="panel active" id="panel-fund">
+          <div class="section-header">
+            <div class="eyebrow">Módulo 01 — Base</div>
+            <h2>O que é <em>Crédito Imobiliário</em>?</h2>
+            <p>
+              Domine os conceitos base com a Técnica Feynman antes de avançar
+              para os cálculos.
+            </p>
+          </div>
+          <div class="feynman">
+            <div class="feynman-header">
+              🧒 Técnica Feynman — explique como para uma criança de 12 anos
+            </div>
+            <p>
+              Imagine que você quer um videogame de <strong>R$ 500</strong> mas
+              tem só <strong>R$ 50</strong>. Você pede R$ 450 ao tio, combina
+              devolver R$ 50 por mês — mas o tio cobra um
+              <strong>"aluguel" pelo dinheiro emprestado</strong>. Isso é o
+              juro.<br /><br />Crédito imobiliário: o videogame é a
+              <strong>casa</strong>, o tio é o <strong>banco</strong>, e o
+              combinado dura <strong>até 35 anos</strong>. O banco guarda a casa
+              como garantia até você pagar tudo — isso se chama
+              <strong>alienação fiduciária</strong>.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Anatomia do Financiamento
+              <span class="tag tag-blue">Conceito Base</span>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Componente</th>
+                  <th>Definição Técnica</th>
+                  <th>Analogia Simples</th>
+                  <th>Impacto</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Principal (PV)</strong></td>
+                  <td>Valor total emprestado</td>
+                  <td>Preço da casa menos a entrada</td>
+                  <td class="hi">Base de cálculo de todos os juros</td>
+                </tr>
+                <tr>
+                  <td><strong>Juros (i)</strong></td>
+                  <td>Custo do empréstimo ao mês</td>
+                  <td>Aluguel do dinheiro</td>
+                  <td class="neg">Quanto maior, mais caro no total</td>
+                </tr>
+                <tr>
+                  <td><strong>Prazo (n)</strong></td>
+                  <td>Número de parcelas contratadas</td>
+                  <td>Quantas vezes você vai pagar</td>
+                  <td class="neg">Prazo maior = mais juros no total</td>
+                </tr>
+                <tr>
+                  <td><strong>Amortização</strong></td>
+                  <td>Parcela que reduz o saldo devedor</td>
+                  <td>Pedaço que "devora" a dívida</td>
+                  <td class="pos">Quanto mais rápido, menos juros</td>
+                </tr>
+                <tr>
+                  <td><strong>Saldo Devedor</strong></td>
+                  <td>Quanto ainda se deve ao banco</td>
+                  <td>O que sobrou da dívida</td>
+                  <td class="hi">Base de cálculo dos juros mensais</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="usecase">
+            <div class="usecase-header">
+              🏠 Use Case Real — Joana compra seu primeiro apartamento
+            </div>
+            <p>
+              <strong>Situação:</strong> Joana, 32 anos, renda R$ 12.000/mês,
+              imóvel R$ 500.000, poupança R$ 80.000.<br /><br />
+              → Entrada R$ 80.000 (16%) | ITBI 3% = R$ 15.000 | Cartório = R$
+              3.000<br />
+              → <strong>Capital necessário no ato: R$ 98.000</strong> — Joana
+              tem R$ 80.000 → déficit de R$ 18.000<br />
+              → Financiamento R$ 420.000, 10% a.a., 360m → Parcela SAC inicial
+              ~R$ 4.650 = 38,75% da renda<br />
+              → <span style="color: var(--red)">ACIMA DO LIMITE DE 30%</span>
+            </p>
+            <div class="insight">
+              Solução: composição de renda com cônjuge (R$ 6.000 → total R$
+              18.000). 4.650 ÷ 18.000 = 25,8% ✅. Ou aumentar a entrada para R$
+              120.000 (financiando R$ 380.000).
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Regra dos 30% — Cálculos Rápidos
+              <span class="tag tag-gold">Cai na Prova</span>
+            </div>
+            <div class="formula">
+              <span class="var">Parcela máxima</span>
+              <span class="eq">=</span> Renda Bruta × 0,30<br />
+              <span class="var">Renda mínima</span>
+              <span class="eq">=</span> Parcela ÷ 0,30<br />
+              <span class="var">Comprometimento</span>
+              <span class="eq">=</span> (Parcela ÷ Renda) × 100
+              <span class="eq">→</span>
+              <span class="result">deve ser ≤ 30%</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Processo de Aprovação — 5 Etapas
+              <span class="tag tag-teal">Passo a Passo</span>
+            </div>
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div class="tl-dot">1</div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Simulação e Escolha</strong>
+                  <p>
+                    Compare CET (não só a taxa), SAC vs Price, prazo. Use ao
+                    menos 3 bancos.
+                  </p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div class="tl-dot">2</div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Análise de Crédito</strong>
+                  <p>
+                    Score (Serasa/SPC), renda comprovada, dívidas ativas. Score
+                    >700 = condições melhores.
+                  </p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div class="tl-dot">3</div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Avaliação do Imóvel (LTV)</strong>
+                  <p>
+                    Engenheiro do banco avalia. LTV padrão = 80%. Imóvel R$ 500k
+                    → banco financia até R$ 400k.
+                  </p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div class="tl-dot">4</div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Análise Jurídica</strong>
+                  <p>
+                    Matrícula, certidões negativas do vendedor, verificação de
+                    ônus e penhoras.
+                  </p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div class="tl-dot">5</div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Assinatura e Registro</strong>
+                  <p>
+                    Contrato assinado, alienação fiduciária averbada, ITBI pago,
+                    chave entregue.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL AMORTIZAÇÃO -->
+        <div class="panel" id="panel-amort">
+          <div class="section-header">
+            <div class="eyebrow">Módulo 02 — Sistemas</div>
+            <h2>SAC vs <em>Price</em></h2>
+            <p>
+              O sistema de amortização define como sua dívida diminui ao longo
+              do tempo.
+            </p>
+          </div>
+          <div class="feynman">
+            <div class="feynman-header">🧒 Técnica Feynman — SAC vs Price</div>
+            <p>
+              Você deve R$ 1.200 ao tio em 12 meses.<br />
+              <strong>SAC:</strong> R$ 100 fixo da dívida + juros sobre o
+              restante. Começa maior, vai caindo.<br />
+              <strong>Price:</strong> Mesmo valor todo mês. Fácil de planejar,
+              mas no início quase tudo é juro — a dívida some devagar e você
+              paga muito mais no total.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              SAC — Amortização Constante
+              <span class="tag tag-green">Menor Custo Total</span>
+            </div>
+            <div class="formula">
+              <span class="var">Amortização</span> <span class="eq">=</span> PV
+              ÷ n
+              <span style="color: var(--text3)"
+                >(constante em todas as parcelas)</span
+              ><br />
+              <span class="var">Juros_k</span>
+              <span class="eq">=</span> Saldo_(k-1) × i<br />
+              <span class="var">Parcela_k</span>
+              <span class="eq">=</span> Amortização + Juros_k<br />
+              <span class="var">Saldo_k</span> <span class="eq">=</span> PV −
+              (Amortização × k)
+            </div>
+            <p style="font-size: 0.86rem; color: var(--text2)">
+              Exemplo: PV=R$240k, n=240, i=1%/mês → Amort.=R$1.000 | 1ª
+              parcela=R$3.400 | última=R$1.010
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Price — Tabela Francesa
+              <span class="tag tag-gold">Parcelas Fixas</span>
+            </div>
+            <div class="formula">
+              <span class="var">PMT</span> <span class="eq">=</span> PV × [ i ×
+              (1+i)^n ] ÷ [ (1+i)^n − 1 ]<br />
+              <span class="var">Juros_k</span>
+              <span class="eq">=</span> Saldo_(k-1) × i<br />
+              <span class="var">Amort_k</span> <span class="eq">=</span> PMT −
+              Juros_k
+              <span style="color: var(--text3)">(cresce mês a mês)</span>
+            </div>
+          </div>
+          <div class="usecase">
+            <div class="usecase-header">
+              📊 Use Case — R$ 300.000 × 360 meses × 10% a.a.
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>SAC</th>
+                  <th>Price</th>
+                  <th>Diferença</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1ª Parcela</td>
+                  <td class="neg">R$ 3.317</td>
+                  <td class="pos">R$ 2.633</td>
+                  <td>SAC maior em R$ 684</td>
+                </tr>
+                <tr>
+                  <td>Parcela 180</td>
+                  <td class="pos">R$ 2.077</td>
+                  <td>R$ 2.633</td>
+                  <td class="pos">SAC menor em R$ 556</td>
+                </tr>
+                <tr>
+                  <td>Última Parcela</td>
+                  <td class="pos">R$ 837</td>
+                  <td>R$ 2.633</td>
+                  <td class="pos">SAC menor em R$ 1.796</td>
+                </tr>
+                <tr>
+                  <td>Total Juros</td>
+                  <td class="pos">R$ 313.750</td>
+                  <td class="neg">R$ 647.880</td>
+                  <td class="hi">SAC economiza R$ 334.130</td>
+                </tr>
+                <tr>
+                  <td>Total Pago</td>
+                  <td class="pos">R$ 613.750</td>
+                  <td class="neg">R$ 947.880</td>
+                  <td class="hi">Price paga 54% a mais</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="insight">
+              SAC ideal para quem tem renda compatível com a parcela inicial
+              maior. Price para quem precisa de parcelas menores agora — ex:
+              profissional em ascensão de carreira. A "economia" da parcela
+              inicial no Price custa R$ 334 mil em 30 anos.
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL TAXAS -->
+        <div class="panel" id="panel-taxas">
+          <div class="section-header">
+            <div class="eyebrow">Módulo 03 — Indexadores</div>
+            <h2>Taxas e <em>Índices</em></h2>
+            <p>
+              Como TR, IPCA e taxa fixa afetam suas parcelas ao longo de
+              décadas.
+            </p>
+          </div>
+          <div class="feynman">
+            <div class="feynman-header">🧒 Técnica Feynman — Indexadores</div>
+            <p>
+              Você combinou R$ 500/mês, mas o tio disse:
+              <strong>"Ajusto quando a inflação mudar"</strong>.<br />
+              <strong>TR:</strong> Tio quase nunca ajusta — reajuste
+              praticamente zero.<br />
+              <strong>IPCA:</strong> Sobe junto com a inflação. Quando inflação
+              = 10%, sua parcela sobe.<br />
+              <strong>Taxa Fixa:</strong> Combinado é combinado. Nunca muda —
+              mas o tio cobra mais desde o início.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Comparativo de Indexadores
+              <span class="tag tag-blue">Decisão Crítica</span>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Indexador</th>
+                  <th>Base</th>
+                  <th>Risco</th>
+                  <th>Quando Usar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>TR</strong></td>
+                  <td>Poupança/FGTS</td>
+                  <td class="pos">Baixíssimo</td>
+                  <td>Sempre — especialmente com FGTS</td>
+                </tr>
+                <tr>
+                  <td><strong>IPCA+</strong></td>
+                  <td>Inflação oficial</td>
+                  <td class="neg">Alto em IPCA elevado</td>
+                  <td>IPCA projetado abaixo de 5,5% a.a.</td>
+                </tr>
+                <tr>
+                  <td><strong>Taxa Fixa</strong></td>
+                  <td>Contrato imutável</td>
+                  <td class="pos">Zero (para o devedor)</td>
+                  <td>Cenário de inflação incerta ou alta</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="insight">
+              SEMPRE compare o CET (Custo Efetivo Total), não só a taxa nominal.
+              CET inclui juros + MIP + DFI + IOF + taxas administrativas. Bancos
+              com mesma taxa nominal de 9% podem ter CET de 11% vs 12,5%.
+            </div>
+          </div>
+          <div class="usecase">
+            <div class="usecase-header">
+              📈 Use Case — Marina: mesma dívida, três indexadores
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Ano</th>
+                  <th>IPCA Real</th>
+                  <th>IPCA+3,5%</th>
+                  <th>TR+9%</th>
+                  <th>Fixa 9%</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2021</td>
+                  <td>10,06%</td>
+                  <td class="neg">13,56% ↑↑</td>
+                  <td>~9,5%</td>
+                  <td class="pos">9,0%</td>
+                </tr>
+                <tr>
+                  <td>2022</td>
+                  <td>5,79%</td>
+                  <td>9,29%</td>
+                  <td>~9,5%</td>
+                  <td class="pos">9,0%</td>
+                </tr>
+                <tr>
+                  <td>2023</td>
+                  <td>4,62%</td>
+                  <td class="pos">8,12% ↓</td>
+                  <td>~9,5%</td>
+                  <td>9,0%</td>
+                </tr>
+                <tr>
+                  <td>2024</td>
+                  <td>4,83%</td>
+                  <td class="pos">8,33% ↓</td>
+                  <td>~9,5%</td>
+                  <td>9,0%</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="insight">
+              Em 2021: IPCA+ foi devastador. Em 2023–2024: ficou abaixo da taxa
+              fixa. IPCA+ vantajoso quando IPCA projetado &lt; (taxa fixa −
+              spread fixo). Incerteza macroeconômica? Escolha a taxa fixa ou TR.
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL GARANTIAS -->
+        <div class="panel" id="panel-gar">
+          <div class="section-header">
+            <div class="eyebrow">Módulo 04 — Legislação</div>
+            <h2>Garantias e <em>Lei 9.514/97</em></h2>
+          </div>
+          <div class="feynman">
+            <div class="feynman-header">
+              🧒 Técnica Feynman — Alienação Fiduciária
+            </div>
+            <p>
+              Enquanto você não pagar tudo, a
+              <strong>escritura fica no nome do banco</strong>. Você mora no
+              imóvel normalmente, mas se parar de pagar, o banco retoma
+              <strong>sem precisar de juiz</strong> — só de um cartório. Muito
+              mais rápido que a hipoteca antiga.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Alienação Fiduciária vs Hipoteca
+              <span class="tag tag-purple">Lei 9.514/97</span>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Aspecto</th>
+                  <th>Alienação Fiduciária</th>
+                  <th>Hipoteca</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Propriedade durante financiamento</td>
+                  <td class="neg">Do banco</td>
+                  <td class="pos">Do devedor</td>
+                </tr>
+                <tr>
+                  <td>Posse do imóvel</td>
+                  <td class="pos">Do comprador</td>
+                  <td class="pos">Do comprador</td>
+                </tr>
+                <tr>
+                  <td>Retomada em inadimplência</td>
+                  <td class="pos">Extrajudicial (6–12 meses)</td>
+                  <td class="neg">Judicial (5–10 anos)</td>
+                </tr>
+                <tr>
+                  <td>Taxa resultante</td>
+                  <td class="pos">Menor (risco menor)</td>
+                  <td class="neg">Maior (risco maior)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Processo de Retomada — 5 Etapas
+              <span class="tag tag-red">Inadimplência</span>
+            </div>
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div
+                    class="tl-dot"
+                    style="border-color: var(--gold); color: var(--gold)"
+                  >
+                    1
+                  </div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Mora</strong>
+                  <p>
+                    Parcela em atraso. Banco aplica multa de 2% + juros de mora.
+                  </p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div
+                    class="tl-dot"
+                    style="border-color: var(--orange); color: var(--orange)"
+                  >
+                    2
+                  </div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Intimação via Cartório</strong>
+                  <p>Devedor notificado formalmente para purgar a mora.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div
+                    class="tl-dot"
+                    style="border-color: var(--red); color: var(--red)"
+                  >
+                    3
+                  </div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>15 dias para purgar</strong>
+                  <p>
+                    Pagar → contrato continua. Não pagar → banco consolida a
+                    propriedade.
+                  </p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div
+                    class="tl-dot"
+                    style="border-color: var(--red); color: var(--red)"
+                  >
+                    4
+                  </div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Consolidação</strong>
+                  <p>
+                    Banco registra imóvel em seu nome. Devedor tem 60 dias para
+                    desocupar.
+                  </p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-connector">
+                  <div
+                    class="tl-dot"
+                    style="border-color: var(--red); color: var(--red)"
+                  >
+                    5
+                  </div>
+                  <div class="tl-line"></div>
+                </div>
+                <div class="tl-body">
+                  <strong>Dois Leilões Extrajudiciais</strong>
+                  <p>
+                    Sobrou dinheiro após pagar a dívida → devolvido ao
+                    ex-devedor. Não cobriu → ex-devedor ainda deve o saldo.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="insight">
+              Se leilão = R$ 600k e dívida = R$ 400k → R$ 200k devolvidos ao
+              ex-devedor (Lei 9.514/97, art. 27). Se leilão = R$ 350k e dívida =
+              R$ 400k → ex-devedor ainda deve R$ 50k.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Seguros Obrigatórios SFH
+              <span class="tag tag-blue">MIP + DFI</span>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Seguro</th>
+                  <th>Cobre</th>
+                  <th>Beneficiário</th>
+                  <th>Custo Típico/mês</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>MIP</strong></td>
+                  <td>Morte e Invalidez Permanente</td>
+                  <td>Banco (quita a dívida)</td>
+                  <td>0,025%–0,05% do saldo</td>
+                </tr>
+                <tr>
+                  <td><strong>DFI</strong></td>
+                  <td>Danos físicos estruturais</td>
+                  <td>Banco e mutuário</td>
+                  <td>0,005%–0,015% do imóvel</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PANEL FGTS & MCMV -->
+        <div class="panel" id="panel-fgts">
+          <div class="section-header">
+            <div class="eyebrow">Módulo 05 — Benefícios</div>
+            <h2>FGTS e <em>MCMV</em></h2>
+          </div>
+          <div class="feynman">
+            <div class="feynman-header">🧒 Técnica Feynman — FGTS</div>
+            <p>
+              Desde que você trabalhou com carteira assinada, seu patrão guardou
+              8% do seu salário numa "caixinha" — o FGTS. Ao comprar sua
+              primeira casa,
+              <strong>o governo libera essa caixinha</strong> para entrada,
+              abater a dívida ou pagar parcelas em aperto.<br /><br />
+              Cada R$ 1 do FGTS aplicado em amortização
+              <strong>"rende" a taxa do financiamento</strong> (ex: 10% a.a.) —
+              muito mais que os ~6% que o FGTS rende dentro da conta.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              FGTS — Requisitos e Formas de Uso
+              <span class="tag tag-green">Lei 8.036/90</span>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Critério</th>
+                  <th>Regra</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tempo mínimo</td>
+                  <td>3 anos de trabalho com FGTS — consecutivos ou não</td>
+                </tr>
+                <tr>
+                  <td>Tipo do imóvel</td>
+                  <td>Residencial urbano apenas (não comercial)</td>
+                </tr>
+                <tr>
+                  <td>Restrição de propriedade</td>
+                  <td>Sem outro imóvel na mesma cidade/região metropolitana</td>
+                </tr>
+                <tr>
+                  <td>Enquadramento</td>
+                  <td>SFH (até R$ 1,5 mi SP/RJ/MG/DF; R$ 800k demais)</td>
+                </tr>
+                <tr>
+                  <td>Frequência para amortizar</td>
+                  <td class="hi">A cada 2 anos</td>
+                </tr>
+                <tr>
+                  <td>Pagamento de parcelas</td>
+                  <td>Até 12 consecutivas por período</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="usecase">
+            <div class="usecase-header">
+              💰 Use Case — Estratégia FGTS Acelerada
+            </div>
+            <p>
+              <strong>João</strong>, 30 anos, financia R$ 350.000 a 10%
+              a.a./SAC/360m. FGTS: R$ 45.000. Acumula ~R$ 7.000/ano.
+            </p>
+            <table class="data-table" style="margin-top: 0.7rem">
+              <thead>
+                <tr>
+                  <th>Momento</th>
+                  <th>Ação</th>
+                  <th>Resultado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ano 0</td>
+                  <td>Usa R$ 45k como entrada extra</td>
+                  <td class="pos">Financia R$ 305k → parcela R$ 650 menor</td>
+                </tr>
+                <tr>
+                  <td>Ano 2</td>
+                  <td>Amortiza R$ 14k acumulados</td>
+                  <td class="pos">Reduz ~18 meses de prazo</td>
+                </tr>
+                <tr>
+                  <td>Ano 4</td>
+                  <td>Amortiza R$ 14k acumulados</td>
+                  <td class="pos">Mais 18 meses a menos</td>
+                </tr>
+                <tr>
+                  <td>10 anos</td>
+                  <td>3 amortizações de R$ 14k</td>
+                  <td class="hi">Economia total ~R$ 180.000 em juros</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="insight">
+              FGTS "rende" a taxa do financiamento ao amortizar (10% a.a.) vs
+              ~6–8% dentro da conta. Amortize sempre que possível a cada 2 anos.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              Minha Casa Minha Vida 2024
+              <span class="tag tag-gold">Subsídio Direto</span>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Faixa</th>
+                  <th>Renda Familiar</th>
+                  <th>Subsídio Máx.</th>
+                  <th>Taxa de Juros</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Faixa 1</strong></td>
+                  <td>Até R$ 2.640</td>
+                  <td class="pos">R$ 55.000</td>
+                  <td class="pos">4% a 4,75% a.a.</td>
+                </tr>
+                <tr>
+                  <td><strong>Faixa 2</strong></td>
+                  <td>R$ 2.640–R$ 4.400</td>
+                  <td class="pos">R$ 29.000</td>
+                  <td class="pos">4,75% a 7% a.a.</td>
+                </tr>
+                <tr>
+                  <td><strong>Faixa 3</strong></td>
+                  <td>R$ 4.400–R$ 8.000</td>
+                  <td>Sem subsídio</td>
+                  <td>7,66% a 8,16% a.a.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="insight">
+              O subsídio é desconto direto no valor financiado — não é
+              restituído. Faixa 2 com subsídio de R$ 25k + taxa 5,5% vs mercado
+              10%: economia de ~R$ 155.000 em 30 anos.
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL FLASHCARDS -->
+        <div class="panel" id="panel-flash">
+          <div class="section-header">
+            <div class="eyebrow">
+              Método — Repetição Espaçada + Active Recall
+            </div>
+            <h2>Flashcards <em>Inteligentes</em></h2>
+            <p>
+              Clique no card para revelar. Avalie para otimizar sua revisão
+              futura.
+            </p>
+          </div>
+          <div class="card" style="margin-bottom: 0.8rem">
+            <div class="sr-labels">
+              <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span
+              ><span>Qui</span><span>Sex</span><span>Sáb</span>
+            </div>
+            <div class="sr-grid" id="srGrid"></div>
+            <div
+              style="
+                display: flex;
+                gap: 1rem;
+                margin-top: 0.4rem;
+                font-family: &quot;IBM Plex Mono&quot;, monospace;
+                font-size: 0.6rem;
+                color: var(--text3);
+              "
+            >
+              <span>■ <span style="color: var(--accent)">Estudado</span></span>
+              <span
+                >■
+                <span style="color: var(--surface3)">Não estudado</span></span
+              >
+              <span>■ <span style="color: var(--gold)">Hoje</span></span>
+            </div>
+          </div>
+          <div class="fc-nav">
+            <span class="fc-counter" id="fcCounter">Card 1 / 20</span>
+            <div class="fc-controls">
+              <button class="fc-btn" onclick="fcPrev()">← Anterior</button>
+              <button class="fc-btn" onclick="fcShuffle()">
+                🔀 Embaralhar
+              </button>
+              <button class="fc-btn primary" onclick="fcNext()">
+                Próximo →
+              </button>
+            </div>
+          </div>
+          <div class="flashcard-wrap" onclick="flipCard()">
+            <div class="flashcard" id="theCard">
+              <div class="fc-front">
+                <div class="fc-label-tag" id="fcLabel">Categoria · Nível</div>
+                <div class="fc-question" id="fcQ">Carregando...</div>
+                <div class="fc-hint">clique para revelar a resposta</div>
+              </div>
+              <div class="fc-back">
+                <div class="fc-answer" id="fcA">—</div>
+                <div class="fc-simple-tag" id="fcS">—</div>
+              </div>
+            </div>
+          </div>
+          <div class="fc-rating" id="fcRating" style="display: none">
+            <button class="fc-hard" onclick="rateCard('hard')">
+              😰 Difícil +5 XP<br /><small>Revisar amanhã</small>
+            </button>
+            <button class="fc-medium" onclick="rateCard('medium')">
+              🤔 Médio +10 XP<br /><small>Revisar em 3 dias</small>
+            </button>
+            <button class="fc-easy" onclick="rateCard('easy')">
+              ✅ Fácil +15 XP<br /><small>Revisar em 7 dias</small>
+            </button>
+          </div>
+        </div>
+
+        <!-- PANEL QUIZ -->
+        <div class="panel" id="panel-quiz">
+          <div class="section-header">
+            <div class="eyebrow">
+              Método — Active Recall · 30 Questões · Nível Progressivo
+            </div>
+            <h2>Quiz <em>Avançado</em></h2>
+            <p>
+              Questões com temporizador, dificuldade progressiva e revisão
+              detalhada.
+            </p>
+          </div>
+          <div class="quiz-header">
+            <div class="quiz-timer" id="qTimer">⏱ 45s</div>
+            <div class="quiz-pbar">
+              <div class="quiz-pfill" id="qPFill"></div>
+            </div>
+            <div class="quiz-score-disp" id="qScoreD">0 / 30</div>
+          </div>
+          <div id="quizContainer"></div>
+          <div class="score-final" id="scoreFinal">
+            <div
+              style="
+                font-family: &quot;IBM Plex Mono&quot;, monospace;
+                font-size: 0.63rem;
+                color: var(--text3);
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                margin-bottom: 0.7rem;
+              "
+            >
+              Resultado Final
+            </div>
+            <div class="score-big" id="scoreBig">—</div>
+            <div class="score-msg" id="scoreMsg">—</div>
+            <div class="score-breakdown">
+              <div class="sb-item">
+                <div class="sb-val" id="sbAc" style="color: var(--green)">
+                  0
+                </div>
+                <div class="sb-lbl">Acertos</div>
+              </div>
+              <div class="sb-item">
+                <div class="sb-val" id="sbEr" style="color: var(--red)">0</div>
+                <div class="sb-lbl">Erros</div>
+              </div>
+              <div class="sb-item">
+                <div class="sb-val" id="sbXP" style="color: var(--gold)">0</div>
+                <div class="sb-lbl">XP Ganho</div>
+              </div>
+            </div>
+            <button
+              class="btn-primary"
+              style="max-width: 200px; margin: 1rem auto"
+              onclick="toggleReview()"
+            >
+              Ver Revisão →
+            </button>
+            <button
+              class="fc-btn"
+              style="display: block; margin: 0.5rem auto"
+              onclick="resetQuiz()"
+            >
+              🔄 Refazer Quiz
+            </button>
+          </div>
+          <div class="review-mode" id="reviewMode">
+            <div
+              style="
+                font-family: &quot;Syne&quot;, sans-serif;
+                font-size: 0.97rem;
+                font-weight: 700;
+                margin-bottom: 0.75rem;
+              "
+            >
+              📖 Revisão Detalhada
+            </div>
+            <div id="reviewList"></div>
+          </div>
+        </div>
+
+        <!-- PANEL CALCULADORA -->
+        <div class="panel" id="panel-calc">
+          <div class="section-header">
+            <div class="eyebrow">Ferramenta — Simulação Profissional</div>
+            <h2>Calculadora <em>Completa</em></h2>
+            <p>
+              SAC, Price, Tabela de Amortização e Análise de Viabilidade
+              integradas.
+            </p>
+          </div>
+          <div class="calc-card">
+            <div class="calc-tabs">
+              <div class="calc-tab active" onclick="calcTab('bas', this)">
+                Básico
+              </div>
+              <div class="calc-tab" onclick="calcTab('comp', this)">
+                SAC vs Price
+              </div>
+              <div class="calc-tab" onclick="calcTab('tab', this)">
+                Tabela Amort.
+              </div>
+              <div class="calc-tab" onclick="calcTab('viab', this)">
+                Viabilidade
+              </div>
+            </div>
+            <div class="calc-body">
+              <div class="calc-panel active" id="cp-bas">
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>Valor do Imóvel (R$)</label
+                    ><input type="number" id="b-iv" value="500000" />
+                  </div>
+                  <div class="ig">
+                    <label>Entrada (R$)</label
+                    ><input type="number" id="b-en" value="100000" />
+                  </div>
+                </div>
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>Taxa de Juros (% a.a.)</label
+                    ><input type="number" id="b-tx" value="10" step="0.1" />
+                  </div>
+                  <div class="ig">
+                    <label>Prazo (meses)</label
+                    ><input
+                      type="number"
+                      id="b-pr"
+                      value="360"
+                      min="12"
+                      max="420"
+                    />
+                  </div>
+                </div>
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>Sistema</label
+                    ><select id="b-si">
+                      <option value="sac">SAC</option>
+                      <option value="price">Price</option>
+                    </select>
+                  </div>
+                  <div class="ig">
+                    <label>Renda Bruta Mensal (R$)</label
+                    ><input type="number" id="b-rd" value="15000" />
+                  </div>
+                </div>
+                <button class="btn-primary" onclick="calcBasico()">
+                  Calcular
+                </button>
+                <div class="result-panel" id="rp-bas">
+                  <div class="result-grid" id="rg-bas"></div>
+                  <div id="al-bas"></div>
+                </div>
+              </div>
+              <div class="calc-panel" id="cp-comp">
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>Valor Financiado (R$)</label
+                    ><input type="number" id="c-fn" value="400000" />
+                  </div>
+                  <div class="ig">
+                    <label>Taxa (% a.a.)</label
+                    ><input type="number" id="c-tx" value="10" step="0.1" />
+                  </div>
+                </div>
+                <div class="ig">
+                  <label>Prazo (meses)</label
+                  ><input
+                    type="number"
+                    id="c-pr"
+                    value="360"
+                    min="12"
+                    max="420"
+                  />
+                </div>
+                <button class="btn-primary" onclick="calcComp()">
+                  Comparar SAC vs Price
+                </button>
+                <div class="result-panel" id="rp-comp">
+                  <table class="data-table" style="margin-top: 0">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>SAC</th>
+                        <th>Price</th>
+                        <th>Diferença</th>
+                      </tr>
+                    </thead>
+                    <tbody id="compBody"></tbody>
+                  </table>
+                  <div id="compInsight" style="margin-top: 0.7rem"></div>
+                </div>
+              </div>
+              <div class="calc-panel" id="cp-tab">
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>Valor Financiado (R$)</label
+                    ><input type="number" id="t-fn" value="200000" />
+                  </div>
+                  <div class="ig">
+                    <label>Taxa (% a.a.)</label
+                    ><input type="number" id="t-tx" value="10" step="0.1" />
+                  </div>
+                </div>
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>Prazo (meses)</label
+                    ><input type="number" id="t-pr" value="120" />
+                  </div>
+                  <div class="ig">
+                    <label>Sistema</label
+                    ><select id="t-si">
+                      <option value="sac">SAC</option>
+                      <option value="price">Price</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn-primary" onclick="calcTabela()">
+                  Gerar Tabela
+                </button>
+                <div class="result-panel" id="rp-tab">
+                  <div class="amort-wrap">
+                    <table class="amort-table">
+                      <thead>
+                        <tr>
+                          <th>Mês</th>
+                          <th>Parcela</th>
+                          <th>Amortiz.</th>
+                          <th>Juros</th>
+                          <th>Saldo Dev.</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tabBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="calc-panel" id="cp-viab">
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>Valor do Imóvel (R$)</label
+                    ><input type="number" id="v-iv" value="450000" />
+                  </div>
+                  <div class="ig">
+                    <label>Entrada Disponível (R$)</label
+                    ><input type="number" id="v-en" value="90000" />
+                  </div>
+                </div>
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>FGTS Disponível (R$)</label
+                    ><input type="number" id="v-fg" value="30000" />
+                  </div>
+                  <div class="ig">
+                    <label>Renda Bruta Total (R$)</label
+                    ><input type="number" id="v-rd" value="14000" />
+                  </div>
+                </div>
+                <div class="ig-row">
+                  <div class="ig">
+                    <label>Taxa de Juros (% a.a.)</label
+                    ><input type="number" id="v-tx" value="10" step="0.1" />
+                  </div>
+                  <div class="ig">
+                    <label>ITBI estimado (%)</label
+                    ><input type="number" id="v-it" value="3" step="0.5" />
+                  </div>
+                </div>
+                <button class="btn-primary" onclick="calcViab()">
+                  Analisar Viabilidade
+                </button>
+                <div class="result-panel" id="rp-viab">
+                  <div class="result-grid" id="rg-viab"></div>
+                  <div id="al-viab"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL SIMULADOR -->
+        <div class="panel" id="panel-sim">
+          <div class="section-header">
+            <div class="eyebrow">Método — Aprendizado Situacional</div>
+            <h2>Simulador de <em>Cenários Reais</em></h2>
+            <p>
+              Escolha um perfil e veja análise financeira completa da situação.
+            </p>
+          </div>
+          <div class="scenario-grid">
+            <div class="sc-card" onclick="runScenario('jovem', this)">
+              <div class="sc-icon">👨‍💻</div>
+              <div class="sc-name">Profissional Jovem</div>
+              <div class="sc-desc">
+                30 anos, renda R$ 7k, primeiro imóvel, pouco FGTS
+              </div>
+            </div>
+            <div class="sc-card" onclick="runScenario('casal', this)">
+              <div class="sc-icon">👫</div>
+              <div class="sc-name">Casal Classe Média</div>
+              <div class="sc-desc">Renda combinada R$ 16k, FGTS R$ 50k</div>
+            </div>
+            <div class="sc-card" onclick="runScenario('mcmv', this)">
+              <div class="sc-icon">🏘</div>
+              <div class="sc-name">Família MCMV</div>
+              <div class="sc-desc">
+                Renda R$ 3.500, Faixa 2, primeiro imóvel popular
+              </div>
+            </div>
+            <div class="sc-card" onclick="runScenario('investidor', this)">
+              <div class="sc-icon">📈</div>
+              <div class="sc-name">Investidor</div>
+              <div class="sc-desc">
+                Renda R$ 30k, compra para renda de aluguel, SFI
+              </div>
+            </div>
+            <div class="sc-card" onclick="runScenario('autonomo', this)">
+              <div class="sc-icon">🔧</div>
+              <div class="sc-name">Autônomo</div>
+              <div class="sc-desc">
+                Renda variável, dificuldade de comprovação
+              </div>
+            </div>
+            <div class="sc-card" onclick="runScenario('portab', this)">
+              <div class="sc-icon">🔄</div>
+              <div class="sc-name">Portabilidade</div>
+              <div class="sc-desc">
+                Financiamento antigo a 13%, mercado agora a 9,5%
+              </div>
+            </div>
+          </div>
+          <div class="sc-result" id="scResult"></div>
+        </div>
+
+        <!-- PANEL ÁRVORE -->
+        <div class="panel" id="panel-tree">
+          <div class="section-header">
+            <div class="eyebrow">Método — Raciocínio Estruturado</div>
+            <h2>Árvore de <em>Decisão</em></h2>
+            <p>
+              Responda as perguntas e descubra o melhor produto para cada
+              perfil.
+            </p>
+          </div>
+          <div id="decisionTree"></div>
+        </div>
+
+        <!-- PANEL CHECKLIST -->
+        <div class="panel" id="panel-check">
+          <div class="section-header">
+            <div class="eyebrow">Método — Verificação de Domínio</div>
+            <h2>Checklist de <em>Competências</em></h2>
+            <p>Marque o que você já domina. Cada item concluído gera XP.</p>
+          </div>
+          <div id="checklistCont"></div>
+        </div>
+      </div>
+      <!-- /content -->
+    </div>
+    <!-- /main -->
+    <button
+      class="mob-btn"
+      onclick="document.getElementById('sidebar').classList.toggle('open')"
+    >
+      ☰
+    </button>
+    <div class="toast" id="toast"></div>
+    <script>
+      // ═══ XP & GAMIFICATION ═══
+      let xp = 0,
+        streak = 0,
+        totalAc = 0;
+      const levels = [
+        { m: 0, n: "Iniciante" },
+        { m: 100, n: "Aprendiz" },
+        { m: 300, n: "Praticante" },
+        { m: 600, n: "Analista" },
+        { m: 1000, n: "Especialista" },
+        { m: 1500, n: "Consultor" },
+        { m: 2500, n: "Mestre" },
+      ];
+      function addXP(pts, msg) {
+        xp += pts;
+        const prev = [...levels].reverse().find((l) => l.m <= xp) || levels[0];
+        const next = levels.find((l) => l.m > xp) || levels[levels.length - 1];
+        const pct =
+          next.m > prev.m
+            ? Math.round(((xp - prev.m) / (next.m - prev.m)) * 100)
+            : 100;
+        document.getElementById("xpDisp").textContent = xp + " XP";
+        document.getElementById("xpFill").style.width = pct + "%";
+        document.getElementById("xpLevel").textContent =
+          "Nível " + (levels.indexOf(prev) + 1) + " — " + prev.n;
+        if (msg) showToast("+" + pts + " XP — " + msg);
+        updateStats();
+      }
+      function updateStats() {
+        document.getElementById("stAcertos").textContent = totalAc;
+        document.getElementById("stStreak").textContent = streak + "🔥";
+        const total = document.querySelectorAll(".cl-item").length || 1;
+        const done = document.querySelectorAll(".cl-item.done").length;
+        document.getElementById("stProg").textContent =
+          Math.round((done / total) * 100) + "%";
+      }
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2500);
+      }
+
+      // ═══ NAVIGATION ═══
+      const titles = {
+        fund: "Fundamentos",
+        amort: "Amortização SAC vs Price",
+        taxas: "Taxas & Indexadores",
+        gar: "Garantias — Lei 9.514/97",
+        fgts: "FGTS & MCMV",
+        flash: "Flashcards — Repetição Espaçada",
+        quiz: "Quiz Avançado — 30 Questões",
+        calc: "Calculadora Profissional",
+        sim: "Simulador de Cenários",
+        tree: "Árvore de Decisão",
+        check: "Checklist de Competências",
+      };
+      function goPanel(id, el) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((n) => n.classList.remove("active"));
+        document.getElementById("panel-" + id).classList.add("active");
+        el.classList.add("active");
+        document.getElementById("topTitle").textContent = titles[id] || id;
+        document.getElementById("sidebar").classList.remove("open");
+        addXP(5, "Módulo visitado");
+      }
+
+      // ═══ FLASHCARDS ═══
+      const fcs = [
+        {
+          cat: "SAC",
+          lvl: "Básico",
+          q: "O que permanece CONSTANTE no SAC?",
+          a: "A <strong>amortização mensal</strong> = PV ÷ n. Os juros variam (caem) conforme o saldo devedor diminui. Por isso as parcelas são decrescentes.",
+          s: "Amort. SAC = PV ÷ n sempre igual",
+        },
+        {
+          cat: "Price",
+          lvl: "Básico",
+          q: "No Price, o que muda mês a mês?",
+          a: "A <strong>composição interna</strong> da parcela (sempre fixa). No início: maioria juros. No final: maioria amortização. O valor total nunca muda.",
+          s: "Parcela fixa, composição interna variável",
+        },
+        {
+          cat: "FGTS",
+          lvl: "Básico",
+          q: "Quantos anos de FGTS para usar na compra do imóvel?",
+          a: "<strong>3 anos</strong> com recolhimento do FGTS — em qualquer empresa, consecutivos ou não.",
+          s: "3 anos = 36 meses acumulados",
+        },
+        {
+          cat: "Alienação",
+          lvl: "Médio",
+          q: "Quem é o proprietário do imóvel durante o financiamento?",
+          a: "O <strong>banco (credor fiduciário)</strong> detém a propriedade resolúvel. Devedor tem a posse direta. Na quitação, a propriedade volta automaticamente.",
+          s: "Banco = dono. Devedor = possuidor até quitar.",
+        },
+        {
+          cat: "CET",
+          lvl: "Médio",
+          q: "Por que o CET é mais importante que a taxa nominal?",
+          a: "CET inclui <strong>juros + MIP + DFI + IOF + taxas</strong>. Dois bancos com 9% nominal podem ter CET de 11% vs 12,5% — diferença enorme em 30 anos.",
+          s: "CET = custo real total. Compare CET!",
+        },
+        {
+          cat: "SAC",
+          lvl: "Médio",
+          q: "PV=R$300k, n=360, i=0,8%/mês (SAC). Qual a 1ª parcela?",
+          a: "Amort. = 300.000÷360 = R$ 833. Juros = 300.000×0,8% = R$ 2.400. <strong>Parcela 1 = R$ 3.233</strong>",
+          s: "Parcela SAC = (PV÷n) + (Saldo×i)",
+        },
+        {
+          cat: "MCMV",
+          lvl: "Básico",
+          q: "Qual o subsídio máximo e a taxa mínima da Faixa 1 MCMV?",
+          a: "Subsídio até <strong>R$ 55.000</strong> e taxa de <strong>4% a 4,75% a.a.</strong> Para renda até R$ 2.640/mês.",
+          s: "Faixa 1: até R$ 55k subsídio, 4% a.a.",
+        },
+        {
+          cat: "Retomada",
+          lvl: "Médio",
+          q: "Quanto tempo o devedor tem para purgar a mora na alienação fiduciária?",
+          a: "<strong>15 dias corridos</strong> após intimação por cartório. Não pagando, banco consolida a propriedade e pode leiloar.",
+          s: "15 dias após notificação. Depois: banco vira dono.",
+        },
+        {
+          cat: "ITBI",
+          lvl: "Básico",
+          q: "O ITBI é cobrado por quem e quando?",
+          a: "<strong>Município</strong> — cobrado no momento da transmissão da propriedade (registro no Cartório de Imóveis). Alíquota típica: 2–3%.",
+          s: "ITBI = imposto municipal. Pago no registro.",
+        },
+        {
+          cat: "SAC vs Price",
+          lvl: "Avançado",
+          q: "Por que o SAC tem menor custo total que o Price?",
+          a: "No SAC, amortização constante faz o saldo devedor cair <strong>mais rápido</strong>. Juros = saldo × taxa. Saldo menor → menos juros. Price: saldo cai devagar → muito mais juros.",
+          s: "SAC: dívida cai rápido. Price: dívida some devagar.",
+        },
+        {
+          cat: "IPCA+",
+          lvl: "Avançado",
+          q: "Em que cenário o IPCA+ é vantajoso vs taxa fixa?",
+          a: "Quando IPCA projetado < <strong>(taxa fixa − spread)</strong>. Ex: fixa=9%, IPCA+=3,5% → vantajoso se IPCA < 5,5%. Acima disso, a fixa protege mais.",
+          s: "IPCA+ vantajoso se IPCA < (fixa − spread)",
+        },
+        {
+          cat: "FGTS",
+          lvl: "Médio",
+          q: "Com que frequência o FGTS pode amortizar o saldo devedor?",
+          a: "A cada <strong>2 anos</strong> (24 meses) da última utilização. Pode reduzir prazo ou parcela — devedor escolhe.",
+          s: "FGTS p/ amortização: uma vez a cada 2 anos",
+        },
+        {
+          cat: "LTV",
+          lvl: "Básico",
+          q: "Banco oferece LTV 80%. Imóvel R$ 600k. Financiamento máximo?",
+          a: "R$ 600.000 × 80% = <strong>R$ 480.000</strong>. O comprador precisa de R$ 120.000 de entrada + ITBI + cartório.",
+          s: "LTV 80%: banco financia até 80% do avaliado",
+        },
+        {
+          cat: "SFH/SFI",
+          lvl: "Médio",
+          q: "Diferença prática entre SFH e SFI?",
+          a: "SFH: teto de valor, permite FGTS, regras governamentais. <strong>SFI: sem teto, sem FGTS</strong>, condições negociadas — para imóveis premium.",
+          s: "SFH = regulado + FGTS. SFI = livre + sem FGTS.",
+        },
+        {
+          cat: "Portabilidade",
+          lvl: "Avançado",
+          q: "Quando a portabilidade de crédito vale a pena?",
+          a: "Quando redução de taxa × prazo restante > custos (avaliação + cartório ~R$ 4–8k). <strong>Regra prática: taxa cair ≥ 1 p.p.</strong> com ≥ 10 anos restantes.",
+          s: "Vale se taxa cair ≥ 1 p.p. e prazo restante longo",
+        },
+        {
+          cat: "Seguros",
+          lvl: "Básico",
+          q: "O que cobre o MIP e o DFI?",
+          a: "<strong>MIP</strong>: morte e invalidez permanente — quita o saldo. <strong>DFI</strong>: danos físicos estruturais (incêndio, desabamento). Ambos obrigatórios no SFH.",
+          s: "MIP = seguro pessoa. DFI = seguro estrutura.",
+        },
+        {
+          cat: "Pré-pagamento",
+          lvl: "Avançado",
+          q: "Reduzir prazo ou parcela no pré-pagamento: qual é melhor?",
+          a: "<strong>Reduzir prazo</strong> — elimina meses inteiros de juros. Reduzir parcela mantém o prazo e acumula mais juros. Exceção: se taxa financiamento < retorno alternativo.",
+          s: "Reduzir prazo = elimina juros futuros inteiros",
+        },
+        {
+          cat: "Custos",
+          lvl: "Médio",
+          q: "Além da entrada, quais outros custos pagar na compra?",
+          a: "ITBI (2–3%), cartório/registro (~0,5–1%), avaliação do imóvel (R$ 500–3k). <strong>Reserve 4–5% extras do valor do imóvel.</strong>",
+          s: "Reserve mais 4–5% do imóvel além da entrada",
+        },
+        {
+          cat: "FGTS",
+          lvl: "Avançado",
+          q: "Por que usar FGTS p/ amortizar é melhor que deixar na conta?",
+          a: 'FGTS rende ~6–8% líquido. Ao amortizar, "rende" a taxa do financiamento (ex: 10%). <strong>10% > 6–8% → amortize sempre.</strong>',
+          s: "FGTS rende 6–8%. Financiamento custa 10%+.",
+        },
+        {
+          cat: "Leilão",
+          lvl: "Avançado",
+          q: "Leilão gerou saldo acima da dívida: o que ocorre?",
+          a: "O <strong>excedente é devolvido ao ex-devedor</strong> (Lei 9.514/97, art. 27). Ex: dívida R$ 400k, leilão R$ 550k → R$ 150k (menos custas do leilão) volta ao devedor.",
+          s: "Sobrou no leilão? Devolve ao ex-devedor. É lei.",
+        },
+      ];
+      let fcIdx = 0,
+        fcOrder = [...Array(fcs.length).keys()],
+        cardFlipped = false;
+      function renderCard() {
+        const c = fcs[fcOrder[fcIdx]];
+        document.getElementById("fcLabel").textContent = c.cat + " · " + c.lvl;
+        document.getElementById("fcQ").textContent = c.q;
+        document.getElementById("fcA").innerHTML = c.a;
+        document.getElementById("fcS").textContent = "🧒 Simples: " + c.s;
+        document.getElementById("fcCounter").textContent =
+          "Card " + (fcIdx + 1) + " / " + fcs.length;
+        document.getElementById("theCard").classList.remove("flipped");
+        document.getElementById("fcRating").style.display = "none";
+        cardFlipped = false;
+      }
+      function flipCard() {
+        if (!cardFlipped) {
+          document.getElementById("theCard").classList.add("flipped");
+          setTimeout(() => {
+            document.getElementById("fcRating").style.display = "flex";
+          }, 400);
+          cardFlipped = true;
+        }
+      }
+      function fcNext() {
+        fcIdx = (fcIdx + 1) % fcs.length;
+        renderCard();
+      }
+      function fcPrev() {
+        fcIdx = (fcIdx - 1 + fcs.length) % fcs.length;
+        renderCard();
+      }
+      function fcShuffle() {
+        for (let i = fcOrder.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [fcOrder[i], fcOrder[j]] = [fcOrder[j], fcOrder[i]];
+        }
+        fcIdx = 0;
+        renderCard();
+        showToast("Cards embaralhados!");
+      }
+      function rateCard(l) {
+        const p = { hard: 5, medium: 10, easy: 15 }[l];
+        addXP(p, "Flashcard avaliado");
+        fcNext();
+      }
+      function buildSRGrid() {
+        const g = document.getElementById("srGrid");
+        if (!g) return;
+        g.innerHTML = "";
+        for (let i = 0; i < 28; i++) {
+          const d = document.createElement("div");
+          d.className = "sr-day";
+          if (i === 27) d.classList.add("today");
+          else if (i < 20 && Math.random() > 0.5) d.classList.add("full");
+          else if (i >= 20 && i < 27) d.classList.add("done");
+          g.appendChild(d);
+        }
+      }
+
+      // ═══ QUIZ 30 QUESTÕES ═══
+      const questoes = [
+        {
+          t: "SAC",
+          d: "easy",
+          q: "No sistema SAC, o que permanece constante em todas as parcelas?",
+          opts: [
+            "O valor total da parcela",
+            "O valor dos juros mensais",
+            "O valor da amortização mensal",
+            "A taxa de juros",
+          ],
+          c: 2,
+          exp: "No SAC (Sistema de Amortização Constante): Amortização = PV ÷ n, sempre igual. Os juros variam (caem) porque o saldo devedor diminui. Resultado: parcelas decrescentes.",
+        },
+        {
+          t: "Renda",
+          d: "easy",
+          q: "Pedro tem renda bruta R$ 10.000/mês. Qual a parcela máxima aprovável pelo SFH?",
+          ctx: "Regra padrão: comprometimento máximo de 30% da renda bruta.",
+          opts: ["R$ 1.500", "R$ 2.000", "R$ 3.000", "R$ 4.000"],
+          c: 2,
+          exp: "30% × R$ 10.000 = R$ 3.000. É o limite regulatório do SFH. O banco pode ser mais rígido, mas 30% é o parâmetro padrão para aprovação.",
+        },
+        {
+          t: "ITBI",
+          d: "easy",
+          q: "O ITBI é cobrado por qual ente e em que momento?",
+          opts: [
+            "União, anualmente",
+            "Estado, no ato da escritura",
+            "Município, na transmissão da propriedade",
+            "Município, anualmente",
+          ],
+          c: 2,
+          exp: "ITBI é imposto municipal (CF/88, art. 156, II). Fato gerador: transmissão da propriedade imobiliária. Cobrado no registro do imóvel. Alíquota: 2–3%.",
+        },
+        {
+          t: "FGTS",
+          d: "easy",
+          q: "Quantos anos mínimos de FGTS para usar na compra de imóvel?",
+          ctx: "Lei 8.036/90.",
+          opts: [
+            "1 ano consecutivo",
+            "2 anos no mesmo emprego",
+            "3 anos — consecutivos ou não",
+            "5 anos de carteira assinada",
+          ],
+          c: 2,
+          exp: "Lei 8.036/90: mínimo 3 anos com recolhimento de FGTS, podendo ser em diferentes empregadores e períodos não consecutivos. Basta acumular 36 meses com depósitos ao longo da vida.",
+        },
+        {
+          t: "Seguros",
+          d: "easy",
+          q: "Quais seguros são obrigatórios em financiamentos pelo SFH?",
+          opts: [
+            "Seguro de vida e contra roubo",
+            "MIP e DFI",
+            "Apenas DFI",
+            "Seguro desemprego e MIP",
+          ],
+          c: 1,
+          exp: "MIP (Morte e Invalidez Permanente): quita o saldo devedor se o mutuário morrer ou ficar inválido. DFI (Danos Físicos ao Imóvel): cobre danos estruturais. Ambos obrigatórios no SFH.",
+        },
+        {
+          t: "Price",
+          d: "easy",
+          q: "No sistema Price, como são as parcelas ao longo do contrato?",
+          opts: [
+            "Decrescentes",
+            "Crescentes",
+            "Fixas (iguais) do início ao fim",
+            "Variáveis com a inflação",
+          ],
+          c: 2,
+          exp: "Na Tabela Price (Sistema Francês), a parcela PMT é sempre constante. O que muda é a composição interna: no início predominam juros; no final, predomina amortização.",
+        },
+        {
+          t: "LTV",
+          d: "med",
+          q: "Banco oferece LTV de 80%. Imóvel avaliado em R$ 600.000. Qual o financiamento máximo?",
+          ctx: "LTV = Loan-to-Value = Valor Financiado ÷ Valor Avaliado.",
+          opts: [
+            "R$ 420.000 (70%)",
+            "R$ 480.000 (80%)",
+            "R$ 540.000 (90%)",
+            "R$ 600.000 (100%)",
+          ],
+          c: 1,
+          exp: "LTV 80%: R$ 600.000 × 0,80 = R$ 480.000. O comprador precisa de R$ 120.000 de entrada (20%) mais custos de ITBI e cartório.",
+        },
+        {
+          t: "SAC Cálculo",
+          d: "med",
+          q: "PV=R$240.000, n=240 meses, i=1%/mês (SAC). Qual a 1ª parcela?",
+          ctx: "Amortiz. = PV ÷ n. Juros = Saldo × i.",
+          opts: ["R$ 2.400", "R$ 3.000", "R$ 3.400", "R$ 4.200"],
+          c: 2,
+          exp: "Amort. = 240.000 ÷ 240 = R$ 1.000. Juros = 240.000 × 1% = R$ 2.400. Parcela = R$ 1.000 + R$ 2.400 = R$ 3.400. Última parcela: R$ 1.000 + R$ 1.000 × 1% = R$ 1.010.",
+        },
+        {
+          t: "FGTS",
+          d: "med",
+          q: "Roberto tem apartamento quitado em BH. Pode usar FGTS para comprar outro imóvel em BH?",
+          opts: [
+            "Sim, livremente",
+            "Sim, se o novo for de maior valor",
+            "Não, pois já tem imóvel na mesma cidade",
+            "Não, o FGTS só pode ser usado uma vez",
+          ],
+          c: 2,
+          exp: "Condição expressa: sem outro imóvel residencial urbano no município onde trabalha, reside ou pretende residir (inclui região metropolitana). A restrição vale tanto para quitados quanto para financiados.",
+        },
+        {
+          t: "CET",
+          d: "med",
+          q: "Dois bancos oferecem 9% a.a. nominal. Por que o CET pode ser diferente?",
+          opts: [
+            "São equivalentes — taxa nominal já representa tudo",
+            "O CET inclui seguros, IOF e taxas — custo real total",
+            "O CET só importa acima de R$ 500k",
+            "O CET é igual em todos os bancos por lei",
+          ],
+          c: 1,
+          exp: "O CET consolida: taxa nominal + MIP + DFI + IOF + tarifas de avaliação + taxas administrativas. Com 9% nominal: Banco A CET 11,2% vs Banco B CET 12,8% — diferença enorme em 30 anos.",
+        },
+        {
+          t: "MCMV",
+          d: "med",
+          q: "Família com renda R$ 3.800/mês. Qual faixa MCMV e subsídio máximo?",
+          ctx: "Faixa 1: até R$ 2.640. Faixa 2: R$ 2.640–R$ 4.400. Faixa 3: R$ 4.400–R$ 8.000.",
+          opts: [
+            "Faixa 1 — subsídio até R$ 55k",
+            "Faixa 2 — subsídio até R$ 29k",
+            "Faixa 3 — sem subsídio",
+            "Faixa 2 — subsídio até R$ 55k",
+          ],
+          c: 1,
+          exp: "R$ 3.800 está entre R$ 2.640 e R$ 4.400 → Faixa 2. Subsídio máximo de R$ 29.000 + taxa de 4,75% a 7% a.a. O subsídio reduz diretamente o valor financiado (não é restituído).",
+        },
+        {
+          t: "Alienação",
+          d: "med",
+          q: "Após notificação cartorial, o devedor tem quantos dias para purgar a mora?",
+          opts: [
+            "5 dias úteis",
+            "10 dias corridos",
+            "15 dias corridos",
+            "30 dias corridos",
+          ],
+          c: 2,
+          exp: "Lei 9.514/97: após intimação via cartório, o devedor tem 15 dias corridos para purgar a mora (pagar atrasos + multas + juros). Não pagando, o credor consolida a propriedade.",
+        },
+        {
+          t: "SFH/SFI",
+          d: "med",
+          q: "Diferença fundamental entre SFH e SFI?",
+          opts: [
+            "SFH é só Caixa; SFI para bancos privados",
+            "SFH: teto, permite FGTS, regras gov.; SFI: livre, sem FGTS",
+            "SFH é para PF; SFI para PJ",
+            "SFI tem taxas sempre menores",
+          ],
+          c: 1,
+          exp: "SFH: teto (R$ 1,5mi SP/RJ/MG/DF; R$ 800k demais), permite FGTS, seguros obrigatórios, regras do CMN. SFI: sem teto, sem FGTS, condições negociadas — imóveis de alto padrão.",
+        },
+        {
+          t: "Custos",
+          d: "med",
+          q: "Compra R$ 500k. Entrada 20% = R$ 100k. ITBI 3% + Cartório 1%. Capital total no ato?",
+          opts: ["R$ 100.000", "R$ 110.000", "R$ 120.000", "R$ 130.000"],
+          c: 2,
+          exp: "Entrada R$ 100k + ITBI R$ 15k + Cartório R$ 5k = R$ 120.000. Erro clássico: planejar só a entrada e ser surpreendido pelos R$ 20.000 extras no ato.",
+        },
+        {
+          t: "Price Composição",
+          d: "med",
+          q: "No Price, nos primeiros meses, o que predomina na parcela?",
+          opts: [
+            "Maioria amortização",
+            "Metade a metade",
+            "Maioria juros, pouca amortização",
+            "Não há amortização nos 12 primeiros meses",
+          ],
+          c: 2,
+          exp: "No Price, o saldo devedor inicial é máximo → juros iniciais são máximos. Como a parcela é fixa, quase tudo é juro no início. A dívida diminui devagar — por isso o custo total é maior.",
+        },
+        {
+          t: "Comparativo",
+          d: "hard",
+          q: "SAC vs Price: R$ 300k × 360m × 10% a.a. Diferença no total pago?",
+          ctx: "SAC total ≈ R$ 613.750. Price total ≈ R$ 947.880.",
+          opts: [
+            "SAC paga ~R$ 50k a mais",
+            "São iguais",
+            "Price paga ~R$ 334k a mais",
+            "Price paga ~R$ 100k a mais",
+          ],
+          c: 2,
+          exp: "SAC: dívida cai rápido → menos juros → total ~R$ 613k. Price: saldo cai devagar → juros acumulados → total ~R$ 948k. Diferença de ~R$ 334k — equivalente ao valor do imóvel original!",
+        },
+        {
+          t: "Portabilidade",
+          d: "hard",
+          q: "Quando a portabilidade imobiliária vale a pena?",
+          ctx: "Mariana: saldo R$ 250k, 12% a.a., 25 anos restantes. Banco B: 9% a.a.",
+          opts: [
+            "Sempre que a taxa cair qualquer valor",
+            "Quando economia de juros > custo da portabilidade (≥1 p.p. geralmente)",
+            "Tem multa de 5% do saldo",
+            "Apenas se prazo restante > 30 anos",
+          ],
+          c: 1,
+          exp: "Portabilidade é sem multa (resolução CMN). Vale quando: economia de juros > custos (avaliação + cartório ~R$ 3–8k). Regra prática: vale se taxa cair ≥ 1 p.p. com prazo restante ≥ 10 anos. 3 p.p. × R$ 250k × 25 anos = enorme economia.",
+        },
+        {
+          t: "FGTS vs Rendimento",
+          d: "hard",
+          q: "Por que amortizar o financiamento com FGTS é melhor que deixar na conta?",
+          opts: [
+            "Não é superior — FGTS rende mais",
+            "Taxa do financiamento (10%) > rendimento do FGTS (6–8%)",
+            "Superior apenas em financiamentos acima de R$ 400k",
+            "Depende só do prazo restante",
+          ],
+          c: 1,
+          exp: 'FGTS "rende" a taxa do financiamento ao amortizar (economiza 10% a.a. sobre o saldo). Deixando na conta: rende ~6–8% líquido. Como 10% > 6–8%, amortizar gera mais riqueza do que manter o saldo parado.',
+        },
+        {
+          t: "Leilão",
+          d: "hard",
+          q: "Imóvel leiloado por R$ 430k. Dívida R$ 400k + R$ 15k de custas do leilão. O que ocorre?",
+          opts: [
+            "Banco fica com tudo",
+            "Ex-devedor recebe R$ 15k",
+            "Ex-devedor ainda deve R$ 15k",
+            "Banco fica com R$ 415k e devolve R$ 15k ao ex-devedor",
+          ],
+          c: 3,
+          exp: "Banco usa R$ 400k (dívida) + R$ 15k (custas) = R$ 415k. Leilão = R$ 430k. Sobra R$ 15k → deve ser devolvido ao ex-devedor (Lei 9.514/97, art. 27).",
+        },
+        {
+          t: "Composição de Renda",
+          d: "hard",
+          q: "Carlos (renda R$ 6k) quer financiar R$ 400k. Parcela SAC inicial ~R$ 4.200. Melhor estratégia?",
+          opts: [
+            "Prazo de 420 meses para reduzir parcela",
+            "Trocar para Price — parcela inicial menor",
+            "Compor renda com cônjuge ou aumentar a entrada",
+            "Pedir ao banco para ignorar o limite de 30%",
+          ],
+          c: 2,
+          exp: "R$ 6k de renda → máxima parcela R$ 1.800 (30%). Estratégias: (1) Composição de renda: cônjuge ganha R$ 8k → total R$ 14k → parcela máx R$ 4.200 ✅; (2) Aumentar entrada: reduzir financiado para um valor compatível.",
+        },
+        {
+          t: "IPCA+ Cenário",
+          d: "hard",
+          q: "IPCA+3,5%. IPCA atual=4,8%. Taxa fixa equivalente=9%. Qual escolher?",
+          opts: [
+            "Sempre taxa fixa — mais segurança",
+            "IPCA+ — custo efetivo 8,3% < fixa 9%",
+            "Acima de 20 anos sempre fixa",
+            "São equivalentes nesse patamar",
+          ],
+          c: 1,
+          exp: "Taxa efetiva IPCA+: 4,8% + 3,5% = 8,3% < taxa fixa 9%. Nesse cenário IPCA+ é mais barato. Mas se IPCA subir para 5,5%+, a taxa efetiva iguala ou supera a fixa. Vantagem do IPCA+ só com inflação controlada.",
+        },
+        {
+          t: "FGTS Comercial",
+          d: "hard",
+          q: "Funcionário quer usar FGTS para financiar sala comercial da empresa. É possível?",
+          opts: [
+            "Sim, para qualquer imóvel da empresa",
+            "Sim, se for a sede da empresa",
+            "Não — FGTS só para imóvel residencial urbano do trabalhador",
+            "Sim, se a empresa tem menos de 50 funcionários",
+          ],
+          c: 2,
+          exp: "O FGTS é benefício do trabalhador pessoa física para moradia. Não pode ser usado por empresas, para imóveis comerciais/industriais ou por pessoas jurídicas.",
+        },
+        {
+          t: "Autônomo",
+          d: "hard",
+          q: "Autônomo sem holerite quer financiar imóvel. Qual é a principal estratégia de comprovação?",
+          opts: [
+            "Impossível — bancos não aceitam autônomos",
+            "IRPF completo + extrato bancário + contratos com clientes",
+            "Apenas Faixa 1 do MCMV aceita autônomos",
+            "Financiamento só em nome de um sócio",
+          ],
+          c: 1,
+          exp: "Bancos aceitam autônomos com: DIRPF dos últimos 2 anos, extrato bancário 6–12 meses, contratos de prestação de serviço, notas fiscais. Score de crédito elevado e maior entrada ajudam muito.",
+        },
+        {
+          t: "Prazo vs Parcela",
+          d: "hard",
+          q: "Pré-pagamento de R$ 50k no SAC. Reduzir prazo ou parcela: qual é melhor?",
+          opts: [
+            "Reduzir parcela economiza mais",
+            "São matematicamente iguais",
+            "Reduzir prazo elimina mais meses de juros — matematicamente melhor",
+            "Depende só da renda corrente",
+          ],
+          c: 2,
+          exp: "Reduzir prazo elimina meses inteiros de encargos (juros + seguros). Reduzir parcela mantém o prazo, pagando menos por mês mas por mais tempo — acumula mais juros no total. Exceção: se investimento alternativo render mais que a taxa do financiamento.",
+        },
+        {
+          t: "Lei Alienação",
+          d: "hard",
+          q: "Qual lei regulamenta a alienação fiduciária de imóveis no Brasil?",
+          opts: [
+            "Lei 8.036/90",
+            "Lei 10.257/01",
+            "Lei 9.514/97",
+            "Lei 6.766/79",
+          ],
+          c: 2,
+          exp: "Lei 9.514/97 regulamenta a alienação fiduciária de bens imóveis e criou o SFI. Define a propriedade resolúvel ao credor, o processo extrajudicial de retomada (consolidação + leilão) e os prazos (15 dias para purgar mora).",
+        },
+        {
+          t: "Score",
+          d: "hard",
+          q: "Score 580 vs 750 no financiamento imobiliário. Quais as diferenças práticas?",
+          opts: [
+            "Score não afeta financiamento imobiliário",
+            "Score 580: possível recusa ou taxa maior; 750: aprovação facilitada e melhores condições",
+            "Score afeta só o limite de crédito",
+            "Score só importa abaixo de 300",
+          ],
+          c: 1,
+          exp: "Score alto (700+): menor risco percebido → taxas menores, aprovação mais rápida. Score baixo (580): risco maior → taxa maior (+0,5–1,5 p.p.), possível exigência de maior entrada, ou recusa.",
+        },
+        {
+          t: "Purgar vs Remir",
+          d: "hard",
+          q: 'Diferença entre "purgar a mora" e "remir a execução"?',
+          opts: [
+            "São sinônimos",
+            "Purgar = pagar atrasados antes da consolidação; Remir = pagar tudo antes do leilão para reaver o imóvel",
+            "Purgar = pagar atrasados; Remir = pagar após o leilão",
+            "Remir só existe na hipoteca",
+          ],
+          c: 1,
+          exp: "Purgar a mora: pagar as parcelas em atraso durante os 15 dias após notificação → contrato segue. Remir a execução: após consolidação, devedor pode pagar a dívida integral antes do leilão para reaver o imóvel. São dois momentos distintos do processo.",
+        },
+        {
+          t: "MCMV Impacto",
+          d: "hard",
+          q: "Subsídio MCMV R$ 25k em imóvel R$ 200k × taxa 5,5% × 360m vs mercado 10%. Economia?",
+          ctx: "Sem MCMV: financia R$ 160k a 10%. Com MCMV: financia R$ 135k a 5,5%.",
+          opts: ["~R$ 30k", "~R$ 80k", "~R$ 155k", "São equivalentes"],
+          c: 2,
+          exp: "Sem MCMV (R$ 160k, 10%, 360m): total ~R$ 505k. Com MCMV (R$ 135k, 5,5%, 360m): total ~R$ 276k. Economia: ~R$ 229k (ou ~R$ 155k descontando o subsídio já recebido). O MCMV muda completamente a equação.",
+        },
+        {
+          t: "Planta",
+          d: "hard",
+          q: "Imóvel na planta: qual cuidado específico no financiamento?",
+          opts: [
+            "Não há diferença vs imóvel pronto",
+            "Banco libera crédito em parcelas conforme obra; FGTS só após entrega; risco da construtora é do comprador",
+            "Na planta sempre é mais barato e sem risco",
+            "Apenas imóveis prontos podem ser financiados pelo SFH",
+          ],
+          c: 1,
+          exp: 'Imóvel na planta: banco financia em fases (medições da obra). Durante a construção: paga "juros de obra". FGTS geralmente só após o habite-se. Risco de construtora falir ou atrasar recai sobre o comprador — verifique patrimônio de afetação e idoneidade da construtora.',
+        },
+        {
+          t: "Estratégia",
+          d: "hard",
+          q: "Portabilidade + FGTS: qual a sequência correta para maximizar a economia?",
+          ctx: "Saldo R$ 300k a 12,5%. Novo banco: 9,5%. FGTS: R$ 60k.",
+          opts: [
+            "Só portabilidade",
+            "Só FGTS para amortizar",
+            "Portabilidade primeiro → depois amortizar com FGTS no novo banco",
+            "Tanto faz — resultado igual",
+          ],
+          c: 2,
+          exp: "(1) Portabilidade: muda a taxa base de 12,5% → 9,5% para TODOS os juros futuros. (2) Com nova taxa menor, aplicar FGTS → cada R$ 1 economiza 9,5% a.a. (vs 12,5% antes). A portabilidade primeiro maximiza o benefício do FGTS posterior.",
+        },
+      ];
+
+      let qState = { resp: new Set(), ac: 0, timerSec: 45, timerInt: null };
+      function buildQuiz() {
+        const c = document.getElementById("quizContainer");
+        c.innerHTML = "";
+        const letters = ["A", "B", "C", "D"];
+        questoes.forEach((q, qi) => {
+          const dc = { easy: "diff-easy", med: "diff-med", hard: "diff-hard" }[
+            q.d
+          ];
+          const dl = { easy: "Fácil", med: "Médio", hard: "Difícil" }[q.d];
+          const topC = { easy: "tag-green", med: "tag-gold", hard: "tag-red" }[
+            q.d
+          ];
+          const opts = q.opts
+            .map(
+              (o, oi) =>
+                `<button class="opt-btn" onclick="respQ(${qi},${oi},this)"><span class="opt-letter">${letters[oi]}</span>${o}</button>`,
+            )
+            .join("");
+          c.innerHTML += `<div class="q-block" id="qb-${qi}"><div class="q-meta"><span class="q-num">Q${String(qi + 1).padStart(2, "0")}</span><span class="q-topic ${topC}">${q.t}</span><span class="q-diff ${dc}">${dl}</span></div>${q.ctx ? `<div class="q-context">${q.ctx}</div>` : ""}<div class="q-text">${q.q}</div><div class="options-grid">${opts}</div><div class="q-exp" id="qe-${qi}">${q.exp}</div></div>`;
+        });
+      }
+      function respQ(qi, oi, btn) {
+        if (qState.resp.has(qi)) return;
+        qState.resp.add(qi);
+        const q = questoes[qi];
+        const blk = document.getElementById("qb-" + qi);
+        const btns = blk.querySelectorAll(".opt-btn");
+        btns.forEach((b) => (b.disabled = true));
+        if (oi === q.c) {
+          btn.classList.add("correct");
+          qState.ac++;
+          totalAc++;
+          streak++;
+          const pts = { easy: 10, med: 20, hard: 35 }[q.d];
+          addXP(pts, "Questão correta");
+        } else {
+          btn.classList.add("wrong");
+          streak = 0;
+          btns[q.c].classList.add("correct");
+          btns.forEach((b, bi) => {
+            if (bi !== oi && bi !== q.c) b.classList.add("dim");
+          });
+        }
+        document.getElementById("qe-" + qi).classList.add("show");
+        const pct = Math.round((qState.resp.size / questoes.length) * 100);
+        document.getElementById("qPFill").style.width = pct + "%";
+        document.getElementById("qScoreD").textContent =
+          qState.ac + " / " + questoes.length;
+        updateStats();
+        if (qState.resp.size === questoes.length) showScore();
+        startTimer();
+      }
+      function startTimer() {
+        if (qState.timerInt) clearInterval(qState.timerInt);
+        qState.timerSec = 45;
+        const el = document.getElementById("qTimer");
+        el.classList.remove("urgent");
+        qState.timerInt = setInterval(() => {
+          qState.timerSec--;
+          el.textContent = "⏱ " + qState.timerSec + "s";
+          if (qState.timerSec <= 10) el.classList.add("urgent");
+          if (qState.timerSec <= 0) clearInterval(qState.timerInt);
+        }, 1000);
+      }
+      function showScore() {
+        if (qState.timerInt) clearInterval(qState.timerInt);
+        const pct = Math.round((qState.ac / questoes.length) * 100);
+        const msgs = [
+          "Revise os módulos teóricos.",
+          "Bom começo! Foque nos erros.",
+          "Progresso sólido! Refaça as difíceis.",
+          "Muito bem! Conhecimento avançado.",
+          "Excelente! Nível especialista 🏆",
+        ];
+        const mi =
+          pct < 40 ? 0 : pct < 60 ? 1 : pct < 75 ? 2 : pct < 90 ? 3 : 4;
+        document.getElementById("scoreBig").textContent = pct + "%";
+        document.getElementById("scoreMsg").textContent = msgs[mi];
+        document.getElementById("sbAc").textContent = qState.ac;
+        document.getElementById("sbEr").textContent =
+          questoes.length - qState.ac;
+        document.getElementById("sbXP").textContent = xp;
+        document.getElementById("scoreFinal").classList.add("show");
+        addXP(50, "Quiz completo!");
+        const rl = document.getElementById("reviewList");
+        rl.innerHTML = "";
+        questoes.forEach((q, qi) => {
+          const isRight =
+            document.querySelector("#qb-" + qi + " .opt-btn.correct") &&
+            !document.querySelector("#qb-" + qi + " .opt-btn.wrong");
+          rl.innerHTML += `<div class="review-item ${isRight ? "cr" : "wr"}"><div class="review-q">${q.q}</div><div class="review-a ${isRight ? "ok" : "fail"}">${isRight ? "✅ Correto" : "❌ Incorreto"}</div>${!isRight ? `<div class="review-correct">Correta: ${q.opts[q.c]}</div>` : ""}</div>`;
+        });
+      }
+      function toggleReview() {
+        document.getElementById("reviewMode").classList.toggle("show");
+      }
+      function resetQuiz() {
+        qState = { resp: new Set(), ac: 0, timerSec: 45, timerInt: null };
+        document.getElementById("scoreFinal").classList.remove("show");
+        document.getElementById("reviewMode").classList.remove("show");
+        document.getElementById("qPFill").style.width = "0%";
+        document.getElementById("qScoreD").textContent =
+          "0 / " + questoes.length;
+        document.getElementById("qTimer").textContent = "⏱ 45s";
+        buildQuiz();
+      }
+
+      // ═══ CALCULADORA ═══
+      const fmt = (n) =>
+        "R$ " +
+        n.toLocaleString("pt-BR", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      function calcTab(id, el) {
+        document
+          .querySelectorAll(".calc-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(".calc-panel")
+          .forEach((p) => p.classList.remove("active"));
+        el.classList.add("active");
+        document.getElementById("cp-" + id).classList.add("active");
+      }
+      function sacParc(PV, i, n, k) {
+        const a = PV / n;
+        const s = PV - a * (k - 1);
+        return { p: a + s * i, a, j: s * i, s: s - a };
+      }
+      function sacTotal(PV, i, n) {
+        const a = PV / n;
+        let t = 0;
+        for (let k = 0; k < n; k++) {
+          const s = PV - a * k;
+          t += a + s * i;
+        }
+        return t;
+      }
+      function pricePMT(PV, i, n) {
+        return (PV * (i * Math.pow(1 + i, n))) / (Math.pow(1 + i, n) - 1);
+      }
+      function mkRI(label, val, cls = "") {
+        return `<div class="ri ${cls}"><div class="rl">${label}</div><div class="rv">${val}</div></div>`;
+      }
+      function calcBasico() {
+        const iv = +document.getElementById("b-iv").value || 0,
+          en = +document.getElementById("b-en").value || 0,
+          tx = +document.getElementById("b-tx").value || 0,
+          pr = +document.getElementById("b-pr").value || 360,
+          si = document.getElementById("b-si").value,
+          rd = +document.getElementById("b-rd").value || 1;
+        const PV = iv - en,
+          i = tx / 100 / 12;
+        let p1, pN, tot;
+        if (si === "sac") {
+          const r1 = sacParc(PV, i, pr, 1);
+          const rN = sacParc(PV, i, pr, pr);
+          p1 = r1.p;
+          pN = rN.p;
+          tot = sacTotal(PV, i, pr);
+        } else {
+          p1 = pricePMT(PV, i, pr);
+          pN = p1;
+          tot = p1 * pr;
+        }
+        const cmp = (p1 / rd) * 100;
+        document.getElementById("rg-bas").innerHTML =
+          mkRI("Valor Financiado", fmt(PV)) +
+          mkRI(
+            "Comprometimento",
+            cmp.toFixed(1) + "%",
+            cmp <= 25 ? "ok" : cmp <= 30 ? "hi" : "bad",
+          ) +
+          mkRI("1ª Parcela", fmt(p1)) +
+          mkRI("Última Parcela", si === "sac" ? fmt(pN) : "(igual à 1ª)") +
+          mkRI("Total Juros", fmt(tot - PV)) +
+          mkRI("Total Pago", fmt(tot), "hi");
+        const a = document.getElementById("al-bas");
+        if (cmp <= 25)
+          a.innerHTML = `<div class="alert-bar alert-ok">✅ Comprometimento confortável (${cmp.toFixed(1)}%)</div>`;
+        else if (cmp <= 30)
+          a.innerHTML = `<div class="alert-bar alert-warn">⚠️ No limite dos 30% (${cmp.toFixed(1)}%). Considere aumentar a entrada.</div>`;
+        else
+          a.innerHTML = `<div class="alert-bar alert-danger">❌ Acima do limite (${cmp.toFixed(1)}%). Provável recusa. Aumente a entrada ou componha renda.</div>`;
+        document.getElementById("rp-bas").classList.add("show");
+        addXP(10, "Simulação realizada");
+      }
+      function calcComp() {
+        const PV = +document.getElementById("c-fn").value || 0,
+          tx = +document.getElementById("c-tx").value || 0,
+          n = +document.getElementById("c-pr").value || 360,
+          i = tx / 100 / 12;
+        const sacP1 = sacParc(PV, i, n, 1).p,
+          sacPN = sacParc(PV, i, n, n).p,
+          sacT = sacTotal(PV, i, n),
+          prP = pricePMT(PV, i, n),
+          prT = prP * n,
+          diff = prT - sacT;
+        document.getElementById("compBody").innerHTML =
+          `<tr><td>1ª Parcela</td><td class="neg">${fmt(sacP1)}</td><td class="pos">${fmt(prP)}</td><td>SAC maior em ${fmt(sacP1 - prP)}</td></tr><tr><td>Última Parcela</td><td class="pos">${fmt(sacPN)}</td><td>${fmt(prP)}</td><td>SAC menor em ${fmt(prP - sacPN)}</td></tr><tr><td>Total Juros</td><td class="pos">${fmt(sacT - PV)}</td><td class="neg">${fmt(prT - PV)}</td><td class="hi">Price paga ${fmt(diff)} a mais</td></tr><tr><td>Total Pago</td><td class="pos">${fmt(sacT)}</td><td class="neg">${fmt(prT)}</td><td class="hi">${((diff / sacT) * 100).toFixed(1)}% a mais no Price</td></tr>`;
+        document.getElementById("compInsight").innerHTML =
+          `<div class="insight">O Price custa ${fmt(diff)} a mais no total. Mas a 1ª parcela do SAC é ${fmt(sacP1 - prP)} maior — decisivo para quem tem renda apertada agora.</div>`;
+        document.getElementById("rp-comp").classList.add("show");
+      }
+      function calcTabela() {
+        const PV = +document.getElementById("t-fn").value || 0,
+          tx = +document.getElementById("t-tx").value || 0,
+          n = +document.getElementById("t-pr").value || 120,
+          si = document.getElementById("t-si").value,
+          i = tx / 100 / 12;
+        const amort = PV / n,
+          pmt = pricePMT(PV, i, n);
+        let saldo = PV,
+          html = "";
+        for (let k = 1; k <= n; k++) {
+          const j = saldo * i,
+            a = si === "sac" ? amort : pmt - j,
+            p = si === "sac" ? a + j : pmt;
+          saldo -= a;
+          if (saldo < 0) saldo = 0;
+          html += `<tr><td>${k}</td><td>${fmt(p)}</td><td>${fmt(a)}</td><td>${fmt(j)}</td><td>${fmt(saldo)}</td></tr>`;
+        }
+        document.getElementById("tabBody").innerHTML = html;
+        document.getElementById("rp-tab").classList.add("show");
+      }
+      function calcViab() {
+        const iv = +document.getElementById("v-iv").value || 0,
+          en = +document.getElementById("v-en").value || 0,
+          fg = +document.getElementById("v-fg").value || 0,
+          rd = +document.getElementById("v-rd").value || 1,
+          tx = +document.getElementById("v-tx").value || 0,
+          it = +document.getElementById("v-it").value || 3;
+        const itbi = iv * (it / 100),
+          cart = iv * 0.006,
+          enT = en + fg,
+          PV = iv - enT,
+          i = tx / 100 / 12,
+          p1 = sacParc(PV, i, 360, 1).p,
+          cmp = (p1 / rd) * 100,
+          rdNec = p1 / 0.3,
+          viavel = cmp <= 30 && enT >= iv * 0.1;
+        document.getElementById("rg-viab").innerHTML =
+          mkRI("Capital p/ ato (entrada+custos)", fmt(en + itbi + cart)) +
+          mkRI(
+            "Entrada Total c/ FGTS",
+            fmt(enT) + " (" + ((enT / iv) * 100).toFixed(1) + "%)",
+            enT >= iv * 0.2 ? "ok" : "hi",
+          ) +
+          mkRI("Valor Financiado", fmt(PV)) +
+          mkRI(
+            "Comprometimento",
+            cmp.toFixed(1) + "%",
+            cmp <= 25 ? "ok" : cmp <= 30 ? "hi" : "bad",
+          ) +
+          mkRI("Renda Necessária", fmt(rdNec)) +
+          mkRI(
+            "Viabilidade",
+            viavel ? "✅ Viável" : "❌ Revisar",
+            viavel ? "ok" : "bad",
+          );
+        let alerts = "";
+        if (cmp > 30)
+          alerts += `<div class="alert-bar alert-danger">❌ Comprometimento ${cmp.toFixed(1)}% > 30%. Precisa de mais ${fmt(rdNec - rd)} de renda ou maior entrada.</div>`;
+        else
+          alerts += `<div class="alert-bar alert-ok">✅ Financiamento viável dentro dos parâmetros.</div>`;
+        if (enT < iv * 0.1)
+          alerts += `<div class="alert-bar alert-danger" style="margin-top:.5rem">❌ Entrada abaixo de 10%. Maioria dos bancos exige mínimo 20%.</div>`;
+        document.getElementById("al-viab").innerHTML = alerts;
+        document.getElementById("rp-viab").classList.add("show");
+      }
+
+      // ═══ SIMULADOR CENÁRIOS ═══
+      const scenarios = {
+        jovem: `<div class="card"><div class="card-title">Profissional Jovem, 30 anos <span class="tag tag-blue">Análise Completa</span></div><p style="color:var(--text2);font-size:.88rem;margin-bottom:.8rem"><strong>Dados:</strong> Renda R$ 7.000 · FGTS R$ 12.000 · Score 680 · Imóvel R$ 350.000 · Poupado R$ 50.000</p><table class="data-table"><thead><tr><th>Análise</th><th>Situação</th><th>Resultado</th></tr></thead><tbody><tr><td>Parcela máxima (30%)</td><td>R$ 2.100</td><td class="pos">OK</td></tr><tr><td>Capital no ato (entrada + ITBI + cartório)</td><td>R$ 50k − R$ 14k (ITBI+cart) = R$ 36k disponíveis</td><td class="neg">Déficit de entrada</td></tr><tr><td>Financiamento R$ 314k SAC 10%/360m</td><td>Parcela inicial ~R$ 3.508</td><td class="neg">50,1% da renda — recusado</td></tr><tr><td>Solução 1: Imóvel R$ 250k</td><td>Financia R$ 200k → parcela ~R$ 2.250</td><td class="pos">32% — próximo do limite</td></tr><tr><td>Solução 2: Aguardar 18 meses (+R$ 27k)</td><td>Entrada R$ 80k → financia R$ 270k → parcela ~R$ 3.017</td><td class="hi">43% — ainda precisa de renda extra</td></tr></tbody></table><div class="insight">Melhor estratégia: imóvel de R$ 250–280k agora + aumento salarial ou cônjuge. FGTS acumulado usar para amortizar após 2 anos.</div></div>`,
+        casal: `<div class="card"><div class="card-title">Casal, Renda Combinada R$ 16.000 <span class="tag tag-green">Viável</span></div><p style="color:var(--text2);font-size:.88rem;margin-bottom:.8rem"><strong>Dados:</strong> Renda R$ 16.000 · FGTS R$ 50.000 · Score 730 · Imóvel R$ 600.000 · Poupança R$ 100.000</p><table class="data-table"><thead><tr><th>Análise</th><th>Valor</th><th>Status</th></tr></thead><tbody><tr><td>Parcela máxima (30%)</td><td>R$ 4.800</td><td class="pos">Meta</td></tr><tr><td>Entrada poupança + FGTS</td><td>R$ 150.000 (25%)</td><td class="pos">Confortável</td></tr><tr><td>ITBI SP 3% + Cartório</td><td>~R$ 21.600</td><td class="hi">Capital total no ato: R$ 171.600</td></tr><tr><td>Financiamento R$ 450k SAC 10%/360m</td><td>Parcela inicial ~R$ 4.988</td><td class="hi">31,2% — ligeiramente acima</td></tr><tr><td>Ajuste: prazo 420 meses</td><td>Parcela inicial ~R$ 4.480</td><td class="pos">28% ✅</td></tr></tbody></table><div class="insight">Estratégia: usar FGTS como entrada (R$ 150k total). Prazo 420 meses para caber nos 30%. Após 2 anos, amortizar com FGTS acumulado (~R$ 12k/ano) para reduzir prazo.</div></div>`,
+        mcmv: `<div class="card"><div class="card-title">Família MCMV Faixa 2 <span class="tag tag-gold">Alto Impacto</span></div><p style="color:var(--text2);font-size:.88rem;margin-bottom:.8rem"><strong>Dados:</strong> Renda R$ 3.500 · FGTS R$ 8.000 · Imóvel R$ 180.000 · Poupança R$ 20.000</p><table class="data-table"><thead><tr><th>Cenário</th><th>Sem MCMV (10%)</th><th>Com MCMV (5,5% + R$ 25k)</th></tr></thead><tbody><tr><td>Valor financiado</td><td>R$ 160.000</td><td class="pos">R$ 127.000</td></tr><tr><td>Parcela SAC inicial</td><td class="neg">R$ 1.778 (50,8% renda)</td><td class="pos">R$ 939 (26,8% renda) ✅</td></tr><tr><td>Total pago (360m)</td><td class="neg">~R$ 455.000</td><td class="pos">~R$ 276.000</td></tr><tr><td>Economia</td><td colspan="2" class="hi" style="text-align:center">R$ 179.000 — 39% de economia!</td></tr></tbody></table><div class="insight">O MCMV transforma um financiamento inviável (50,8%) em viável (26,8%). Usando FGTS R$ 8k como entrada adicional: financia R$ 119k → parcela ~R$ 882 = 25,2%. Objetivo plenamente alcançável.</div></div>`,
+        investidor: `<div class="card"><div class="card-title">Investidor — Renda de Aluguel <span class="tag tag-purple">SFI · Cap Rate</span></div><p style="color:var(--text2);font-size:.88rem;margin-bottom:.8rem"><strong>Dados:</strong> Renda R$ 30.000 · Imóvel R$ 800.000 · Entrada 30% = R$ 240.000</p><table class="data-table"><thead><tr><th>Métrica</th><th>Valor</th><th>Análise</th></tr></thead><tbody><tr><td>Financiamento SFI</td><td>R$ 560.000 a 11%/SAC/240m</td><td class="hi">Parcela inicial ~R$ 7.493</td></tr><tr><td>Aluguel estimado (0,4% do valor)</td><td>R$ 3.200/mês</td><td class="neg">Cobre 42% da parcela</td></tr><tr><td>Desembolso líquido mensal</td><td>R$ 4.293/mês</td><td class="neg">Investidor financia a diferença</td></tr><tr><td>Cap Rate</td><td>4,8% a.a.</td><td class="neg">Abaixo do CDI (~10%)</td></tr></tbody></table><div class="insight">Financiar imóvel para aluguel raramente "fecha" pelo fluxo. O retorno vem da valorização + quitação da dívida pelo aluguel. Cap rate 4,8% vs CDI 10% → logicamente CDI ganha. A lógica é alavancagem patrimonial + hedge inflacionário, não yield imediato.</div></div>`,
+        autonomo: `<div class="card"><div class="card-title">Autônomo — Comprovação de Renda <span class="tag tag-orange">Desafio</span></div><p style="color:var(--text2);font-size:.88rem;margin-bottom:.8rem"><strong>Dados:</strong> Mecânico autônomo, média R$ 9.000/mês, sem holerite, IRPF declarado há 3 anos</p><div class="timeline"><div class="tl-item"><div class="tl-connector"><div class="tl-dot" style="border-color:var(--gold);color:var(--gold)">1</div><div class="tl-line"></div></div><div class="tl-body"><strong>IRPF dos últimos 2 anos</strong><p>Banco usa renda declarada no IRPF. Se declarou R$ 9k/mês → ok. Se declarou menos → problema.</p></div></div><div class="tl-item"><div class="tl-connector"><div class="tl-dot" style="border-color:var(--gold);color:var(--gold)">2</div><div class="tl-line"></div></div><div class="tl-body"><strong>Extrato bancário 6–12 meses</strong><p>Comprova movimentação compatível com a renda declarada.</p></div></div><div class="tl-item"><div class="tl-connector"><div class="tl-dot">3</div><div class="tl-line"></div></div><div class="tl-body"><strong>Aumentar entrada + Score alto</strong><p>Entrada maior (25–30%) reduz risco do banco. Score 750+ compensa a dificuldade de comprovação.</p></div></div></div><div class="insight">Autônomos têm aprovação possível mas mais trabalhosa. Formalizar como MEI/Simples ajuda muito. A regularização fiscal prévia é o passo mais importante.</div></div>`,
+        portab: `<div class="card"><div class="card-title">Portabilidade — Taxa 13% → 9,5% <span class="tag tag-teal">Otimização</span></div><p style="color:var(--text2);font-size:.88rem;margin-bottom:.8rem"><strong>Dados:</strong> Saldo R$ 320.000 · Taxa 13% a.a. · Prazo restante 22 anos · Nova taxa 9,5% a.a.</p><table class="data-table"><thead><tr><th></th><th>Banco Atual (13%)</th><th>Novo Banco (9,5%)</th></tr></thead><tbody><tr><td>Parcela SAC atual</td><td class="neg">R$ 4.680</td><td class="pos">R$ 3.926</td></tr><tr><td>Economia mensal</td><td colspan="2" class="pos" style="text-align:center">R$ 754/mês</td></tr><tr><td>Total restante</td><td class="neg">~R$ 748.000</td><td class="pos">~R$ 626.000</td></tr><tr><td>Economia total</td><td colspan="2" class="hi" style="text-align:center">~R$ 122.000 em 22 anos</td></tr><tr><td>Custo da portabilidade</td><td colspan="2" style="text-align:center">~R$ 4.000–R$ 8.000</td></tr><tr><td>Payback</td><td colspan="2" class="pos" style="text-align:center">~6 meses</td></tr></tbody></table><div class="insight">ROI de 1.425% (R$ 122k economia com custo de R$ 8k). Payback em 6 meses. O banco atual tem direito de igualar a oferta — use isso como negociação. É sem multa por lei.</div></div>`,
+      };
+      function runScenario(id, card) {
+        document
+          .querySelectorAll(".sc-card")
+          .forEach((c) => c.classList.remove("selected"));
+        card.classList.add("selected");
+        document.getElementById("scResult").innerHTML = scenarios[id];
+        document.getElementById("scResult").classList.add("show");
+        addXP(15, "Cenário analisado");
+      }
+
+      // ═══ ÁRVORE DE DECISÃO ═══
+      const dtNodes = [
+        {
+          id: "q1",
+          q: "Qual é a renda bruta familiar mensal?",
+          opts: [
+            { l: "Até R$ 2.640", n: "faixa1" },
+            { l: "R$ 2.640 a R$ 4.400", n: "faixa2" },
+            { l: "R$ 4.400 a R$ 8.000", n: "faixa3" },
+            { l: "Acima de R$ 8.000", n: "q2" },
+          ],
+        },
+        {
+          id: "q2",
+          q: "Qual o valor aproximado do imóvel desejado?",
+          opts: [
+            { l: "Até R$ 500.000", n: "q3" },
+            { l: "R$ 500k a R$ 800k", n: "q4" },
+            { l: "Acima de R$ 800.000", n: "sfi" },
+          ],
+        },
+        {
+          id: "q3",
+          q: "Você prioriza menor custo total ou parcelas menores agora?",
+          opts: [
+            { l: "Menor custo total", n: "rec_sac" },
+            { l: "Parcelas menores agora", n: "rec_price" },
+          ],
+        },
+        {
+          id: "q4",
+          q: "Tem FGTS disponível e é o primeiro imóvel?",
+          opts: [
+            { l: "Sim", n: "rec_sfh_fgts" },
+            { l: "Não", n: "rec_sfh" },
+          ],
+        },
+      ];
+      const dtResults = {
+        faixa1: {
+          t: "✅ MCMV Faixa 1",
+          b: "Subsídio de até <strong>R$ 55.000</strong> e taxa de <strong>4% a 4,75% a.a.</strong> Melhor opção disponível. Procure a Caixa Econômica Federal imediatamente.",
+        },
+        faixa2: {
+          t: "✅ MCMV Faixa 2",
+          b: "Subsídio de até <strong>R$ 29.000</strong> e taxa de <strong>4,75% a 7% a.a.</strong> Compare com SFH convencional, mas MCMV geralmente é melhor. Caixa, Bradesco e BB participam.",
+        },
+        faixa3: {
+          t: "🏦 SFH Faixa 3 MCMV ou SFH Convencional",
+          b: "Faixa 3: sem subsídio, mas taxa de <strong>7,66% a 8,16%</strong> — abaixo do mercado. Pode usar FGTS (primeiro imóvel + SFH). Compare CET em pelo menos 3 bancos. Use <strong>SAC</strong>.",
+        },
+        sfi: {
+          t: "🏛 SFI — Sistema de Financiamento Imobiliário",
+          b: "Sem teto de valor, <strong>sem FGTS</strong>, condições negociadas. Negocie agressivamente: spread, CET, SAC. Compare ao menos 3 bancos. Taxa típica: 11–13% a.a.",
+        },
+        rec_sac: {
+          t: "📉 Recomendação: Sistema SAC",
+          b: "Para minimizar custo total, use o <strong>SAC</strong>. Parcelas iniciais maiores, mas paga muito menos juros ao longo do prazo. Use FGTS para amortizar a cada 2 anos.",
+        },
+        rec_price: {
+          t: "📊 Recomendação: Tabela Price",
+          b: "Para acomodar a renda atual, considere a <strong>Tabela Price</strong>. Parcelas fixas e menores. Atenção: custo total será maior. Planeje amortizações quando a renda aumentar.",
+        },
+        rec_sfh_fgts: {
+          t: "💼 SFH + FGTS — Combinação Ótima",
+          b: "Financie pelo <strong>SFH com SAC</strong> e use <strong>FGTS como entrada adicional</strong>. A cada 2 anos, amortize com FGTS acumulado. Essa estratégia pode economizar R$ 100k+ ao longo do prazo.",
+        },
+        rec_sfh: {
+          t: "🏦 SFH Convencional",
+          b: "Use o <strong>SFH com SAC</strong>. Compare o <strong>CET</strong> em Caixa, Bradesco, Itaú e BB. Considere o indexador: TR+juros fixos é o mais previsível em cenário de inflação incerta.",
+        },
+      };
+      function buildTree() {
+        const c = document.getElementById("decisionTree");
+        c.innerHTML = "";
+        addDTNode("q1", c);
+      }
+      function addDTNode(id, cont) {
+        const node = dtNodes.find((n) => n.id === id);
+        if (!node) return;
+        const div = document.createElement("div");
+        div.className = "dt-question";
+        div.id = "dtn-" + id;
+        div.innerHTML = `<div class="dt-q-text">${node.q}</div><div class="dt-options">${node.opts.map((o) => `<button class="dt-opt" onclick="dtChoose('${id}','${o.n}',this)">${o.l}</button>`).join("")}</div><div class="dt-result" id="dtr-${id}"></div>`;
+        cont.appendChild(div);
+      }
+      function dtChoose(nid, next, btn) {
+        const qDiv = document.getElementById("dtn-" + nid);
+        qDiv
+          .querySelectorAll(".dt-opt")
+          .forEach((b) => b.classList.remove("chosen"));
+        btn.classList.add("chosen");
+        const cont = document.getElementById("decisionTree");
+        let found = false;
+        [...cont.children].forEach((ch) => {
+          if (found) ch.remove();
+          if (ch.id === "dtn-" + nid) found = true;
+        });
+        if (dtResults[next]) {
+          const r = document.getElementById("dtr-" + nid);
+          r.innerHTML = `<h4>${dtResults[next].t}</h4><p>${dtResults[next].b}</p>`;
+          r.classList.add("show");
+          addXP(20, "Árvore concluída");
+          showToast("Recomendação gerada! +20 XP");
+        } else {
+          document.getElementById("dtr-" + nid).classList.remove("show");
+          addDTNode(next, cont);
+        }
+      }
+
+      // ═══ CHECKLISTS ═══
+      const clData = [
+        {
+          title: "Fundamentos",
+          items: [
+            {
+              t: "Sei explicar crédito imobiliário como para uma criança",
+              p: 15,
+            },
+            {
+              t: "Conheço todos os elementos: PV, juros, prazo, amortização, saldo devedor",
+              p: 20,
+            },
+            {
+              t: "Sei calcular comprometimento de renda e renda mínima",
+              p: 20,
+            },
+            { t: "Conheço as 5 etapas do processo de aprovação", p: 15 },
+            { t: "Entendo o que é LTV e sei calcular", p: 20 },
+          ],
+        },
+        {
+          title: "Amortização",
+          items: [
+            {
+              t: "Sei a fórmula SAC e consigo calcular a 1ª parcela sem consultar",
+              p: 25,
+            },
+            {
+              t: "Entendo por que o SAC tem menor custo total que o Price",
+              p: 25,
+            },
+            { t: "Sei quando o Price é preferível ao SAC", p: 20 },
+            {
+              t: "Consigo fazer tabela de amortização dos primeiros 3 meses manualmente",
+              p: 30,
+            },
+          ],
+        },
+        {
+          title: "Taxas e CET",
+          items: [
+            {
+              t: "Sei a diferença entre TR, IPCA+ e taxa fixa e quando usar cada um",
+              p: 25,
+            },
+            {
+              t: "Entendo por que o CET é mais relevante que a taxa nominal",
+              p: 20,
+            },
+            { t: "Sei em que cenário o IPCA+ é mais vantajoso", p: 25 },
+            { t: "Compreendo o risco do IPCA+ em inflação elevada", p: 20 },
+          ],
+        },
+        {
+          title: "Garantias e Legislação",
+          items: [
+            {
+              t: "Sei o que é alienação fiduciária e como difere da hipoteca",
+              p: 25,
+            },
+            {
+              t: "Conheço as 5 etapas do processo de retomada (Lei 9.514/97)",
+              p: 30,
+            },
+            {
+              t: "Entendo os seguros MIP e DFI e por que são obrigatórios",
+              p: 20,
+            },
+            { t: "Sei a diferença prática entre SFH e SFI", p: 25 },
+          ],
+        },
+        {
+          title: "FGTS e Programas",
+          items: [
+            { t: "Conheço os 4 requisitos para usar o FGTS na compra", p: 20 },
+            { t: "Sei as 3 formas de uso do FGTS no financiamento", p: 20 },
+            {
+              t: "Entendo por que amortizar com FGTS é melhor que deixar na conta",
+              p: 25,
+            },
+            { t: "Conheço as faixas MCMV, subsídios e taxas de 2024", p: 25 },
+            {
+              t: "Sei calcular o impacto do subsídio MCMV no total pago",
+              p: 30,
+            },
+          ],
+        },
+        {
+          title: "Nível Avançado",
+          items: [
+            { t: "Entendo portabilidade e sei quando vale a pena", p: 30 },
+            {
+              t: "Sei analisar viabilidade completa: renda + FGTS + custos + ITBI",
+              p: 35,
+            },
+            {
+              t: "Consigo comparar indexadores considerando o cenário macroeconômico",
+              p: 30,
+            },
+            {
+              t: "Sei as implicações do leilão na alienação fiduciária",
+              p: 30,
+            },
+            {
+              t: "Consigo orientar um autônomo sobre como conseguir aprovação",
+              p: 25,
+            },
+          ],
+        },
+      ];
+      function buildChecklists() {
+        const cont = document.getElementById("checklistCont");
+        cont.innerHTML = "";
+        clData.forEach((sec, si) => {
+          const items = sec.items
+            .map((item, ii) => {
+              let isDone = false;
+              try {
+                isDone = localStorage.getItem("cl-" + si + "-" + ii) === "1";
+              } catch (e) {}
+              return `<div class="cl-item ${isDone ? "done" : ""}" onclick="toggleCL(this,${si},${ii},${item.p})"><div class="cl-chk"></div><div class="cl-text">${item.t}</div><div class="cl-pts">+${item.p} XP</div></div>`;
+            })
+            .join("");
+          const done = sec.items.filter((_, ii) => {
+            try {
+              return localStorage.getItem("cl-" + si + "-" + ii) === "1";
+            } catch (e) {
+              return false;
+            }
+          }).length;
+          cont.innerHTML += `<div class="cl-section"><div class="cl-header"><div class="cl-title">${sec.title}</div><div class="cl-count" id="clc-${si}">${done}/${sec.items.length}</div></div>${items}</div>`;
+        });
+      }
+      function toggleCL(el, si, ii, pts) {
+        const d = el.classList.toggle("done");
+        try {
+          localStorage.setItem("cl-" + si + "-" + ii, d ? "1" : "0");
+        } catch (e) {}
+        if (d) addXP(pts, "Competência dominada!");
+        const sec = el.closest(".cl-section");
+        const t = sec.querySelectorAll(".cl-item").length,
+          dn = sec.querySelectorAll(".cl-item.done").length;
+        document.getElementById("clc-" + si).textContent = dn + "/" + t;
+        updateStats();
+      }
+
+      // ═══ INIT ═══
+      window.addEventListener("load", () => {
+        buildQuiz();
+        buildChecklists();
+        buildTree();
+        buildSRGrid();
+        renderCard();
+        startTimer();
+        updateStats();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1866 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CPA Study Hub — Certificações ANBIMA 2026</title>
+    <style>
+      :root {
+        --primary: #1a237e;
+        --secondary: #0d47a1;
+        --accent: #00bcd4;
+        --gold: #ffd700;
+        --success: #00c853;
+        --warning: #ff6f00;
+        --danger: #c62828;
+        --bg: #0a0e1a;
+        --card: #111827;
+        --card2: #1c2433;
+        --text: #e8eaf6;
+        --muted: #90a4ae;
+        --border: #1e3a5f;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      /* NAV */
+      nav {
+        background: linear-gradient(90deg, #0d1b2a, #1a237e);
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 20px #000a;
+      }
+      .nav-logo {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--gold);
+        letter-spacing: 1px;
+      }
+      .nav-logo span {
+        color: var(--accent);
+      }
+      .nav-links {
+        display: flex;
+        gap: 1rem;
+      }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        transition: 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #fff;
+        background: rgba(0, 188, 212, 0.15);
+      }
+
+      /* HERO */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          #0a0e1a 0%,
+          #0d1b3e 50%,
+          #1a237e 100%
+        );
+        padding: 3rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle at 60% 40%,
+          rgba(0, 188, 212, 0.08) 0%,
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+        font-weight: 900;
+        background: linear-gradient(90deg, #fff, var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+      }
+      .hero p {
+        color: var(--muted);
+        font-size: 1rem;
+        max-width: 600px;
+        margin: 0 auto 1.5rem;
+      }
+      .badges {
+        display: flex;
+        gap: 0.8rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .badge {
+        background: rgba(0, 188, 212, 0.15);
+        border: 1px solid rgba(0, 188, 212, 0.3);
+        color: var(--accent);
+        padding: 0.3rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .badge.gold {
+        background: rgba(255, 215, 0, 0.12);
+        border-color: rgba(255, 215, 0, 0.3);
+        color: var(--gold);
+      }
+
+      /* PROGRESS */
+      .progress-bar {
+        background: var(--card);
+        padding: 1.2rem 2rem;
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        flex-wrap: wrap;
+      }
+      .prog-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        min-width: 140px;
+      }
+      .prog-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .prog-track {
+        background: #1e2a3a;
+        border-radius: 10px;
+        height: 8px;
+        overflow: hidden;
+      }
+      .prog-fill {
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.5s;
+      }
+      .prog-fill.blue {
+        background: linear-gradient(90deg, var(--secondary), var(--accent));
+      }
+      .prog-fill.gold {
+        background: linear-gradient(90deg, #f57f17, var(--gold));
+      }
+      .prog-fill.green {
+        background: linear-gradient(90deg, #1b5e20, var(--success));
+      }
+      .prog-pct {
+        font-size: 0.8rem;
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      /* MAIN LAYOUT */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+      .tab {
+        padding: 0.6rem 1.4rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: 0.2s;
+      }
+      .tab:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .tab.active {
+        background: linear-gradient(90deg, var(--secondary), var(--accent));
+        border-color: transparent;
+        color: #fff;
+        font-weight: 700;
+      }
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+
+      /* CARDS */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 1.5rem;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.5rem;
+        transition: 0.2s;
+      }
+      .card:hover {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+      }
+      .card-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .card-title {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .card-sub {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+
+      /* FEYNMAN BOX */
+      .feynman {
+        background: linear-gradient(135deg, #0d1b2a, #0a1628);
+        border: 1px solid rgba(0, 188, 212, 0.3);
+        border-left: 4px solid var(--accent);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+      .feynman-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent);
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .feynman h3 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #fff;
+      }
+      .feynman p {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .feynman .analogy {
+        background: rgba(0, 188, 212, 0.07);
+        border-radius: 8px;
+        padding: 0.8rem;
+        margin-top: 0.8rem;
+        font-size: 0.85rem;
+        color: var(--text);
+      }
+
+      /* USE CASE */
+      .usecase {
+        background: var(--card2);
+        border-radius: 10px;
+        padding: 1.2rem;
+        margin: 0.8rem 0;
+        border-left: 3px solid var(--gold);
+      }
+      .usecase-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: var(--gold);
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.4rem;
+      }
+      .usecase-title {
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+      }
+      .usecase p {
+        font-size: 0.84rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .usecase .result {
+        margin-top: 0.6rem;
+        padding: 0.5rem 0.8rem;
+        background: rgba(0, 200, 83, 0.1);
+        border-radius: 6px;
+        font-size: 0.82rem;
+        color: var(--success);
+      }
+
+      /* EXERCISE */
+      .exercise {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.3rem;
+        margin: 1rem 0;
+      }
+      .ex-header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.8rem;
+      }
+      .ex-num {
+        background: var(--secondary);
+        color: #fff;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.78rem;
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+      .ex-level {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 10px;
+        font-weight: 700;
+      }
+      .ex-level.easy {
+        background: rgba(0, 200, 83, 0.15);
+        color: var(--success);
+      }
+      .ex-level.med {
+        background: rgba(255, 111, 0, 0.15);
+        color: #ff9800;
+      }
+      .ex-level.hard {
+        background: rgba(198, 40, 40, 0.15);
+        color: #ef5350;
+      }
+      .ex-q {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .option {
+        padding: 0.6rem 0.9rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        cursor: pointer;
+        font-size: 0.84rem;
+        transition: 0.2s;
+        display: flex;
+        gap: 0.6rem;
+        align-items: flex-start;
+      }
+      .option:hover {
+        border-color: var(--accent);
+        background: rgba(0, 188, 212, 0.05);
+      }
+      .option.correct {
+        border-color: var(--success);
+        background: rgba(0, 200, 83, 0.1);
+        color: var(--success);
+      }
+      .option.wrong {
+        border-color: var(--danger);
+        background: rgba(198, 40, 40, 0.1);
+        color: #ef5350;
+      }
+      .option-letter {
+        font-weight: 800;
+        flex-shrink: 0;
+        min-width: 18px;
+      }
+      .ex-explain {
+        display: none;
+        margin-top: 0.8rem;
+        padding: 0.8rem 1rem;
+        background: rgba(0, 188, 212, 0.06);
+        border-radius: 8px;
+        font-size: 0.83rem;
+        color: var(--muted);
+        line-height: 1.6;
+        border-left: 3px solid var(--accent);
+      }
+      .ex-explain.show {
+        display: block;
+      }
+
+      /* FLASHCARD */
+      .flashcard-wrap {
+        perspective: 1000px;
+      }
+      .flashcard {
+        width: 100%;
+        min-height: 160px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.5s;
+        cursor: pointer;
+        border-radius: 14px;
+      }
+      .flashcard.flipped {
+        transform: rotateY(180deg);
+      }
+      .fc-front,
+      .fc-back {
+        position: absolute;
+        width: 100%;
+        min-height: 160px;
+        backface-visibility: hidden;
+        border-radius: 14px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .fc-front {
+        background: linear-gradient(135deg, #0d1b3e, #1a237e);
+        border: 1px solid var(--border);
+      }
+      .fc-back {
+        background: linear-gradient(135deg, #0a1f0a, #1b5e20);
+        border: 1px solid rgba(0, 200, 83, 0.3);
+        transform: rotateY(180deg);
+      }
+      .fc-tag {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--accent);
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+      .fc-question {
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+      .fc-answer {
+        font-size: 0.9rem;
+        color: var(--success);
+        line-height: 1.6;
+      }
+      .fc-hint {
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin-top: 0.5rem;
+      }
+      .fc-nav {
+        display: flex;
+        gap: 0.8rem;
+        margin-top: 0.8rem;
+        justify-content: center;
+        align-items: center;
+      }
+      .fc-btn {
+        background: var(--card2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 0.5rem 1.2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.82rem;
+        transition: 0.2s;
+      }
+      .fc-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .fc-counter {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0.6rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(180deg, var(--accent), var(--secondary));
+      }
+      .tl-item {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+      .tl-dot {
+        position: absolute;
+        left: -1.7rem;
+        top: 0.2rem;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--accent);
+        border: 2px solid var(--bg);
+      }
+      .tl-dot.gold {
+        background: var(--gold);
+      }
+      .tl-dot.green {
+        background: var(--success);
+      }
+      .tl-date {
+        font-size: 0.72rem;
+        color: var(--accent);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .tl-title {
+        font-size: 0.92rem;
+        font-weight: 700;
+        margin: 0.2rem 0;
+      }
+      .tl-desc {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      /* TABLE */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.84rem;
+      }
+      th {
+        background: rgba(0, 188, 212, 0.1);
+        color: var(--accent);
+        text-align: left;
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      td {
+        padding: 0.65rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+      }
+      tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text);
+      }
+      .pill {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 10px;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+      .pill.cpa {
+        background: rgba(0, 188, 212, 0.15);
+        color: var(--accent);
+      }
+      .pill.cpro {
+        background: rgba(255, 215, 0, 0.12);
+        color: var(--gold);
+      }
+      .pill.cproi {
+        background: rgba(0, 200, 83, 0.12);
+        color: var(--success);
+      }
+
+      /* CHECKLIST */
+      .checklist {
+        list-style: none;
+      }
+      .checklist li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.7rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        font-size: 0.87rem;
+        color: var(--muted);
+      }
+      .checklist li:last-child {
+        border: none;
+      }
+      .check-box {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--border);
+        border-radius: 5px;
+        flex-shrink: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        margin-top: 0.1rem;
+      }
+      .check-box.checked {
+        background: var(--success);
+        border-color: var(--success);
+      }
+      .check-box.checked::after {
+        content: "✓";
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 800;
+      }
+      .checklist li.done {
+        color: var(--success);
+        text-decoration: line-through;
+        opacity: 0.7;
+      }
+
+      /* SCORE */
+      .score-display {
+        text-align: center;
+        padding: 1.5rem;
+      }
+      .score-circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 6px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: var(--accent);
+      }
+      .btn {
+        padding: 0.6rem 1.4rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 700;
+        transition: 0.2s;
+      }
+      .btn-primary {
+        background: linear-gradient(90deg, var(--secondary), var(--accent));
+        color: #fff;
+      }
+      .btn-secondary {
+        background: var(--card2);
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      .btn:hover {
+        opacity: 0.85;
+        transform: translateY(-1px);
+      }
+      .mt1 {
+        margin-top: 1rem;
+      }
+      .mt2 {
+        margin-top: 1.5rem;
+      }
+      h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: #fff;
+      }
+      h3 {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1.2rem;
+      }
+      .section-title h2 {
+        margin: 0;
+      }
+      .tag {
+        font-size: 0.72rem;
+        padding: 0.2rem 0.7rem;
+        border-radius: 10px;
+        background: rgba(0, 188, 212, 0.12);
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      @media (max-width: 600px) {
+        .hero h1 {
+          font-size: 1.5rem;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-logo">CPA <span>Study Hub</span></div>
+      <div class="nav-links">
+        <a href="#" class="active" onclick="showTab('inicio', this)">Início</a>
+        <a href="#" onclick="showTab('feynman', this)">Técnica Feynman</a>
+        <a href="#" onclick="showTab('exercicios', this)">Exercícios</a>
+        <a href="#" onclick="showTab('flashcards', this)">Flashcards</a>
+        <a href="#" onclick="showTab('roadmap', this)">Roadmap</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <h1>🏦 CPA Study Hub</h1>
+      <p>
+        Seu guia completo para as certificações ANBIMA 2026 — aprenda com a
+        Técnica Feynman, use cases reais e exercícios interativos.
+      </p>
+      <div class="badges">
+        <span class="badge">CPA — Nível Base</span>
+        <span class="badge">C-Pro R — Relacionamento</span>
+        <span class="badge">C-Pro I — Investimento</span>
+        <span class="badge gold">✦ Novo Modelo 2026</span>
+      </div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="prog-item">
+        <span class="prog-label">CPA (Base)</span>
+        <div class="prog-track">
+          <div class="prog-fill blue" style="width: 0%" id="prog-cpa"></div>
+        </div>
+        <span class="prog-pct" id="pct-cpa">0%</span>
+      </div>
+      <div class="prog-item">
+        <span class="prog-label">C-Pro R</span>
+        <div class="prog-track">
+          <div class="prog-fill gold" style="width: 0%" id="prog-cpror"></div>
+        </div>
+        <span class="prog-pct" id="pct-cpror">0%</span>
+      </div>
+      <div class="prog-item">
+        <span class="prog-label">C-Pro I</span>
+        <div class="prog-track">
+          <div class="prog-fill green" style="width: 0%" id="prog-cproi"></div>
+        </div>
+        <span class="prog-pct" id="pct-cproi">0%</span>
+      </div>
+      <div style="margin-left: auto">
+        <button class="btn btn-secondary" onclick="resetProgress()">
+          ↺ Resetar Progresso
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="tabs">
+        <div class="tab active" onclick="showTab('inicio', this)">
+          🏠 Início
+        </div>
+        <div class="tab" onclick="showTab('feynman', this)">
+          🧠 Técnica Feynman
+        </div>
+        <div class="tab" onclick="showTab('exercicios', this)">
+          📝 Exercícios
+        </div>
+        <div class="tab" onclick="showTab('flashcards', this)">
+          🃏 Flashcards
+        </div>
+        <div class="tab" onclick="showTab('roadmap', this)">🗺️ Roadmap</div>
+      </div>
+
+      <!-- ===== INÍCIO ===== -->
+      <div class="panel active" id="tab-inicio">
+        <div class="grid">
+          <div class="card">
+            <div class="card-header">
+              <div
+                class="card-icon"
+                style="background: rgba(0, 188, 212, 0.15)"
+              >
+                🏅
+              </div>
+              <div>
+                <div class="card-title">Nova CPA (Base)</div>
+                <div class="card-sub">Substitui CPA-10 — Porta de entrada</div>
+              </div>
+            </div>
+            <p
+              style="font-size: 0.84rem; color: var(--muted); line-height: 1.6"
+            >
+              Voltada para atendimento, prospecção e suporte comercial em bancos
+              e corretoras.
+              <strong style="color: #fff">Pré-requisito</strong> para todas as
+              demais certificações.
+            </p>
+            <div
+              style="
+                margin-top: 1rem;
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+              "
+            >
+              <span class="pill cpa">R$ 225</span>
+              <span class="pill cpa">Atualização anual</span>
+              <span class="pill cpa">Comportamental + Técnico</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div
+                class="card-icon"
+                style="background: rgba(255, 215, 0, 0.12)"
+              >
+                🌟
+              </div>
+              <div>
+                <div class="card-title">C-Pro R — Relacionamento</div>
+                <div class="card-sub">Substitui CPA-20 | Pré-req: CPA</div>
+              </div>
+            </div>
+            <p
+              style="font-size: 0.84rem; color: var(--muted); line-height: 1.6"
+            >
+              Para quem recomenda investimentos e constrói portfólios. Exige
+              conhecimento avançado de produtos, suitability e relacionamento
+              consultivo.
+            </p>
+            <div
+              style="
+                margin-top: 1rem;
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+              "
+            >
+              <span class="pill cpro">R$ 500</span>
+              <span class="pill cpro">Requer CPA ativa</span>
+              <span class="pill cpro">Estudos de caso</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(0, 200, 83, 0.1)">
+                💎
+              </div>
+              <div>
+                <div class="card-title">C-Pro I — Investimento</div>
+                <div class="card-sub">
+                  Substitui CEA | Pré-req: CPA + C-Pro R
+                </div>
+              </div>
+            </div>
+            <p
+              style="font-size: 0.84rem; color: var(--muted); line-height: 1.6"
+            >
+              Para especialistas em produtos complexos. Planejamento financeiro,
+              derivativos avançados, sucessão patrimonial e private banking.
+            </p>
+            <div
+              style="
+                margin-top: 1rem;
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+              "
+            >
+              <span class="pill cproi">Nível máximo</span>
+              <span class="pill cproi">Requer CPA + C-Pro R</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt2">
+          <div class="section-title">
+            <h2>📋 Checklist de Estudos — CPA Base</h2>
+            <span class="tag">Marque conforme avança</span>
+          </div>
+          <div class="card">
+            <ul class="checklist" id="checklist">
+              <li id="ci0">
+                <div class="check-box" onclick="toggleCheck(0)"></div>
+                Sistema Financeiro Nacional: CMN, BACEN, CVM e B3
+              </li>
+              <li id="ci1">
+                <div class="check-box" onclick="toggleCheck(1)"></div>
+                Tipos de produtos: CDB, LCI, LCA, Tesouro Direto, Fundos
+              </li>
+              <li id="ci2">
+                <div class="check-box" onclick="toggleCheck(2)"></div>
+                Suitability: API — Análise de Perfil do Investidor
+              </li>
+              <li id="ci3">
+                <div class="check-box" onclick="toggleCheck(3)"></div>
+                Prevenção à Lavagem de Dinheiro (PLD)
+              </li>
+              <li id="ci4">
+                <div class="check-box" onclick="toggleCheck(4)"></div>
+                Tributação: IR, IOF, tabela regressiva
+              </li>
+              <li id="ci5">
+                <div class="check-box" onclick="toggleCheck(5)"></div>
+                Risco x Retorno x Liquidez
+              </li>
+              <li id="ci6">
+                <div class="check-box" onclick="toggleCheck(6)"></div>
+                FGC: Fundo Garantidor de Créditos
+              </li>
+              <li id="ci7">
+                <div class="check-box" onclick="toggleCheck(7)"></div>
+                Ética e Código ANBIMA de Melhores Práticas
+              </li>
+              <li id="ci8">
+                <div class="check-box" onclick="toggleCheck(8)"></div>
+                Competências comportamentais: comunicação, autogestão
+              </li>
+              <li id="ci9">
+                <div class="check-box" onclick="toggleCheck(9)"></div>
+                Microcertificações na plataforma ANBIMA Edu
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt2">
+          <div class="section-title">
+            <h2>📊 Comparativo das Certificações</h2>
+          </div>
+          <div class="card" style="overflow-x: auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Certificação</th>
+                  <th>Substitui</th>
+                  <th>Perfil</th>
+                  <th>Pré-req</th>
+                  <th>Valor Prova</th>
+                  <th>Renovação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>CPA</strong></td>
+                  <td>CPA-10</td>
+                  <td>Atendimento / Suporte</td>
+                  <td>—</td>
+                  <td>R$ 225</td>
+                  <td>Anual</td>
+                </tr>
+                <tr>
+                  <td><strong>C-Pro R</strong></td>
+                  <td>CPA-20</td>
+                  <td>Relacionamento / Recomendação</td>
+                  <td>CPA</td>
+                  <td>R$ 500</td>
+                  <td>Anual</td>
+                </tr>
+                <tr>
+                  <td><strong>C-Pro I</strong></td>
+                  <td>CEA</td>
+                  <td>Especialista / Private</td>
+                  <td>CPA + C-Pro R</td>
+                  <td>A confirmar</td>
+                  <td>Anual</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FEYNMAN ===== -->
+      <div class="panel" id="tab-feynman">
+        <div class="section-title">
+          <h2>🧠 Técnica Feynman Aplicada ao CPA</h2>
+          <span class="tag">Aprenda ensinando</span>
+        </div>
+        <p
+          style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1.5rem"
+        >
+          A Técnica Feynman tem 4 passos:
+          <strong style="color: #fff"
+            >1) Escolha o conceito → 2) Explique como se fosse a uma criança →
+            3) Identifique lacunas → 4) Simplifique ainda mais.</strong
+          >
+          Aplique isso para cada tópico abaixo.
+        </p>
+
+        <div class="feynman">
+          <div class="feynman-label">
+            🧠 Feynman #1 — Sistema Financeiro Nacional
+          </div>
+          <h3>O que é o CMN, BACEN e CVM — explicado simplesmente</h3>
+          <p>
+            Imagine que o mercado financeiro é uma cidade. O
+            <strong style="color: #fff"
+              >CMN (Conselho Monetário Nacional)</strong
+            >
+            é a câmara de vereadores: define as regras do jogo. O
+            <strong style="color: #fff">BACEN</strong> é o prefeito: executa as
+            regras, cuida do dinheiro em circulação e fiscaliza os bancos. A
+            <strong style="color: #fff">CVM</strong> é a vigilância sanitária da
+            bolsa: garante que empresas e fundos sejam honestos com os
+            investidores.
+          </p>
+          <div class="analogy">
+            💡 <strong>Analogia:</strong> Se você abre um banco (empresa
+            financeira), precisa de licença do BACEN. Se quer lançar ações na
+            bolsa, precisa de autorização da CVM. Ninguém faz nada sem passar
+            por eles.
+          </div>
+        </div>
+        <div class="usecase">
+          <div class="usecase-label">📌 Use Case Real</div>
+          <div class="usecase-title">Banco X lança um produto irregular</div>
+          <p>
+            O Banco X começa a vender um produto prometendo rentabilidade
+            garantida de 30% ao ano, sem informar os riscos. Um cliente denuncia
+            à CVM.
+          </p>
+          <div class="result">
+            ✅ Resultado: A CVM investiga, aplica multa ao banco e obriga o
+            cancelamento do produto — protegendo os investidores.
+          </div>
+        </div>
+
+        <div class="feynman mt2">
+          <div class="feynman-label">
+            🧠 Feynman #2 — Risco x Retorno x Liquidez
+          </div>
+          <h3>O triângulo impossível dos investimentos</h3>
+          <p>
+            Todo investimento tem três qualidades:
+            <strong style="color: #fff">Segurança</strong> (não perder
+            dinheiro),
+            <strong style="color: #fff">Rentabilidade</strong> (ganhar muito) e
+            <strong style="color: #fff">Liquidez</strong> (poder resgatar
+            rápido). O problema?
+            <em>Você nunca consegue ter os três ao mesmo tempo.</em>
+          </p>
+          <div class="analogy">
+            💡 <strong>Analogia da pizza:</strong> É como pedir uma pizza boa,
+            barata e rápida. Você escolhe dois, no máximo. Um CDB de banco
+            grande paga pouco (boa + rápida). Uma ação promissora pode dar muito
+            retorno mas você pode perder (rentável + rápida, mas arriscada). Um
+            imóvel é seguro e rentável, mas não tem liquidez.
+          </div>
+        </div>
+        <div class="usecase">
+          <div class="usecase-label">📌 Use Case Real</div>
+          <div class="usecase-title">
+            Gerente de banco explica para dona Maria
+          </div>
+          <p>
+            Dona Maria tem 65 anos e quer guardar R$ 50.000 para emergências.
+            Ela diz: "quero muito retorno e quero poder sacar na hora!"
+          </p>
+          <div class="result">
+            ✅ O gerente explica: Alta liquidez + segurança = CDB com liquidez
+            diária ou Tesouro Selic. O retorno será menor, mas o dinheiro está
+            disponível e protegido. Perfeito para reserva de emergência.
+          </div>
+        </div>
+
+        <div class="feynman mt2">
+          <div class="feynman-label">🧠 Feynman #3 — Suitability (API)</div>
+          <h3>Por que o banco te pergunta sobre sua vida antes de investir?</h3>
+          <p>
+            Suitability significa "adequação". Antes de recomendar qualquer
+            produto, o profissional precisa conhecer o cliente:
+            <strong style="color: #fff">quem é</strong> (idade, renda,
+            patrimônio),
+            <strong style="color: #fff">o que quer</strong> (objetivo:
+            aposentadoria, viagem, casa) e
+            <strong style="color: #fff">quanto aguenta perder</strong>
+            (tolerância ao risco). Isso protege o cliente de produtos
+            inadequados — e o banco de processos.
+          </p>
+          <div class="analogy">
+            💡 <strong>Analogia:</strong> É como um médico que não receita
+            remédio sem antes examinar o paciente. Recomendar um fundo de alto
+            risco para um aposentado conservador é como receitar antibiótico
+            para uma dor de cabeça. Tecnicamente existe, mas é completamente
+            errado.
+          </div>
+        </div>
+        <div class="usecase">
+          <div class="usecase-label">📌 Use Case Real</div>
+          <div class="usecase-title">
+            João quer aplicar em ações mas tem perfil conservador
+          </div>
+          <p>
+            João, 58 anos, está se aposentando em 2 anos e tem R$ 200.000
+            poupados. Pede para o gerente investir tudo em ações de tech.
+          </p>
+          <div class="result">
+            ✅ O profissional deve: alertar sobre o risco, registrar no sistema
+            como "operação fora do perfil" e oferecer alternativas adequadas.
+            Não pode simplesmente executar sem alertar — isso é obrigação
+            regulatória.
+          </div>
+        </div>
+
+        <div class="feynman mt2">
+          <div class="feynman-label">🧠 Feynman #4 — Come-Cotas</div>
+          <h3>O imposto que "morde" seu fundo todo semestre</h3>
+          <p>
+            Fundos de investimento têm um mecanismo chamado come-cotas: o
+            governo antecipa a cobrança de Imposto de Renda
+            <strong style="color: #fff">em maio e novembro</strong>, mesmo sem
+            você resgatar. Ele "come" uma parte das suas cotas. No resgate
+            final, desconta-se o que já foi pago.
+          </p>
+          <div class="analogy">
+            💡 <strong>Analogia:</strong> É como se você cultivasse uma horta e
+            o governo chegasse duas vezes por ano para colher um pouco dos seus
+            legumes — mesmo antes de você colhê-los. No fim da safra, ele só
+            cobra o que ainda não pegou.
+          </div>
+        </div>
+        <div class="usecase">
+          <div class="usecase-label">📌 Use Case Real</div>
+          <div class="usecase-title">
+            Carlos aplica em fundo de curto prazo e recebe menos do que esperava
+          </div>
+          <p>
+            Carlos investiu R$ 100.000 em fundo de renda fixa de curto prazo por
+            6 meses e achou que receberia 100% dos juros sem desconto na
+            retirada.
+          </p>
+          <div class="result">
+            ✅ Explicação: O come-cotas de 22,5% já foi descontado em
+            maio/novembro. Carlos já pagou parte do IR antecipado. O valor na
+            retirada é líquido — sem surpresa fiscal.
+          </div>
+        </div>
+
+        <div class="feynman mt2">
+          <div class="feynman-label">
+            🧠 Feynman #5 — Lavagem de Dinheiro (PLD)
+          </div>
+          <h3>Por que o banco te pede tantos documentos?</h3>
+          <p>
+            Lavagem de dinheiro é o processo de transformar dinheiro obtido
+            ilegalmente em dinheiro "limpo". O banco é a porta de entrada
+            preferida dos criminosos. Por isso, o BACEN obriga todas as
+            instituições a conhecer seus clientes (KYC — Know Your Customer),
+            monitorar transações suspeitas e reportar ao COAF (Conselho de
+            Controle de Atividades Financeiras).
+          </p>
+          <div class="analogy">
+            💡 <strong>As 3 fases da lavagem: Colocação</strong> (colocar o
+            dinheiro sujo no sistema — ex: depósito em espécie),
+            <strong>Ocultação</strong> (movimentar para esconder a origem — ex:
+            várias transferências) e <strong>Integração</strong> (usar o
+            dinheiro "limpo" normalmente — ex: comprar imóvel).
+          </div>
+        </div>
+        <div class="usecase">
+          <div class="usecase-label">📌 Use Case Real</div>
+          <div class="usecase-title">
+            Cliente faz depósitos fracionados suspeitos
+          </div>
+          <p>
+            Um cliente passa a depositar R$ 9.000 em espécie todos os dias
+            durante 1 mês — sempre abaixo do limite de R$ 10.000 que gera alerta
+            automático.
+          </p>
+          <div class="result">
+            ✅ Isso se chama "smurfing". O gerente deve reportar como operação
+            suspeita ao COAF, independentemente do valor. O comportamento
+            atípico é o gatilho, não apenas o valor.
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EXERCÍCIOS ===== -->
+      <div class="panel" id="tab-exercicios">
+        <div class="section-title">
+          <h2>📝 Exercícios Interativos</h2>
+          <span class="tag">Clique nas alternativas</span>
+        </div>
+        <div id="score-area" style="display: none" class="card score-display">
+          <div class="score-circle" id="score-circle">0/0</div>
+          <p style="color: var(--muted)">Acertos no simulado</p>
+          <button class="btn btn-primary mt1" onclick="resetExercises()">
+            ↺ Refazer Exercícios
+          </button>
+        </div>
+
+        <div id="exercises-wrap">
+          <!-- EX 1 -->
+          <div class="exercise">
+            <div class="ex-header">
+              <div class="ex-num">1</div>
+              <span class="ex-level easy">CPA — Fácil</span>
+              <span style="font-size: 0.78rem; color: var(--muted)"
+                >Sistema Financeiro</span
+              >
+            </div>
+            <div class="ex-q">
+              Qual órgão é responsável por
+              <strong>executar a política monetária</strong> e fiscalizar
+              instituições financeiras no Brasil?
+            </div>
+            <div class="options" data-answer="1">
+              <div class="option" onclick="answer(this, 0, 1)">
+                <span class="option-letter">A</span>CVM — Comissão de Valores
+                Mobiliários
+              </div>
+              <div class="option" onclick="answer(this, 1, 1)">
+                <span class="option-letter">B</span>BACEN — Banco Central do
+                Brasil
+              </div>
+              <div class="option" onclick="answer(this, 2, 1)">
+                <span class="option-letter">C</span>CMN — Conselho Monetário
+                Nacional
+              </div>
+              <div class="option" onclick="answer(this, 3, 1)">
+                <span class="option-letter">D</span>B3 — Brasil, Bolsa, Balcão
+              </div>
+            </div>
+            <div class="ex-explain" id="exp1">
+              ✅ <strong>BACEN</strong> executa a política monetária, emite
+              moeda, fiscaliza bancos e controla o câmbio. O CMN apenas formula
+              as regras; a CVM cuida do mercado de capitais.
+            </div>
+          </div>
+
+          <!-- EX 2 -->
+          <div class="exercise">
+            <div class="ex-header">
+              <div class="ex-num">2</div>
+              <span class="ex-level easy">CPA — Fácil</span>
+              <span style="font-size: 0.78rem; color: var(--muted)">FGC</span>
+            </div>
+            <div class="ex-q">
+              O Fundo Garantidor de Créditos (FGC) garante, por CPF e por
+              instituição financeira, até qual valor?
+            </div>
+            <div class="options" data-answer="2">
+              <div class="option" onclick="answer(this, 0, 2)">
+                <span class="option-letter">A</span>R$ 100.000
+              </div>
+              <div class="option" onclick="answer(this, 1, 2)">
+                <span class="option-letter">B</span>R$ 150.000
+              </div>
+              <div class="option" onclick="answer(this, 2, 2)">
+                <span class="option-letter">C</span>R$ 250.000
+              </div>
+              <div class="option" onclick="answer(this, 3, 2)">
+                <span class="option-letter">D</span>R$ 500.000
+              </div>
+            </div>
+            <div class="ex-explain" id="exp2">
+              ✅ O FGC garante <strong>R$ 250.000</strong> por CPF por
+              instituição (com teto global de R$ 1 milhão a cada 4 anos). Cobre:
+              CDB, LCI, LCA, poupança, entre outros.
+            </div>
+          </div>
+
+          <!-- EX 3 -->
+          <div class="exercise">
+            <div class="ex-header">
+              <div class="ex-num">3</div>
+              <span class="ex-level med">CPA — Médio</span>
+              <span style="font-size: 0.78rem; color: var(--muted)"
+                >Suitability</span
+              >
+            </div>
+            <div class="ex-q">
+              Um cliente de 70 anos, aposentado, perfil conservador, procura o
+              gerente e pede para aplicar toda sua reserva em um fundo
+              multimercado alavancado. A conduta correta é:
+            </div>
+            <div class="options" data-answer="1">
+              <div class="option" onclick="answer(this, 0, 3)">
+                <span class="option-letter">A</span>Executar a ordem, pois o
+                cliente é dono do dinheiro
+              </div>
+              <div class="option" onclick="answer(this, 1, 3)">
+                <span class="option-letter">B</span>Alertar o cliente sobre o
+                risco, registrar como inadequado ao perfil e oferecer
+                alternativas compatíveis
+              </div>
+              <div class="option" onclick="answer(this, 2, 3)">
+                <span class="option-letter">C</span>Encaminhar o cliente para
+                outro gerente sem atendimento
+              </div>
+              <div class="option" onclick="answer(this, 3, 3)">
+                <span class="option-letter">D</span>Ignorar o pedido por ser de
+                alto risco
+              </div>
+            </div>
+            <div class="ex-explain" id="exp3">
+              ✅ Pelo Código ANBIMA e regras de Suitability, o profissional
+              <strong
+                >deve alertar, registrar a inadequação e oferecer
+                alternativas</strong
+              >. Se o cliente insistir, registra-se formalmente como "declaração
+              de investimento fora do perfil".
+            </div>
+          </div>
+
+          <!-- EX 4 -->
+          <div class="exercise">
+            <div class="ex-header">
+              <div class="ex-num">4</div>
+              <span class="ex-level med">CPA — Médio</span>
+              <span style="font-size: 0.78rem; color: var(--muted)"
+                >Tributação</span
+              >
+            </div>
+            <div class="ex-q">
+              São <strong>isentos de Imposto de Renda</strong> para pessoa
+              física:
+            </div>
+            <div class="options" data-answer="0">
+              <div class="option" onclick="answer(this, 0, 4)">
+                <span class="option-letter">A</span>LCI, LCA e rendimentos
+                distribuídos por FIIs (quando o FII cumpre requisitos legais)
+              </div>
+              <div class="option" onclick="answer(this, 1, 4)">
+                <span class="option-letter">B</span>CDB e Tesouro IPCA+
+              </div>
+              <div class="option" onclick="answer(this, 2, 4)">
+                <span class="option-letter">C</span>Todos os fundos de renda
+                fixa
+              </div>
+              <div class="option" onclick="answer(this, 3, 4)">
+                <span class="option-letter">D</span>Ações negociadas acima de R$
+                20.000 no mês
+              </div>
+            </div>
+            <div class="ex-explain" id="exp4">
+              ✅ <strong>LCI, LCA e dividendos de FIIs</strong> são isentos de
+              IR para PF. CDB e Tesouro pagam IR regressivo. Ações abaixo de R$
+              20.000/mês são isentas — acima, pagam 15%.
+            </div>
+          </div>
+
+          <!-- EX 5 -->
+          <div class="exercise">
+            <div class="ex-header">
+              <div class="ex-num">5</div>
+              <span class="ex-level hard">C-Pro R — Difícil</span>
+              <span style="font-size: 0.78rem; color: var(--muted)"
+                >Derivativos</span
+              >
+            </div>
+            <div class="ex-q">
+              Um exportador brasileiro teme a valorização do real. Para se
+              proteger (hedge), qual estratégia é mais indicada?
+            </div>
+            <div class="options" data-answer="2">
+              <div class="option" onclick="answer(this, 0, 5)">
+                <span class="option-letter">A</span>Comprar contratos futuros de
+                dólar (posição comprada)
+              </div>
+              <div class="option" onclick="answer(this, 1, 5)">
+                <span class="option-letter">B</span>Aplicar todo o capital em
+                Tesouro Selic
+              </div>
+              <div class="option" onclick="answer(this, 2, 5)">
+                <span class="option-letter">C</span>Vender contratos futuros de
+                dólar (posição vendida) ou comprar put de dólar
+              </div>
+              <div class="option" onclick="answer(this, 3, 5)">
+                <span class="option-letter">D</span>Não fazer nada e esperar o
+                câmbio se estabilizar
+              </div>
+            </div>
+            <div class="ex-explain" id="exp5">
+              ✅ O exportador <strong>recebe dólares</strong> no futuro. Se o
+              real valorizar, ele recebe menos reais. Para proteger, vende
+              futuros de dólar (trava o câmbio) ou compra put de dólar (direito
+              de vender a um preço mínimo).
+            </div>
+          </div>
+
+          <!-- EX 6 -->
+          <div class="exercise">
+            <div class="ex-header">
+              <div class="ex-num">6</div>
+              <span class="ex-level hard">C-Pro R — Difícil</span>
+              <span style="font-size: 0.78rem; color: var(--muted)"
+                >Performance</span
+              >
+            </div>
+            <div class="ex-q">O Índice de Sharpe de uma carteira mede:</div>
+            <div class="options" data-answer="1">
+              <div class="option" onclick="answer(this, 0, 6)">
+                <span class="option-letter">A</span>Apenas o retorno absoluto do
+                portfólio no período
+              </div>
+              <div class="option" onclick="answer(this, 1, 6)">
+                <span class="option-letter">B</span>O retorno excedente por
+                unidade de risco total assumido
+              </div>
+              <div class="option" onclick="answer(this, 2, 6)">
+                <span class="option-letter">C</span>A correlação entre dois
+                ativos da carteira
+              </div>
+              <div class="option" onclick="answer(this, 3, 6)">
+                <span class="option-letter">D</span>O beta da carteira em
+                relação ao índice de mercado
+              </div>
+            </div>
+            <div class="ex-explain" id="exp6">
+              ✅
+              <strong
+                >Sharpe = (Retorno da Carteira − Taxa Livre de Risco) ÷ Desvio
+                Padrão</strong
+              >. Quanto maior o Sharpe, melhor o retorno por unidade de risco. É
+              a métrica principal para comparar fundos.
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 1.5rem">
+            <button class="btn btn-primary" onclick="calcScore()">
+              📊 Ver meu resultado
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FLASHCARDS ===== -->
+      <div class="panel" id="tab-flashcards">
+        <div class="section-title">
+          <h2>🃏 Flashcards de Revisão Rápida</h2>
+          <span class="tag">Clique para revelar a resposta</span>
+        </div>
+        <div id="fc-container"></div>
+        <div class="fc-nav">
+          <button class="fc-btn" onclick="prevCard()">← Anterior</button>
+          <span class="fc-counter" id="fc-counter">1 / 10</span>
+          <button class="fc-btn" onclick="nextCard()">Próximo →</button>
+        </div>
+      </div>
+
+      <!-- ===== ROADMAP ===== -->
+      <div class="panel" id="tab-roadmap">
+        <div class="section-title">
+          <h2>🗺️ Seu Roadmap Para Entrar no Banco</h2>
+          <span class="tag">Passo a passo</span>
+        </div>
+        <div class="grid">
+          <div>
+            <div class="card">
+              <h3 style="color: var(--accent); margin-bottom: 1rem">
+                📅 Cronograma Sugerido
+              </h3>
+              <div class="timeline">
+                <div class="tl-item">
+                  <div class="tl-dot"></div>
+                  <div class="tl-date">Semanas 1–2</div>
+                  <div class="tl-title">Base do Sistema Financeiro</div>
+                  <div class="tl-desc">
+                    CMN, BACEN, CVM, B3. Tipos de instituições. Use a técnica
+                    Feynman: explique cada órgão como se fosse para um amigo sem
+                    área financeira.
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-dot gold"></div>
+                  <div class="tl-date">Semanas 3–4</div>
+                  <div class="tl-title">Produtos de Investimento</div>
+                  <div class="tl-desc">
+                    CDB, LCI, LCA, Tesouro Direto, Fundos. Para cada produto:
+                    anote o que é, para quem serve, tributação e use cases
+                    reais.
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-dot green"></div>
+                  <div class="tl-date">Semana 5</div>
+                  <div class="tl-title">Suitability + Ética</div>
+                  <div class="tl-desc">
+                    API, perfis de investidor, Código ANBIMA, PLD. Estude com
+                    casos práticos — é o tema mais cobrado em provas
+                    comportamentais.
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-dot"></div>
+                  <div class="tl-date">Semana 6</div>
+                  <div class="tl-title">Tributação + FGC</div>
+                  <div class="tl-desc">
+                    Tabela regressiva de IR, come-cotas, IOF, isenções. Monte
+                    uma tabela comparativa de tributação por produto.
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-dot gold"></div>
+                  <div class="tl-date">Semanas 7–8</div>
+                  <div class="tl-title">Simulados + ANBIMA Edu</div>
+                  <div class="tl-desc">
+                    Faça ao menos 3 simulados completos. Revise erros com a
+                    técnica Feynman. Acesse o ANBIMA Edu para as
+                    microcertificações oficiais.
+                  </div>
+                </div>
+                <div class="tl-item">
+                  <div class="tl-dot green"></div>
+                  <div class="tl-date">Semana 9</div>
+                  <div class="tl-title">🏆 Prova CPA</div>
+                  <div class="tl-desc">
+                    Chegou a hora! Revise os flashcards, durma bem e confie no
+                    processo. Valor: R$ 225 — agende pelo site da ANBIMA.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3 style="color: var(--gold); margin-bottom: 1rem">
+                🏦 O que os bancos esperam de você
+              </h3>
+              <div class="usecase" style="margin-bottom: 1rem">
+                <div class="usecase-label">
+                  📌 Use Case — Entrevista de banco
+                </div>
+                <div class="usecase-title">
+                  Por que você quer trabalhar em banco?
+                </div>
+                <p>
+                  A resposta certa usa conhecimento técnico: mostre que entende
+                  produtos, regulação e que está se certificando. Mencionar a
+                  CPA demonstra comprometimento antes mesmo de ser contratado.
+                </p>
+                <div class="result">
+                  ✅ "Estou me certificando pela ANBIMA para já chegar pronto
+                  para atender clientes e recomendar investimentos com
+                  responsabilidade regulatória."
+                </div>
+              </div>
+              <div class="usecase">
+                <div class="usecase-label">📌 Use Case — Vaga de gerente</div>
+                <div class="usecase-title">CPA vs C-Pro R: qual priorizar?</div>
+                <p>
+                  Para vagas de atendimento e suporte comercial em bancos, a
+                  <strong>CPA já é suficiente e obrigatória</strong>. Para
+                  cargos de gerente de investimentos ou assessor, o banco
+                  exigirá a <strong>C-Pro R</strong>.
+                </p>
+                <div class="result">
+                  ✅ Estratégia: tire a CPA primeiro (mais rápido e barato), já
+                  entre no banco e então faça a C-Pro R financiado pela própria
+                  instituição.
+                </div>
+              </div>
+            </div>
+            <div class="card mt1">
+              <h3 style="color: var(--accent); margin-bottom: 0.8rem">
+                🔗 Recursos Recomendados
+              </h3>
+              <ul
+                style="
+                  list-style: none;
+                  font-size: 0.84rem;
+                  color: var(--muted);
+                "
+              >
+                <li
+                  style="
+                    padding: 0.4rem 0;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+                  "
+                >
+                  📚 <strong style="color: #fff">ANBIMA Edu</strong> —
+                  plataforma oficial de microcertificações
+                </li>
+                <li
+                  style="
+                    padding: 0.4rem 0;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+                  "
+                >
+                  📖
+                  <strong style="color: #fff">Apostila oficial ANBIMA</strong> —
+                  disponível no site anbima.com.br
+                </li>
+                <li
+                  style="
+                    padding: 0.4rem 0;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+                  "
+                >
+                  🧪
+                  <strong style="color: #fff"
+                    >Top Invest / FK Partners / Stoodi</strong
+                  >
+                  — simulados e questões
+                </li>
+                <li
+                  style="
+                    padding: 0.4rem 0;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+                  "
+                >
+                  📺
+                  <strong style="color: #fff"
+                    >YouTube: Me Poupe, Primo Rico</strong
+                  >
+                  — didática para fixação
+                </li>
+                <li style="padding: 0.4rem 0">
+                  📱 <strong style="color: #fff">Tesouro Direto app</strong> —
+                  entenda produtos na prática
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // TABS
+      function showTab(id, el) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".tab")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-links a")
+          .forEach((a) => a.classList.remove("active"));
+        document.getElementById("tab-" + id).classList.add("active");
+        if (el) el.classList.add("active");
+      }
+
+      // CHECKLIST
+      let checks = JSON.parse(localStorage.getItem("cpa_checks") || "[]");
+      function toggleCheck(i) {
+        const box = document.querySelectorAll(".check-box")[i];
+        const li = document.getElementById("ci" + i);
+        if (checks.includes(i)) {
+          checks = checks.filter((x) => x !== i);
+          box.classList.remove("checked");
+          li.classList.remove("done");
+        } else {
+          checks.push(i);
+          box.classList.add("checked");
+          li.classList.add("done");
+        }
+        localStorage.setItem("cpa_checks", JSON.stringify(checks));
+        updateProgress();
+      }
+      function restoreChecks() {
+        checks.forEach((i) => {
+          const box = document.querySelectorAll(".check-box")[i];
+          const li = document.getElementById("ci" + i);
+          if (box) {
+            box.classList.add("checked");
+            li.classList.add("done");
+          }
+        });
+        updateProgress();
+      }
+      function updateProgress() {
+        const pct = Math.round((checks.length / 10) * 100);
+        document.getElementById("prog-cpa").style.width = pct + "%";
+        document.getElementById("pct-cpa").textContent = pct + "%";
+      }
+      function resetProgress() {
+        checks = [];
+        localStorage.removeItem("cpa_checks");
+        document
+          .querySelectorAll(".check-box")
+          .forEach((b) => b.classList.remove("checked"));
+        document
+          .querySelectorAll(".checklist li")
+          .forEach((l) => l.classList.remove("done"));
+        updateProgress();
+      }
+
+      // EXERCISES
+      let answered = {};
+      let correct = 0;
+      function answer(el, chosen, qNum) {
+        if (answered[qNum]) return;
+        answered[qNum] = true;
+        const opts = el.closest(".options");
+        const correct_idx = parseInt(opts.dataset.answer);
+        opts.querySelectorAll(".option").forEach((o, i) => {
+          if (i === correct_idx) o.classList.add("correct");
+          else if (i === chosen && chosen !== correct_idx)
+            o.classList.add("wrong");
+        });
+        document.getElementById("exp" + qNum).classList.add("show");
+        if (chosen === correct_idx) correct++;
+        // Update C-Pro R progress
+        const cpro = Math.round((Object.keys(answered).length / 6) * 100);
+        document.getElementById("prog-cpror").style.width = cpro + "%";
+        document.getElementById("pct-cpror").textContent = cpro + "%";
+      }
+      function calcScore() {
+        const total = 6;
+        document.getElementById("score-area").style.display = "block";
+        document.getElementById("score-circle").textContent =
+          correct + "/" + total;
+        document.getElementById("exercises-wrap").style.opacity = ".5";
+        document.getElementById("exercises-wrap").style.pointerEvents = "none";
+      }
+      function resetExercises() {
+        answered = {};
+        correct = 0;
+        document.getElementById("score-area").style.display = "none";
+        document.getElementById("exercises-wrap").style.opacity = "1";
+        document.getElementById("exercises-wrap").style.pointerEvents = "";
+        document.querySelectorAll(".option").forEach((o) => {
+          o.classList.remove("correct", "wrong");
+        });
+        document
+          .querySelectorAll(".ex-explain")
+          .forEach((e) => e.classList.remove("show"));
+        document.getElementById("prog-cpror").style.width = "0%";
+        document.getElementById("pct-cpror").textContent = "0%";
+      }
+
+      // FLASHCARDS
+      const cards = [
+        {
+          tag: "SFN",
+          q: "Qual é a diferença entre CMN e BACEN?",
+          a: "CMN formula as regras (legislativo). BACEN executa e fiscaliza (executivo). CMN não fiscaliza bancos diretamente.",
+        },
+        {
+          tag: "Produtos",
+          q: "O que é um CDB?",
+          a: "Certificado de Depósito Bancário — o banco pega emprestado seu dinheiro e paga juros. Garantido pelo FGC até R$ 250 mil. Tributação: tabela regressiva de IR.",
+        },
+        {
+          tag: "Produtos",
+          q: "Qual a diferença entre LCI e LCA?",
+          a: "LCI financia o setor imobiliário. LCA financia o agronegócio. Ambos são isentos de IR para PF e garantidos pelo FGC.",
+        },
+        {
+          tag: "Tributação",
+          q: "O que é a tabela regressiva de IR em fundos?",
+          a: "22,5% (até 180 dias) → 20% (181–360) → 17,5% (361–720) → 15% (acima de 720 dias). Quanto mais tempo, menos imposto.",
+        },
+        {
+          tag: "Suitability",
+          q: "Quais são os 3 perfis de investidor?",
+          a: "Conservador (prioriza segurança), Moderado (equilibra risco e retorno) e Arrojado/Agressivo (aceita alta volatilidade por maior retorno).",
+        },
+        {
+          tag: "Fundos",
+          q: "O que é marcação a mercado?",
+          a: "Atualização diária do valor dos ativos do fundo pelo preço justo de mercado. Evita transferência de riqueza entre cotistas que entram e saem.",
+        },
+        {
+          tag: "Derivativos",
+          q: "O que é uma opção de compra (call)?",
+          a: "Direito — não obrigação — de comprar um ativo por um preço fixo (strike) até uma data. O comprador paga prêmio pelo direito.",
+        },
+        {
+          tag: "PLD",
+          q: "Quais são as 3 fases da lavagem de dinheiro?",
+          a: "1) Colocação (inserir o dinheiro sujo no sistema). 2) Ocultação (movimentar para disfarçar). 3) Integração (usar como dinheiro limpo).",
+        },
+        {
+          tag: "Novo Modelo",
+          q: "Qual certificação substitui a CPA-10 em 2026?",
+          a: "A nova CPA (Certificado Profissional ANBIMA). É a porta de entrada obrigatória para toda a trilha. Valor: R$ 225. Atualização anual via ANBIMA Edu.",
+        },
+        {
+          tag: "Performance",
+          q: "O que mede o Índice de Sharpe?",
+          a: "Retorno excedente por unidade de risco: (Retorno − Taxa livre de risco) ÷ Desvio padrão. Sharpe alto = melhor relação risco-retorno.",
+        },
+      ];
+      let fcIdx = 0;
+      function renderCard() {
+        const c = cards[fcIdx];
+        document.getElementById("fc-container").innerHTML = `
+    <div class="flashcard-wrap">
+      <div class="flashcard" id="fc" onclick="document.getElementById('fc').classList.toggle('flipped')">
+        <div class="fc-front">
+          <div class="fc-tag">${c.tag}</div>
+          <div class="fc-question">${c.q}</div>
+          <div class="fc-hint" style="margin-top:.8rem">👆 Clique para ver a resposta</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-tag" style="color:var(--success)">✅ Resposta</div>
+          <div class="fc-answer">${c.a}</div>
+        </div>
+      </div>
+    </div>`;
+        document.getElementById("fc-counter").textContent =
+          fcIdx + 1 + " / " + cards.length;
+        const pct = Math.round(((fcIdx + 1) / cards.length) * 100);
+        document.getElementById("prog-cproi").style.width = pct + "%";
+        document.getElementById("pct-cproi").textContent = pct + "%";
+      }
+      function nextCard() {
+        fcIdx = (fcIdx + 1) % cards.length;
+        renderCard();
+      }
+      function prevCard() {
+        fcIdx = (fcIdx - 1 + cards.length) % cards.length;
+        renderCard();
+      }
+
+      // INIT
+      restoreChecks();
+      renderCard();
+    </script>
+  </body>
+</html>

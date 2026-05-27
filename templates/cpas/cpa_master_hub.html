@@ -1,0 +1,4870 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>CPA Master Hub 2026</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+    <style>
+      :root {
+        --bg: #08090f;
+        --s1: #0e1117;
+        --s2: #141820;
+        --s3: #1a2030;
+        --s4: #1f2640;
+        --b1: rgba(255, 255, 255, 0.055);
+        --b2: rgba(255, 255, 255, 0.1);
+        --b3: rgba(255, 255, 255, 0.18);
+        --t1: #f0f4ff;
+        --t2: #8899bb;
+        --t3: #4a5878;
+        --cyan: #22d3ee;
+        --blue: #3b82f6;
+        --violet: #7c3aed;
+        --gold: #f59e0b;
+        --green: #10b981;
+        --red: #ef4444;
+        --pink: #ec4899;
+        --orange: #f97316;
+        --cpa: #22d3ee;
+        --cpror: #f59e0b;
+        --cproi: #10b981;
+        --r: 8px;
+        --r2: 12px;
+        --r3: 16px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+      }
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--t1);
+        font-size: 14px;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
+        font-size: 13px;
+      }
+      button {
+        cursor: pointer;
+      }
+
+      /* LAYOUT */
+      .app {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .sidebar {
+        width: 240px;
+        background: var(--s1);
+        border-right: 1px solid var(--b1);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        flex-shrink: 0;
+      }
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .topbar {
+        background: var(--s1);
+        border-bottom: 1px solid var(--b1);
+        padding: 0.7rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.5rem;
+      }
+
+      /* SIDEBAR */
+      .sb-logo {
+        padding: 1rem 1rem 0.8rem;
+        border-bottom: 1px solid var(--b1);
+      }
+      .sb-logo-name {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--t1);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .sb-logo-name i {
+        color: var(--cyan);
+        font-size: 18px;
+      }
+      .sb-logo-sub {
+        font-size: 0.65rem;
+        color: var(--t3);
+        margin-top: 0.2rem;
+        padding-left: 26px;
+      }
+      .sb-sec {
+        padding: 0.5rem 1rem 0.2rem;
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--t3);
+        font-weight: 700;
+      }
+      .sb-link {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.45rem 1rem;
+        color: var(--t2);
+        border-left: 2px solid transparent;
+        cursor: pointer;
+        transition: 0.12s;
+        font-size: 0.82rem;
+      }
+      .sb-link:hover {
+        color: var(--t1);
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .sb-link.on {
+        color: var(--cyan);
+        background: rgba(34, 211, 238, 0.06);
+        border-left-color: var(--cyan);
+        font-weight: 600;
+      }
+      .sb-link i {
+        font-size: 15px;
+        flex-shrink: 0;
+      }
+      .sb-badge {
+        margin-left: auto;
+        font-size: 0.6rem;
+        padding: 0.1rem 0.4rem;
+        border-radius: 20px;
+        background: rgba(34, 211, 238, 0.12);
+        color: var(--cyan);
+        font-weight: 700;
+      }
+      .sb-xp {
+        margin: auto 0 0;
+        padding: 0.8rem 1rem;
+        border-top: 1px solid var(--b1);
+      }
+      .xp-bar-wrap {
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        height: 5px;
+        margin: 0.35rem 0;
+      }
+      .xp-bar-fill {
+        height: 100%;
+        border-radius: 20px;
+        background: linear-gradient(90deg, var(--violet), var(--cyan));
+        transition: width 0.5s;
+      }
+      .xp-label {
+        font-size: 0.7rem;
+        color: var(--t2);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* TOPBAR */
+      .tb-title {
+        font-size: 0.92rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--t1);
+      }
+      .tb-title i {
+        font-size: 16px;
+        color: var(--t3);
+      }
+      .tb-right {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.2rem 0.65rem;
+        border-radius: 20px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        border: 1px solid;
+      }
+      .pill.cpa {
+        background: rgba(34, 211, 238, 0.1);
+        border-color: rgba(34, 211, 238, 0.25);
+        color: var(--cpa);
+      }
+      .pill.cpror {
+        background: rgba(245, 158, 11, 0.09);
+        border-color: rgba(245, 158, 11, 0.2);
+        color: var(--cpror);
+      }
+      .pill.cproi {
+        background: rgba(16, 185, 129, 0.09);
+        border-color: rgba(16, 185, 129, 0.2);
+        color: var(--cproi);
+      }
+      .pill.xp {
+        background: rgba(124, 58, 237, 0.12);
+        border-color: rgba(124, 58, 237, 0.25);
+        color: #a78bfa;
+      }
+
+      /* PANELS */
+      .panel {
+        display: none;
+        animation: fadeIn 0.15s ease;
+      }
+      .panel.on {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* CARDS */
+      .card {
+        background: var(--s2);
+        border: 1px solid var(--b1);
+        border-radius: var(--r3);
+        padding: 1.2rem;
+      }
+      .card-sm {
+        background: var(--s2);
+        border: 1px solid var(--b1);
+        border-radius: var(--r2);
+        padding: 0.9rem 1rem;
+      }
+      .g2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .g3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .g4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.8rem;
+      }
+      .gauto {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.8rem;
+      }
+      .sec {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--t3);
+        font-weight: 700;
+        margin-bottom: 0.7rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .sec i {
+        font-size: 13px;
+      }
+      .h2 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--t1);
+        margin-bottom: 0.15rem;
+      }
+      .muted {
+        color: var(--t2);
+        font-size: 0.8rem;
+        line-height: 1.6;
+      }
+      .gap1 {
+        margin-top: 0.8rem;
+      }
+      .gap2 {
+        margin-top: 1.2rem;
+      }
+      .gap3 {
+        margin-top: 1.8rem;
+      }
+      .divider {
+        border: none;
+        border-top: 1px solid var(--b1);
+        margin: 1.2rem 0;
+      }
+
+      /* STAT CARDS */
+      .stat-card {
+        background: var(--s2);
+        border: 1px solid var(--b1);
+        border-radius: var(--r2);
+        padding: 0.85rem 1rem;
+      }
+      .stat-num {
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.68rem;
+        color: var(--t2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+      }
+      .stat-delta {
+        font-size: 0.72rem;
+        margin-top: 0.3rem;
+      }
+
+      /* PROGRESS */
+      .prog-row {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin: 0.4rem 0;
+      }
+      .prog-name {
+        font-size: 0.72rem;
+        color: var(--t2);
+        width: 55px;
+      }
+      .prog-track {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        height: 5px;
+        overflow: hidden;
+      }
+      .prog-fill {
+        height: 100%;
+        border-radius: 20px;
+        transition: width 0.5s;
+      }
+
+      /* FEYNMAN ENGINE */
+      .feynman-step {
+        background: var(--s3);
+        border: 1px solid var(--b1);
+        border-radius: var(--r2);
+        padding: 1rem;
+        margin: 0.6rem 0;
+        display: flex;
+        gap: 0.8rem;
+        align-items: flex-start;
+      }
+      .feynman-step.done {
+        border-color: rgba(16, 185, 129, 0.3);
+        background: rgba(16, 185, 129, 0.04);
+      }
+      .fs-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--s4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        flex-shrink: 0;
+        color: var(--t2);
+        border: 1px solid var(--b2);
+      }
+      .feynman-step.done .fs-num {
+        background: rgba(16, 185, 129, 0.15);
+        color: var(--green);
+        border-color: rgba(16, 185, 129, 0.4);
+      }
+      .fs-body {
+        flex: 1;
+      }
+      .fs-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--t1);
+        margin-bottom: 0.2rem;
+      }
+      .fs-desc {
+        font-size: 0.78rem;
+        color: var(--t2);
+        line-height: 1.6;
+      }
+      .fs-action {
+        margin-top: 0.6rem;
+      }
+      .feynman-textarea {
+        width: 100%;
+        background: var(--s4);
+        border: 1px solid var(--b2);
+        border-radius: var(--r);
+        padding: 0.6rem 0.8rem;
+        color: var(--t1);
+        font-size: 0.82rem;
+        line-height: 1.6;
+        resize: vertical;
+        min-height: 70px;
+      }
+      .feynman-textarea:focus {
+        outline: none;
+        border-color: var(--cyan);
+      }
+      .feynman-box {
+        background: linear-gradient(
+          135deg,
+          rgba(34, 211, 238, 0.05),
+          rgba(124, 58, 237, 0.04)
+        );
+        border: 1px solid rgba(34, 211, 238, 0.15);
+        border-radius: var(--r2);
+        padding: 1rem 1.1rem;
+        margin: 0.6rem 0;
+      }
+      .feynman-box .tag-label {
+        font-size: 0.63rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--cyan);
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+      }
+      .analogy-box {
+        background: rgba(245, 158, 11, 0.06);
+        border: 1px solid rgba(245, 158, 11, 0.18);
+        border-radius: var(--r);
+        padding: 0.7rem 0.9rem;
+        margin-top: 0.6rem;
+        font-size: 0.82rem;
+        color: var(--t2);
+        line-height: 1.65;
+      }
+      .analogy-box strong {
+        color: var(--gold);
+      }
+
+      /* USE CASE */
+      .usecase {
+        background: var(--s3);
+        border-left: 3px solid var(--gold);
+        border-radius: 0 var(--r) var(--r) 0;
+        padding: 0.9rem 1rem;
+        margin: 0.7rem 0;
+      }
+      .uc-label {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--gold);
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+      }
+      .uc-title {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--t1);
+        margin-bottom: 0.35rem;
+      }
+      .uc-body {
+        font-size: 0.8rem;
+        color: var(--t2);
+        line-height: 1.65;
+      }
+      .uc-result {
+        margin-top: 0.6rem;
+        padding: 0.5rem 0.8rem;
+        background: rgba(16, 185, 129, 0.08);
+        border-radius: var(--r);
+        font-size: 0.79rem;
+        color: var(--green);
+        line-height: 1.55;
+      }
+
+      /* EXERCISES */
+      .ex {
+        background: var(--s2);
+        border: 1px solid var(--b1);
+        border-radius: var(--r2);
+        padding: 1.1rem;
+        margin-bottom: 0.7rem;
+        transition: 0.12s;
+      }
+      .ex:hover {
+        border-color: var(--b2);
+      }
+      .ex-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.7rem;
+      }
+      .ex-num {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        font-size: 0.68rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .tag {
+        font-size: 0.63rem;
+        padding: 0.15rem 0.55rem;
+        border-radius: 20px;
+        font-weight: 700;
+      }
+      .tag.easy {
+        background: rgba(16, 185, 129, 0.12);
+        color: var(--green);
+      }
+      .tag.med {
+        background: rgba(245, 158, 11, 0.12);
+        color: var(--gold);
+      }
+      .tag.hard {
+        background: rgba(239, 68, 68, 0.12);
+        color: var(--red);
+      }
+      .tag.topic {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--t2);
+      }
+      .tag.new {
+        background: rgba(124, 58, 237, 0.15);
+        color: #a78bfa;
+      }
+      .tag.case {
+        background: rgba(249, 115, 22, 0.12);
+        color: var(--orange);
+      }
+      .ex-ctx {
+        background: rgba(34, 211, 238, 0.04);
+        border: 1px solid rgba(34, 211, 238, 0.12);
+        border-radius: var(--r);
+        padding: 0.65rem 0.85rem;
+        margin-bottom: 0.7rem;
+        font-size: 0.81rem;
+        line-height: 1.65;
+      }
+      .ex-ctx-lbl {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--cyan);
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .ex-q {
+        font-size: 0.88rem;
+        line-height: 1.65;
+        margin-bottom: 0.7rem;
+        color: var(--t1);
+      }
+      .opts {
+        display: flex;
+        flex-direction: column;
+        gap: 0.28rem;
+      }
+      .opt {
+        display: flex;
+        gap: 0.5rem;
+        align-items: flex-start;
+        padding: 0.5rem 0.8rem;
+        border-radius: var(--r);
+        border: 1px solid var(--b1);
+        cursor: pointer;
+        font-size: 0.81rem;
+        line-height: 1.5;
+        transition: 0.1s;
+      }
+      .opt:hover:not(.locked) {
+        border-color: rgba(34, 211, 238, 0.3);
+        background: rgba(34, 211, 238, 0.04);
+      }
+      .opt.correct {
+        border-color: var(--green) !important;
+        background: rgba(16, 185, 129, 0.07) !important;
+        color: var(--green) !important;
+      }
+      .opt.wrong {
+        border-color: var(--red) !important;
+        background: rgba(239, 68, 68, 0.06) !important;
+        color: var(--red) !important;
+      }
+      .opt.locked {
+        pointer-events: none;
+      }
+      .opt-l {
+        font-weight: 700;
+        flex-shrink: 0;
+        min-width: 14px;
+        color: var(--t3);
+      }
+      .explain {
+        display: none;
+        margin-top: 0.7rem;
+        padding: 0.7rem 0.85rem;
+        background: rgba(255, 255, 255, 0.025);
+        border-left: 2px solid var(--cyan);
+        border-radius: 0 var(--r) var(--r) 0;
+        font-size: 0.79rem;
+        line-height: 1.7;
+        color: var(--t2);
+      }
+      .explain.show {
+        display: block;
+      }
+      .explain strong {
+        color: var(--t1);
+      }
+      .ex-xp {
+        display: none;
+        margin-top: 0.4rem;
+        font-size: 0.72rem;
+        color: #a78bfa;
+        display: none;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .ex-xp.show {
+        display: flex;
+      }
+
+      /* CASE STUDY */
+      .case-card {
+        background: var(--s2);
+        border: 1px solid var(--b1);
+        border-radius: var(--r3);
+        padding: 1.3rem;
+        margin-bottom: 1rem;
+      }
+      .case-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem;
+        margin-bottom: 0.9rem;
+      }
+      .case-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: var(--r2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+      .case-meta {
+        flex: 1;
+      }
+      .case-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--t1);
+        margin-bottom: 0.2rem;
+      }
+      .case-sub {
+        font-size: 0.75rem;
+        color: var(--t2);
+      }
+      .case-scenario {
+        background: var(--s3);
+        border-radius: var(--r);
+        padding: 0.9rem 1rem;
+        margin-bottom: 0.9rem;
+        font-size: 0.82rem;
+        line-height: 1.7;
+        color: var(--t2);
+      }
+      .case-scenario strong {
+        color: var(--t1);
+      }
+      .case-question {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--t1);
+        margin-bottom: 0.7rem;
+      }
+      .case-decision {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .case-opt {
+        background: var(--s3);
+        border: 1px solid var(--b1);
+        border-radius: var(--r);
+        padding: 0.65rem 0.9rem;
+        cursor: pointer;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        transition: 0.12s;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.55rem;
+        color: var(--t2);
+      }
+      .case-opt:hover:not(.locked) {
+        border-color: rgba(34, 211, 238, 0.25);
+        background: rgba(34, 211, 238, 0.03);
+        color: var(--t1);
+      }
+      .case-opt.correct {
+        border-color: var(--green) !important;
+        background: rgba(16, 185, 129, 0.06) !important;
+        color: var(--green) !important;
+      }
+      .case-opt.wrong {
+        border-color: var(--red) !important;
+        background: rgba(239, 68, 68, 0.05) !important;
+        color: var(--red) !important;
+      }
+      .case-opt.locked {
+        pointer-events: none;
+      }
+      .case-feedback {
+        display: none;
+        margin-top: 0.8rem;
+        padding: 0.8rem 1rem;
+        border-radius: var(--r2);
+        font-size: 0.82rem;
+        line-height: 1.7;
+      }
+      .case-feedback.ok {
+        background: rgba(16, 185, 129, 0.07);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        color: var(--green);
+      }
+      .case-feedback.nok {
+        background: rgba(239, 68, 68, 0.06);
+        border: 1px solid rgba(239, 68, 68, 0.18);
+        color: var(--red);
+      }
+      .case-feedback.show {
+        display: block;
+      }
+      .case-feedback strong {
+        color: var(--t1);
+      }
+
+      /* POMODORO */
+      .pomo-display {
+        text-align: center;
+        padding: 1.5rem 0;
+      }
+      .pomo-time {
+        font-size: 3.5rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        color: var(--t1);
+        font-variant-numeric: tabular-nums;
+      }
+      .pomo-label {
+        font-size: 0.75rem;
+        color: var(--t2);
+        margin-top: 0.3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+      .pomo-ring-wrap {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .pomo-ring-wrap svg {
+        transform: rotate(-90deg);
+      }
+      .pomo-ring-inner {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .pomo-btns {
+        display: flex;
+        gap: 0.6rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      .pomo-log {
+        max-height: 140px;
+        overflow-y: auto;
+        font-size: 0.75rem;
+        color: var(--t2);
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-top: 0.8rem;
+      }
+      .pomo-log-item {
+        padding: 0.3rem 0.6rem;
+        background: var(--s3);
+        border-radius: var(--r);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* SPACED REP */
+      .sr-card {
+        background: var(--s2);
+        border: 1px solid var(--b1);
+        border-radius: var(--r3);
+        padding: 1.5rem;
+        min-height: 180px;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: 0.15s;
+      }
+      .sr-card:hover {
+        border-color: var(--b2);
+        transform: translateY(-2px);
+      }
+      .sr-front {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
+      .sr-back {
+        display: none;
+      }
+      .sr-card.flipped .sr-front {
+        display: none;
+      }
+      .sr-card.flipped .sr-back {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
+      .sr-q {
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.6;
+        color: var(--t1);
+      }
+      .sr-a {
+        font-size: 0.87rem;
+        line-height: 1.65;
+        color: var(--t2);
+      }
+      .sr-tag {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--cyan);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .sr-hint {
+        font-size: 0.68rem;
+        color: var(--t3);
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .sr-rating {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .sr-btn {
+        flex: 1;
+        padding: 0.45rem 0.3rem;
+        border-radius: var(--r);
+        border: 1px solid var(--b1);
+        color: var(--t2);
+        background: var(--s3);
+        font-size: 0.72rem;
+        font-weight: 600;
+        transition: 0.12s;
+        min-width: 60px;
+      }
+      .sr-btn:hover {
+        border-color: var(--b2);
+        color: var(--t1);
+      }
+      .sr-btn.easy {
+        border-color: rgba(16, 185, 129, 0.35);
+        background: rgba(16, 185, 129, 0.08);
+        color: var(--green);
+      }
+      .sr-btn.med {
+        border-color: rgba(245, 158, 11, 0.35);
+        background: rgba(245, 158, 11, 0.07);
+        color: var(--gold);
+      }
+      .sr-btn.hard {
+        border-color: rgba(239, 68, 68, 0.3);
+        background: rgba(239, 68, 68, 0.06);
+        color: var(--red);
+      }
+      .sr-progress {
+        font-size: 0.7rem;
+        color: var(--t3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem;
+      }
+
+      /* MIND MAP */
+      .mindmap-container {
+        background: var(--s2);
+        border: 1px solid var(--b1);
+        border-radius: var(--r3);
+        overflow: hidden;
+      }
+      .mindmap-svg {
+        width: 100%;
+        min-height: 420px;
+      }
+
+      /* NOTEBOOK */
+      .note-area {
+        width: 100%;
+        background: var(--s3);
+        border: 1px solid var(--b1);
+        border-radius: var(--r2);
+        padding: 0.8rem 1rem;
+        color: var(--t1);
+        line-height: 1.8;
+        resize: vertical;
+        min-height: 140px;
+        font-size: 0.85rem;
+      }
+      .note-area:focus {
+        outline: none;
+        border-color: var(--cyan);
+      }
+      .note-card {
+        background: var(--s3);
+        border: 1px solid var(--b1);
+        border-radius: var(--r);
+        padding: 0.75rem 0.9rem;
+        margin: 0.4rem 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+      }
+      .note-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 0.35rem;
+      }
+
+      /* CHALLENGE MODE */
+      .challenge-bar {
+        background: var(--s3);
+        border-radius: 20px;
+        height: 6px;
+        margin: 0.5rem 0;
+        overflow: hidden;
+      }
+      .challenge-fill {
+        height: 100%;
+        border-radius: 20px;
+        background: linear-gradient(90deg, var(--cyan), var(--violet));
+        transition: width 0.4s;
+      }
+      .challenge-num {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--t1);
+      }
+      .achievement {
+        background: var(--s3);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-radius: var(--r);
+        padding: 0.5rem 0.7rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--gold);
+      }
+      .achievement.locked {
+        opacity: 0.35;
+        filter: grayscale(1);
+      }
+
+      /* BUTTONS */
+      .btn {
+        padding: 0.45rem 1rem;
+        border-radius: var(--r);
+        border: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.12s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .btn:hover {
+        opacity: 0.85;
+        transform: translateY(-1px);
+      }
+      .btn-primary {
+        background: var(--cyan);
+        color: #000;
+      }
+      .btn-secondary {
+        background: var(--s4);
+        border: 1px solid var(--b2);
+        color: var(--t1);
+      }
+      .btn-violet {
+        background: rgba(124, 58, 237, 0.8);
+        color: #fff;
+      }
+      .btn-green {
+        background: rgba(16, 185, 129, 0.8);
+        color: #fff;
+      }
+      .btn-gold {
+        background: rgba(245, 158, 11, 0.8);
+        color: #000;
+      }
+      .btn-sm {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.73rem;
+      }
+
+      /* SEARCH */
+      .search-input {
+        width: 100%;
+        background: var(--s3);
+        border: 1px solid var(--b2);
+        border-radius: var(--r);
+        padding: 0.45rem 0.8rem;
+        color: var(--t1);
+        font-size: 0.82rem;
+      }
+      .search-input:focus {
+        outline: none;
+        border-color: var(--cyan);
+      }
+
+      /* TOOLTIP */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+      .tooltip .tt-text {
+        visibility: hidden;
+        background: var(--s4);
+        color: var(--t1);
+        border: 1px solid var(--b2);
+        padding: 0.3rem 0.6rem;
+        border-radius: var(--r);
+        font-size: 0.72rem;
+        position: absolute;
+        bottom: calc(100% + 5px);
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        z-index: 999;
+      }
+      .tooltip:hover .tt-text {
+        visibility: visible;
+      }
+
+      /* CHARTS */
+      .chart-wrap {
+        position: relative;
+        width: 100%;
+      }
+
+      /* RANKING */
+      .rank-item {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .rank-num {
+        width: 22px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--t3);
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .rank-num.gold {
+        color: var(--gold);
+      }
+      .rank-num.silver {
+        color: #94a3b8;
+      }
+      .rank-num.bronze {
+        color: #cd7f32;
+      }
+
+      /* MOBILE */
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none;
+        }
+        .g2,
+        .g3,
+        .g4 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2
+      class="sr-only"
+      style="
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+      "
+    >
+      CPA Master Hub — Plataforma avançada de estudos ANBIMA 2026
+    </h2>
+
+    <div class="app">
+      <!-- SIDEBAR -->
+      <nav class="sidebar">
+        <div class="sb-logo">
+          <div class="sb-logo-name">
+            <i class="ti ti-school" aria-hidden="true"></i>CPA Master Hub
+          </div>
+          <div class="sb-logo-sub">ANBIMA 2026 · Aprendizado Acelerado</div>
+        </div>
+
+        <div class="sb-sec">Início</div>
+        <div class="sb-link on" onclick="go('dashboard', this)">
+          <i class="ti ti-layout-dashboard" aria-hidden="true"></i>Dashboard
+        </div>
+        <div class="sb-link" onclick="go('roadmap', this)">
+          <i class="ti ti-route" aria-hidden="true"></i>Minha Jornada
+        </div>
+
+        <div class="sb-sec">Métodos de Ensino</div>
+        <div class="sb-link" onclick="go('feynman', this)">
+          <i class="ti ti-bulb" aria-hidden="true"></i>Técnica Feynman
+        </div>
+        <div class="sb-link" onclick="go('casestudies', this)">
+          <i class="ti ti-briefcase" aria-hidden="true"></i>Use Cases Reais<span
+            class="sb-badge"
+            >NOVO</span
+          >
+        </div>
+        <div class="sb-link" onclick="go('spacedrep', this)">
+          <i class="ti ti-brain" aria-hidden="true"></i>Revisão Espaçada
+        </div>
+        <div class="sb-link" onclick="go('mindmap', this)">
+          <i class="ti ti-network" aria-hidden="true"></i>Mapa Mental
+        </div>
+
+        <div class="sb-sec">Praticar</div>
+        <div class="sb-link" onclick="go('exercises', this)">
+          <i class="ti ti-list-check" aria-hidden="true"></i>Exercícios
+        </div>
+        <div class="sb-link" onclick="go('challenge', this)">
+          <i class="ti ti-bolt" aria-hidden="true"></i>Modo Desafio<span
+            class="sb-badge"
+            >XP</span
+          >
+        </div>
+        <div class="sb-link" onclick="go('notebook', this)">
+          <i class="ti ti-notebook" aria-hidden="true"></i>Caderno
+        </div>
+
+        <div class="sb-sec">Ferramentas</div>
+        <div class="sb-link" onclick="go('pomodoro', this)">
+          <i class="ti ti-clock" aria-hidden="true"></i>Timer Pomodoro
+        </div>
+        <div class="sb-link" onclick="go('calcs', this)">
+          <i class="ti ti-calculator" aria-hidden="true"></i>Calculadoras
+        </div>
+        <div class="sb-link" onclick="go('glossary', this)">
+          <i class="ti ti-book" aria-hidden="true"></i>Glossário
+        </div>
+
+        <div class="sb-xp">
+          <div class="xp-label">
+            <span style="color: var(--t1); font-size: 0.75rem; font-weight: 600"
+              >Nível <span id="sb-level">1</span> —
+              <span id="sb-rank">Iniciante</span></span
+            ><span id="sb-xp-num">0 XP</span>
+          </div>
+          <div class="xp-bar-wrap">
+            <div class="xp-bar-fill" id="sb-xp-bar" style="width: 0%"></div>
+          </div>
+          <div class="xp-label">
+            <span>Próximo nível</span><span id="sb-xp-next">100 XP</span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MAIN -->
+      <div class="main">
+        <div class="topbar">
+          <div class="tb-title">
+            <i
+              class="ti ti-layout-dashboard"
+              id="tb-icon"
+              aria-hidden="true"
+            ></i
+            ><span id="tb-title">Dashboard</span>
+          </div>
+          <div class="tb-right">
+            <span class="pill cpa">CPA</span>
+            <span class="pill cpror">C-Pro R</span>
+            <span class="pill cproi">C-Pro I</span>
+            <span class="pill xp" id="xp-pill">0 XP</span>
+          </div>
+        </div>
+
+        <div class="content">
+          <!-- ============ DASHBOARD ============ -->
+          <div class="panel on" id="panel-dashboard">
+            <div class="gauto" style="margin-bottom: 1.2rem">
+              <div class="stat-card">
+                <div class="stat-label">XP Total</div>
+                <div class="stat-num" id="d-xp" style="color: #a78bfa">0</div>
+                <div class="stat-delta" style="color: var(--t3)">
+                  Ganhe respondendo questões
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Acertos totais</div>
+                <div
+                  class="stat-num"
+                  id="d-correct"
+                  style="color: var(--green)"
+                >
+                  0
+                </div>
+                <div class="stat-delta" style="color: var(--t3)">
+                  de <span id="d-answered">0</span> respondidas
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Flashcards revisados</div>
+                <div class="stat-num" id="d-fc" style="color: var(--cyan)">
+                  0
+                </div>
+                <div class="stat-delta" style="color: var(--t3)">
+                  revisão espaçada ativa
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Pomodoros</div>
+                <div class="stat-num" id="d-pomo" style="color: var(--gold)">
+                  0
+                </div>
+                <div class="stat-delta" style="color: var(--t3)">
+                  ciclos completados
+                </div>
+              </div>
+            </div>
+
+            <div class="g2">
+              <div class="card">
+                <div class="sec">
+                  <i class="ti ti-chart-bar" aria-hidden="true"></i>Desempenho
+                  por certificação
+                </div>
+                <div class="prog-row">
+                  <span class="prog-name" style="color: var(--cpa)">CPA</span>
+                  <div class="prog-track">
+                    <div
+                      class="prog-fill"
+                      id="dp-cpa"
+                      style="width: 0%; background: var(--cpa)"
+                    ></div>
+                  </div>
+                  <span
+                    style="
+                      font-size: 0.72rem;
+                      color: var(--t2);
+                      min-width: 32px;
+                      text-align: right;
+                    "
+                    id="dp-cpa-pct"
+                    >0%</span
+                  >
+                </div>
+                <div class="prog-row">
+                  <span class="prog-name" style="color: var(--cpror)"
+                    >C-Pro R</span
+                  >
+                  <div class="prog-track">
+                    <div
+                      class="prog-fill"
+                      id="dp-cpror"
+                      style="width: 0%; background: var(--cpror)"
+                    ></div>
+                  </div>
+                  <span
+                    style="
+                      font-size: 0.72rem;
+                      color: var(--t2);
+                      min-width: 32px;
+                      text-align: right;
+                    "
+                    id="dp-cpror-pct"
+                    >0%</span
+                  >
+                </div>
+                <div class="prog-row">
+                  <span class="prog-name" style="color: var(--cproi)"
+                    >C-Pro I</span
+                  >
+                  <div class="prog-track">
+                    <div
+                      class="prog-fill"
+                      id="dp-cproi"
+                      style="width: 0%; background: var(--cproi)"
+                    ></div>
+                  </div>
+                  <span
+                    style="
+                      font-size: 0.72rem;
+                      color: var(--t2);
+                      min-width: 32px;
+                      text-align: right;
+                    "
+                    id="dp-cproi-pct"
+                    >0%</span
+                  >
+                </div>
+                <div class="gap1">
+                  <div class="chart-wrap" style="height: 130px">
+                    <canvas
+                      id="chartDesempenho"
+                      role="img"
+                      aria-label="Gráfico de desempenho por tema"
+                      >Desempenho por tema de estudo.</canvas
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec">
+                  <i class="ti ti-trophy" aria-hidden="true"></i>Conquistas
+                </div>
+                <div
+                  style="display: flex; flex-direction: column; gap: 0.4rem"
+                  id="achievements-list"
+                ></div>
+                <div class="gap2">
+                  <div class="sec" style="margin-bottom: 0.5rem">
+                    <i class="ti ti-flame" aria-hidden="true"></i>Ranking de
+                    tópicos
+                  </div>
+                  <div id="topic-ranking"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="gap2">
+              <div class="sec">
+                <i class="ti ti-rocket" aria-hidden="true"></i>Acesso rápido
+              </div>
+              <div class="g3">
+                <div
+                  class="card"
+                  style="
+                    cursor: pointer;
+                    border-color: rgba(34, 211, 238, 0.18);
+                  "
+                  onclick="
+                    go(
+                      'feynman',
+                      document.querySelector('.sb-link:nth-child(8)'),
+                    )
+                  "
+                >
+                  <div style="font-size: 1.3rem; margin-bottom: 0.5rem">🧠</div>
+                  <div class="h2" style="color: var(--cpa)">
+                    Técnica Feynman
+                  </div>
+                  <div class="muted">
+                    Aprenda explicando. O método mais eficaz para dominar
+                    conceitos difíceis.
+                  </div>
+                </div>
+                <div
+                  class="card"
+                  style="
+                    cursor: pointer;
+                    border-color: rgba(249, 115, 22, 0.18);
+                  "
+                  onclick="
+                    go(
+                      'casestudies',
+                      document.querySelector('.sb-link:nth-child(9)'),
+                    )
+                  "
+                >
+                  <div style="font-size: 1.3rem; margin-bottom: 0.5rem">💼</div>
+                  <div class="h2" style="color: var(--orange)">
+                    Use Cases Reais
+                  </div>
+                  <div class="muted">
+                    Situações do dia a dia bancário com dilemas éticos e tomadas
+                    de decisão.
+                  </div>
+                </div>
+                <div
+                  class="card"
+                  style="cursor: pointer; border-color: rgba(124, 58, 237, 0.2)"
+                  onclick="
+                    go(
+                      'challenge',
+                      document.querySelector('.sb-link:nth-child(15)'),
+                    )
+                  "
+                >
+                  <div style="font-size: 1.3rem; margin-bottom: 0.5rem">⚡</div>
+                  <div class="h2" style="color: #a78bfa">Modo Desafio</div>
+                  <div class="muted">
+                    Questões cronometradas com XP. Simule a pressão da prova
+                    real.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ ROADMAP ============ -->
+          <div class="panel" id="panel-roadmap">
+            <div class="g2">
+              <div>
+                <div class="card" style="margin-bottom: 1rem">
+                  <div class="sec">
+                    <i class="ti ti-route" aria-hidden="true"></i>Trilha de
+                    Certificações — Nova estrutura 2026
+                  </div>
+                  <div
+                    style="display: flex; flex-direction: column; gap: 0.6rem"
+                  >
+                    <div
+                      style="
+                        background: var(--s3);
+                        border: 1px solid rgba(34, 211, 238, 0.2);
+                        border-radius: var(--r2);
+                        padding: 0.9rem 1rem;
+                      "
+                    >
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: space-between;
+                          margin-bottom: 0.3rem;
+                        "
+                      >
+                        <div
+                          style="
+                            font-size: 0.88rem;
+                            font-weight: 700;
+                            color: var(--cpa);
+                          "
+                        >
+                          1. CPA — Certificado Profissional
+                        </div>
+                        <span class="pill cpa">R$ 225</span>
+                      </div>
+                      <div class="muted">
+                        Substitui a CPA-10. Porta de entrada obrigatória. 50
+                        questões · 2h30. Múltipla escolha contextual + Árvore de
+                        diálogo. Foco: SFN, produtos, suitability, tributação,
+                        fintechs.
+                      </div>
+                    </div>
+                    <div
+                      style="
+                        background: var(--s3);
+                        border: 1px solid rgba(245, 158, 11, 0.2);
+                        border-radius: var(--r2);
+                        padding: 0.9rem 1rem;
+                      "
+                    >
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: space-between;
+                          margin-bottom: 0.3rem;
+                        "
+                      >
+                        <div
+                          style="
+                            font-size: 0.88rem;
+                            font-weight: 700;
+                            color: var(--cpror);
+                          "
+                        >
+                          2. C-Pro R — Relacionamento
+                        </div>
+                        <span class="pill cpror">R$ 500</span>
+                      </div>
+                      <div class="muted">
+                        Substitui CPA-20. Pré-req: CPA ativa. 45 questões ·
+                        2h30. Portfólios, derivativos, fundos avançados, análise
+                        de perfil consultivo.
+                      </div>
+                    </div>
+                    <div
+                      style="
+                        background: var(--s3);
+                        border: 1px solid rgba(16, 185, 129, 0.2);
+                        border-radius: var(--r2);
+                        padding: 0.9rem 1rem;
+                      "
+                    >
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: space-between;
+                          margin-bottom: 0.3rem;
+                        "
+                      >
+                        <div
+                          style="
+                            font-size: 0.88rem;
+                            font-weight: 700;
+                            color: var(--cproi);
+                          "
+                        >
+                          3. C-Pro I — Investimento
+                        </div>
+                        <span class="pill cproi">Especialista</span>
+                      </div>
+                      <div class="muted">
+                        Substitui CEA. Pré-req: CPA + C-Pro R. 40 questões ·
+                        2h30. Previdência, planejamento patrimonial, private
+                        banking, sucessão, derivativos complexos.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="sec">
+                    <i class="ti ti-calendar" aria-hidden="true"></i>Plano de
+                    estudos — 9 semanas
+                  </div>
+                  <div
+                    style="display: flex; flex-direction: column; gap: 0.5rem"
+                    id="roadmap-weeks"
+                  ></div>
+                </div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 1rem">
+                <div class="card">
+                  <div class="sec">
+                    <i class="ti ti-bulb" aria-hidden="true"></i>Macetes que
+                    mais caem
+                  </div>
+                  <div
+                    style="display: flex; flex-direction: column; gap: 0.4rem"
+                    id="macetes-list"
+                  ></div>
+                </div>
+                <div class="card">
+                  <div class="sec">
+                    <i class="ti ti-checklist" aria-hidden="true"></i>Checklist
+                    antes da prova
+                  </div>
+                  <div id="checklist-wrap"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ FEYNMAN ENGINE ============ -->
+          <div class="panel" id="panel-feynman">
+            <div class="feynman-box" style="margin-bottom: 1.2rem">
+              <div class="tag-label">🧠 Técnica Feynman — O que é?</div>
+              <div class="muted">
+                Criada pelo físico Richard Feynman:
+                <strong style="color: var(--t1)"
+                  >se você não consegue explicar de forma simples, é porque não
+                  entendeu.</strong
+                >
+                4 passos: escolha o conceito → explique como a uma criança →
+                identifique onde trava → simplifique com analogias. Combate a
+                "ilusão de conhecimento".
+              </div>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                margin-bottom: 1rem;
+              "
+              id="feynman-topics"
+            ></div>
+            <div id="feynman-content"></div>
+          </div>
+
+          <!-- ============ USE CASES ============ -->
+          <div class="panel" id="panel-casestudies">
+            <div style="margin-bottom: 1rem">
+              <div class="muted" style="margin-bottom: 0.8rem">
+                Situações reais do dia a dia bancário. Treine tomada de decisão,
+                ética profissional e aplicação de normas em contextos práticos —
+                exatamente o que a prova CPA 2026 avalia.
+              </div>
+              <div
+                style="display: flex; gap: 0.5rem; flex-wrap: wrap"
+                id="case-filters"
+              ></div>
+            </div>
+            <div id="cases-container"></div>
+          </div>
+
+          <!-- ============ SPACED REP ============ -->
+          <div class="panel" id="panel-spacedrep">
+            <div class="g2" style="margin-bottom: 1rem">
+              <div class="card-sm">
+                <div class="stat-label">Para revisar hoje</div>
+                <div class="stat-num" id="sr-due" style="color: var(--cyan)">
+                  0
+                </div>
+                <div class="stat-delta" style="color: var(--t3)">
+                  cards pendentes
+                </div>
+              </div>
+              <div class="card-sm">
+                <div class="stat-label">Revisados hoje</div>
+                <div class="stat-num" id="sr-done" style="color: var(--green)">
+                  0
+                </div>
+                <div class="stat-delta" style="color: var(--t3)">
+                  de <span id="sr-total-num">0</span> total
+                </div>
+              </div>
+            </div>
+            <div class="sr-progress" id="sr-progress-bar-wrap">
+              <span id="sr-pos">Card 0/0</span>
+              <div
+                style="
+                  flex: 1;
+                  margin: 0 0.8rem;
+                  height: 4px;
+                  background: rgba(255, 255, 255, 0.06);
+                  border-radius: 20px;
+                  overflow: hidden;
+                "
+              >
+                <div
+                  id="sr-prog"
+                  style="
+                    height: 100%;
+                    border-radius: 20px;
+                    background: var(--cyan);
+                    transition: width 0.3s;
+                    width: 0%;
+                  "
+                ></div>
+              </div>
+              <span id="sr-pct-text">0%</span>
+            </div>
+            <div
+              id="sr-card-wrap"
+              style="max-width: 520px; margin: 0 auto"
+            ></div>
+            <div
+              style="
+                text-align: center;
+                margin-top: 1rem;
+                font-size: 0.78rem;
+                color: var(--t3);
+              "
+            >
+              <i
+                class="ti ti-info-circle"
+                style="font-size: 13px"
+                aria-hidden="true"
+              ></i>
+              Avalie sua dificuldade para otimizar as revisões (Algoritmo SM-2
+              simplificado)
+            </div>
+          </div>
+
+          <!-- ============ MIND MAP ============ -->
+          <div class="panel" id="panel-mindmap">
+            <div class="muted" style="margin-bottom: 0.8rem">
+              Mapa mental interativo do Sistema Financeiro Nacional — clique nos
+              nós para expandir detalhes.
+            </div>
+            <div class="mindmap-container">
+              <svg
+                class="mindmap-svg"
+                id="mindmap-svg"
+                viewBox="0 0 800 480"
+                role="img"
+                aria-label="Mapa mental do Sistema Financeiro Nacional"
+              ></svg>
+            </div>
+            <div
+              id="mindmap-detail"
+              class="card gap2"
+              style="display: none"
+            ></div>
+          </div>
+
+          <!-- ============ EXERCISES ============ -->
+          <div class="panel" id="panel-exercises">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+              "
+            >
+              <div
+                style="display: flex; gap: 0.4rem; flex-wrap: wrap"
+                id="ex-filters"
+              ></div>
+              <div style="font-size: 0.78rem; color: var(--t2)">
+                <span id="ex-count">0</span> questões ·
+                <span id="ex-correct-count">0</span> corretas
+              </div>
+            </div>
+            <div id="exercises-container"></div>
+          </div>
+
+          <!-- ============ CHALLENGE MODE ============ -->
+          <div class="panel" id="panel-challenge">
+            <div id="challenge-intro">
+              <div
+                class="card"
+                style="
+                  max-width: 480px;
+                  margin: 0 auto;
+                  text-align: center;
+                  padding: 2rem;
+                "
+              >
+                <div style="font-size: 2.5rem; margin-bottom: 0.8rem">⚡</div>
+                <div
+                  class="h2"
+                  style="font-size: 1.1rem; margin-bottom: 0.5rem"
+                >
+                  Modo Desafio
+                </div>
+                <div class="muted" style="margin-bottom: 1.2rem">
+                  10 questões cronometradas. 30 segundos por questão. Cada
+                  acerto vale XP extra. Treine a pressão da prova real.
+                </div>
+                <div class="g2" style="margin-bottom: 1.2rem">
+                  <div class="card-sm" style="text-align: left">
+                    <div class="stat-label">Recorde</div>
+                    <div
+                      class="stat-num"
+                      id="ch-record"
+                      style="color: var(--gold)"
+                    >
+                      0
+                    </div>
+                    <div class="stat-delta" style="color: var(--t3)">
+                      acertos
+                    </div>
+                  </div>
+                  <div class="card-sm" style="text-align: left">
+                    <div class="stat-label">XP ganho</div>
+                    <div
+                      class="stat-num"
+                      id="ch-xp-earned"
+                      style="color: #a78bfa"
+                    >
+                      0
+                    </div>
+                    <div class="stat-delta" style="color: var(--t3)">
+                      no modo desafio
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="btn btn-primary"
+                  style="
+                    width: 100%;
+                    justify-content: center;
+                    font-size: 0.9rem;
+                    padding: 0.7rem;
+                  "
+                  onclick="startChallenge()"
+                >
+                  <i class="ti ti-player-play" aria-hidden="true"></i>Iniciar
+                  Desafio
+                </button>
+              </div>
+            </div>
+            <div
+              id="challenge-game"
+              style="display: none; max-width: 560px; margin: 0 auto"
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-bottom: 0.8rem;
+                "
+              >
+                <div>
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      color: var(--t3);
+                      text-transform: uppercase;
+                      letter-spacing: 0.5px;
+                    "
+                  >
+                    Questão
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.95rem;
+                      font-weight: 700;
+                      color: var(--t1);
+                    "
+                    id="ch-q-num"
+                  >
+                    1 / 10
+                  </div>
+                </div>
+                <div style="text-align: center">
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      color: var(--t3);
+                      text-transform: uppercase;
+                      letter-spacing: 0.5px;
+                    "
+                  >
+                    Tempo
+                  </div>
+                  <div
+                    style="
+                      font-size: 1.5rem;
+                      font-weight: 700;
+                      color: var(--t1);
+                      font-variant-numeric: tabular-nums;
+                    "
+                    id="ch-timer"
+                  >
+                    30
+                  </div>
+                </div>
+                <div style="text-align: right">
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      color: var(--t3);
+                      text-transform: uppercase;
+                      letter-spacing: 0.5px;
+                    "
+                  >
+                    Acertos
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.95rem;
+                      font-weight: 700;
+                      color: var(--green);
+                    "
+                    id="ch-score"
+                  >
+                    0
+                  </div>
+                </div>
+              </div>
+              <div class="challenge-bar">
+                <div
+                  class="challenge-fill"
+                  id="ch-bar"
+                  style="width: 100%"
+                ></div>
+              </div>
+              <div class="ex" style="margin-bottom: 0.7rem">
+                <div
+                  id="ch-q"
+                  style="
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    line-height: 1.6;
+                    color: var(--t1);
+                    margin-bottom: 0.8rem;
+                  "
+                ></div>
+                <div class="opts" id="ch-opts"></div>
+              </div>
+            </div>
+            <div
+              id="challenge-result"
+              style="
+                display: none;
+                max-width: 480px;
+                margin: 0 auto;
+                text-align: center;
+              "
+            >
+              <div class="card" style="padding: 2rem">
+                <div
+                  style="font-size: 2rem; margin-bottom: 0.5rem"
+                  id="ch-result-emoji"
+                >
+                  🎉
+                </div>
+                <div
+                  style="
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                    color: var(--t1);
+                    margin-bottom: 0.3rem;
+                  "
+                  id="ch-result-score"
+                ></div>
+                <div
+                  class="muted"
+                  style="margin-bottom: 1rem"
+                  id="ch-result-msg"
+                ></div>
+                <div
+                  style="
+                    background: rgba(124, 58, 237, 0.1);
+                    border: 1px solid rgba(124, 58, 237, 0.2);
+                    border-radius: var(--r);
+                    padding: 0.6rem;
+                    font-size: 0.88rem;
+                    color: #a78bfa;
+                    margin-bottom: 1rem;
+                  "
+                  id="ch-result-xp"
+                ></div>
+                <button
+                  class="btn btn-primary"
+                  style="width: 100%; justify-content: center"
+                  onclick="resetChallenge()"
+                >
+                  <i class="ti ti-refresh" aria-hidden="true"></i>Jogar
+                  novamente
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ NOTEBOOK ============ -->
+          <div class="panel" id="panel-notebook">
+            <div class="g2">
+              <div>
+                <div class="card" style="margin-bottom: 1rem">
+                  <div class="sec">
+                    <i class="ti ti-pencil" aria-hidden="true"></i>Minha
+                    anotação
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      gap: 0.5rem;
+                      margin-bottom: 0.6rem;
+                      flex-wrap: wrap;
+                    "
+                    id="note-topics"
+                  ></div>
+                  <textarea
+                    class="note-area"
+                    id="note-input"
+                    placeholder="Escreva sua anotação ou resumo Feynman aqui... (Ex: 'O FGC funciona como um seguro bancário que...')"
+                  ></textarea>
+                  <div
+                    style="
+                      display: flex;
+                      gap: 0.5rem;
+                      margin-top: 0.6rem;
+                      flex-wrap: wrap;
+                    "
+                  >
+                    <button class="btn btn-primary btn-sm" onclick="saveNote()">
+                      <i class="ti ti-plus" aria-hidden="true"></i>Salvar nota
+                    </button>
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      onclick="clearNote()"
+                    >
+                      <i class="ti ti-trash" aria-hidden="true"></i>Limpar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="card">
+                  <div class="sec">
+                    <i class="ti ti-notebook" aria-hidden="true"></i>Notas
+                    salvas
+                  </div>
+                  <div id="notes-list">
+                    <div class="muted">Nenhuma nota salva ainda.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ POMODORO ============ -->
+          <div class="panel" id="panel-pomodoro">
+            <div class="g2">
+              <div class="card">
+                <div class="sec" style="justify-content: center">
+                  <i class="ti ti-clock" aria-hidden="true"></i>Timer de Estudo
+                </div>
+                <div class="pomo-display">
+                  <div class="pomo-ring-wrap">
+                    <svg width="180" height="180" aria-label="Timer Pomodoro">
+                      <circle
+                        cx="90"
+                        cy="90"
+                        r="82"
+                        fill="none"
+                        stroke="rgba(255,255,255,.06)"
+                        stroke-width="7"
+                      />
+                      <circle
+                        cx="90"
+                        cy="90"
+                        r="82"
+                        fill="none"
+                        stroke="var(--cyan)"
+                        stroke-width="7"
+                        stroke-linecap="round"
+                        stroke-dasharray="515.2"
+                        stroke-dashoffset="0"
+                        id="pomo-ring"
+                        style="
+                          transition:
+                            stroke-dashoffset 0.5s,
+                            stroke 0.3s;
+                        "
+                      />
+                    </svg>
+                    <div class="pomo-ring-inner">
+                      <div class="pomo-time" id="pomo-display">25:00</div>
+                      <div class="pomo-label" id="pomo-mode-label">Foco</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pomo-btns">
+                  <button
+                    class="btn btn-primary"
+                    id="pomo-btn"
+                    onclick="togglePomo()"
+                  >
+                    <i
+                      class="ti ti-player-play"
+                      id="pomo-icon"
+                      aria-hidden="true"
+                    ></i
+                    >Iniciar
+                  </button>
+                  <button class="btn btn-secondary" onclick="resetPomo()">
+                    <i class="ti ti-refresh" aria-hidden="true"></i>Reset
+                  </button>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    gap: 0.5rem;
+                    justify-content: center;
+                    margin-top: 0.8rem;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    onclick="setPomo(25, 'Foco')"
+                  >
+                    25 min
+                  </button>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    onclick="setPomo(15, 'Foco longo')"
+                  >
+                    15 min
+                  </button>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    onclick="setPomo(5, 'Pausa curta')"
+                  >
+                    5 min
+                  </button>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    onclick="setPomo(10, 'Pausa longa')"
+                  >
+                    10 min
+                  </button>
+                </div>
+              </div>
+              <div>
+                <div class="card" style="margin-bottom: 1rem">
+                  <div class="sec">
+                    <i class="ti ti-history" aria-hidden="true"></i>Sessões de
+                    hoje
+                  </div>
+                  <div class="pomo-log" id="pomo-log">
+                    <div class="muted">Nenhuma sessão concluída ainda.</div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="sec">
+                    <i class="ti ti-info-circle" aria-hidden="true"></i>Como
+                    usar com os estudos CPA
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      gap: 0.4rem;
+                      font-size: 0.8rem;
+                      color: var(--t2);
+                    "
+                  >
+                    <div
+                      style="
+                        padding: 0.45rem 0.7rem;
+                        background: var(--s3);
+                        border-radius: var(--r);
+                      "
+                    >
+                      🍅 <strong style="color: var(--t1)">25 min</strong> —
+                      Feynman de um tópico específico
+                    </div>
+                    <div
+                      style="
+                        padding: 0.45rem 0.7rem;
+                        background: var(--s3);
+                        border-radius: var(--r);
+                      "
+                    >
+                      🍅 <strong style="color: var(--t1)">25 min</strong> —
+                      Resolução de 10 exercícios
+                    </div>
+                    <div
+                      style="
+                        padding: 0.45rem 0.7rem;
+                        background: var(--s3);
+                        border-radius: var(--r);
+                      "
+                    >
+                      ☕ <strong style="color: var(--t1)">5 min</strong> — Pausa
+                      ativa (revise flashcards)
+                    </div>
+                    <div
+                      style="
+                        padding: 0.45rem 0.7rem;
+                        background: var(--s3);
+                        border-radius: var(--r);
+                      "
+                    >
+                      🍅 <strong style="color: var(--t1)">25 min</strong> — Use
+                      cases e casos práticos
+                    </div>
+                    <div
+                      style="
+                        padding: 0.45rem 0.7rem;
+                        background: var(--s3);
+                        border-radius: var(--r);
+                      "
+                    >
+                      🌿 <strong style="color: var(--t1)">15 min</strong> —
+                      Pausa longa após 4 pomodoros
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ CALCULADORAS ============ -->
+          <div class="panel" id="panel-calcs">
+            <div class="g2">
+              <div class="card">
+                <div class="sec">
+                  <i class="ti ti-receipt-tax" aria-hidden="true"></i>IR —
+                  Tabela Regressiva
+                </div>
+                <div style="margin-bottom: 0.6rem">
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      color: var(--t2);
+                      margin-bottom: 0.3rem;
+                    "
+                  >
+                    Rendimento bruto (R$)
+                  </div>
+                  <input
+                    type="number"
+                    class="search-input"
+                    id="ir-rend"
+                    value="10000"
+                    oninput="calcIR()"
+                    style="width: 100%"
+                  />
+                </div>
+                <div style="margin-bottom: 0.8rem">
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      color: var(--t2);
+                      margin-bottom: 0.3rem;
+                    "
+                  >
+                    Prazo (dias)
+                  </div>
+                  <input
+                    type="range"
+                    id="ir-dias"
+                    min="1"
+                    max="1000"
+                    value="400"
+                    oninput="
+                      calcIR();
+                      document.getElementById('ir-dias-v').textContent =
+                        this.value + ' dias';
+                    "
+                    style="width: 100%"
+                  />
+                  <div
+                    style="
+                      font-size: 0.75rem;
+                      color: var(--t1);
+                      margin-top: 0.2rem;
+                    "
+                    id="ir-dias-v"
+                  >
+                    400 dias
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: var(--s3);
+                    border-radius: var(--r2);
+                    padding: 0.8rem 1rem;
+                  "
+                >
+                  <div
+                    style="
+                      display: grid;
+                      grid-template-columns: 1fr 1fr 1fr;
+                      gap: 0.5rem;
+                      text-align: center;
+                    "
+                  >
+                    <div>
+                      <div
+                        style="
+                          font-size: 0.62rem;
+                          color: var(--t3);
+                          text-transform: uppercase;
+                        "
+                      >
+                        Alíquota
+                      </div>
+                      <div
+                        style="
+                          font-size: 1.1rem;
+                          font-weight: 700;
+                          color: var(--gold);
+                        "
+                        id="ir-aliq"
+                      >
+                        17,5%
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        style="
+                          font-size: 0.62rem;
+                          color: var(--t3);
+                          text-transform: uppercase;
+                        "
+                      >
+                        IR
+                      </div>
+                      <div
+                        style="
+                          font-size: 1.1rem;
+                          font-weight: 700;
+                          color: var(--red);
+                        "
+                        id="ir-val"
+                      >
+                        R$ 1.750
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        style="
+                          font-size: 0.62rem;
+                          color: var(--t3);
+                          text-transform: uppercase;
+                        "
+                      >
+                        Líquido
+                      </div>
+                      <div
+                        style="
+                          font-size: 1.1rem;
+                          font-weight: 700;
+                          color: var(--green);
+                        "
+                        id="ir-liq"
+                      >
+                        R$ 8.250
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec">
+                  <i class="ti ti-chart-line" aria-hidden="true"></i>Índice de
+                  Sharpe
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    margin-bottom: 0.8rem;
+                  "
+                >
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.72rem;
+                        color: var(--t2);
+                        margin-bottom: 0.2rem;
+                      "
+                    >
+                      Retorno do fundo (%)
+                    </div>
+                    <input
+                      type="number"
+                      class="search-input"
+                      id="sh-ret"
+                      value="18"
+                      oninput="calcSharpe()"
+                    />
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.72rem;
+                        color: var(--t2);
+                        margin-bottom: 0.2rem;
+                      "
+                    >
+                      Taxa livre de risco (%)
+                    </div>
+                    <input
+                      type="number"
+                      class="search-input"
+                      id="sh-rf"
+                      value="10.5"
+                      oninput="calcSharpe()"
+                    />
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.72rem;
+                        color: var(--t2);
+                        margin-bottom: 0.2rem;
+                      "
+                    >
+                      Desvio padrão (%)
+                    </div>
+                    <input
+                      type="number"
+                      class="search-input"
+                      id="sh-dp"
+                      value="15"
+                      oninput="calcSharpe()"
+                    />
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: var(--s3);
+                    border-radius: var(--r2);
+                    padding: 0.8rem 1rem;
+                    text-align: center;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.62rem;
+                      color: var(--t3);
+                      text-transform: uppercase;
+                      margin-bottom: 0.2rem;
+                    "
+                  >
+                    Sharpe
+                  </div>
+                  <div
+                    style="
+                      font-size: 1.5rem;
+                      font-weight: 700;
+                      color: var(--cpa);
+                    "
+                    id="sh-val"
+                  >
+                    0,50
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.75rem;
+                      color: var(--t2);
+                      margin-top: 0.2rem;
+                    "
+                    id="sh-interp"
+                  >
+                    Bom
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec">
+                  <i class="ti ti-currency-real" aria-hidden="true"></i>Taxa
+                  Real — Fisher
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    margin-bottom: 0.8rem;
+                  "
+                >
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.72rem;
+                        color: var(--t2);
+                        margin-bottom: 0.2rem;
+                      "
+                    >
+                      Taxa nominal/Selic (%)
+                    </div>
+                    <input
+                      type="number"
+                      class="search-input"
+                      id="fi-nom"
+                      value="13.75"
+                      oninput="calcFisher()"
+                    />
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.72rem;
+                        color: var(--t2);
+                        margin-bottom: 0.2rem;
+                      "
+                    >
+                      Inflação/IPCA (%)
+                    </div>
+                    <input
+                      type="number"
+                      class="search-input"
+                      id="fi-inf"
+                      value="5"
+                      oninput="calcFisher()"
+                    />
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: var(--s3);
+                    border-radius: var(--r2);
+                    padding: 0.8rem 1rem;
+                    text-align: center;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.62rem;
+                      color: var(--t3);
+                      text-transform: uppercase;
+                      margin-bottom: 0.2rem;
+                    "
+                  >
+                    Taxa real (Fisher)
+                  </div>
+                  <div
+                    style="
+                      font-size: 1.5rem;
+                      font-weight: 700;
+                      color: var(--cproi);
+                    "
+                    id="fi-val"
+                  >
+                    8,33%
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.75rem;
+                      color: var(--t2);
+                      margin-top: 0.2rem;
+                    "
+                  >
+                    Aprox. simples: <span id="fi-aprox">8,75%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec">
+                  <i class="ti ti-trending-up" aria-hidden="true"></i>Retorno
+                  pelo Beta
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    margin-bottom: 0.8rem;
+                  "
+                >
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.72rem;
+                        color: var(--t2);
+                        margin-bottom: 0.2rem;
+                      "
+                    >
+                      Beta do ativo
+                    </div>
+                    <input
+                      type="number"
+                      class="search-input"
+                      id="be-beta"
+                      value="1.8"
+                      step="0.1"
+                      oninput="calcBeta()"
+                    />
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        font-size: 0.72rem;
+                        color: var(--t2);
+                        margin-bottom: 0.2rem;
+                      "
+                    >
+                      Variação do mercado (%)
+                    </div>
+                    <input
+                      type="number"
+                      class="search-input"
+                      id="be-mkt"
+                      value="10"
+                      oninput="calcBeta()"
+                    />
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: var(--s3);
+                    border-radius: var(--r2);
+                    padding: 0.8rem 1rem;
+                    text-align: center;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.62rem;
+                      color: var(--t3);
+                      text-transform: uppercase;
+                      margin-bottom: 0.2rem;
+                    "
+                  >
+                    Retorno esperado
+                  </div>
+                  <div
+                    style="
+                      font-size: 1.5rem;
+                      font-weight: 700;
+                      color: var(--cpror);
+                    "
+                    id="be-val"
+                  >
+                    18,0%
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.75rem;
+                      color: var(--t2);
+                      margin-top: 0.2rem;
+                    "
+                    id="be-interp"
+                  >
+                    Mais volátil que o mercado
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ GLOSSARY ============ -->
+          <div class="panel" id="panel-glossary">
+            <input
+              class="search-input"
+              type="text"
+              placeholder="Buscar termo financeiro..."
+              oninput="filterGloss(this.value)"
+              style="margin-bottom: 0.8rem"
+              aria-label="Buscar no glossário"
+            />
+            <div class="g2" id="gloss-container"></div>
+          </div>
+        </div>
+        <!-- content -->
+      </div>
+      <!-- main -->
+    </div>
+    <!-- app -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script>
+      // ============ STATE ============
+      const ST = {
+        xp: 0,
+        level: 1,
+        correct: 0,
+        answered: 0,
+        fcDone: 0,
+        pomos: 0,
+        chRecord: 0,
+        chXP: 0,
+        topicScores: {},
+        notes: [],
+        srDone: 0,
+        srIdx: 0,
+      };
+      const LEVELS = [
+        "Iniciante",
+        "Aprendiz",
+        "Estudante",
+        "Dedicado",
+        "Avançado",
+        "Expert",
+        "Mestre",
+      ];
+      const LEVEL_XP = [0, 100, 250, 500, 900, 1500, 2500];
+
+      function addXP(n, reason) {
+        ST.xp += n;
+        updateXPBar();
+        const pill = document.getElementById("xp-pill");
+        if (pill) {
+          pill.textContent = ST.xp + " XP";
+          pill.style.transform = "scale(1.15)";
+          setTimeout(() => (pill.style.transform = ""), 300);
+        }
+        document.getElementById("d-xp").textContent = ST.xp;
+        checkAchievements();
+      }
+      function updateXPBar() {
+        let lv = 0;
+        for (let i = 0; i < LEVEL_XP.length; i++) {
+          if (ST.xp >= LEVEL_XP[i]) lv = i;
+        }
+        ST.level = lv + 1;
+        const next = LEVEL_XP[lv + 1] || LEVEL_XP[LEVEL_XP.length - 1] + 500;
+        const prev = LEVEL_XP[lv];
+        const pct = Math.min(
+          100,
+          Math.round(((ST.xp - prev) / (next - prev)) * 100),
+        );
+        document.getElementById("sb-level").textContent = ST.level;
+        document.getElementById("sb-rank").textContent =
+          LEVELS[lv] || "Lendário";
+        document.getElementById("sb-xp-num").textContent = ST.xp + " XP";
+        document.getElementById("sb-xp-bar").style.width = pct + "%";
+        document.getElementById("sb-xp-next").textContent = next + " XP";
+      }
+
+      // ============ NAV ============
+      const tabIcons = {
+        dashboard: "ti-layout-dashboard",
+        roadmap: "ti-route",
+        feynman: "ti-bulb",
+        casestudies: "ti-briefcase",
+        spacedrep: "ti-brain",
+        mindmap: "ti-network",
+        exercises: "ti-list-check",
+        challenge: "ti-bolt",
+        notebook: "ti-notebook",
+        pomodoro: "ti-clock",
+        calcs: "ti-calculator",
+        glossary: "ti-book",
+      };
+      const tabTitles = {
+        dashboard: "Dashboard",
+        roadmap: "Minha Jornada",
+        feynman: "Técnica Feynman",
+        casestudies: "Use Cases Reais",
+        spacedrep: "Revisão Espaçada (Spaced Repetition)",
+        mindmap: "Mapa Mental Interativo",
+        exercises: "Exercícios por Módulo",
+        challenge: "Modo Desafio ⚡",
+        notebook: "Caderno de Estudos",
+        pomodoro: "Timer Pomodoro",
+        calcs: "Calculadoras Financeiras",
+        glossary: "Glossário Financeiro",
+      };
+      function go(id, el) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("on"));
+        document
+          .querySelectorAll(".sb-link")
+          .forEach((l) => l.classList.remove("on"));
+        document.getElementById("panel-" + id).classList.add("on");
+        if (el) el.classList.add("on");
+        const ic = document.getElementById("tb-icon");
+        const tc = tabIcons[id];
+        if (ic && tc) {
+          ic.className = "ti " + tc;
+        }
+        document.getElementById("tb-title").textContent = tabTitles[id] || id;
+        if (id === "spacedrep") initSR();
+        if (id === "mindmap") drawMindmap();
+        if (id === "exercises") renderExercises("all");
+        if (id === "casestudies") renderCases("all");
+        if (id === "feynman") renderFeynman(0);
+        if (id === "roadmap") renderRoadmap();
+      }
+
+      // ============ DASHBOARD CHART ============
+      let dashChart = null;
+      function updateDashboard() {
+        document.getElementById("d-correct").textContent = ST.correct;
+        document.getElementById("d-answered").textContent = ST.answered;
+        document.getElementById("d-fc").textContent = ST.fcDone;
+        document.getElementById("d-pomo").textContent = ST.pomos;
+        const mods = {
+          cpa: { c: 0, t: 0 },
+          cpror: { c: 0, t: 0 },
+          cproi: { c: 0, t: 0 },
+        };
+        document.querySelectorAll(".ex[data-answered]").forEach((e) => {
+          const m = e.dataset.mod;
+          if (mods[m]) {
+            mods[m].t++;
+            if (e.dataset.hit === "1") mods[m].c++;
+          }
+        });
+        ["cpa", "cpror", "cproi"].forEach((m) => {
+          const pct = mods[m].t ? Math.round((mods[m].c / mods[m].t) * 100) : 0;
+          const el = document.getElementById("dp-" + m);
+          const el2 = document.getElementById("dp-" + m + "-pct");
+          if (el) el.style.width = pct + "%";
+          if (el2) el2.textContent = pct + "%";
+        });
+        const topics = Object.entries(ST.topicScores)
+          .sort((a, b) => b[1].t - a[1].t)
+          .slice(0, 6);
+        if (topics.length) {
+          const labels = topics.map((t) => t[0].substring(0, 12));
+          const data = topics.map((t) =>
+            t[1].t ? Math.round((t[1].c / t[1].t) * 100) : 0,
+          );
+          if (!dashChart) {
+            const ctx = document.getElementById("chartDesempenho");
+            if (ctx)
+              dashChart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                  labels,
+                  datasets: [
+                    {
+                      label: "%",
+                      data,
+                      backgroundColor: data.map((v) =>
+                        v >= 70
+                          ? "rgba(16,185,129,.55)"
+                          : v >= 50
+                            ? "rgba(245,158,11,.55)"
+                            : "rgba(239,68,68,.5)",
+                      ),
+                      borderRadius: 4,
+                    },
+                  ],
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: { legend: { display: false } },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      max: 100,
+                      ticks: { color: "#4a5878", font: { size: 10 } },
+                      grid: { color: "rgba(255,255,255,.04)" },
+                    },
+                    x: {
+                      ticks: {
+                        color: "#4a5878",
+                        font: { size: 9 },
+                        maxRotation: 35,
+                      },
+                      grid: { display: false },
+                    },
+                  },
+                },
+              });
+          } else {
+            dashChart.data.labels = labels;
+            dashChart.data.datasets[0].data = data;
+            dashChart.data.datasets[0].backgroundColor = data.map((v) =>
+              v >= 70
+                ? "rgba(16,185,129,.55)"
+                : v >= 50
+                  ? "rgba(245,158,11,.55)"
+                  : "rgba(239,68,68,.5)",
+            );
+            dashChart.update("none");
+          }
+        }
+        renderAchievements();
+        renderTopicRanking();
+      }
+
+      // ============ ACHIEVEMENTS ============
+      const ACHIEVEMENTS = [
+        {
+          id: "first",
+          icon: "🎯",
+          label: "Primeira resposta",
+          desc: "Respondeu a primeira questão",
+          check: () => ST.answered >= 1,
+        },
+        {
+          id: "ten",
+          icon: "🔟",
+          label: "Dez questões",
+          desc: "Respondeu 10 questões",
+          check: () => ST.answered >= 10,
+        },
+        {
+          id: "streak5",
+          icon: "🔥",
+          label: "5 acertos seguidos",
+          desc: "Acertou 5 questões em sequência",
+          check: () => ST.streak >= 5,
+        },
+        {
+          id: "pomo1",
+          icon: "🍅",
+          label: "Primeiro Pomodoro",
+          desc: "Completou um ciclo de foco",
+          check: () => ST.pomos >= 1,
+        },
+        {
+          id: "xp100",
+          icon: "⭐",
+          label: "100 XP",
+          desc: "Acumulou 100 pontos de experiência",
+          check: () => ST.xp >= 100,
+        },
+        {
+          id: "xp500",
+          icon: "💫",
+          label: "500 XP",
+          desc: "Acumulou 500 pontos de experiência",
+          check: () => ST.xp >= 500,
+        },
+        {
+          id: "fc10",
+          icon: "🃏",
+          label: "Revisor",
+          desc: "Revisou 10 flashcards",
+          check: () => ST.fcDone >= 10,
+        },
+        {
+          id: "challenger",
+          icon: "⚡",
+          label: "Desafiante",
+          desc: "Completou o Modo Desafio",
+          check: () => ST.chRecord > 0,
+        },
+      ];
+      const earned = new Set();
+      function checkAchievements() {
+        ACHIEVEMENTS.forEach((a) => {
+          if (!earned.has(a.id) && a.check()) {
+            earned.add(a.id);
+          }
+        });
+        renderAchievements();
+      }
+      function renderAchievements() {
+        const el = document.getElementById("achievements-list");
+        if (!el) return;
+        el.innerHTML = ACHIEVEMENTS.slice(0, 6)
+          .map(
+            (a) => `
+          <div class="achievement${earned.has(a.id) ? "" : " locked"}">
+            <span>${a.icon}</span><div><div style="font-size:.75rem;font-weight:600;color:${earned.has(a.id) ? "var(--gold)" : "var(--t3)"}">${a.label}</div><div style="font-size:.68rem;color:var(--t3)">${a.desc}</div></div>
+          </div>`,
+          )
+          .join("");
+      }
+      function renderTopicRanking() {
+        const el = document.getElementById("topic-ranking");
+        if (!el) return;
+        const sorted = Object.entries(ST.topicScores)
+          .sort((a, b) => b[1].t - a[1].t)
+          .slice(0, 5);
+        if (!sorted.length) {
+          el.innerHTML =
+            '<div class="muted">Responda questões para ver o ranking.</div>';
+          return;
+        }
+        const cls = ["gold", "silver", "bronze", "", ""];
+        el.innerHTML = sorted
+          .map(
+            (t, i) => `
+          <div class="rank-item"><span class="rank-num ${cls[i]}">${i + 1}</span><span style="flex:1;font-size:.78rem;color:var(--t2)">${t[0]}</span><span style="font-size:.72rem;color:var(--t3)">${t[1].t} resps</span></div>`,
+          )
+          .join("");
+      }
+      ST.streak = 0;
+
+      // ============ FEYNMAN DATA ============
+      const feynmanTopics = [
+        {
+          label: "SFN",
+          color: "var(--cpa)",
+          concept: "Sistema Financeiro Nacional",
+          simple:
+            "O SFN é como uma cidade organizada. O <strong>CMN</strong> é o prefeito que faz as leis. O <strong>BACEN</strong> é a polícia que as faz cumprir. A <strong>CVM</strong> é o fiscal do mercado de capitais. A <strong>B3</strong> é a praça de negócios.",
+          analogy:
+            "💡 Pense em um condomínio: o CMN é o síndico (faz as regras). O BACEN é o zelador (executa e fiscaliza). A CVM é a comissão de ética (cuida dos negócios entre moradores). A B3 é o mercado interno do condomínio.",
+          lacunas: [
+            "O que acontece se um banco quebrar?",
+            "Quem regula seguros? (SUSEP)",
+            "O que é o COAF?",
+          ],
+          usecase: {
+            title: "Banco irregular",
+            body: "Um banco começa a captar recursos sem autorização, prometendo 30% a.a. garantido.",
+            result:
+              "BACEN investiga e suspende o banco. CVM age se havia produto classificado como valor mobiliário. COAF pode ser acionado se suspeita de lavagem.",
+          },
+        },
+        {
+          label: "FGC",
+          color: "var(--green)",
+          concept: "Fundo Garantidor de Créditos",
+          simple:
+            "O FGC é como um seguro do seu dinheiro no banco. Se o banco quebrar, o FGC paga até R$250.000 do seu dinheiro de volta. Mas só cobre CDB, poupança, LCI, LCA, RDB, LC — não cobre fundos, ações, COE.",
+          analogy:
+            "💡 É como o seguro do carro: se você bater (banco falir), o seguro cobre até um limite (R$250k por CPF por banco). Se o carro valer mais que o limite, você arca com o resto.",
+          lacunas: [
+            "Qual o teto global do FGC?",
+            "O que acontece com fundos de investimento sem FGC?",
+            "Qual o prazo para receber do FGC?",
+          ],
+          usecase: {
+            title: "Corretora quebra",
+            body: "Uma corretora pequena entra em intervenção. João tem R$180.000 em CDB e R$100.000 em fundo de ações na mesma instituição.",
+            result:
+              "O CDB (R$180k) está coberto pelo FGC. O fundo de ações (R$100k) NÃO está coberto — João pode perder dependendo dos ativos do fundo.",
+          },
+        },
+        {
+          label: "Suitability",
+          color: "var(--gold)",
+          concept: "Análise de Perfil do Investidor (API)",
+          simple:
+            "Suitability é adequação. Antes de recomendar qualquer produto, o profissional precisa saber: Quem é o cliente? (idade, renda, patrimônio). O que ele quer? (objetivos). Quanto aguenta perder? (tolerância ao risco). É como um médico que examina antes de receitar.",
+          analogy:
+            "💡 Imagine uma loja de sapatos: você não oferece salto 12cm para alguém que vai andar 20km. Você pergunta para onde vai, qual tamanho, se tem algum problema no joelho — e então indica o produto certo.",
+          lacunas: [
+            "O que fazer se o cliente insiste em produto inadequado?",
+            'O que é "declaração de awareness"?',
+            "Com que frequência revisar o perfil?",
+          ],
+          usecase: {
+            title: "Cliente conservador insistindo em ações",
+            body: "Pedro, 65 anos, aposentado, perfil conservador quer colocar toda sua reserva (R$300k) em ações de small caps por conselho de um amigo.",
+            result:
+              "O profissional alerta sobre a inadequação, registra no sistema, oferece alternativas compatíveis. Se Pedro insistir, assina declaração de ciência do risco (aware). A responsabilidade passa para o cliente, mas tudo fica documentado.",
+          },
+        },
+        {
+          label: "Come-cotas",
+          color: "var(--violet)",
+          concept: "Come-cotas — Antecipação de IR em Fundos",
+          simple:
+            'Come-cotas é o governo cobrando IR do seu fundo antes de você retirar o dinheiro. Acontece duas vezes por ano: maio e novembro. Ele literalmente "come" uma parte das suas cotas (reduz a quantidade).',
+          analogy:
+            "💡 É como plantar uma horta e o governo chegar em maio e novembro para colher uma parte dos seus vegetais — mesmo antes de você colher. Na hora de vender a colheita, ele só cobra o que ainda não pegou.",
+          lacunas: [
+            "Por que afeta fundos de ações diferente?",
+            "Come-cotas no curto e longo prazo têm alíquotas diferentes?",
+            "Como calcular o impacto do come-cotas no retorno líquido?",
+          ],
+          usecase: {
+            title: "Investidor surpreso com come-cotas",
+            body: "Maria aplicou R$100.000 em fundo de RF em janeiro. Em novembro esperava ter exatamente o rendimento bruto disponível para retirar.",
+            result:
+              'O come-cotas de novembro já antecipou 15% (fundo LP) do rendimento acumulado. Quando Maria resgatar, o IR já foi parcialmente recolhido — ela não vai pagar "em dobro", mas precisa entender que o patrimônio já está líquido de parte do IR.',
+          },
+        },
+        {
+          label: "Derivativos",
+          color: "var(--red)",
+          concept: "Derivativos: Opções, Futuros e Swap",
+          simple:
+            "Derivativos são contratos cujo valor deriva de outro ativo. É como fazer uma aposta sobre o preço futuro de algo. Opção: direito de comprar/vender. Futuro: obrigação de comprar/vender. Swap: trocar um fluxo financeiro por outro.",
+          analogy:
+            "💡 Opção = seguro de carro: você paga um prêmio (pequeno) para ter o direito de acionar (se precisar). Futuro = contrato de aluguel com preço fixado: ambos os lados são obrigados. Swap = trocar seu plano de celular com alguém: você dá o seu, recebe o dele.",
+          lacunas: [
+            "O que é Delta de uma opção?",
+            "Por que futuros têm ajuste diário?",
+            "Quando usar swap CDI × Prefixado?",
+          ],
+          usecase: {
+            title: "Exportadora protegendo o caixa",
+            body: "Empresa vai receber US$1M em 90 dias e teme queda do dólar (valorização do real).",
+            result:
+              "Vende contratos futuros de dólar. Se o real valorizar, ganha nos futuros e compensa a perda cambial. Se o dólar subir, perde nos futuros, mas compensado pelas receitas maiores em reais. O risco cambial fica travado.",
+          },
+        },
+        {
+          label: "PGBL/VGBL",
+          color: "var(--cproi)",
+          concept: "Previdência Privada: PGBL vs VGBL",
+          simple:
+            "PGBL: deduz até 12% da renda no IR. Mas no resgate, o IR incide sobre TUDO (principal + rendimentos). VGBL: sem dedução. No resgate, IR incide só sobre os rendimentos. Regra prática: se você declara IR completo, use PGBL. Senão, VGBL.",
+          analogy:
+            '💡 PGBL = pagar o ingresso do parque de diversões mais barato (dedução), mas pagar ingresso para todas as atrações ao sair. VGBL = pagar o ingresso cheio, mas só pagar pelas atrações que usar. A diferença depende de quantas "atrações" (rendimentos) você teve.',
+          lacunas: [
+            "O que é regime progressivo vs regressivo?",
+            "Qual alíquota mínima do regime regressivo e quando alcançar?",
+            "PGBL ou VGBL para quem usa declaração simplificada?",
+          ],
+          usecase: {
+            title: "Médico escolhendo previdência",
+            body: "Dr. José, 40 anos, renda R$30.000/mês, declara IR completo, quer investir R$3.000/mês em previdência por 20 anos.",
+            result:
+              "PGBL: deduz R$3.000/mês (até 12% da renda) → economia de ~R$700/mês no IR agora. Regime regressivo: após 10 anos, alíquota de 10% no resgate. Melhor estratégia: PGBL até o limite de 12% da renda + VGBL para o excedente.",
+          },
+        },
+      ];
+      let currentFeynman = 0;
+      const feynmanProgress = new Set();
+      function renderFeynman(idx) {
+        currentFeynman = idx;
+        const t = feynmanTopics;
+        const btns = document.getElementById("feynman-topics");
+        if (btns)
+          btns.innerHTML = t
+            .map(
+              (f, i) =>
+                `<button class="btn ${i === idx ? "btn-primary" : "btn-secondary"} btn-sm" onclick="renderFeynman(${i})">${f.label}</button>`,
+            )
+            .join("");
+        const fc = document.getElementById("feynman-content");
+        if (!fc) return;
+        const f = t[idx];
+        fc.innerHTML = `
+          <div class="card" style="margin-bottom:1rem">
+            <div class="sec" style="color:${f.color}"><i class="ti ti-bulb" aria-hidden="true"></i>${f.concept}</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div>
+                <div class="feynman-step${feynmanProgress.has(idx + "_1") ? " done" : ""}">
+                  <div class="fs-num">1</div>
+                  <div class="fs-body">
+                    <div class="fs-title">Escolha o conceito</div>
+                    <div class="fs-desc">Leia e entenda o conceito abaixo sem anotações.</div>
+                    <div class="feynman-box gap1"><div class="tag-label">Conceito</div><div style="font-size:.83rem;color:var(--t2);line-height:1.7">${f.simple}</div></div>
+                    <div class="analogy-box">${f.analogy}</div>
+                    <div class="fs-action"><button class="btn btn-green btn-sm" onclick="markStep(${idx},1)"><i class="ti ti-check" aria-hidden="true"></i>Entendi!</button></div>
+                  </div>
+                </div>
+                <div class="feynman-step${feynmanProgress.has(idx + "_2") ? " done" : ""}">
+                  <div class="fs-num">2</div>
+                  <div class="fs-body">
+                    <div class="fs-title">Explique com suas palavras</div>
+                    <div class="fs-desc">Escreva abaixo como você explicaria isso para uma criança de 12 anos:</div>
+                    <div class="fs-action"><textarea class="feynman-textarea" id="ft-${idx}" placeholder="Ex: O FGC é como um seguro que..."></textarea>
+                    <button class="btn btn-primary btn-sm gap1" onclick="checkFeynman(${idx})"><i class="ti ti-send" aria-hidden="true"></i>Verificar</button></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="feynman-step${feynmanProgress.has(idx + "_3") ? " done" : ""}">
+                  <div class="fs-num">3</div>
+                  <div class="fs-body">
+                    <div class="fs-title">Identifique onde trava</div>
+                    <div class="fs-desc">Perguntas que você deve conseguir responder:</div>
+                    <div class="fs-action" style="display:flex;flex-direction:column;gap:.3rem;margin-top:.4rem">${f.lacunas.map((l, i) => `<div style="background:var(--s4);border-radius:var(--r);padding:.4rem .6rem;font-size:.78rem;color:var(--t2);display:flex;gap:.4rem;align-items:center"><i class="ti ti-question-mark" style="font-size:12px;color:var(--gold)" aria-hidden="true"></i>${l}</div>`).join("")}</div>
+                    <button class="btn btn-gold btn-sm" style="margin-top:.6rem" onclick="markStep(${idx},3)"><i class="ti ti-check" aria-hidden="true"></i>Revisei os gaps</button>
+                  </div>
+                </div>
+                <div class="feynman-step${feynmanProgress.has(idx + "_4") ? " done" : ""}">
+                  <div class="fs-num">4</div>
+                  <div class="fs-body">
+                    <div class="fs-title">Use Case Real</div>
+                    <div class="usecase">
+                      <div class="uc-label">Situação Real</div>
+                      <div class="uc-title">${f.usecase.title}</div>
+                      <div class="uc-body">${f.usecase.body}</div>
+                      <div class="uc-result"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i> ${f.usecase.result}</div>
+                    </div>
+                    <button class="btn btn-violet btn-sm" onclick="markStep(${idx},4)"><i class="ti ti-star" aria-hidden="true"></i>Domino esse tema!</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }
+      function markStep(idx, step) {
+        feynmanProgress.add(idx + "_" + step);
+        if (step === 4)
+          addXP(30, "Feynman completo: " + feynmanTopics[idx].label);
+        renderFeynman(idx);
+      }
+      function checkFeynman(idx) {
+        const v = (document.getElementById("ft-" + idx) || {}).value || "";
+        if (v.trim().length < 30) {
+          alert("Escreva pelo menos uma frase explicando o conceito!");
+          return;
+        }
+        feynmanProgress.add(idx + "_2");
+        addXP(15, "Exercício Feynman escrito");
+        renderFeynman(idx);
+      }
+
+      // ============ USE CASES ============
+      const caseStudies = [
+        {
+          id: 1,
+          cat: "ética",
+          icon: "⚖️",
+          color: "var(--gold)",
+          title: "A Meta vs o Código",
+          sub: "Conflito de interesse — CPA/C-Pro R",
+          nivel: "CPA",
+          scenario:
+            "Você é gerente em um banco e sua diretora exige que você venda um COE de capital protegido para <strong>todos os clientes com mais de R$50.000</strong>, independentemente do perfil, para bater a meta do trimestre. Você sabe que 40% da sua base tem perfil conservador e o COE não é adequado para eles.",
+          question: "Qual conduta você deve adotar?",
+          opts: [
+            {
+              txt: "Vender para todos — a diretora tem autoridade e você pode ser demitido se não bater a meta.",
+              fb: "Incorreto. Metas comerciais não têm precedência sobre o Código ANBIMA e as regras de suitability. Vender produto inadequado ao perfil é uma violação regulatória grave que pode gerar multas e cancelamento da certificação.",
+              ok: false,
+            },
+            {
+              txt: "Vender apenas para os clientes com perfil adequado e comunicar ao canal de compliance a pressão recebida, documentando tudo.",
+              fb: "Correto! O profissional deve respeitar o perfil de cada cliente, oferecer o COE somente aos que têm perfil adequado e acionar o canal de compliance para registrar a situação de pressão indevida. Isso protege o cliente, o profissional e a instituição.",
+              ok: true,
+            },
+            {
+              txt: "Ignorar a situação e não fazer nada para não criar conflito.",
+              fb: "Incorreto. Omitir-se diante de uma violação regulatória não é uma opção. O profissional tem obrigação de denunciar ao compliance.",
+              ok: false,
+            },
+            {
+              txt: "Comunicar ao BACEN diretamente sem antes tentar resolver internamente.",
+              fb: "Incorreto. O caminho correto é primeiro acionar o canal de compliance interno. A denúncia a órgãos externos é uma escalada que vem depois.",
+              ok: false,
+            },
+          ],
+        },
+        {
+          id: 2,
+          cat: "pld",
+          icon: "🔍",
+          title: "O Depósito Suspeito",
+          sub: "Prevenção à Lavagem — PLD/COAF",
+          nivel: "CPA",
+          scenario:
+            "Um cliente pessoa física, operário de fábrica com renda mensal de R$2.500, começa a fazer depósitos diários em espécie de R$9.500 no caixa eletrônico. Isso se repete por 12 dias consecutivos. No 13º dia ele tenta fazer uma TED de R$100.000 para uma conta no exterior.",
+          question: "O que a instituição e o profissional devem fazer?",
+          opts: [
+            {
+              txt: "Não fazer nada — cada depósito individual está dentro dos limites legais.",
+              fb: "Incorreto. O gatilho para comunicar ao COAF é o comportamento atípico e incompatível com o perfil, não apenas o valor. Isso é um caso clássico de smurfing.",
+              ok: false,
+            },
+            {
+              txt: "Bloquear a conta e avisar o cliente para que ele regularize a situação.",
+              fb: "Incorreto. Avisar o cliente sobre uma investigação de PLD é proibido — pode configurar cumplicidade na lavagem de dinheiro.",
+              ok: false,
+            },
+            {
+              txt: "Registrar como operação suspeita, reportar ao COAF e NÃO comunicar ao cliente sobre a comunicação.",
+              fb: "Correto! Comportamento incompatível com o perfil = operação suspeita = reportar ao COAF obrigatoriamente, sem comunicar o cliente. O sigilo da comunicação ao COAF é requisito legal.",
+              ok: true,
+            },
+            {
+              txt: "Pedir documentação adicional ao cliente e esperar 30 dias para decidir.",
+              fb: "Incorreto. A situação já apresenta todos os elementos de suspeita. Aguardar sem reportar pode caracterizar omissão intencional.",
+              ok: false,
+            },
+          ],
+        },
+        {
+          id: 3,
+          cat: "suitability",
+          icon: "👤",
+          title: "A Cliente que Quer Mais",
+          sub: "Suitability na prática",
+          nivel: "CPA",
+          scenario:
+            'Dona Helena, 72 anos, viúva, tem R$400.000 poupados para sustentar os próximos anos. Ela diz: "Vi um vídeo na internet sobre Day Trade e quero usar metade do meu dinheiro — R$200.000 — para operar ações todo dia para multiplicar meu patrimônio."',
+          question: "Como o profissional deve conduzir esse atendimento?",
+          opts: [
+            {
+              txt: "Abrir conta de corretora e liberar o acesso ao home broker imediatamente.",
+              fb: "Incorreto. Liberar operações incompatíveis com o perfil sem alertas e documentação é violação direta das normas de suitability.",
+              ok: false,
+            },
+            {
+              txt: "Recusar o atendimento e encaminhar para outro gerente.",
+              fb: "Incorreto. Transferir o problema sem atendimento não é conduta adequada.",
+              ok: false,
+            },
+            {
+              txt: "Explicar com dados reais a taxa de insucesso no day trade, apontar que o montante comprometido (50% de todo patrimônio) vai contra os princípios básicos de preservação para a terceira idade, registrar no sistema, oferecer alternativas seguras com rentabilidade real e, se ela insistir, documentar a declaração de investimento fora do perfil.",
+              fb: 'Correto! O profissional deve ser honesto sobre os riscos, apresentar dados (90%+ dos day traders perdem dinheiro), proteger o melhor interesse da cliente (preservação patrimonial) e, se ela ainda insistir consciente dos riscos, registrar formalmente o "aware".',
+              ok: true,
+            },
+            {
+              txt: "Investir apenas R$50.000 (10% do patrimônio) sem documentar — um meio-termo.",
+              fb: "Incorreto. Qualquer valor em operação incompatível com o perfil exige documentação e alerta formal, mesmo que reduzido.",
+              ok: false,
+            },
+          ],
+        },
+        {
+          id: 4,
+          cat: "produtos",
+          icon: "💰",
+          title: "A Escolha do Produto Certo",
+          sub: "Adequação produto × perfil × objetivo",
+          nivel: "C-Pro R",
+          scenario:
+            "Ricardo, 35 anos, engenheiro, renda R$12.000/mês, perfil moderado, acaba de receber R$200.000 de rescisão trabalhista. Objetivos declarados: (1) Reserva de emergência de R$30.000 acessível a qualquer momento. (2) R$120.000 para aposentadoria em 25 anos. (3) R$50.000 para comprar um carro em 18 meses.",
+          question: "Qual alocação o assessor deve recomendar?",
+          opts: [
+            {
+              txt: "Tudo em CDB de 1 banco grande — simples e seguro.",
+              fb: "Incorreto. CDB concentra tudo em um produto, não atende as diferentes necessidades de liquidez e prazos distintos. Além disso, um único banco tem limite de FGC de R$250k — não seria um problema aqui, mas a estratégia ignora objetivos específicos.",
+              ok: false,
+            },
+            {
+              txt: "R$30k em Tesouro Selic (reserva, liquidez D+1). R$120k em Tesouro IPCA+ 2050 ou PGBL/VGBL (aposentadoria, proteção inflacionária). R$50k em CDB prefixado de 18 meses (carro, rentabilidade determinada).",
+              fb: "Correto! Essa alocação separa os objetivos por prazo e liquidez: reserva (liquidez imediata), aposentadoria (proteção de longo prazo contra inflação), carro (prazo determinado com taxa travada). Adequado ao perfil moderado.",
+              ok: true,
+            },
+            {
+              txt: "R$200k em ações — perfil moderado suporta risco e o horizonte justifica.",
+              fb: "Incorreto. Ações são adequadas para parte da carteira, mas alocar 100% em renda variável com necessidades de curto prazo (reserva + carro em 18m) é incompatível com o perfil moderado e os objetivos.",
+              ok: false,
+            },
+            {
+              txt: "R$200k em poupança — seguro e simples.",
+              fb: "Incorreto. Poupança rende abaixo da inflação historicamente. Para R$120k com horizonte de 25 anos, a poupança desperdiça o enorme potencial dos juros compostos e a proteção inflacionária que o perfil e o horizonte permitem explorar.",
+              ok: false,
+            },
+          ],
+        },
+        {
+          id: 5,
+          cat: "derivativos",
+          icon: "📊",
+          title: "O Hedge da Empresa",
+          sub: "Derivativos aplicados",
+          nivel: "C-Pro R",
+          scenario:
+            "TechExport Ltda exporta software e receberá US$2.000.000 em 6 meses. O CFO está preocupado: se o dólar cair de R$5,20 para R$4,80, a empresa perde R$800.000 em receita. Ele pede uma estratégia de proteção sem abrir mão de todo o ganho potencial caso o dólar suba.",
+          question: "Qual instrumento é mais adequado para essa estratégia?",
+          opts: [
+            {
+              txt: "Não fazer nada — o dólar historicamente tende a subir.",
+              fb: "Incorreto. Deixar o risco cambial em aberto em uma empresa operacional com fluxo previsível é má gestão financeira. O BACEN e as normas contábeis exigem gestão de risco cambial.",
+              ok: false,
+            },
+            {
+              txt: "Vender contratos futuros de dólar para travar a taxa em R$5,20.",
+              fb: "Parcialmente correto, mas não é o ideal aqui. Futuros travam a taxa (trava total), mas eliminam a possibilidade de ganho se o dólar subir acima de R$5,20. O CFO quer proteção sem abrir mão do ganho potencial.",
+              ok: false,
+            },
+            {
+              txt: "Comprar opções de venda (put) de dólar com strike em R$5,00 — protege o piso de receita e mantém ganho se o dólar subir acima do strike.",
+              fb: "Correto! A put de dólar dá à empresa o direito de vender dólares a R$5,00, garantindo receita mínima. Se o dólar subir para R$5,50, a empresa não exerce a put e fica com a receita maior. O custo é o prêmio da opção.",
+              ok: true,
+            },
+            {
+              txt: "Aplicar os reais previstos em Tesouro Selic até o recebimento.",
+              fb: "Incorreto. Aplicar reais não resolve o risco cambial — a empresa ainda terá que converter dólares em reais na data de recebimento, exposta à variação cambial.",
+              ok: false,
+            },
+          ],
+        },
+        {
+          id: 6,
+          cat: "planejamento",
+          icon: "🏦",
+          title: "O Planejamento do Executivo",
+          sub: "Previdência + Sucessão — C-Pro I",
+          nivel: "C-Pro I",
+          scenario:
+            "Fábio, 48 anos, diretor de empresa, renda anual R$600.000, patrimônio de R$3M, dois filhos menores. Quer: (a) aposentadoria aos 60 com renda mensal equivalente a R$25.000 atuais; (b) proteção da família se falecer ou ficar inválido; (c) deixar herança de forma ágil sem inventário longo; (d) otimizar a carga tributária.",
+          question:
+            "Qual estrutura de planejamento o especialista C-Pro I deve propor?",
+          opts: [
+            {
+              txt: "Concentrar tudo em CDB de grandes bancos com liquidez diária.",
+              fb: "Incorreto. CDB não resolve a necessidade de previdência com eficiência fiscal, não provê proteção para a família nem instrumentos sucessórios. Para R$3M e objetivos complexos, é uma solução insuficiente.",
+              ok: false,
+            },
+            {
+              txt: "PGBL (deduz 12% da renda bruta = R$72k/ano) no regime regressivo + VGBL para o excedente + Seguro de vida e invalidez com capital suficiente para 10 anos de renda familiar + Holding familiar para gestão e sucessão do patrimônio imobiliário e empresarial.",
+              fb: "Correto! Estratégia integrada: PGBL gera economia fiscal imediata (alíquota 28% no topo = ~R$20k/ano de economia). Regime regressivo: 10% no resgate após 10 anos. VGBL para valores acima do limite. Seguro de vida não entra em inventário, vai direto para os filhos. Holding centraliza e facilita a doação programada, reduzindo ITCMD.",
+              ok: true,
+            },
+            {
+              txt: "Apenas testamento registrado em cartório resolve todos os objetivos.",
+              fb: "Incorreto. Testamento NÃO otimiza IR, NÃO protege a família de imediato em caso de falecimento e ainda passa por inventário. É uma parte do planejamento, não uma solução completa.",
+              ok: false,
+            },
+            {
+              txt: "FIP para o patrimônio todo — retorno máximo e isenção de IR.",
+              fb: "Incorreto. FIP é destino para parte do capital de risco, mas é ilíquido e não atende as necessidades de renda na aposentadoria, proteção familiar e eficiência sucessória. FIP não é isento de IR — as regras dependem do tipo de ganho.",
+              ok: false,
+            },
+          ],
+        },
+      ];
+      let caseAnswered = {};
+      function renderCases(filter) {
+        const el = document.getElementById("case-filters");
+        if (el && !el.innerHTML) {
+          const cats = [
+            "all",
+            "ética",
+            "pld",
+            "suitability",
+            "produtos",
+            "derivativos",
+            "planejamento",
+          ];
+          el.innerHTML = cats
+            .map(
+              (c) =>
+                `<button class="btn btn-sm ${c === "all" ? "btn-primary" : "btn-secondary"}" onclick="renderCases('${c}');this.parentElement.querySelectorAll('.btn').forEach(b=>b.className='btn btn-sm btn-secondary');this.className='btn btn-sm btn-primary'">${c === "all" ? "Todos" : c.charAt(0).toUpperCase() + c.slice(1)}</button>`,
+            )
+            .join("");
+        }
+        const filtered = caseStudies.filter(
+          (c) => filter === "all" || c.cat === filter,
+        );
+        const wrap = document.getElementById("cases-container");
+        if (!wrap) return;
+        wrap.innerHTML = filtered
+          .map(
+            (c) => `
+          <div class="case-card" id="case-${c.id}">
+            <div class="case-header">
+              <div class="case-icon" style="background:rgba(255,255,255,.05)">${c.icon}</div>
+              <div class="case-meta">
+                <div class="case-title">${c.title}</div>
+                <div class="case-sub">${c.sub} · <span class="pill ${c.nivel === "CPA" ? "cpa" : c.nivel === "C-Pro R" ? "cpror" : "cproi"}" style="font-size:.6rem">${c.nivel}</span></div>
+              </div>
+            </div>
+            <div class="case-scenario"><div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.7px;color:var(--cyan);font-weight:700;margin-bottom:.4rem">Situação</div>${c.scenario}</div>
+            <div class="case-question">${c.question}</div>
+            <div class="case-decision">${c.opts.map((o, i) => `<div class="case-opt ${caseAnswered[c.id] ? "locked" : ""} ${caseAnswered[c.id] === i ? (o.ok ? "correct" : "wrong") : caseAnswered[c.id] !== undefined && o.ok ? "correct" : ""}" onclick="ansCase(${c.id},${i},${o.ok},${c.opts.length})"><span style="font-weight:700;flex-shrink:0;color:var(--t3);min-width:16px">${String.fromCharCode(65 + i)}</span><span>${o.txt}</span></div>`).join("")}</div>
+            <div class="case-feedback ${caseAnswered[c.id] !== undefined ? "show " + (c.opts[caseAnswered[c.id]].ok ? "ok" : "nok") : ""}" id="cfb-${c.id}">${caseAnswered[c.id] !== undefined ? "<strong>" + (c.opts[caseAnswered[c.id]].ok ? "✅ Correto!" : "❌ Incorreto.") + "</strong> " + c.opts[caseAnswered[c.id]].fb : ""}</div>
+          </div>`,
+          )
+          .join("");
+      }
+      function ansCase(cid, optIdx, ok, total) {
+        if (caseAnswered[cid] !== undefined) return;
+        caseAnswered[cid] = optIdx;
+        if (ok) {
+          ST.correct++;
+          addXP(20, "Use Case correto");
+        } else {
+          addXP(5, "Use Case respondido");
+        }
+        ST.answered++;
+        updateDashboard();
+        renderCases("all");
+      }
+
+      // ============ SPACED REP ============
+      const srCards = [
+        {
+          tag: "SFN",
+          q: "Qual a diferença entre CMN e BACEN?",
+          a: "CMN formula as regras (legislativo financeiro). BACEN executa e fiscaliza (executivo). CMN não fiscaliza bancos diretamente.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "FGC",
+          q: "O FGC cobre quais produtos e até qual valor?",
+          a: "CDB, LCI, LCA, Poupança, LC, RDB — R$250k/CPF/instituição. Teto global R$1M/4 anos. NÃO cobre: fundos, ações, debêntures, títulos públicos, COE.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "IR",
+          q: "Tabela regressiva de IR para renda fixa?",
+          a: "≤180d: 22,5% | 181–360d: 20% | 361–720d: 17,5% | >720d: 15%. Quanto mais tempo, menos imposto.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "Suitability",
+          q: "O que fazer se cliente insiste em produto inadequado ao perfil?",
+          a: 'Alertar sobre inadequação → oferecer alternativas → se insistir → registrar "aware" (declaração de ciência do risco) formalmente. Documentar tudo.',
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "Come-cotas",
+          q: "Quando ocorre o come-cotas e em quais fundos?",
+          a: "Último dia útil de maio e novembro. Só em fundos de RF e multimercado abertos. Alíquota: 15% (LP) ou 20% (CP). Fundos de ações: sem come-cotas.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "PIX",
+          q: "O que é o PIX e quem o regula?",
+          a: "Sistema de pagamento instantâneo do BACEN. Funciona 24/7 inclusive feriados. Liquidação em segundos. Regulado e operado pelo BACEN.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "Sharpe",
+          q: "Fórmula e interpretação do Índice de Sharpe?",
+          a: "Sharpe = (Retorno − Rf) / Desvio padrão. >1: excelente. 0,5–1: bom. 0–0,5: moderado. <0: não compensa o risco.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "Beta",
+          q: "O que é Beta e como interpretar Beta = 1,8?",
+          a: "Beta mede sensibilidade ao mercado. Beta 1,8: oscila 80% mais que o índice. >1: mais volátil. <1: menos volátil. Negativo: move inversamente.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "Duration",
+          q: "Duration alta significa o quê?",
+          a: "Maior sensibilidade do preço às variações de taxa de juros. Selic sobe → título de Duration longa cai mais. Zero-cupom: Duration = prazo de vencimento.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "Derivativos",
+          q: "Resultado do comprador de call com strike R$75, prêmio R$3, ação a R$85?",
+          a: "Resultado = (85−75) − 3 = R$7 de lucro por ação. In the money. Perda máxima do comprador = prêmio pago (R$3).",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "PLD",
+          q: "O que é smurfing e como deve ser tratado?",
+          a: "Fracionamento de depósitos para evitar alertas automáticos. Independe do valor — o comportamento atípico é o gatilho. Reportar ao COAF sem avisar o cliente.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "Previdência",
+          q: "PGBL ou VGBL — qual usar e quando?",
+          a: "PGBL: declara IR completo + contribui ao INSS → deduz até 12% da renda bruta. VGBL: declaração simplificada ou aportes acima do limite. Regime regressivo: 10% após 10+ anos.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "Fisher",
+          q: "Fórmula de Fisher para taxa real?",
+          a: "(1 + juro nominal) / (1 + inflação) − 1. Ex: Selic 13,75% e IPCA 5% → (1,1375/1,05) − 1 = 8,33% real. Aproximação simples: 13,75 − 5 = 8,75%.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "VaR",
+          q: "VaR 95%, 1 dia, R$50k — o que significa?",
+          a: "Em 95% dos dias, a perda não ultrapassa R$50.000. Nos outros 5% (1 em 20 dias), pode ser maior. Medida de risco de cauda.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+        {
+          tag: "COE",
+          q: "O que é COE e o FGC cobre?",
+          a: "Certificado de Operações Estruturadas = RF (proteção) + derivativos (exposição). Capital protegido: pior cenário = devolver principal. NÃO coberto pelo FGC.",
+          interval: 1,
+          ease: 2.5,
+          reps: 0,
+        },
+      ];
+      let srIdx = 0;
+      const srDoneToday = new Set();
+      function initSR() {
+        document.getElementById("sr-total-num").textContent = srCards.length;
+        document.getElementById("sr-due").textContent = srCards.filter(
+          (c) => c.interval <= 1,
+        ).length;
+        document.getElementById("sr-done").textContent = srDoneToday.size;
+        renderSRCard();
+      }
+      function renderSRCard() {
+        const c = srCards[srIdx % srCards.length];
+        const wrap = document.getElementById("sr-card-wrap");
+        if (!wrap) return;
+        const pct = Math.round((srIdx / srCards.length) * 100);
+        document.getElementById("sr-pos").textContent =
+          `Card ${(srIdx % srCards.length) + 1}/${srCards.length}`;
+        document.getElementById("sr-prog").style.width = pct + "%";
+        document.getElementById("sr-pct-text").textContent = pct + "%";
+        wrap.innerHTML = `
+          <div class="sr-card" id="sr-main" onclick="flipSR()">
+            <div class="sr-front">
+              <div>
+                <div class="sr-tag">${c.tag}</div>
+                <div class="sr-q">${c.q}</div>
+              </div>
+              <div class="sr-hint"><i class="ti ti-hand-finger" style="font-size:13px" aria-hidden="true"></i> Clique para ver a resposta</div>
+            </div>
+            <div class="sr-back">
+              <div>
+                <div class="sr-tag" style="color:var(--green)">✓ Resposta</div>
+                <div class="sr-a">${c.a}</div>
+              </div>
+              <div>
+                <div style="font-size:.7rem;color:var(--t3);margin-bottom:.4rem">Como foi para você?</div>
+                <div class="sr-rating">
+                  <button class="sr-btn hard" onclick="rateSR(1)">Difícil<br><span style="font-size:.62rem">+1 dia</span></button>
+                  <button class="sr-btn med" onclick="rateSR(3)">Ok<br><span style="font-size:.62rem">+3 dias</span></button>
+                  <button class="sr-btn easy" onclick="rateSR(7)">Fácil<br><span style="font-size:.62rem">+7 dias</span></button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }
+      function flipSR() {
+        const c = document.getElementById("sr-main");
+        if (c) c.classList.toggle("flipped");
+      }
+      function rateSR(days) {
+        srCards[srIdx % srCards.length].interval = days;
+        srDoneToday.add(srIdx % srCards.length);
+        ST.fcDone = srDoneToday.size;
+        document.getElementById("sr-done").textContent = srDoneToday.size;
+        document.getElementById("d-fc").textContent = ST.fcDone;
+        addXP(5, "Flashcard revisado");
+        srIdx++;
+        renderSRCard();
+      }
+
+      // ============ MIND MAP ============
+      function drawMindmap() {
+        const svg = document.getElementById("mindmap-svg");
+        if (!svg) return;
+        const nodes = [
+          {
+            id: "sfn",
+            x: 400,
+            y: 240,
+            label: "SFN",
+            sub: "Sistema Financeiro",
+            r: 38,
+            color: "#22d3ee",
+            detail:
+              "O Sistema Financeiro Nacional organiza todas as atividades financeiras do Brasil. Tem 3 níveis: normativos (CMN), supervisores (BACEN, CVM, SUSEP, PREVIC) e operadores (bancos, corretoras, distribuidoras).",
+          },
+          {
+            id: "cmn",
+            x: 190,
+            y: 100,
+            label: "CMN",
+            sub: "Normativos",
+            r: 28,
+            color: "#f59e0b",
+            detail:
+              "Conselho Monetário Nacional: formula política de moeda e crédito. Membros: Ministro da Fazenda (presidente), Ministro do Planejamento e Presidente do BACEN. Não fiscaliza diretamente.",
+          },
+          {
+            id: "bacen",
+            x: 620,
+            y: 100,
+            label: "BACEN",
+            sub: "Execução",
+            r: 28,
+            color: "#3b82f6",
+            detail:
+              "Banco Central: executa política monetária, emite moeda, controla câmbio, fiscaliza bancos, gerencia reservas internacionais, regula SPB, PIX e Open Finance.",
+          },
+          {
+            id: "cvm",
+            x: 190,
+            y: 380,
+            label: "CVM",
+            sub: "Capitais",
+            r: 28,
+            color: "#8b5cf6",
+            detail:
+              "Comissão de Valores Mobiliários: regula ações, fundos de investimento, debêntures, CRI, CRA, COE e demais valores mobiliários. Fiscaliza B3, gestoras e distribuidoras.",
+          },
+          {
+            id: "susep",
+            x: 620,
+            y: 380,
+            label: "SUSEP",
+            sub: "Seguros",
+            r: 28,
+            color: "#10b981",
+            detail:
+              "Superintendência de Seguros Privados: regula seguros de vida, patrimoniais, capitalização e previdência complementar aberta (PGBL/VGBL).",
+          },
+          {
+            id: "b3",
+            x: 400,
+            y: 100,
+            label: "B3",
+            sub: "Bolsa",
+            r: 22,
+            color: "#f97316",
+            detail:
+              "Brasil, Bolsa, Balcão: bolsa de valores, câmara de compensação e depositária central. Negocia ações, futuros, opções, FII, ETF, BDR. Principal praça financeira do Brasil.",
+          },
+          {
+            id: "fgc",
+            x: 400,
+            y: 380,
+            label: "FGC",
+            sub: "Garantia",
+            r: 22,
+            color: "#ef4444",
+            detail:
+              "Fundo Garantidor de Créditos: protege depósitos em bancos até R$250k/CPF/instituição. Teto global R$1M/4 anos. Cobre: CDB, LCI, LCA, Poupança, LC, RDB.",
+          },
+          {
+            id: "selic",
+            x: 190,
+            y: 240,
+            label: "SELIC",
+            sub: "Juros",
+            r: 20,
+            color: "#22d3ee",
+            detail:
+              "Sistema Especial de Liquidação e Custódia: taxa básica de juros da economia. Definida pelo COPOM (reuniões a cada 45 dias). Meta de inflação fixada pelo CMN.",
+          },
+          {
+            id: "pix",
+            x: 620,
+            y: 240,
+            label: "PIX",
+            sub: "Pagamentos",
+            r: 20,
+            color: "#22d3ee",
+            detail:
+              "Sistema de pagamentos instantâneos do BACEN. Opera 24/7. Liquidação em segundos. Principal inovação do SPB. Revolucionou os meios de pagamento no Brasil.",
+          },
+        ];
+        const links = [
+          ["sfn", "cmn"],
+          ["sfn", "bacen"],
+          ["sfn", "cvm"],
+          ["sfn", "susep"],
+          ["sfn", "b3"],
+          ["sfn", "fgc"],
+          ["sfn", "selic"],
+          ["sfn", "pix"],
+          ["bacen", "selic"],
+          ["bacen", "pix"],
+        ];
+        svg.innerHTML = "";
+        links.forEach(([a, b]) => {
+          const na = nodes.find((n) => n.id === a),
+            nb = nodes.find((n) => n.id === b);
+          const line = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line",
+          );
+          line.setAttribute("x1", na.x);
+          line.setAttribute("y1", na.y);
+          line.setAttribute("x2", nb.x);
+          line.setAttribute("y2", nb.y);
+          line.setAttribute("stroke", "rgba(255,255,255,.08)");
+          line.setAttribute("stroke-width", "1.5");
+          svg.appendChild(line);
+        });
+        nodes.forEach((n) => {
+          const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          g.style.cursor = "pointer";
+          g.onclick = () => showMindmapDetail(n);
+          const circle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle",
+          );
+          circle.setAttribute("cx", n.x);
+          circle.setAttribute("cy", n.y);
+          circle.setAttribute("r", n.r);
+          circle.setAttribute("fill", n.color + "22");
+          circle.setAttribute("stroke", n.color);
+          circle.setAttribute("stroke-width", "1.5");
+          const text = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "text",
+          );
+          text.setAttribute("x", n.x);
+          text.setAttribute("y", n.y - 4);
+          text.setAttribute("text-anchor", "middle");
+          text.setAttribute("fill", "#f0f4ff");
+          text.setAttribute("font-size", "11");
+          text.setAttribute("font-weight", "700");
+          text.textContent = n.label;
+          const sub = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "text",
+          );
+          sub.setAttribute("x", n.x);
+          sub.setAttribute("y", n.y + 10);
+          sub.setAttribute("text-anchor", "middle");
+          sub.setAttribute("fill", "#8899bb");
+          sub.setAttribute("font-size", "8");
+          sub.textContent = n.sub;
+          g.appendChild(circle);
+          g.appendChild(text);
+          g.appendChild(sub);
+          svg.appendChild(g);
+        });
+      }
+      function showMindmapDetail(n) {
+        const el = document.getElementById("mindmap-detail");
+        el.style.display = "block";
+        el.innerHTML = `<div class="sec" style="color:${n.color}"><i class="ti ti-info-circle" aria-hidden="true"></i>${n.label} — ${n.sub}</div><div class="muted">${n.detail}</div>`;
+      }
+
+      // ============ EXERCISES ============
+      const exercises = [
+        {
+          mod: "cpa",
+          topic: "SFN",
+          dif: "easy",
+          q: "Um banco digital lança produto prometendo rentabilidade garantida de 25% a.a. sem informar riscos. Qual órgão investiga?",
+          opts: [
+            "CMN — formula as regras gerais",
+            "CVM — fiscaliza valores mobiliários e veda rentabilidade garantida",
+            "BACEN — todo produto bancário é sua competência",
+            "B3 — os produtos são negociados em bolsa",
+          ],
+          ans: 1,
+          xp: 10,
+          exp: "<strong>CVM</strong> fiscaliza valores mobiliários e veda expressamente promessa de rentabilidade garantida. O BACEN fiscaliza a instituição em si; a irregularidade do produto é da alçada da CVM.",
+        },
+        {
+          mod: "cpa",
+          topic: "FGC",
+          dif: "easy",
+          q: "Roberto tem R$600.000 e quer maximizar a cobertura do FGC dividindo entre dois bancos. Qual o limite correto?",
+          opts: [
+            "R$100.000 por CPF e banco",
+            "R$150.000 por CPF e banco",
+            "R$250.000 por CPF e banco",
+            "R$500.000 por CPF e banco",
+          ],
+          ans: 2,
+          xp: 10,
+          exp: "<strong>R$250.000 por CPF por instituição</strong>, com teto global de R$1M a cada 4 anos. Cobre CDB, LCI, LCA, poupança, LC, RDB. NÃO cobre fundos, ações, debêntures, COE.",
+        },
+        {
+          mod: "cpa",
+          topic: "IR",
+          dif: "med",
+          q: "CDB resgatado com 400 dias e rendimento bruto de R$10.000. IR = ?",
+          opts: [
+            "22,5% → R$2.250",
+            "20% → R$2.000",
+            "17,5% → R$1.750 (361–720 dias)",
+            "15% → R$1.500",
+          ],
+          ans: 2,
+          xp: 15,
+          exp: "Tabela regressiva: <strong>361–720 dias = 17,5%</strong>. IR = 17,5% × R$10.000 = <strong>R$1.750</strong>. Líquido: R$8.250. Memorize: 22,5→20→17,5→15%.",
+        },
+        {
+          mod: "cpa",
+          topic: "Suitability",
+          dif: "med",
+          q: "Pedro, 65 anos, conservador, quer colocar toda sua reserva (R$300k) em small caps. O profissional deve:",
+          opts: [
+            "Executar imediatamente — cliente é livre",
+            "Recusar sem explicar",
+            'Explicar riscos, registrar inadequação, oferecer alternativas; se insistir → "aware"',
+            "Aplicar 50% em ações sem documentar",
+          ],
+          ans: 2,
+          xp: 15,
+          exp: 'Código ANBIMA: alertar sobre inadequação, oferecer alternativas, documentar. Se o cliente insistir → <strong>declaração de investimento fora do perfil ("aware")</strong>. Responsabilidade passa para o cliente, mas tudo documentado.',
+        },
+        {
+          mod: "cpa",
+          topic: "Come-cotas",
+          dif: "med",
+          q: "O come-cotas nos fundos ocorre:",
+          opts: [
+            "No resgate das cotas",
+            "Trimestralmente em todos os fundos",
+            "Semestralmente (maio e novembro) em fundos RF e multimercado",
+            "Apenas em fundos de ações",
+          ],
+          ans: 2,
+          xp: 15,
+          exp: "<strong>Come-cotas</strong>: antecipação semestral de IR no último dia útil de <strong>maio e novembro</strong>. Só fundos RF e multimercado. Fundos de ações: sem come-cotas. 15% (LP) ou 20% (CP).",
+        },
+        {
+          mod: "cpa",
+          topic: "PIX",
+          dif: "easy",
+          q: "Fintech lança pagamento 24h por dia, 7 dias, inclusive feriados, com liquidação em segundos. Sistema utilizado:",
+          opts: [
+            "PIX — sistema de pagamentos instantâneos do BACEN",
+            "TED — horários restritos",
+            "DOC — Documento de Ordem de Crédito",
+            "SWIFT — transferências internacionais",
+          ],
+          ans: 0,
+          xp: 10,
+          exp: "<strong>PIX</strong>: sistema do BACEN, funciona 24/7, liquidação em segundos. TED: dias úteis, horários restritos. DOC: dia útil seguinte. SWIFT: transferências internacionais (câmbio).",
+        },
+        {
+          mod: "cpa",
+          topic: "PLD",
+          dif: "hard",
+          q: "Cliente com renda R$3k/mês deposita R$9.800/dia em espécie por 12 dias seguidos. Conduta correta:",
+          opts: [
+            "Não fazer nada — abaixo de R$10k",
+            "Bloquear conta e avisar cliente",
+            "Reportar ao COAF como suspeita SEM avisar o cliente",
+            "Aguardar 30 dias e decidir",
+          ],
+          ans: 2,
+          xp: 20,
+          exp: "<strong>Smurfing</strong>: fracionamento para evitar alertas. Gatilho = comportamento atípico, não o valor. <strong>Reportar ao COAF obrigatoriamente, sem avisar o cliente</strong> (sigilo legal). Avisar o cliente pode configurar cumplicidade.",
+        },
+        {
+          mod: "cpa",
+          topic: "IOF",
+          dif: "hard",
+          q: "CDB resgatado após 15 dias. Além do IR, qual tributo incide?",
+          opts: [
+            "ISS",
+            "IOF — regressivo nos primeiros 30 dias, cobrado antes do IR",
+            "CSLL",
+            "Nenhum outro",
+          ],
+          ans: 1,
+          xp: 20,
+          exp: "<strong>IOF</strong>: incide sobre rendimentos de RF resgatados em menos de 30 dias. Regressivo: 96% no 1º dia → 0% no 30º. Cobrado <strong>antes do IR</strong> e sobre o rendimento.",
+        },
+        {
+          mod: "cpror",
+          topic: "Sharpe",
+          dif: "med",
+          q: "Fundo A: ret 12%, DP 8%, Rf 10,5%. Fundo B: ret 18%, DP 15%, Rf 10,5%. Qual tem melhor Sharpe?",
+          opts: [
+            "Fundo A — menor volatilidade",
+            "Fundo B — Sharpe 0,50 vs 0,19 do Fundo A",
+            "São iguais",
+            "Fundo A — retorno mais próximo do CDI",
+          ],
+          ans: 1,
+          xp: 15,
+          exp: "Sharpe = (Ret−Rf)/DP. A: (12−10,5)/8 = <strong>0,19</strong>. B: (18−10,5)/15 = <strong>0,50</strong>. Fundo B mais eficiente por unidade de risco.",
+        },
+        {
+          mod: "cpror",
+          topic: "Beta",
+          dif: "med",
+          q: "Ação Beta=1,8. Ibovespa sobe 10%. Retorno esperado da ação?",
+          opts: [
+            "+18% — Beta 1,8 × mercado 10%",
+            "+10% — acompanha mercado",
+            "+1,8%",
+            "+8%",
+          ],
+          ans: 0,
+          xp: 15,
+          exp: "Beta 1,8 × 10% = <strong>18%</strong>. Beta >1: mais volátil que o mercado. Beta <1: menos volátil. Negativo: movimento inverso.",
+        },
+        {
+          mod: "cpror",
+          topic: "Duration",
+          dif: "hard",
+          q: "Sobre Duration, é CORRETO:",
+          opts: [
+            "Igual ao prazo de vencimento sempre",
+            "Baixa Duration = mais sensível a juros",
+            "Zero-cupom tem Duration < prazo de vencimento",
+            "Duration alta = maior sensibilidade do preço a variações de juros",
+          ],
+          ans: 3,
+          xp: 20,
+          exp: "<strong>Duration alta = maior sensibilidade</strong>. Selic sobe → título de Duration longa cai mais. Zero-cupom: Duration = prazo de vencimento (sem fluxos intermediários).",
+        },
+        {
+          mod: "cpror",
+          topic: "Derivativos",
+          dif: "hard",
+          q: "Call VALE3: strike R$75, prêmio R$3, ação a R$85 no vencimento. Resultado do comprador?",
+          opts: [
+            "Lucro R$7 — (85−75)−3",
+            "Lucro R$15",
+            "Prejuízo R$3",
+            "Lucro R$10",
+          ],
+          ans: 0,
+          xp: 20,
+          exp: "Resultado = (Preço atual − Strike) − Prêmio = (85−75) − 3 = <strong>R$7</strong>. Comprador de call: ganho ilimitado, perda limitada ao prêmio.",
+        },
+        {
+          mod: "cpror",
+          topic: "Hedge",
+          dif: "hard",
+          q: "Empresa vai pagar US$500k em 3 meses e teme alta do dólar. Hedge correto:",
+          opts: [
+            "Vender futuros de dólar (posição vendida)",
+            "Comprar futuros de dólar (posição comprada)",
+            "Aplicar reais em Tesouro Selic",
+            "Vender ações de exportadoras",
+          ],
+          ans: 1,
+          xp: 20,
+          exp: "Importadora <strong>precisa comprar dólares</strong>. Hedge: <strong>comprar futuros</strong> (posição comprada). Se dólar subir, ganha nos futuros e compensa o custo maior. Lógica: posição no derivativo oposta ao risco do negócio.",
+        },
+        {
+          mod: "cpror",
+          topic: "Fundos",
+          dif: "med",
+          q: "Fundo sem concentração mínima em nenhuma classe, pode usar alavancagem:",
+          opts: [
+            "Fundo Multimercado",
+            "Fundo RF Simples",
+            "Fundo de Ações",
+            "Fundo Cambial",
+          ],
+          ans: 0,
+          xp: 15,
+          exp: "<strong>Multimercado</strong>: mais flexível, sem concentração mínima, pode usar alavancagem. RF: mínimo 80% RF. Ações: mínimo 67% ações. Cambial: mínimo 80% câmbio.",
+        },
+        {
+          mod: "cproi",
+          topic: "PGBL/VGBL",
+          dif: "med",
+          q: "Médico, renda R$400k/ano, declara IR completo. Melhor produto de previdência:",
+          opts: [
+            "PGBL — deduz até 12% da renda bruta (R$48k) → economia fiscal real",
+            "VGBL — IR só sobre rendimentos",
+            "São equivalentes",
+            "VGBL tem taxa menor",
+          ],
+          ans: 0,
+          xp: 15,
+          exp: "<strong>PGBL</strong> para quem declara completo + contribui ao INSS. Deduz R$48k → economia ~R$13k/ano. No resgate: IR sobre tudo. <strong>VGBL</strong>: para declaração simplificada ou aportes acima do limite do PGBL.",
+        },
+        {
+          mod: "cproi",
+          topic: "Regime",
+          dif: "hard",
+          q: "Investidor 35 anos, previdência por 25 anos. Regime mais vantajoso?",
+          opts: [
+            "Progressivo — alíquotas menores no início",
+            "Progressivo — pode trocar depois",
+            "Regressivo — 10% após 10 anos. Para 25 anos, altamente eficiente",
+            "Regressivo exige 30 anos",
+          ],
+          ans: 2,
+          xp: 20,
+          exp: "Regime <strong>regressivo</strong>: 35%→30%→25%→20%→15%→<strong>10% após 10 anos</strong>. Para 25 anos = alíquota mínima. Progressivo: até 27,5%. Escolha <strong>irrevogável</strong>.",
+        },
+        {
+          mod: "cproi",
+          topic: "VaR",
+          dif: "hard",
+          q: "Carteira com VaR 95%, 1 dia = R$50.000. Interpretação correta:",
+          opts: [
+            "Perderá exatamente R$50k amanhã",
+            "95% de chance de ganhar R$50k",
+            "95% de probabilidade de a perda não exceder R$50k — 5% de chance de perda maior",
+            "Ganho médio diário é R$50k",
+          ],
+          ans: 2,
+          xp: 20,
+          exp: "<strong>VaR 95%</strong>: em 95% dos dias, perda ≤ R$50k. Nos outros 5% (1 em 20 dias), pode ser maior. Medida de risco de cauda usada por reguladores e gestores de risco.",
+        },
+        {
+          mod: "cproi",
+          topic: "Fisher",
+          dif: "hard",
+          q: "Selic 13,75%, IPCA 5%. Taxa real (Fisher exato)?",
+          opts: [
+            "8,75% — diferença simples",
+            "8,33% — (1,1375/1,05)−1",
+            "13,75% — Selic já é real",
+            "5,0% — taxa real = inflação",
+          ],
+          ans: 1,
+          xp: 20,
+          exp: "Fisher: <strong>(1+nom)/(1+inf)−1 = (1,1375/1,05)−1 = 8,33%</strong>. Aproximação simples: 8,75%. Fisher exato é cobrado no C-Pro I.",
+        },
+      ];
+      let exAnswered = {};
+      function renderExercises(filter) {
+        const fBtn = document.getElementById("ex-filters");
+        if (fBtn && !fBtn.innerHTML) {
+          const fs = ["all", "cpa", "cpror", "cproi"];
+          fBtn.innerHTML = fs
+            .map(
+              (f) =>
+                `<button class="btn btn-sm ${f === "all" ? "btn-primary" : "btn-secondary"}" onclick="renderExercises('${f}');this.parentElement.querySelectorAll('.btn').forEach(b=>b.className='btn btn-sm btn-secondary');this.className='btn btn-sm btn-primary'">${f === "all" ? "Todos" : f === "cpa" ? "CPA" : f === "cpror" ? "C-Pro R" : "C-Pro I"}</button>`,
+            )
+            .join("");
+        }
+        const filtered = exercises.filter(
+          (e) => filter === "all" || e.mod === filter,
+        );
+        document.getElementById("ex-count").textContent = filtered.length;
+        const correct = filtered.filter(
+          (e) => exAnswered[exercises.indexOf(e)] === e.ans,
+        ).length;
+        document.getElementById("ex-correct-count").textContent = correct;
+        const wrap = document.getElementById("exercises-container");
+        if (!wrap) return;
+        wrap.innerHTML = filtered
+          .map((e) => {
+            const gi = exercises.indexOf(e);
+            const answered = exAnswered[gi] !== undefined;
+            return `<div class="ex${answered ? " ex-done" : ""}" data-mod="${e.mod}" data-gi="${gi}" ${answered ? `data-answered="1" data-hit="${exAnswered[gi] === e.ans ? 1 : 0}"` : ""}>
+            <div class="ex-meta">
+              <div class="ex-num" style="background:rgba(${e.mod === "cpa" ? "34,211,238" : e.mod === "cpror" ? "245,158,11" : "16,185,129"},.15);color:var(--${e.mod})">${gi + 1}</div>
+              <span class="tag ${e.dif === "easy" ? "easy" : e.dif === "med" ? "med" : "hard"}">${e.dif === "easy" ? "Fácil" : e.dif === "med" ? "Médio" : "Difícil"}</span>
+              <span class="tag topic">${e.topic}</span>
+              <span class="tag new">${e.mod.toUpperCase()}</span>
+              <span style="margin-left:auto;font-size:.65rem;color:var(--t3)">+${e.xp} XP</span>
+            </div>
+            <div class="ex-q">${e.q}</div>
+            <div class="opts">${e.opts.map((o, i) => `<div class="opt${answered ? " locked" + (i === e.ans ? " correct" : "") + (answered && exAnswered[gi] === i && i !== e.ans ? " wrong" : "") : ""}" onclick="ansEx(${gi},${i})">\<span class="opt-l">${String.fromCharCode(65 + i)}</span><span>${o}</span></div>`).join("")}</div>
+            <div class="explain${answered ? " show" : ""}">${answered ? e.exp : ""}</div>
+            <div class="ex-xp${answered && exAnswered[gi] === e.ans ? " show" : ""}"><i class="ti ti-sparkles" style="font-size:12px" aria-hidden="true"></i>+${e.xp} XP ganhos!</div>
+          </div>`;
+          })
+          .join("");
+      }
+      function ansEx(gi, chosen) {
+        if (exAnswered[gi] !== undefined) return;
+        exAnswered[gi] = chosen;
+        const e = exercises[gi];
+        const hit = chosen === e.ans;
+        if (hit) {
+          ST.correct++;
+          ST.streak++;
+          addXP(e.xp, "Questão correta");
+        } else {
+          ST.streak = 0;
+          addXP(Math.floor(e.xp / 4), "Questão respondida");
+        }
+        ST.answered++;
+        if (!ST.topicScores[e.topic]) ST.topicScores[e.topic] = { c: 0, t: 0 };
+        ST.topicScores[e.topic].t++;
+        if (hit) ST.topicScores[e.topic].c++;
+        checkAchievements();
+        updateDashboard();
+        const mod = e.mod;
+        ["cpa", "cpror", "cproi"].forEach((m) => {
+          const exMod = exercises.filter((ex) => ex.mod === m);
+          const done = exMod.filter(
+            (ex) => exAnswered[exercises.indexOf(ex)] !== undefined,
+          ).length;
+          const pct = Math.round((done / exMod.length) * 100);
+          const dp = document.getElementById("dp-" + m);
+          const dp2 = document.getElementById("dp-" + m + "-pct");
+          if (dp) dp.style.width = pct + "%";
+          if (dp2) dp2.textContent = pct + "%";
+        });
+        const filter = document.querySelector("#ex-filters .btn-primary");
+        renderExercises(
+          filter
+            ? filter.textContent
+                .toLowerCase()
+                .replace("-pro r", "cpror")
+                .replace("c-pro i", "cproi")
+                .replace("cpa", "cpa")
+                .replace("todos", "all")
+            : "all",
+        );
+      }
+
+      // ============ CHALLENGE ============
+      const chPool = [...exercises].sort(() => Math.random() - 0.5);
+      let chState = { qs: [], idx: 0, score: 0, timer: null, totalTime: 30 };
+      function startChallenge() {
+        chState.qs = exercises.sort(() => Math.random() - 0.5).slice(0, 10);
+        chState.idx = 0;
+        chState.score = 0;
+        document.getElementById("challenge-intro").style.display = "none";
+        document.getElementById("challenge-result").style.display = "none";
+        document.getElementById("challenge-game").style.display = "block";
+        showChQ();
+      }
+      function showChQ() {
+        const q = chState.qs[chState.idx];
+        if (!q) {
+          endChallenge();
+          return;
+        }
+        document.getElementById("ch-q-num").textContent =
+          chState.idx + 1 + " / 10";
+        document.getElementById("ch-score").textContent = chState.score;
+        document.getElementById("ch-q").textContent = q.q;
+        document.getElementById("ch-opts").innerHTML = q.opts
+          .map(
+            (o, i) =>
+              `<div class="opt" onclick="ansChallenge(${i})"><span class="opt-l">${String.fromCharCode(65 + i)}</span><span>${o}</span></div>`,
+          )
+          .join("");
+        chState.time = chState.totalTime;
+        document.getElementById("ch-timer").textContent = chState.time;
+        document.getElementById("ch-bar").style.width = "100%";
+        clearInterval(chState.timer);
+        chState.timer = setInterval(() => {
+          chState.time--;
+          document.getElementById("ch-timer").textContent = chState.time;
+          document.getElementById("ch-bar").style.width =
+            (chState.time / chState.totalTime) * 100 + "%";
+          if (chState.time <= 0) {
+            clearInterval(chState.timer);
+            chState.idx++;
+            showChQ();
+          }
+        }, 1000);
+      }
+      function ansChallenge(i) {
+        clearInterval(chState.timer);
+        const q = chState.qs[chState.idx];
+        document.querySelectorAll("#ch-opts .opt").forEach((o, idx) => {
+          o.classList.add("locked");
+          if (idx === q.ans) o.classList.add("correct");
+          else if (idx === i && i !== q.ans) o.classList.add("wrong");
+        });
+        if (i === q.ans) {
+          chState.score++;
+          addXP(25, "Desafio acerto");
+        }
+        setTimeout(() => {
+          chState.idx++;
+          showChQ();
+        }, 700);
+      }
+      function endChallenge() {
+        clearInterval(chState.timer);
+        if (chState.score > ST.chRecord) ST.chRecord = chState.score;
+        const xp = chState.score * 25;
+        ST.chXP += xp;
+        document.getElementById("ch-record").textContent = ST.chRecord;
+        document.getElementById("ch-xp-earned").textContent = ST.chXP;
+        document.getElementById("challenge-game").style.display = "none";
+        document.getElementById("challenge-result").style.display = "block";
+        const e = ["😅", "🙂", "😊", "👍", "🎯", "🏆"][
+          Math.min(5, Math.floor(chState.score / 2))
+        ];
+        document.getElementById("ch-result-emoji").textContent = e;
+        document.getElementById("ch-result-score").textContent =
+          chState.score + "/10 corretas";
+        const msgs = [
+          "Não desanime — revise os temas e tente de novo!",
+          "Bom começo! Foque nos temas com mais erro.",
+          "Metade certa! Continue praticando.",
+          "Boa performance! Você está no caminho.",
+          "Muito bem! Quase lá.",
+          "Excelente! Você está pronto para a prova!",
+        ];
+        document.getElementById("ch-result-msg").textContent =
+          msgs[Math.min(5, chState.score - Math.max(0, 5 - chState.score))];
+        document.getElementById("ch-result-xp").textContent =
+          "+" + chState.score * 25 + " XP ganhos nessa rodada!";
+        checkAchievements();
+        updateDashboard();
+      }
+      function resetChallenge() {
+        document.getElementById("challenge-result").style.display = "none";
+        document.getElementById("challenge-intro").style.display = "block";
+      }
+
+      // ============ NOTEBOOK ============
+      const notes = [];
+      function saveNote() {
+        const v = (document.getElementById("note-input") || {}).value || "";
+        if (!v.trim()) {
+          alert("Escreva algo antes de salvar!");
+          return;
+        }
+        const sel = document.querySelector("#note-topics .btn-primary");
+        const topic = sel ? sel.textContent : "Geral";
+        notes.unshift({
+          topic,
+          text: v.trim(),
+          date: new Date().toLocaleString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        });
+        document.getElementById("note-input").value = "";
+        renderNotes();
+        addXP(5, "Nota salva");
+      }
+      function clearNote() {
+        document.getElementById("note-input").value = "";
+      }
+      function renderNotes() {
+        const el = document.getElementById("notes-list");
+        if (!el) return;
+        if (!notes.length) {
+          el.innerHTML = '<div class="muted">Nenhuma nota salva ainda.</div>';
+          return;
+        }
+        const colors = {
+          SFN: "var(--cpa)",
+          FGC: "var(--green)",
+          Suitability: "var(--gold)",
+          Tributação: "var(--orange)",
+          Derivativos: "var(--red)",
+          Previdência: "var(--cproi)",
+          Geral: "var(--t3)",
+        };
+        el.innerHTML = notes
+          .map(
+            (n, i) => `
+          <div class="note-card">
+            <div class="note-dot" style="background:${colors[n.topic] || "var(--t3)"}"></div>
+            <div style="flex:1">
+              <div style="font-size:.68rem;color:var(--t3);display:flex;justify-content:space-between;margin-bottom:.15rem"><span style="color:${colors[n.topic] || "var(--t3)"}">📌 ${n.topic}</span><span>${n.date}</span></div>
+              <div style="font-size:.8rem;color:var(--t2);line-height:1.6">${n.text}</div>
+            </div>
+            <button style="background:none;border:none;color:var(--t3);cursor:pointer;padding:.2rem;font-size:13px" onclick="deleteNote(${i})" aria-label="Apagar nota"><i class="ti ti-trash"></i></button>
+          </div>`,
+          )
+          .join("");
+      }
+      function deleteNote(i) {
+        notes.splice(i, 1);
+        renderNotes();
+      }
+      function initNoteTopics() {
+        const el = document.getElementById("note-topics");
+        if (!el) return;
+        [
+          "SFN",
+          "FGC",
+          "Suitability",
+          "Tributação",
+          "Derivativos",
+          "Previdência",
+          "Geral",
+        ].forEach((t, i) => {
+          const btn = document.createElement("button");
+          btn.className = "btn btn-secondary btn-sm";
+          if (i === 6) btn.className = "btn btn-primary btn-sm";
+          btn.textContent = t;
+          btn.onclick = () => {
+            document
+              .querySelectorAll("#note-topics .btn")
+              .forEach((b) => (b.className = "btn btn-secondary btn-sm"));
+            btn.className = "btn btn-primary btn-sm";
+          };
+          el.appendChild(btn);
+        });
+      }
+
+      // ============ POMODORO ============
+      let pomoState = {
+        running: false,
+        minutes: 25,
+        seconds: 0,
+        total: 25 * 60,
+        type: "Foco",
+        sessions: [],
+      };
+      function togglePomo() {
+        pomoState.running = !pomoState.running;
+        const btn = document.getElementById("pomo-btn");
+        const ic = document.getElementById("pomo-icon");
+        if (pomoState.running) {
+          btn.textContent = "";
+          btn.innerHTML =
+            '<i class="ti ti-player-pause" aria-hidden="true"></i>Pausar';
+          btn.className = "btn btn-secondary";
+          runPomo();
+        } else {
+          btn.innerHTML =
+            '<i class="ti ti-player-play" aria-hidden="true"></i>Continuar';
+          btn.className = "btn btn-primary";
+        }
+      }
+      let pomoInterval;
+      function runPomo() {
+        clearInterval(pomoInterval);
+        pomoInterval = setInterval(() => {
+          if (!pomoState.running) {
+            clearInterval(pomoInterval);
+            return;
+          }
+          if (pomoState.seconds === 0) {
+            if (pomoState.minutes === 0) {
+              completePomo();
+              return;
+            }
+            pomoState.minutes--;
+            pomoState.seconds = 59;
+          } else pomoState.seconds--;
+          updatePomoDisplay();
+        }, 1000);
+      }
+      function updatePomoDisplay() {
+        const mm = String(pomoState.minutes).padStart(2, "0");
+        const ss = String(pomoState.seconds).padStart(2, "0");
+        document.getElementById("pomo-display").textContent = mm + ":" + ss;
+        document.getElementById("pomo-mode-label").textContent = pomoState.type;
+        const elapsed =
+          pomoState.total - (pomoState.minutes * 60 + pomoState.seconds);
+        const pct = elapsed / pomoState.total;
+        const circ = 515.2;
+        const ring = document.getElementById("pomo-ring");
+        if (ring) ring.style.strokeDashoffset = circ * (1 - pct);
+      }
+      function completePomo() {
+        clearInterval(pomoInterval);
+        pomoState.running = false;
+        ST.pomos++;
+        addXP(20, "Pomodoro concluído");
+        checkAchievements();
+        updateDashboard();
+        pomoState.sessions.push({
+          type: pomoState.type,
+          time: new Date().toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        });
+        renderPomoLog();
+        resetPomo();
+        document.getElementById("pomo-btn").innerHTML =
+          '<i class="ti ti-player-play" aria-hidden="true"></i>Iniciar';
+        document.getElementById("pomo-btn").className = "btn btn-primary";
+      }
+      function renderPomoLog() {
+        const el = document.getElementById("pomo-log");
+        if (!el) return;
+        if (!pomoState.sessions.length) {
+          el.innerHTML =
+            '<div class="muted">Nenhuma sessão concluída ainda.</div>';
+          return;
+        }
+        el.innerHTML = pomoState.sessions
+          .map(
+            (s) =>
+              `<div class="pomo-log-item"><span>🍅 ${s.type}</span><span>${s.time}</span></div>`,
+          )
+          .join("");
+      }
+      function resetPomo() {
+        clearInterval(pomoInterval);
+        pomoState.running = false;
+        pomoState.minutes = 25;
+        pomoState.seconds = 0;
+        pomoState.total = 25 * 60;
+        updatePomoDisplay();
+        document.getElementById("pomo-ring").style.strokeDashoffset = 0;
+        document.getElementById("pomo-btn").innerHTML =
+          '<i class="ti ti-player-play" aria-hidden="true"></i>Iniciar';
+        document.getElementById("pomo-btn").className = "btn btn-primary";
+      }
+      function setPomo(min, type) {
+        clearInterval(pomoInterval);
+        pomoState.running = false;
+        pomoState.minutes = min;
+        pomoState.seconds = 0;
+        pomoState.total = min * 60;
+        pomoState.type = type;
+        updatePomoDisplay();
+        document.getElementById("pomo-ring").style.strokeDashoffset = 0;
+        document.getElementById("pomo-btn").innerHTML =
+          '<i class="ti ti-player-play" aria-hidden="true"></i>Iniciar';
+        document.getElementById("pomo-btn").className = "btn btn-primary";
+      }
+
+      // ============ CALCS ============
+      function calcIR() {
+        const r = parseFloat(document.getElementById("ir-rend").value) || 0;
+        const d = parseInt(document.getElementById("ir-dias").value) || 0;
+        let a = 22.5;
+        if (d > 720) a = 15;
+        else if (d > 360) a = 17.5;
+        else if (d > 180) a = 20;
+        const ir = (r * a) / 100;
+        document.getElementById("ir-aliq").textContent = a.toFixed(1) + "%";
+        document.getElementById("ir-val").textContent =
+          "R$ " +
+          ir.toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        document.getElementById("ir-liq").textContent =
+          "R$ " +
+          (r - ir).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+      }
+      function calcSharpe() {
+        const r = parseFloat(document.getElementById("sh-ret").value) || 0;
+        const rf = parseFloat(document.getElementById("sh-rf").value) || 0;
+        const dp = parseFloat(document.getElementById("sh-dp").value) || 1;
+        const s = (r - rf) / dp;
+        document.getElementById("sh-val").textContent = s.toFixed(2);
+        document.getElementById("sh-interp").textContent =
+          s > 1
+            ? "Excelente"
+            : s > 0.5
+              ? "Bom"
+              : s > 0
+                ? "Moderado"
+                : "Ruim — não compensa o risco";
+      }
+      function calcFisher() {
+        const n = parseFloat(document.getElementById("fi-nom").value) || 0;
+        const i = parseFloat(document.getElementById("fi-inf").value) || 0;
+        const real = ((1 + n / 100) / (1 + i / 100) - 1) * 100;
+        document.getElementById("fi-val").textContent = real.toFixed(2) + "%";
+        document.getElementById("fi-aprox").textContent =
+          (n - i).toFixed(2) + "%";
+      }
+      function calcBeta() {
+        const b = parseFloat(document.getElementById("be-beta").value) || 0;
+        const m = parseFloat(document.getElementById("be-mkt").value) || 0;
+        document.getElementById("be-val").textContent =
+          (b * m).toFixed(1) + "%";
+        document.getElementById("be-interp").textContent =
+          b > 1
+            ? "Mais volátil que o mercado"
+            : b === 1
+              ? "Igual ao mercado"
+              : b > 0
+                ? "Menos volátil"
+                : "Move inversamente ao mercado";
+      }
+
+      // ============ GLOSSARY ============
+      const glossTerms = [
+        {
+          t: "BACEN",
+          n: "CPA",
+          d: "Banco Central do Brasil. Executa política monetária, controla câmbio, emite moeda e fiscaliza instituições financeiras.",
+        },
+        {
+          t: "CMN",
+          n: "CPA",
+          d: "Conselho Monetário Nacional. Órgão máximo do SFN. Formula políticas de moeda e crédito. Não fiscaliza diretamente.",
+        },
+        {
+          t: "CVM",
+          n: "CPA",
+          d: "Comissão de Valores Mobiliários. Regula ações, fundos, debêntures, COE e valores mobiliários. Fiscaliza B3, gestoras e distribuidoras.",
+        },
+        {
+          t: "FGC",
+          n: "CPA",
+          d: "Fundo Garantidor de Créditos. Protege depósitos até R$250k/CPF/instituição. Teto global R$1M/4 anos. Não cobre fundos, ações, COE.",
+        },
+        {
+          t: "Come-cotas",
+          n: "CPA",
+          d: "Antecipação semestral de IR em fundos RF e multimercado. Maio e novembro. 15% (LP) ou 20% (CP). Reduz quantidade de cotas.",
+        },
+        {
+          t: "Suitability",
+          n: "CPA",
+          d: "Análise de Perfil do Investidor. Obrigatória. Verifica se o produto é adequado ao perfil, objetivos e situação financeira do cliente.",
+        },
+        {
+          t: "PIX",
+          n: "CPA",
+          d: "Sistema de pagamento instantâneo do BACEN. 24/7, liquidação em segundos. Revolucionou os meios de pagamento no Brasil.",
+        },
+        {
+          t: "Smurfing",
+          n: "CPA",
+          d: "Fracionamento de depósitos para evitar alertas de PLD. Gatilho = comportamento atípico, não o valor. Reportar ao COAF sem avisar o cliente.",
+        },
+        {
+          t: "SUSEP",
+          n: "CPA",
+          d: "Superintendência de Seguros Privados. Regula seguros de vida, capitalização e previdência complementar aberta (PGBL/VGBL).",
+        },
+        {
+          t: "Open Finance",
+          n: "CPA",
+          d: "Compartilhamento de dados financeiros entre instituições com consentimento expresso do cliente. Regulado pelo BACEN.",
+        },
+        {
+          t: "Sharpe",
+          n: "C-Pro R",
+          d: "(Retorno − Rf) / Desvio padrão. Mede eficiência da carteira por unidade de risco. >1: excelente. <0: não compensa.",
+        },
+        {
+          t: "Beta",
+          n: "C-Pro R",
+          d: "Sensibilidade do ativo ao mercado. Beta 1,5 = oscila 50% mais que o índice. >1: mais volátil. Negativo: movimento inverso.",
+        },
+        {
+          t: "Duration",
+          n: "C-Pro R",
+          d: "Prazo médio ponderado dos fluxos de caixa. Duration alta = maior sensibilidade a variações de juros.",
+        },
+        {
+          t: "VaR",
+          n: "C-Pro I",
+          d: "Value at Risk. Perda máxima esperada dado nível de confiança e horizonte. VaR 95%/dia R$50k: 95% dos dias perda ≤ R$50k.",
+        },
+        {
+          t: "PGBL",
+          n: "C-Pro I",
+          d: "Plano Gerador de Benefício Livre. Deduz até 12% da renda bruta no IR. IR sobre tudo no resgate. Para quem declara modelo completo.",
+        },
+        {
+          t: "VGBL",
+          n: "C-Pro I",
+          d: "Vida Gerador de Benefício Livre. Sem dedução fiscal. IR só sobre rendimentos no resgate. Para declaração simplificada.",
+        },
+        {
+          t: "Fisher",
+          n: "C-Pro I",
+          d: "Taxa real = (1+nominal)/(1+inflação) − 1. Ex: 13,75% e 5% → 8,33% real (aprox. 8,75%).",
+        },
+        {
+          t: "TIR",
+          n: "C-Pro I",
+          d: "Taxa Interna de Retorno. Taxa que zera o VPL. TIR > TMA: aceitar. Considera valor do dinheiro no tempo.",
+        },
+        {
+          t: "Holding Familiar",
+          n: "C-Pro I",
+          d: "PJ que centraliza patrimônio familiar. Facilita sucessão, protege bens, centraliza governança, pode otimizar ITCMD.",
+        },
+        {
+          t: "COE",
+          n: "CPA",
+          d: "Certificado de Operações Estruturadas = RF + derivativos. Capital protegido: pior cenário = devolver principal. Não coberto pelo FGC.",
+        },
+        {
+          t: "BDR",
+          n: "C-Pro R",
+          d: "Brazilian Depositary Receipt. Recibo de ação estrangeira na B3 em reais. Risco cambial embutido. IR 15% sobre ganho.",
+        },
+        {
+          t: "ETF",
+          n: "C-Pro R",
+          d: "Exchange Traded Fund. Gestão passiva que replica índice. Negociado em bolsa. Sem come-cotas. Taxa menor que fundo ativo.",
+        },
+        {
+          t: "FIP",
+          n: "C-Pro I",
+          d: "Fundo de Investimento em Participações. Private equity/VC. Baixa liquidez, fundo fechado. Investidores qualificados.",
+        },
+        {
+          t: "Aversão a perdas",
+          n: "C-Pro I",
+          d: 'Viés cognitivo: perdas "doem" ~2x mais que ganhos equivalentes (Kahneman). Leva a decisões irracionais como segurar ativos em queda.',
+        },
+      ];
+      function filterGloss(v) {
+        const f = v.toLowerCase();
+        const filtered = glossTerms.filter(
+          (g) => g.t.toLowerCase().includes(f) || g.d.toLowerCase().includes(f),
+        );
+        renderGlossHTML(filtered);
+      }
+      function renderGlossHTML(items) {
+        const el = document.getElementById("gloss-container");
+        if (!el) return;
+        const cols = [
+          document.createElement("div"),
+          document.createElement("div"),
+        ];
+        items.forEach((g, i) => {
+          const nc = {
+            CPA: "var(--cpa)",
+            "C-Pro R": "var(--cpror)",
+            "C-Pro I": "var(--cproi)",
+          }[g.n];
+          const div = document.createElement("div");
+          div.style.cssText =
+            "padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04)";
+          div.innerHTML = `<div style="font-size:.85rem;font-weight:600;color:var(--t1);margin-bottom:.2rem;display:flex;align-items:center;gap:.4rem">${g.t}<span style="font-size:.62rem;padding:.1rem .4rem;border-radius:20px;font-weight:700;background:rgba(255,255,255,.06);color:${nc}">${g.n}</span></div><div style="font-size:.78rem;color:var(--t2);line-height:1.6">${g.d}</div>`;
+          cols[i % 2].appendChild(div);
+        });
+        el.innerHTML = "";
+        cols.forEach((c) => el.appendChild(c));
+      }
+
+      // ============ ROADMAP DATA ============
+      function renderRoadmap() {
+        const weeks = [
+          {
+            w: "Sem 1–2",
+            title: "Sistema Financeiro Nacional",
+            color: "var(--cpa)",
+            desc: "CMN, BACEN, CVM, B3, SUSEP, SPB, Open Finance, Fintechs (SCD/SEP). Feynman: explique cada órgão como se fosse para alguém sem experiência financeira.",
+          },
+          {
+            w: "Sem 3–4",
+            title: "Produtos de Investimento",
+            color: "var(--cyan)",
+            desc: "CDB, LCI, LCA, Tesouro, Fundos, FII, COE, BDR, Seguros. Para cada produto: o que é · para quem · tributação · FGC sim/não.",
+          },
+          {
+            w: "Sem 5",
+            title: "Suitability, Ética e PLD",
+            color: "var(--gold)",
+            desc: "API, perfis, Código ANBIMA, KYC, PLD/COAF. Estude com use cases — é o tema mais cobrado em comportamental 2026.",
+          },
+          {
+            w: "Sem 6",
+            title: "Tributação Completa",
+            color: "var(--orange)",
+            desc: "IR regressivo (22,5→15%), IOF, come-cotas, isenções (LCI/LCA/FII/Deb. incentivada), ações. Monte tabela comparativa.",
+          },
+          {
+            w: "Sem 7",
+            title: "C-Pro R: Portfólio e Derivativos",
+            color: "var(--cpror)",
+            desc: "Sharpe, Beta, Duration, correlação, VaR. Futuros, opções, swap. Construção e rebalanceamento de carteiras. Use calculadoras.",
+          },
+          {
+            w: "Sem 8",
+            title: "C-Pro I: Previdência e Planejamento",
+            color: "var(--cproi)",
+            desc: "PGBL/VGBL, regime regressivo/progressivo, holding familiar, seguro de vida, planejamento sucessório, TIR/VPL, Fisher.",
+          },
+          {
+            w: "Sem 9",
+            title: "Simulados e Revisão Final",
+            color: "var(--green)",
+            desc: "3 simulados completos. Revisão Feynman dos temas com mais erro. Flashcards 15min/dia. Microcertificações no ANBIMA Edu.",
+          },
+        ];
+        const el = document.getElementById("roadmap-weeks");
+        if (el)
+          el.innerHTML = weeks
+            .map(
+              (w) => `
+          <div style="display:flex;gap:.6rem;align-items:flex-start;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.04)">
+            <div style="width:60px;flex-shrink:0;font-size:.65rem;font-weight:700;color:${w.color};text-transform:uppercase;letter-spacing:.4px;padding-top:.1rem">${w.w}</div>
+            <div><div style="font-size:.83rem;font-weight:600;color:var(--t1);margin-bottom:.15rem">${w.title}</div><div style="font-size:.76rem;color:var(--t2);line-height:1.6">${w.desc}</div></div>
+          </div>`,
+            )
+            .join("");
+
+        const macetes = [
+          {
+            color: "var(--cpa)",
+            text: "FGC cobre: CDB, LCI, LCA, Poupança, LC, RDB → até R$250k/CPF/instituição",
+          },
+          {
+            color: "var(--red)",
+            text: "FGC NÃO cobre: Fundos, Ações, Debêntures, Títulos Públicos, COE",
+          },
+          {
+            color: "var(--green)",
+            text: "IR isentos PF: LCI, LCA, CRI, CRA, Deb. incentivada, FII dividendos, Ações <R$20k/mês",
+          },
+          {
+            color: "var(--gold)",
+            text: "IR RF tabela: 22,5% (≤180d) → 20% (181–360) → 17,5% (361–720) → 15% (>720d)",
+          },
+          {
+            color: "var(--violet)",
+            text: "Come-cotas: maio e novembro, RF e multimercado. 15% (LP) ou 20% (CP)",
+          },
+          {
+            color: "var(--cpa)",
+            text: "BACEN: pol. monetária, câmbio, bancos. CVM: ações, fundos, debêntures. SUSEP: seguros",
+          },
+          {
+            color: "var(--green)",
+            text: "Selic sobe → preço de títulos de renda fixa cai. Duration alta = mais sensível",
+          },
+          {
+            color: "var(--cpror)",
+            text: "Sharpe = (Ret − Rf) / DP. Beta = sensibilidade ao mercado. VaR = perda máxima esperada",
+          },
+          {
+            color: "var(--cproi)",
+            text: "PGBL: declara completo + INSS → deduz 12% renda bruta. VGBL: declaração simples",
+          },
+          {
+            color: "var(--gold)",
+            text: "Fisher: (1+nominal)/(1+inflação)−1. Regressivo previdência: 10% após 10 anos",
+          },
+        ];
+        const mel = document.getElementById("macetes-list");
+        if (mel)
+          mel.innerHTML = macetes
+            .map(
+              (m) =>
+                `<div style="padding:.4rem .7rem;background:var(--s3);border-radius:var(--r);border-left:2px solid ${m.color};font-size:.76rem;color:var(--t2);line-height:1.5">${m.text}</div>`,
+            )
+            .join("");
+
+        const checks = [
+          "Fiz ao menos 2 simulados com nota > 70%",
+          "Consigo explicar cada produto sem consultar (Feynman)",
+          "Sei diferença entre CMN, BACEN, CVM e B3",
+          "Sei o que o FGC cobre e não cobre",
+          "Tabela regressiva de IR de cabeça",
+          "Sei o que fazer quando cliente pede produto fora do perfil",
+          "Completei microcertificações no ANBIMA Edu",
+          "Tenho documento com foto para o dia da prova",
+          "Agendei minha prova no site ANBIMA",
+        ];
+        const chel = document.getElementById("checklist-wrap");
+        if (chel)
+          chel.innerHTML = checks
+            .map(
+              (c, i) =>
+                `<div style="display:flex;align-items:center;gap:.5rem;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.03);font-size:.78rem;color:var(--t2)" id="chk-${i}"><div style="width:16px;height:16px;border:1px solid var(--b2);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0" onclick="toggleChk(${i})" id="chkbox-${i}"></div>${c}</div>`,
+            )
+            .join("");
+      }
+      const chkDone = new Set();
+      function toggleChk(i) {
+        const box = document.getElementById("chkbox-" + i);
+        const row = document.getElementById("chk-" + i);
+        if (chkDone.has(i)) {
+          chkDone.delete(i);
+          box.innerHTML = "";
+          box.style.background = "";
+          row.style.opacity = "1";
+          row.style.textDecoration = "";
+        } else {
+          chkDone.add(i);
+          box.innerHTML =
+            '<i class="ti ti-check" style="font-size:10px;color:var(--green)"></i>';
+          box.style.background = "rgba(16,185,129,.12)";
+          row.style.opacity = ".6";
+          row.style.textDecoration = "line-through";
+          addXP(5, "Checklist item");
+        }
+      }
+
+      // ============ INIT ============
+      renderGlossHTML(glossTerms);
+      initNoteTopics();
+      updatePomoDisplay();
+      calcIR();
+      calcSharpe();
+      calcFisher();
+      calcBeta();
+      updateDashboard();
+      renderAchievements();
+      renderExercises("all");
+    </script>
+  </body>
+</html>

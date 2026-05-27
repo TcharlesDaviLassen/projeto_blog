@@ -1,0 +1,2783 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crédito Imobiliário — Guia de Estudos</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cream: #f5f0e8;
+        --ink: #1a1209;
+        --terracotta: #c4522a;
+        --gold: #c8922a;
+        --sage: #5a7a5c;
+        --dust: #d4c9b0;
+        --light-dust: #eae4d8;
+        --shadow: rgba(26, 18, 9, 0.12);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--cream);
+        font-family: "Lato", sans-serif;
+        color: var(--ink);
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      /* ─── HEADER ─── */
+      header {
+        background: var(--ink);
+        color: var(--cream);
+        padding: 3rem 2rem 2.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 30px,
+          rgba(200, 146, 42, 0.06) 30px,
+          rgba(200, 146, 42, 0.06) 31px
+        );
+      }
+      header .badge {
+        display: inline-block;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 0.3rem 1rem;
+        border-radius: 2px;
+        margin-bottom: 1.2rem;
+      }
+      header h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.2rem, 5vw, 3.8rem);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      header h1 span {
+        color: var(--terracotta);
+      }
+      header p {
+        margin-top: 0.8rem;
+        color: var(--dust);
+        font-size: 0.95rem;
+        letter-spacing: 0.04em;
+      }
+
+      /* ─── PROGRESS BAR ─── */
+      .progress-wrap {
+        background: var(--ink);
+        padding: 0 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .progress-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--dust);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .progress-bar {
+        width: 100%;
+        max-width: 640px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--terracotta), var(--gold));
+        width: 0%;
+        transition: width 0.6s ease;
+        border-radius: 4px;
+      }
+      .progress-text {
+        font-family: "DM Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--gold);
+      }
+
+      /* ─── NAV TABS ─── */
+      nav.tabs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1.5rem 1rem;
+        background: var(--light-dust);
+        border-bottom: 2px solid var(--dust);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      nav.tabs button {
+        background: none;
+        border: 1.5px solid var(--dust);
+        padding: 0.4rem 1rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        color: var(--ink);
+        cursor: pointer;
+        border-radius: 2px;
+        transition: all 0.2s;
+        text-transform: uppercase;
+      }
+      nav.tabs button:hover {
+        background: var(--dust);
+      }
+      nav.tabs button.active {
+        background: var(--terracotta);
+        border-color: var(--terracotta);
+        color: white;
+      }
+
+      /* ─── MAIN CONTAINER ─── */
+      main {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 5rem;
+      }
+
+      /* ─── SECTION ─── */
+      .section {
+        display: none;
+        animation: fadeSlide 0.4s ease;
+      }
+      .section.active {
+        display: block;
+      }
+      @keyframes fadeSlide {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ─── MODULE HEADER ─── */
+      .module-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid var(--dust);
+      }
+      .module-num {
+        font-family: "Playfair Display", serif;
+        font-size: 4rem;
+        font-weight: 900;
+        color: var(--dust);
+        line-height: 1;
+        min-width: 4rem;
+      }
+      .module-title h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.9rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .module-title p {
+        color: var(--terracotta);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-top: 0.3rem;
+      }
+
+      /* ─── FEYNMAN BOX ─── */
+      .feynman-box {
+        background: var(--ink);
+        color: var(--cream);
+        border-radius: 4px;
+        padding: 1.5rem 1.8rem;
+        margin: 1.5rem 0;
+        position: relative;
+      }
+      .feynman-box::before {
+        content: "🧒 Explicação Feynman";
+        display: block;
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.8rem;
+      }
+      .feynman-box p {
+        font-size: 0.97rem;
+        line-height: 1.75;
+        color: #e8e0d0;
+      }
+      .feynman-box em {
+        color: var(--gold);
+        font-style: normal;
+        font-weight: 700;
+      }
+
+      /* ─── CONTENT CARDS ─── */
+      .card {
+        background: white;
+        border: 1px solid var(--dust);
+        border-radius: 4px;
+        padding: 1.4rem 1.6rem;
+        margin: 1.2rem 0;
+        box-shadow: 0 2px 8px var(--shadow);
+      }
+      .card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+        color: var(--ink);
+      }
+      .card h3 .tag {
+        font-family: "DM Mono", monospace;
+        font-size: 0.62rem;
+        background: var(--light-dust);
+        color: var(--terracotta);
+        padding: 0.2rem 0.5rem;
+        border-radius: 2px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-left: 0.5rem;
+        vertical-align: middle;
+      }
+
+      /* ─── COMPARISON TABLE ─── */
+      .comp-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+      }
+      .comp-table th {
+        background: var(--ink);
+        color: var(--cream);
+        padding: 0.7rem 1rem;
+        text-align: left;
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .comp-table td {
+        padding: 0.65rem 1rem;
+        border-bottom: 1px solid var(--dust);
+      }
+      .comp-table tr:hover td {
+        background: var(--light-dust);
+      }
+      .comp-table .highlight {
+        color: var(--terracotta);
+        font-weight: 700;
+      }
+      .comp-table .positive {
+        color: var(--sage);
+        font-weight: 700;
+      }
+
+      /* ─── USE CASE ─── */
+      .use-case {
+        border-left: 3px solid var(--terracotta);
+        background: #fff8f5;
+        padding: 1.2rem 1.4rem;
+        margin: 1.2rem 0;
+        border-radius: 0 4px 4px 0;
+      }
+      .use-case-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--terracotta);
+        margin-bottom: 0.5rem;
+      }
+      .use-case strong {
+        color: var(--ink);
+      }
+      .insight-box {
+        background: var(--sage);
+        color: white;
+        padding: 0.7rem 1rem;
+        border-radius: 3px;
+        margin-top: 0.8rem;
+        font-size: 0.88rem;
+      }
+      .insight-box::before {
+        content: "💡 Insight: ";
+        font-weight: 700;
+      }
+
+      /* ─── FORMULA BOX ─── */
+      .formula {
+        background: var(--light-dust);
+        border: 1px solid var(--dust);
+        border-radius: 4px;
+        padding: 1rem 1.2rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.85rem;
+        line-height: 2;
+        margin: 0.8rem 0;
+        color: var(--ink);
+      }
+      .formula .var {
+        color: var(--terracotta);
+        font-weight: 500;
+      }
+
+      /* ─── PIPELINE STEPS ─── */
+      .pipeline {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin: 1rem 0;
+      }
+      .pipeline-step {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      .pipeline-step .connector {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 2rem;
+      }
+      .pipeline-step .dot {
+        width: 2rem;
+        height: 2rem;
+        background: var(--terracotta);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "DM Mono", monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .pipeline-step .line {
+        width: 2px;
+        flex: 1;
+        background: var(--dust);
+        min-height: 1.5rem;
+      }
+      .pipeline-step:last-child .line {
+        display: none;
+      }
+      .pipeline-step .content {
+        padding-bottom: 1.2rem;
+        flex: 1;
+      }
+      .pipeline-step .content strong {
+        font-family: "Playfair Display", serif;
+        font-size: 1rem;
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+      .pipeline-step .content p {
+        font-size: 0.88rem;
+        color: #555;
+      }
+
+      /* ─── CALCULATOR ─── */
+      .calculator {
+        background: var(--ink);
+        color: var(--cream);
+        border-radius: 4px;
+        padding: 1.6rem;
+        margin: 1.5rem 0;
+      }
+      .calculator h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        color: var(--gold);
+        margin-bottom: 1.2rem;
+      }
+      .calc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+      }
+      @media (max-width: 540px) {
+        .calc-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .calc-field label {
+        display: block;
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--dust);
+        margin-bottom: 0.4rem;
+      }
+      .calc-field input,
+      .calc-field select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 3px;
+        padding: 0.55rem 0.8rem;
+        color: var(--cream);
+        font-family: "DM Mono", monospace;
+        font-size: 0.88rem;
+        transition: border-color 0.2s;
+      }
+      .calc-field input:focus,
+      .calc-field select:focus {
+        outline: none;
+        border-color: var(--gold);
+      }
+      .calc-field select option {
+        background: var(--ink);
+        color: var(--cream);
+      }
+      .btn-calc {
+        display: block;
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--terracotta);
+        color: white;
+        border: none;
+        border-radius: 3px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-calc:hover {
+        background: #a8441f;
+      }
+      .calc-result {
+        display: none;
+        margin-top: 1.2rem;
+        padding-top: 1.2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .calc-result.show {
+        display: block;
+        animation: fadeSlide 0.3s ease;
+      }
+      .result-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.9rem;
+      }
+      .result-row .val {
+        font-family: "DM Mono", monospace;
+        color: var(--gold);
+      }
+      .result-row.total {
+        font-weight: 700;
+        font-size: 1.05rem;
+        padding-top: 0.7rem;
+        border-bottom: none;
+      }
+      .result-row.total .val {
+        color: var(--terracotta);
+      }
+
+      /* ─── EXERCISES ─── */
+      .exercise-block {
+        counter-increment: exercise;
+        background: white;
+        border: 1px solid var(--dust);
+        border-radius: 4px;
+        padding: 1.4rem 1.6rem;
+        margin: 1.2rem 0;
+        box-shadow: 0 2px 6px var(--shadow);
+      }
+      .exercise-block .ex-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.6rem;
+      }
+      .exercise-block .question {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+      .options-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .options-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+      }
+      .options-list li button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        background: var(--light-dust);
+        border: 1.5px solid var(--dust);
+        border-radius: 3px;
+        padding: 0.6rem 0.9rem;
+        font-family: "Lato", sans-serif;
+        font-size: 0.9rem;
+        color: var(--ink);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .options-list li button:hover:not(:disabled) {
+        border-color: var(--gold);
+        background: #fdf6e3;
+      }
+      .options-list li button.correct {
+        background: #eaf5ea;
+        border-color: var(--sage);
+        color: var(--sage);
+        font-weight: 700;
+      }
+      .options-list li button.wrong {
+        background: #fdecec;
+        border-color: #c0392b;
+        color: #c0392b;
+      }
+      .options-list li button:disabled {
+        cursor: default;
+      }
+      .explanation {
+        display: none;
+        margin-top: 0.8rem;
+        background: var(--light-dust);
+        border-left: 3px solid var(--sage);
+        padding: 0.8rem 1rem;
+        font-size: 0.88rem;
+        border-radius: 0 3px 3px 0;
+        color: #333;
+      }
+      .explanation.show {
+        display: block;
+        animation: fadeSlide 0.3s ease;
+      }
+
+      /* ─── CHECKLIST MODULE ─── */
+      .checklist-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        margin: 1rem 0;
+      }
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem;
+        padding: 0.8rem 1rem;
+        background: white;
+        border: 1px solid var(--dust);
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .check-item:hover {
+        background: var(--light-dust);
+      }
+      .check-item.done {
+        background: #eaf5ea;
+        border-color: #8dc98d;
+      }
+      .check-item .chk {
+        width: 1.2rem;
+        height: 1.2rem;
+        border: 2px solid var(--dust);
+        border-radius: 2px;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        transition: all 0.2s;
+      }
+      .check-item.done .chk {
+        background: var(--sage);
+        border-color: var(--sage);
+        color: white;
+      }
+      .check-item .chk::after {
+        content: "";
+      }
+      .check-item.done .chk::after {
+        content: "✓";
+      }
+      .check-item span {
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+
+      /* ─── GLOSSARY ─── */
+      .glossary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin: 1rem 0;
+      }
+      @media (max-width: 560px) {
+        .glossary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .glossary-item {
+        background: white;
+        border: 1px solid var(--dust);
+        border-radius: 4px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: box-shadow 0.2s;
+      }
+      .glossary-item:hover {
+        box-shadow: 0 4px 12px var(--shadow);
+      }
+      .glossary-item .term {
+        font-family: "Playfair Display", serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--terracotta);
+        margin-bottom: 0.3rem;
+      }
+      .glossary-item .definition {
+        font-size: 0.85rem;
+        color: #666;
+        display: none;
+        line-height: 1.5;
+      }
+      .glossary-item.open .definition {
+        display: block;
+        animation: fadeSlide 0.25s ease;
+      }
+      .glossary-item .arrow {
+        float: right;
+        font-size: 0.75rem;
+        color: var(--dust);
+        transition: transform 0.2s;
+      }
+      .glossary-item.open .arrow {
+        transform: rotate(90deg);
+      }
+
+      /* ─── SCORE BANNER ─── */
+      #score-banner {
+        display: none;
+        text-align: center;
+        padding: 1.5rem;
+        background: var(--ink);
+        color: var(--cream);
+        border-radius: 4px;
+        margin-top: 2rem;
+      }
+      #score-banner.show {
+        display: block;
+        animation: fadeSlide 0.4s ease;
+      }
+      #score-banner .score-num {
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        color: var(--gold);
+      }
+      #score-banner p {
+        color: var(--dust);
+        font-size: 0.9rem;
+        margin-top: 0.4rem;
+      }
+
+      /* ─── FOOTER ─── */
+      footer {
+        text-align: center;
+        padding: 2rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.68rem;
+        color: #aaa;
+        letter-spacing: 0.1em;
+        border-top: 1px solid var(--dust);
+        margin-top: 3rem;
+      }
+
+      /* ─── RESPONSIVE HELPERS ─── */
+      .divider {
+        border: none;
+        border-top: 1px solid var(--dust);
+        margin: 1.5rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="badge">Técnica Feynman · Use Cases · Exercícios</div>
+      <h1>Crédito <span>Imobiliário</span></h1>
+      <p>Guia de Estudos Completo — Do básico ao avançado</p>
+    </header>
+
+    <div class="progress-wrap">
+      <span class="progress-label">Seu progresso</span>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-text" id="progressText">0 / 0 conceitos</span>
+    </div>
+
+    <nav class="tabs">
+      <button class="active" onclick="showSection('conceitos')">
+        01 · Conceitos
+      </button>
+      <button onclick="showSection('amortizacao')">02 · Amortização</button>
+      <button onclick="showSection('taxas')">03 · Taxas</button>
+      <button onclick="showSection('fgts')">04 · FGTS</button>
+      <button onclick="showSection('programas')">05 · Programas</button>
+      <button onclick="showSection('calculadora')">06 · Calculadora</button>
+      <button onclick="showSection('exercicios')">07 · Exercícios</button>
+      <button onclick="showSection('glossario')">08 · Glossário</button>
+    </nav>
+
+    <main>
+      <!-- ═══ SEÇÃO 1: CONCEITOS ═══ -->
+      <div class="section active" id="section-conceitos">
+        <div class="module-header">
+          <div class="module-num">01</div>
+          <div class="module-title">
+            <p>Fundamentos</p>
+            <h2>O que é Crédito Imobiliário?</h2>
+          </div>
+        </div>
+
+        <div class="feynman-box">
+          <p>
+            Imagine que você quer comprar um videogame de <em>R$ 500</em> mas só
+            tem <em>R$ 50</em>. Você pede R$ 450 emprestado ao seu tio e combina
+            de devolver R$ 50 por mês — mas o tio cobra um
+            <em>"aluguel"</em> pelo dinheiro. Isso é o juros.
+          </p>
+          <p style="margin-top: 0.7rem">
+            O crédito imobiliário funciona igual. O "videogame" é a casa, o
+            "tio" é o banco, e o contrato dura até <em>30 anos</em>.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Elementos-chave <span class="tag">Conceito</span></h3>
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Elemento</th>
+                <th>O que é</th>
+                <th>Analogia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Principal</strong></td>
+                <td>Valor total emprestado</td>
+                <td>Preço da casa</td>
+              </tr>
+              <tr>
+                <td><strong>Juros</strong></td>
+                <td>Custo do empréstimo</td>
+                <td>Aluguel do dinheiro</td>
+              </tr>
+              <tr>
+                <td><strong>Prazo</strong></td>
+                <td>Tempo para pagar</td>
+                <td>Número de parcelas</td>
+              </tr>
+              <tr>
+                <td><strong>Amortização</strong></td>
+                <td>Redução da dívida</td>
+                <td>Cada pedaço "devorado" da dívida</td>
+              </tr>
+              <tr>
+                <td><strong>Alienação fiduciária</strong></td>
+                <td>Imóvel no nome do banco até quitação</td>
+                <td>Tio guarda o videogame até pagar tudo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="use-case">
+          <div class="use-case-label">🏠 Use Case — Compra Simples</div>
+          <p>
+            <strong>Situação:</strong> Joana quer comprar um apartamento de R$
+            400.000. Ela tem R$ 80.000 guardados (20% de entrada).
+          </p>
+          <p style="margin-top: 0.6rem">
+            → Financiamento necessário: <strong>R$ 320.000</strong><br />
+            → Prazo escolhido: <strong>360 meses (30 anos)</strong><br />
+            → Taxa: <strong>10% a.a.</strong><br />
+            → Parcela inicial (SAC): <strong>~R$ 3.556/mês</strong>
+          </p>
+          <div class="insight-box">
+            Comprometimento de renda: se a parcela máxima é 30% da renda, Joana
+            precisa de renda mínima de R$ 11.853/mês.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Regra dos 30% <span class="tag">Importante</span></h3>
+          <p>
+            Os bancos limitam o financiamento ao máximo de
+            <strong>30% da renda bruta mensal</strong> do tomador. Renda de
+            cônjuge e familiares pode ser somada (composição de renda).
+          </p>
+          <div class="formula">
+            <span class="var">Capacidade de parcela</span> = Renda Bruta ×
+            0,30<br />
+            <span class="var">Renda mínima</span> = Parcela ÷ 0,30
+          </div>
+        </div>
+
+        <div class="checklist-wrap" id="checklist-1">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Entendi o que é crédito imobiliário e seus elementos</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Sei calcular a renda mínima necessária para uma parcela</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Entendi o que é alienação fiduciária</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SEÇÃO 2: AMORTIZAÇÃO ═══ -->
+      <div class="section" id="section-amortizacao">
+        <div class="module-header">
+          <div class="module-num">02</div>
+          <div class="module-title">
+            <p>Sistemas</p>
+            <h2>SAC vs Price</h2>
+          </div>
+        </div>
+
+        <div class="feynman-box">
+          <p>Você deve <em>R$ 1.200</em> ao tio e vai pagar em 12 meses.</p>
+          <p style="margin-top: 0.6rem">
+            <strong style="color: var(--gold)">SAC:</strong> Todo mês você paga
+            R$ 100 fixo da dívida + juros sobre o que resta. As parcelas
+            <em>começam maiores e vão caindo</em>.
+          </p>
+          <p style="margin-top: 0.4rem">
+            <strong style="color: var(--gold)">Price:</strong> Todo mês você
+            paga <em>sempre o mesmo valor</em>. Fácil de planejar, mas paga mais
+            juros no total.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>
+            SAC — Sistema de Amortização Constante
+            <span class="tag">Recomendado</span>
+          </h3>
+          <div class="formula">
+            <span class="var">Amortização</span> = Principal ÷ N° de Parcelas<br />
+            <span class="var">Juros do mês</span> = Saldo Devedor × Taxa
+            Mensal<br />
+            <span class="var">Parcela</span> = Amortização + Juros
+          </div>
+          <p style="font-size: 0.9rem; color: #555">
+            Parcelas começam maiores, mas a dívida cai mais rápido e o total
+            pago é menor.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>
+            Price — Sistema Francês <span class="tag">Parcelas Fixas</span>
+          </h3>
+          <p style="font-size: 0.9rem; color: #555; margin-bottom: 0.8rem">
+            Parcelas sempre iguais. No início, a maior parte é juros; com o
+            tempo, vira amortização.
+          </p>
+          <div class="formula">
+            <span class="var">PMT</span> = PV × [i(1+i)ⁿ] ÷ [(1+i)ⁿ − 1]<br />
+            <span style="font-size: 0.8rem; color: #888"
+              >PV = valor financiado, i = taxa mensal, n = número de
+              parcelas</span
+            >
+          </div>
+        </div>
+
+        <div class="use-case">
+          <div class="use-case-label">
+            📊 Use Case — SAC vs Price em números reais
+          </div>
+          <p>
+            <strong>Cenário:</strong> Carlos financia R$ 300.000 em 360 meses a
+            10% a.a.
+          </p>
+          <table class="comp-table" style="margin-top: 0.8rem">
+            <thead>
+              <tr>
+                <th></th>
+                <th>SAC</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Parcela inicial</td>
+                <td>~R$ 3.317</td>
+                <td>~R$ 2.632</td>
+              </tr>
+              <tr>
+                <td>Parcela final</td>
+                <td>~R$ 840</td>
+                <td>~R$ 2.632</td>
+              </tr>
+              <tr>
+                <td>Total pago</td>
+                <td class="positive">~R$ 614.000</td>
+                <td class="highlight">~R$ 947.520</td>
+              </tr>
+              <tr>
+                <td><strong>Diferença</strong></td>
+                <td colspan="2" class="highlight" style="text-align: center">
+                  <strong>SAC economiza ~R$ 333.500</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight-box">
+            SAC tem parcela inicial maior, mas economiza centenas de milhares.
+            Price é melhor para quem tem renda apertada no início da carreira.
+          </div>
+        </div>
+
+        <div class="checklist-wrap">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span
+              >Sei explicar a diferença entre SAC e Price sem olhar o
+              material</span
+            >
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Entendi por que o SAC gera menos custo total de juros</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Sei em qual situação o Price pode ser mais vantajoso</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SEÇÃO 3: TAXAS ═══ -->
+      <div class="section" id="section-taxas">
+        <div class="module-header">
+          <div class="module-num">03</div>
+          <div class="module-title">
+            <p>Indexadores</p>
+            <h2>Taxas e Correção Monetária</h2>
+          </div>
+        </div>
+
+        <div class="feynman-box">
+          <p>
+            Imagina que você combinou pagar R$ 500/mês ao tio, mas ele disse:
+            <em>"Vou cobrar um pouquinho a mais quando a inflação subir"</em>.
+            Isso é o que os bancos fazem — amarram a dívida a um
+            <em>índice que muda com o tempo</em>.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>TR — Taxa Referencial</h3>
+          <p style="font-size: 0.9rem; color: #555">
+            Usada no FGTS e na Poupança. Base do SFH. Historicamente próxima de
+            zero, portanto o reajuste é mínimo.
+            <strong>Melhor opção em cenários de inflação alta</strong>.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>IPCA — Inflação Oficial</h3>
+          <p style="font-size: 0.9rem; color: #555">
+            Mede a inflação real do Brasil. Financiamentos IPCA+ oferecem taxas
+            menores, mas as parcelas variam com a inflação.
+            <strong>Risco elevado quando IPCA dispara</strong>.
+          </p>
+          <div class="formula" style="margin-top: 0.8rem">
+            Taxa efetiva = <span class="var">IPCA anual</span> +
+            <span class="var">spread fixo do banco</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Taxa Fixa</h3>
+          <p style="font-size: 0.9rem; color: #555">
+            A taxa não muda durante o contrato.
+            <strong>Segurança máxima</strong>, geralmente com taxa mais alta em
+            cenários de inflação baixa.
+          </p>
+        </div>
+
+        <div class="use-case">
+          <div class="use-case-label">
+            📈 Use Case — Marina e os indexadores
+          </div>
+          <p>
+            <strong>Marina</strong> financiou R$ 400.000 em 2021 em duas
+            modalidades:
+          </p>
+          <table class="comp-table" style="margin-top: 0.8rem">
+            <thead>
+              <tr>
+                <th>Ano</th>
+                <th>IPCA + 3,5%</th>
+                <th>Taxa Fixa 9%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2021 (IPCA 10,06%)</td>
+                <td class="highlight">13,56% — parcela subiu</td>
+                <td class="positive">9% — estável</td>
+              </tr>
+              <tr>
+                <td>2022 (IPCA 5,79%)</td>
+                <td>9,29% — parcela caiu</td>
+                <td class="positive">9% — estável</td>
+              </tr>
+              <tr>
+                <td>2023 (IPCA 4,62%)</td>
+                <td class="positive">8,12% — abaixo da fixa!</td>
+                <td>9% — estável</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight-box">
+            IPCA+ é vantajoso quando inflação &lt; 5,5%. Taxa fixa dá paz em
+            cenários voláteis. IPCA+ pode ser escolha melhor em inflação
+            controlada.
+          </div>
+        </div>
+
+        <div class="checklist-wrap">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Sei diferenciar TR, IPCA e Taxa Fixa</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span
+              >Entendi em que cenário IPCA+ pode ser melhor que taxa fixa</span
+            >
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Compreendo o risco do IPCA+ em inflação elevada</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SEÇÃO 4: FGTS ═══ -->
+      <div class="section" id="section-fgts">
+        <div class="module-header">
+          <div class="module-num">04</div>
+          <div class="module-title">
+            <p>Benefício</p>
+            <h2>FGTS no Financiamento</h2>
+          </div>
+        </div>
+
+        <div class="feynman-box">
+          <p>
+            Sabe aquela caixinha onde o patrão guarda um dinheirinho do
+            funcionário todo mês? Isso é o <em>FGTS</em>. Quando você compra uma
+            casa, o governo deixa você usar esse dinheiro para
+            <em>dar de entrada ou abater a dívida</em>.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>
+            Requisitos para uso do FGTS <span class="tag">Condições</span>
+          </h3>
+          <ul
+            style="
+              list-style: none;
+              display: flex;
+              flex-direction: column;
+              gap: 0.5rem;
+              font-size: 0.9rem;
+            "
+          >
+            <li>
+              ✅ Mínimo de <strong>3 anos de trabalho</strong> com FGTS
+              (consecutivos ou não)
+            </li>
+            <li>✅ Imóvel <strong>residencial urbano</strong></li>
+            <li>
+              ✅ <strong>Não ter outro imóvel</strong> na mesma cidade ou região
+              metropolitana
+            </li>
+            <li>
+              ✅ Imóvel enquadrado no <strong>SFH</strong> (até R$ 1,5 mi em
+              SP/RJ/MG/DF; R$ 800 mil nos demais)
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>3 Formas de Usar o FGTS</h3>
+          <div class="pipeline">
+            <div class="pipeline-step">
+              <div class="connector">
+                <div class="dot">1</div>
+                <div class="line"></div>
+              </div>
+              <div class="content">
+                <strong>Pagamento da Entrada</strong>
+                <p>
+                  Reduz o valor financiado desde o início. Menor dívida = menos
+                  juros por todo o prazo.
+                </p>
+              </div>
+            </div>
+            <div class="pipeline-step">
+              <div class="connector">
+                <div class="dot">2</div>
+                <div class="line"></div>
+              </div>
+              <div class="content">
+                <strong>Amortização do Saldo Devedor</strong>
+                <p>
+                  Pode ser usado a cada 2 anos para reduzir parcelas ou encurtar
+                  o prazo do financiamento.
+                </p>
+              </div>
+            </div>
+            <div class="pipeline-step">
+              <div class="connector">
+                <div class="dot">3</div>
+                <div class="line"></div>
+              </div>
+              <div class="content">
+                <strong>Pagamento de Parcelas</strong>
+                <p>
+                  Até 12 parcelas consecutivas. Útil em momentos de aperto
+                  financeiro temporário.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="use-case">
+          <div class="use-case-label">💰 Use Case — Poder do FGTS</div>
+          <p>
+            <strong>João</strong> tem R$ 45.000 no FGTS e financia R$ 350.000 a
+            10% a.a. por 360 meses.
+          </p>
+          <p style="margin-top: 0.7rem">
+            <strong>Após 2 anos</strong>, saldo devedor = ~R$ 337.000.<br />
+            Aplica R$ 45.000 do FGTS (modalidade amortização):<br />
+            → Novo saldo devedor: <strong>R$ 292.000</strong><br />
+            → Redução de prazo:
+            <span class="positive"><strong>~4,5 anos a menos</strong></span
+            ><br />
+            → Economia em juros:
+            <span class="positive"><strong>~R$ 82.000</strong></span>
+          </p>
+          <div class="insight-box">
+            Usar FGTS para amortizar a cada 2 anos pode economizar mais de R$
+            150.000 no total de um financiamento de 30 anos.
+          </div>
+        </div>
+
+        <div class="checklist-wrap">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Sei os requisitos para usar o FGTS no imóvel</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Entendi as 3 formas de aplicar o FGTS no financiamento</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span
+              >Compreendo o impacto de usar FGTS para amortizar
+              periodicamente</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SEÇÃO 5: PROGRAMAS ═══ -->
+      <div class="section" id="section-programas">
+        <div class="module-header">
+          <div class="module-num">05</div>
+          <div class="module-title">
+            <p>Habitação</p>
+            <h2>Programas Governamentais</h2>
+          </div>
+        </div>
+
+        <div class="feynman-box">
+          <p>
+            O governo quer que mais pessoas tenham casa. Então ele
+            <em>"paga parte da conta"</em> para quem ganha menos. Quanto menor a
+            renda, <em>maior o desconto</em> e menor a taxa de juros.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>
+            Minha Casa Minha Vida — Faixas (2024) <span class="tag">MCMV</span>
+          </h3>
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Faixa</th>
+                <th>Renda Familiar</th>
+                <th>Subsídio</th>
+                <th>Taxa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Faixa 1</strong></td>
+                <td>Até R$ 2.640</td>
+                <td class="positive">Até R$ 55.000</td>
+                <td class="positive">4% a 4,75% a.a.</td>
+              </tr>
+              <tr>
+                <td><strong>Faixa 2</strong></td>
+                <td>R$ 2.640 a R$ 4.400</td>
+                <td class="positive">Até R$ 29.000</td>
+                <td>4,75% a 7% a.a.</td>
+              </tr>
+              <tr>
+                <td><strong>Faixa 3</strong></td>
+                <td>R$ 4.400 a R$ 8.000</td>
+                <td>Sem subsídio</td>
+                <td>7,66% a 8,16% a.a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="use-case">
+          <div class="use-case-label">📊 Use Case — Impacto do Subsídio</div>
+          <p>
+            <strong>Ana</strong> (Faixa 2, renda R$ 3.500) quer comprar imóvel
+            de R$ 200.000.
+          </p>
+          <table class="comp-table" style="margin-top: 0.8rem">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Sem MCMV (10% a.a.)</th>
+                <th>Com MCMV (5,5% a.a.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Subsídio</td>
+                <td>—</td>
+                <td class="positive">R$ 25.000</td>
+              </tr>
+              <tr>
+                <td>Financiamento efetivo</td>
+                <td>R$ 160.000</td>
+                <td>R$ 135.000</td>
+              </tr>
+              <tr>
+                <td>Parcela inicial (SAC)</td>
+                <td>R$ 1.778</td>
+                <td class="positive">R$ 997</td>
+              </tr>
+              <tr>
+                <td>Total pago em 30 anos</td>
+                <td class="highlight">~R$ 455.000</td>
+                <td class="positive">~R$ 298.000</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight-box">
+            Economia total com MCMV: ~R$ 157.000. O subsídio é literalmente um
+            desconto à vista no preço do imóvel.
+          </div>
+        </div>
+
+        <div class="checklist-wrap">
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Sei as faixas de renda do MCMV e seus benefícios</span>
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span
+              >Entendi como o subsídio impacta o custo total do
+              financiamento</span
+            >
+          </div>
+          <div class="check-item" onclick="toggleCheck(this)">
+            <div class="chk"></div>
+            <span>Sei explicar por que a taxa reduzida tem tanto impacto</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SEÇÃO 6: CALCULADORA ═══ -->
+      <div class="section" id="section-calculadora">
+        <div class="module-header">
+          <div class="module-num">06</div>
+          <div class="module-title">
+            <p>Ferramenta</p>
+            <h2>Simulador de Parcelas</h2>
+          </div>
+        </div>
+
+        <div class="calculator">
+          <h3>🏠 Simule seu financiamento</h3>
+          <div class="calc-grid">
+            <div class="calc-field">
+              <label>Valor do imóvel (R$)</label>
+              <input type="number" id="c-imovel" value="400000" min="0" />
+            </div>
+            <div class="calc-field">
+              <label>Entrada (R$)</label>
+              <input type="number" id="c-entrada" value="80000" min="0" />
+            </div>
+            <div class="calc-field">
+              <label>Taxa de juros (% a.a.)</label>
+              <input type="number" id="c-taxa" value="10" step="0.1" min="0" />
+            </div>
+            <div class="calc-field">
+              <label>Prazo (meses)</label>
+              <input
+                type="number"
+                id="c-prazo"
+                value="360"
+                min="12"
+                max="420"
+              />
+            </div>
+            <div class="calc-field">
+              <label>Sistema</label>
+              <select id="c-sistema">
+                <option value="sac">SAC — Amortização Constante</option>
+                <option value="price">Price — Parcelas Fixas</option>
+              </select>
+            </div>
+            <div class="calc-field">
+              <label>Renda bruta mensal (R$)</label>
+              <input type="number" id="c-renda" value="12000" min="0" />
+            </div>
+          </div>
+          <button class="btn-calc" onclick="calcular()">Calcular →</button>
+          <div class="calc-result" id="calcResult">
+            <div class="result-row">
+              <span>Valor financiado</span
+              ><span class="val" id="r-financiado">—</span>
+            </div>
+            <div class="result-row">
+              <span>Parcela inicial</span
+              ><span class="val" id="r-inicial">—</span>
+            </div>
+            <div class="result-row">
+              <span>Parcela final (SAC)</span
+              ><span class="val" id="r-final">—</span>
+            </div>
+            <div class="result-row">
+              <span>Total de juros pagos</span
+              ><span class="val" id="r-juros">—</span>
+            </div>
+            <div class="result-row total">
+              <span>Total pago</span><span class="val" id="r-total">—</span>
+            </div>
+            <div class="result-row">
+              <span>Comprometimento de renda</span
+              ><span class="val" id="r-renda">—</span>
+            </div>
+            <div class="result-row">
+              <span>Status</span><span class="val" id="r-status">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Como interpretar os resultados <span class="tag">Dica</span></h3>
+          <ul
+            style="
+              list-style: none;
+              display: flex;
+              flex-direction: column;
+              gap: 0.5rem;
+              font-size: 0.9rem;
+            "
+          >
+            <li>
+              🟢 <strong>Comprometimento ≤ 25%</strong> — Situação confortável
+            </li>
+            <li>
+              🟡 <strong>Comprometimento 25–30%</strong> — Limite aceitável
+              pelos bancos
+            </li>
+            <li>
+              🔴 <strong>Comprometimento > 30%</strong> — Geralmente negado.
+              Aumente a entrada ou componha renda.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ═══ SEÇÃO 7: EXERCÍCIOS ═══ -->
+      <div class="section" id="section-exercicios">
+        <div class="module-header">
+          <div class="module-num">07</div>
+          <div class="module-title">
+            <p>Fixação</p>
+            <h2>Exercícios e Quiz</h2>
+          </div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 01 · Conceitos Básicos</div>
+          <div class="question">
+            No sistema SAC, como se comportam as parcelas ao longo do tempo?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q1')">
+                São sempre iguais durante todo o contrato
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q1')">
+                Começam maiores e diminuem progressivamente
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q1')">
+                Começam menores e aumentam progressivamente
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q1')">
+                Variam de acordo com a inflação do mês
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q1">
+            ✅ No SAC a amortização é constante (Principal ÷ N° de parcelas),
+            mas os juros diminuem a cada mês porque o saldo devedor cai.
+            Resultado: a parcela total começa maior e decresce ao longo do
+            contrato.
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 02 · Regra de Renda</div>
+          <div class="question">
+            Pedro tem renda bruta de R$ 10.000/mês. Qual é o valor máximo de
+            parcela que um banco tipicamente aprovaria?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q2')">
+                R$ 1.500 (15%)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q2')">
+                R$ 2.000 (20%)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q2')">
+                R$ 3.000 (30%)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q2')">
+                R$ 4.000 (40%)
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q2">
+            ✅ A regra padrão dos bancos brasileiros é limitar o comprometimento
+            a 30% da renda bruta mensal. Logo: R$ 10.000 × 30% = R$ 3.000 de
+            parcela máxima.
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 03 · Indexadores</div>
+          <div class="question">
+            Em qual cenário macroeconômico o financiamento indexado ao IPCA é
+            mais vantajoso?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q3')">
+                Quando a inflação está acima de 10% ao ano
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q3')">
+                Quando a inflação está controlada, abaixo de 5,5% ao ano
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q3')">
+                Quando a Selic está muito alta
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q3')">
+                Quando o banco central está subindo juros
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q3">
+            ✅ O IPCA+ tem um spread fixo menor que a taxa fixa. Quando o IPCA
+            está baixo (&lt;5,5%), o custo efetivo fica abaixo da taxa fixa. Já
+            em inflação alta, o risco é enorme — as parcelas sobem junto com a
+            inflação.
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 04 · FGTS</div>
+          <div class="question">
+            Com que frequência mínima um trabalhador pode usar o FGTS para
+            amortizar o saldo devedor do financiamento?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q4')">
+                A qualquer momento, sem restrição
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q4')">
+                Uma vez por ano
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q4')">
+                Uma vez a cada 2 anos
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q4')">
+                Uma vez a cada 5 anos
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q4">
+            ✅ A legislação permite o uso do FGTS para amortização do saldo
+            devedor ou pagamento de parcelas a cada 2 anos. Isso é uma
+            estratégia poderosa para reduzir o prazo e os juros totais do
+            financiamento.
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 05 · Custos da Compra</div>
+          <div class="question">
+            Ana vai comprar um imóvel de R$ 500.000 em São Paulo. Ela tem R$
+            100.000 (20%) para a entrada. Qual problema ela provavelmente vai
+            enfrentar?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q5')">
+                A entrada de 20% é insuficiente — bancos exigem 30%
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q5')">
+                Ela precisará de capital adicional para ITBI e cartório (~R$
+                17.500)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q5')">
+                Nenhum problema, R$ 100.000 cobre tudo
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q5')">
+                O banco só financia imóveis acima de R$ 600.000 em SP
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q5">
+            ✅ Além da entrada (20% = R$ 100.000), Ana precisará pagar ITBI (~3%
+            = R$ 15.000) e custas de cartório/registro (~0,5% = R$ 2.500) —
+            totalizando ~R$ 117.500 disponíveis. Quem planeja só a entrada
+            geralmente é pego de surpresa pelos custos cartoriais.
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 06 · MCMV</div>
+          <div class="question">
+            Uma família com renda de R$ 3.800/mês quer comprar um imóvel pelo
+            MCMV. Qual faixa se enquadra e qual benefício terá?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q6')">
+                Faixa 1 — subsídio até R$ 55.000
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q6')">
+                Faixa 2 — subsídio até R$ 29.000 e taxa de 4,75%–7% a.a.
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q6')">
+                Faixa 3 — sem subsídio, taxa de mercado
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q6')">
+                Não se enquadra em nenhuma faixa
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q6">
+            ✅ Faixa 2 cobre rendas de R$ 2.640 a R$ 4.400. Com R$ 3.800, a
+            família está na Faixa 2 e tem direito a subsídio de até R$ 29.000 e
+            taxas de 4,75% a 7% a.a. — muito abaixo do mercado (10–12%).
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 07 · Price — Composição Inicial</div>
+          <div class="question">
+            No sistema Price, nos primeiros meses do financiamento, qual é a
+            composição predominante de cada parcela?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q7')">
+                A maior parte é amortização, com pouco juro
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q7')">
+                A maior parte é juro, com pouca amortização
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q7')">
+                Sempre metade amortização e metade juro
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q7')">
+                Não há amortização nos primeiros 12 meses
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q7">
+            ✅ Na Tabela Price, como o saldo devedor inicial é máximo, os juros
+            do primeiro período consomem a maior parte da parcela. Com o tempo,
+            o saldo cai, os juros diminuem e a amortização cresce. Nos últimos
+            meses o oposto acontece: quase tudo é amortização.
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 08 · SAC — Cálculo Direto</div>
+          <div class="question">
+            Lucas financia R$ 240.000 pelo SAC em 240 meses a 1% a.m. Qual é o
+            valor da amortização mensal e da primeira parcela?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q8')">
+                Amortização R$ 800 · Parcela R$ 800
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q8')">
+                Amortização R$ 1.000 · Parcela R$ 1.000
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q8')">
+                Amortização R$ 1.000 · Parcela R$ 3.400
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q8')">
+                Amortização R$ 1.200 · Parcela R$ 3.600
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q8">
+            ✅ Amortização = R$ 240.000 ÷ 240 = R$ 1.000/mês (constante). Juros
+            do 1° mês = R$ 240.000 × 1% = R$ 2.400. Parcela inicial = R$ 1.000 +
+            R$ 2.400 = <strong>R$ 3.400</strong>. Na última parcela: R$ 1.000 +
+            R$ 1.000 × 1% = R$ 1.010.
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 09 · Alienação Fiduciária</div>
+          <div class="question">
+            Na alienação fiduciária, quem detém a propriedade do imóvel durante
+            o período de financiamento?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q9')">
+                O comprador (devedor fiduciante), pois paga as parcelas
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q9')">
+                O banco (credor fiduciário), até a quitação total da dívida
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q9')">
+                O cartório de registro de imóveis
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q9')">
+                Ninguém — o imóvel fica bloqueado até o pagamento
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q9">
+            ✅ Na alienação fiduciária (Lei 9.514/97), a propriedade resolúvel
+            do imóvel é transferida ao credor (banco). O devedor fica com a
+            posse direta (mora no imóvel), mas a propriedade real só retorna a
+            ele após a quitação total. Em inadimplência, o banco retoma
+            extrajudicialmente — muito mais ágil que a hipoteca judicial.
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 10 · Seguros Obrigatórios</div>
+          <div class="question">
+            Quais seguros são OBRIGATÓRIOS em todo financiamento imobiliário
+            pelo SFH?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q10')">
+                Seguro de vida e seguro contra roubo
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q10')">
+                Apenas o seguro contra danos físicos ao imóvel
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q10')">
+                MIP (Morte e Invalidez Permanente) e DFI (Danos Físicos ao
+                Imóvel)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q10')">
+                Seguro desemprego e seguro contra inadimplência
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q10">
+            ✅ O SFH exige dois seguros obrigatórios: <strong>MIP</strong> —
+            quita a dívida em caso de morte ou invalidez permanente do mutuário;
+            <strong>DFI</strong> — cobre danos físicos estruturais ao imóvel
+            (incêndio, desabamento). Ambos são cobrados mensalmente e compõem o
+            CET do financiamento.
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 11 · SFH vs SFI</div>
+          <div class="question">
+            Qual é a diferença fundamental entre o SFH e o SFI (Sistema de
+            Financiamento Imobiliário)?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q11')">
+                SFH é para pessoas físicas; SFI é exclusivo para empresas
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q11')">
+                SFH tem teto de valor, permite FGTS e segue regras do governo;
+                SFI é para imóveis acima do teto, sem FGTS e com condições
+                negociadas livremente
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q11')">
+                SFH é do Banco do Brasil; SFI é da Caixa Econômica Federal
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q11')">
+                No SFI as taxas são sempre menores que no SFH
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q11">
+            ✅ O SFH tem regras rígidas: teto de valor do imóvel (R$ 1,5 mi em
+            SP/RJ/MG/DF; R$ 800k nos demais), permite FGTS, limita a taxa de
+            juros e exige os seguros obrigatórios. O SFI não tem teto, não
+            permite FGTS, e as condições são negociadas livremente — usado em
+            imóveis de alto padrão.
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 12 · ITBI — Competência e Momento</div>
+          <div class="question">
+            O ITBI é cobrado por qual ente federativo e em que momento?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q12')">
+                União Federal, anualmente sobre o valor venal
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q12')">
+                Estado, no momento do registro do financiamento
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q12')">
+                Município, no ato da transmissão da propriedade (compra e venda)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q12')">
+                Estado, uma única vez no ato da escritura pública
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q12">
+            ✅ O ITBI é imposto municipal (Art. 156, II, CF/88), cobrado no
+            momento da transmissão da propriedade — quando o comprador registra
+            a escritura ou o contrato de financiamento no Cartório de Registro
+            de Imóveis. A alíquota varia por município, geralmente entre 2% e 3%
+            do valor da transação.
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 13 · LTV — Loan to Value</div>
+          <div class="question">
+            Um banco oferece LTV máximo de 80%. Para um imóvel avaliado em R$
+            600.000, qual o valor máximo financiado?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q13')">
+                R$ 600.000 (valor total)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q13')">
+                R$ 420.000 (70%)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q13')">
+                R$ 480.000 (80%)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q13')">
+                R$ 540.000 (90%)
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q13">
+            ✅ LTV (Loan-to-Value) = Valor Financiado ÷ Valor de Avaliação. Com
+            LTV de 80%: R$ 600.000 × 80% = <strong>R$ 480.000</strong>. O
+            comprador precisará de no mínimo R$ 120.000 de entrada (20%), mais
+            os custos de ITBI e cartório.
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 14 · CET — Custo Efetivo Total</div>
+          <div class="question">
+            Dois bancos oferecem a mesma taxa nominal de 9% a.a. Por que o CET
+            pode ser diferente entre eles?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q14')">
+                O CET é sempre igual à taxa nominal — são sinônimos
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q14')">
+                O CET inclui seguros, taxas administrativas e IOF — que variam
+                entre bancos
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q14')">
+                O CET só difere se o prazo do financiamento for diferente
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q14')">
+                O CET é regulado pelo governo e igual em todos os bancos
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q14">
+            ✅ O CET representa o custo real total: juros nominais + seguros MIP
+            e DFI + taxas de avaliação do imóvel + tarifas de administração +
+            IOF. Como os encargos acessórios variam por banco, o CET pode
+            diferir significativamente mesmo com taxa nominal idêntica.
+            <strong>Sempre compare o CET, não só a taxa de juros!</strong>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="exercise-block">
+          <div class="ex-label">
+            Questão 15 · Custos da Compra — Cálculo Integrado
+          </div>
+          <div class="question">
+            Compra de R$ 500.000 em SP com entrada de 20%. ITBI = 3%, Cartório =
+            1%. Qual o capital total necessário no ato?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q15')">
+                R$ 100.000 (apenas a entrada)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q15')">
+                R$ 110.000
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q15')">
+                R$ 120.000 (entrada R$ 100k + ITBI R$ 15k + Cartório R$ 5k)
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q15')">
+                R$ 150.000
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q15">
+            ✅ Entrada = 20% × 500k = R$ 100.000. ITBI = 3% × 500k = R$ 15.000.
+            Cartório = 1% × 500k = R$ 5.000. Total: <strong>R$ 120.000</strong>.
+            Esse é o erro mais comum no planejamento — guardar só a entrada e
+            ser surpreendido pelos custos de transferência.
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 16 · FGTS — Restrição de Uso</div>
+          <div class="question">
+            Roberto tem um apartamento quitado em BH e quer usar o FGTS para
+            comprar um segundo imóvel também em BH. Ele pode?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, true, 'q16')">
+                Não — quem já tem imóvel residencial na mesma cidade não pode
+                usar FGTS para outro na mesma localidade
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q16')">
+                Sim — o FGTS pode ser usado livremente para qualquer imóvel
+                residencial
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q16')">
+                Sim — a restrição vale só para imóveis ainda financiados, não
+                para os quitados
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q16')">
+                Não — o FGTS só pode ser usado uma vez na vida
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q16">
+            ✅ Uma das condições para uso do FGTS é não ser titular de outro
+            imóvel residencial urbano no município onde trabalha, reside ou
+            pretende residir — incluindo a região metropolitana. A restrição
+            vale para imóveis quitados ou financiados. Roberto está impedido por
+            já ter o apartamento na mesma cidade.
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 17 · FGTS — Imóvel Comercial</div>
+          <div class="question">
+            Fernanda quer usar seu FGTS para financiar uma sala comercial. Ela
+            pode?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q17')">
+                Sim, o FGTS pode ser usado para qualquer tipo de imóvel
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q17')">
+                Sim, desde que o valor seja inferior a R$ 500.000
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q17')">
+                Não — o FGTS só pode ser usado para imóveis residenciais urbanos
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q17')">
+                Sim, mas apenas se for sua primeira propriedade
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q17">
+            ✅ O FGTS é destinado exclusivamente à aquisição de imóvel
+            residencial urbano. Imóveis comerciais, salas, galpões e terrenos
+            isolados não permitem o uso do FGTS como recurso de pagamento ou
+            amortização.
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 18 · Indexadores — Risco IPCA</div>
+          <div class="question">
+            Em qual cenário o financiamento indexado ao IPCA representa maior
+            RISCO para o mutuário?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q18')">
+                Quando a inflação está abaixo de 3% ao ano
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q18')">
+                Quando a Selic está em queda
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q18')">
+                Quando a inflação acelera acima de 8–10% ao ano, elevando
+                drasticamente as parcelas
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q18')">
+                Quando o banco central mantém a taxa de juros estável
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q18">
+            ✅ Em um financiamento IPCA + 3,5% a.a., se o IPCA sobe para 10%, a
+            taxa efetiva se torna 13,5% — praticamente dobrando o custo em
+            relação a um cenário de IPCA de 3,5%. O mutuário sem reserva
+            financeira pode entrar em inadimplência. Por isso o IPCA+ exige
+            planejamento e reserva de emergência robusta.
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="exercise-block">
+          <div class="ex-label">
+            Questão 19 · Hipoteca vs Alienação Fiduciária
+          </div>
+          <div class="question">
+            Qual a principal vantagem da alienação fiduciária em relação à
+            hipoteca para o credor (banco)?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q19')">
+                A taxa de juros pode ser maior
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q19')">
+                Não precisa de registro em cartório
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q19')">
+                A retomada do imóvel em inadimplência é extrajudicial e muito
+                mais rápida
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q19')">
+                O devedor perde o imóvel após apenas 1 parcela em atraso
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q19">
+            ✅ Na hipoteca, a retomada exige processo judicial que pode durar 5
+            a 10 anos. Na alienação fiduciária (Lei 9.514/97), após 15 dias de
+            notificação sem pagamento, o credor pode consolidar a propriedade e
+            leiloar extrajudicialmente — processo de 6 a 12 meses. Isso reduz o
+            risco do banco e, em teoria, permite taxas menores ao tomador.
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 20 · MCMV — Impacto do Subsídio</div>
+          <div class="question">
+            Qual o efeito prático de um subsídio de R$ 30.000 em um
+            financiamento de R$ 180.000?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q20')">
+                O subsídio reduz apenas a taxa de juros, não o principal
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q20')">
+                O subsídio é devolvido ao governo quando o imóvel é vendido
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q20')">
+                O subsídio reduz diretamente o valor financiado para R$ 150.000,
+                diminuindo parcelas e total pago
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q20')">
+                O subsídio cobre apenas as parcelas dos primeiros 24 meses
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q20">
+            ✅ O subsídio do MCMV funciona como desconto à vista: é aplicado na
+            redução do valor financiado. R$ 180.000 − R$ 30.000 =
+            <strong>R$ 150.000 financiados</strong>. Menos principal = menos
+            juros ao longo de todo o prazo. O efeito multiplicado pelos juros de
+            30 anos pode representar economia de R$ 80.000 a R$ 150.000 no
+            total.
+          </div>
+        </div>
+
+        <!-- Q21 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 21 · Composição de Renda</div>
+          <div class="question">
+            Carlos (renda R$ 6.000) quer financiar R$ 400.000. A parcela inicial
+            seria ~R$ 4.200. O banco negará. Qual a melhor estratégia?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q21')">
+                Solicitar prazo de 420 meses para reduzir a parcela
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q21')">
+                Trocar para o Price — parcela inicial é menor
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q21')">
+                Compor renda com cônjuge ou familiar, ou aumentar a entrada para
+                reduzir o valor financiado
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q21')">
+                Pedir ao banco para ignorar o limite de 30% por ter bom score de
+                crédito
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q21">
+            ✅ Com R$ 6.000 de renda, o máximo de parcela é R$ 1.800. As
+            estratégias reais: (1) <strong>Composição de renda</strong>: se o
+            cônjuge ganha R$ 8.000, a renda total vira R$ 14.000 → parcela
+            máxima R$ 4.200 ✅; (2) <strong>Aumentar a entrada</strong>: reduzir
+            o financiado para um valor compatível com os 30% da renda
+            individual.
+          </div>
+        </div>
+
+        <!-- Q22 -->
+        <div class="exercise-block">
+          <div class="ex-label">Questão 22 · Portabilidade de Crédito</div>
+          <div class="question">
+            Mariana tem financiamento a 12% a.a. no Banco A. O Banco B oferece
+            9% a.a. O que ela pode fazer para aproveitar a taxa menor?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q22')">
+                Nada — o contrato de financiamento é irrevogável
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q22')">
+                Vender o imóvel e comprar outro pelo Banco B
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q22')">
+                Solicitar portabilidade de crédito ao Banco B, que quita o saldo
+                devedor no Banco A e assume o financiamento nas novas condições
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q22')">
+                Renegociar com o Banco A, que é legalmente obrigado a igualar a
+                taxa do concorrente
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q22">
+            ✅ A portabilidade de crédito imobiliário (regulamentada pelo Bacen)
+            permite transferir o saldo devedor para outro banco com melhores
+            condições, sem multa contratual. O novo banco paga o saldo ao banco
+            original e o mutuário passa a pagar ao novo banco. A diferença de 3
+            p.p. em R$ 250.000 pode economizar mais de R$ 100.000 no total.
+          </div>
+        </div>
+
+        <!-- Q23 -->
+        <div class="exercise-block">
+          <div class="ex-label">
+            Questão 23 · Pré-pagamento — Prazo vs Parcela
+          </div>
+          <div class="question">
+            João tem R$ 50.000 e um saldo devedor de R$ 300.000. É mais
+            vantajoso usar para reduzir o prazo ou a parcela?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q23')">
+                Reduzir a parcela — melhora o fluxo de caixa e poupa mais
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q23')">
+                Reduzir o prazo — elimina mais meses de juros e resulta em maior
+                economia total
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q23')">
+                As duas opções geram a mesma economia total
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q23')">
+                Não vale pré-pagar — melhor investir na poupança
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q23">
+            ✅ Reduzir o <strong>prazo</strong> elimina meses inteiros de
+            encargos (juros + seguros), gerando maior economia total. Reduzir a
+            parcela apenas suaviza o orçamento mensal, mas o financiamento
+            continua mais tempo pagando mais juros. Exceção: se a taxa do
+            financiamento for menor que o retorno de um investimento
+            conservador, pode valer mais investir.
+          </div>
+        </div>
+
+        <!-- Q24 -->
+        <div class="exercise-block">
+          <div class="ex-label">
+            Questão 24 · Inadimplência — Retomada do Imóvel
+          </div>
+          <div class="question">
+            Ricardo parou de pagar um financiamento com alienação fiduciária.
+            Como e em quanto tempo o banco pode retomar o imóvel?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q24')">
+                Apenas via ação judicial, que leva 5 a 10 anos
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q24')">
+                Após 90 dias, via ação judicial simplificada
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q24')">
+                Após notificação e 15 dias sem pagamento, o banco consolida a
+                propriedade extrajudicialmente e pode leiloar o imóvel
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q24')">
+                O banco não pode retomar — apenas cobrar a dívida judicialmente
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q24">
+            ✅ Pela Lei 9.514/97: (1) credor intima o devedor por cartório; (2)
+            devedor tem 15 dias para purgar a mora; (3) sem pagamento, o banco
+            consolida a propriedade em seu nome; (4) realiza dois leilões
+            extrajudiciais. Se o leilão superar a dívida, o saldo é devolvido ao
+            ex-devedor. Todo o processo leva 6–12 meses — muito mais ágil que a
+            hipoteca (5–10 anos).
+          </div>
+        </div>
+
+        <!-- Q25 -->
+        <div class="exercise-block">
+          <div class="ex-label">
+            Questão 25 · Integrada — Planejamento Completo
+          </div>
+          <div class="question">
+            Casal com renda total de R$ 12.000 quer comprar imóvel de R$
+            450.000, dar 20% de entrada e tem R$ 30.000 no FGTS. Qual afirmação
+            é CORRETA?
+          </div>
+          <ul class="options-list">
+            <li>
+              <button onclick="responder(this, false, 'q25')">
+                Eles precisam de R$ 90.000 disponíveis no ato da compra
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q25')">
+                Com renda de R$ 12.000 não conseguem financiar R$ 360.000
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, true, 'q25')">
+                Precisam de ~R$ 103.500 no ato (entrada R$ 90k + ITBI ~R$ 10k +
+                cartório ~R$ 3,5k) e podem usar FGTS para amortizar após 2 anos
+              </button>
+            </li>
+            <li>
+              <button onclick="responder(this, false, 'q25')">
+                O FGTS deve ser usado obrigatoriamente como entrada para reduzir
+                o financiamento
+              </button>
+            </li>
+          </ul>
+          <div class="explanation" id="exp-q25">
+            ✅ Entrada 20% = R$ 90.000. ITBI ~2,5% = ~R$ 11.250. Cartório ~0,5%
+            = ~R$ 2.250. Total no ato: ~R$ 103.500. Comprometimento:
+            financiamento R$ 360.000, parcela SAC inicial ~R$ 3.800 — dentro dos
+            30% de R$ 12.000 (R$ 3.600). O FGTS de R$ 30.000 pode ser reservado
+            para amortização extraordinária 2 anos depois, economizando meses de
+            prazo e juros. Planejamento ideal: não gastar o FGTS como entrada se
+            os 30% de renda já permitem o financiamento.
+          </div>
+        </div>
+
+        <!-- SCORE FINAL -->
+        <div id="score-banner">
+          <div
+            style="
+              font-family: &quot;DM Mono&quot;, monospace;
+              font-size: 0.65rem;
+              letter-spacing: 0.2em;
+              text-transform: uppercase;
+              color: var(--gold);
+              margin-bottom: 0.5rem;
+            "
+          >
+            Resultado Final
+          </div>
+          <div class="score-num" id="score-display">0/25</div>
+          <div
+            id="score-bar-wrap"
+            style="
+              width: 200px;
+              height: 6px;
+              background: rgba(255, 255, 255, 0.1);
+              border-radius: 4px;
+              margin: 0.8rem auto;
+            "
+          >
+            <div
+              id="score-bar-fill"
+              style="
+                height: 100%;
+                background: linear-gradient(
+                  90deg,
+                  var(--terracotta),
+                  var(--gold)
+                );
+                border-radius: 4px;
+                width: 0%;
+                transition: width 0.8s ease;
+              "
+            ></div>
+          </div>
+          <p
+            id="score-msg"
+            style="color: var(--dust); font-size: 0.9rem; margin-top: 0.4rem"
+          >
+            Complete todas as questões para ver sua pontuação!
+          </p>
+        </div>
+      </div>
+
+      <!-- ═══ SEÇÃO 8: GLOSSÁRIO ═══ -->
+      <div class="section" id="section-glossario">
+        <div class="module-header">
+          <div class="module-num">08</div>
+          <div class="module-title">
+            <p>Referência</p>
+            <h2>Glossário Rápido</h2>
+          </div>
+        </div>
+
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem">
+          Clique em cada termo para ver a definição.
+        </p>
+
+        <div class="glossary-grid" id="glossaryGrid"></div>
+      </div>
+    </main>
+
+    <footer>
+      Técnica Feynman · Use Cases · Crédito Imobiliário — Guia de Estudos
+      Interativo
+    </footer>
+
+    <script>
+      // ─── NAVEGAÇÃO ───
+      function showSection(id) {
+        document
+          .querySelectorAll(".section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelectorAll("nav.tabs button")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("section-" + id).classList.add("active");
+        event.target.classList.add("active");
+      }
+
+      // ─── CHECKLIST / PROGRESSO ───
+      let totalChecks = 0;
+      let doneChecks = 0;
+
+      function toggleCheck(el) {
+        el.classList.toggle("done");
+        doneChecks = document.querySelectorAll(".check-item.done").length;
+        totalChecks = document.querySelectorAll(".check-item").length;
+        const pct = totalChecks
+          ? Math.round((doneChecks / totalChecks) * 100)
+          : 0;
+        document.getElementById("progressFill").style.width = pct + "%";
+        document.getElementById("progressText").textContent =
+          `${doneChecks} / ${totalChecks} conceitos`;
+      }
+
+      window.addEventListener("load", () => {
+        totalChecks = document.querySelectorAll(".check-item").length;
+        document.getElementById("progressText").textContent =
+          `0 / ${totalChecks} conceitos`;
+      });
+
+      // ─── CALCULADORA ───
+      function fmt(n) {
+        return (
+          "R$ " +
+          n.toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
+      }
+
+      function calcular() {
+        const imovel =
+          parseFloat(document.getElementById("c-imovel").value) || 0;
+        const entrada =
+          parseFloat(document.getElementById("c-entrada").value) || 0;
+        const taxaAA = parseFloat(document.getElementById("c-taxa").value) || 0;
+        const n = parseInt(document.getElementById("c-prazo").value) || 360;
+        const sistema = document.getElementById("c-sistema").value;
+        const renda = parseFloat(document.getElementById("c-renda").value) || 1;
+
+        const PV = imovel - entrada;
+        const i = taxaAA / 100 / 12;
+
+        let parcelaInicial, parcelaFinal, totalPago;
+
+        if (sistema === "sac") {
+          const amort = PV / n;
+          parcelaInicial = amort + PV * i;
+          parcelaFinal = amort + amort * i;
+          // Somatório total SAC
+          totalPago = 0;
+          for (let k = 0; k < n; k++) {
+            const saldo = PV - amort * k;
+            totalPago += amort + saldo * i;
+          }
+        } else {
+          const pmtFator = (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
+          parcelaInicial = PV * pmtFator;
+          parcelaFinal = parcelaInicial;
+          totalPago = parcelaInicial * n;
+        }
+
+        const totalJuros = totalPago - PV;
+        const comprometimento = (parcelaInicial / renda) * 100;
+
+        document.getElementById("r-financiado").textContent = fmt(PV);
+        document.getElementById("r-inicial").textContent = fmt(parcelaInicial);
+        document.getElementById("r-final").textContent =
+          sistema === "sac" ? fmt(parcelaFinal) : "(igual à inicial)";
+        document.getElementById("r-juros").textContent = fmt(totalJuros);
+        document.getElementById("r-total").textContent = fmt(totalPago);
+        document.getElementById("r-renda").textContent =
+          comprometimento.toFixed(1) + "%";
+
+        const statusEl = document.getElementById("r-status");
+        if (comprometimento <= 25) {
+          statusEl.textContent = "🟢 Confortável";
+          statusEl.style.color = "#5A7A5C";
+        } else if (comprometimento <= 30) {
+          statusEl.textContent = "🟡 Limite aceitável";
+          statusEl.style.color = "#C8922A";
+        } else {
+          statusEl.textContent = "🔴 Acima do limite — risco de recusa";
+          statusEl.style.color = "#C4522A";
+        }
+
+        document.getElementById("calcResult").classList.add("show");
+      }
+
+      // ─── EXERCÍCIOS ───
+      let acertos = 0;
+      let respondidas = new Set();
+
+      function getTotalQuestoes() {
+        return document.querySelectorAll("#section-exercicios .exercise-block")
+          .length;
+      }
+
+      function responder(btn, correto, questaoId) {
+        if (respondidas.has(questaoId)) return;
+        respondidas.add(questaoId);
+
+        const lista = btn.closest(".options-list");
+        lista.querySelectorAll("button").forEach((b) => (b.disabled = true));
+
+        if (correto) {
+          btn.classList.add("correct");
+          acertos++;
+        } else {
+          btn.classList.add("wrong");
+          lista.querySelectorAll("button").forEach((b) => {
+            if (b !== btn) b.style.opacity = "0.35";
+          });
+          // highlight correct answer
+          lista.querySelectorAll("button").forEach((b) => {
+            if (
+              b.getAttribute("onclick") &&
+              b.getAttribute("onclick").includes("true")
+            ) {
+              b.style.opacity = "1";
+              b.style.border = "2px solid var(--sage)";
+            }
+          });
+        }
+
+        document.getElementById("exp-" + questaoId).classList.add("show");
+
+        const total = getTotalQuestoes();
+        // update live counter
+        document.getElementById("live-score").textContent =
+          `${acertos} acertos de ${respondidas.size} respondidas`;
+
+        if (respondidas.size === total) {
+          const banner = document.getElementById("score-banner");
+          const pct = Math.round((acertos / total) * 100);
+          document.getElementById("score-display").textContent =
+            acertos + "/" + total;
+          document.getElementById("score-bar-fill").style.width = pct + "%";
+          const msgs = [
+            "📚 Continue estudando! Revise os módulos mais difíceis e tente novamente.",
+            "🔄 Bom progresso! Refaça as questões erradas focando nas explicações.",
+            "✅ Muito bem! Você domina os fundamentos do crédito imobiliário.",
+            "🏆 Excelente! Conhecimento sólido — você está pronto para a prova!",
+          ];
+          const idx = pct < 50 ? 0 : pct < 70 ? 1 : pct < 90 ? 2 : 3;
+          document.getElementById("score-msg").textContent = msgs[idx];
+          banner.classList.add("show");
+          document.getElementById("btn-reiniciar").style.display = "block";
+          banner.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+
+      function reiniciarQuiz() {
+        acertos = 0;
+        respondidas = new Set();
+        document
+          .querySelectorAll("#section-exercicios .options-list button")
+          .forEach((b) => {
+            b.disabled = false;
+            b.classList.remove("correct", "wrong");
+            b.style.opacity = "";
+            b.style.border = "";
+          });
+        document
+          .querySelectorAll("#section-exercicios .explanation")
+          .forEach((e) => e.classList.remove("show"));
+        document.getElementById("score-banner").classList.remove("show");
+        document.getElementById("btn-reiniciar").style.display = "none";
+        document.getElementById("live-score").textContent =
+          "0 acertos de 0 respondidas";
+        window.scrollTo({
+          top: document.getElementById("section-exercicios").offsetTop - 80,
+          behavior: "smooth",
+        });
+      }
+
+      // ─── GLOSSÁRIO ───
+      const glossario = [
+        {
+          term: "Alienação Fiduciária",
+          def: "Modalidade de garantia em que o devedor transfere a propriedade do bem ao credor até a quitação total da dívida. Se o devedor não pagar, o banco pode retomar o imóvel.",
+        },
+        {
+          term: "Amortização",
+          def: 'Processo de redução gradual do saldo devedor por meio do pagamento de parcelas. É a parte da parcela que efetivamente "devora" a dívida principal.',
+        },
+        {
+          term: "CET — Custo Efetivo Total",
+          def: "Taxa que representa o custo real do financiamento, incluindo juros, taxas administrativas, seguros e outros encargos. Sempre compare o CET, não apenas a taxa de juros.",
+        },
+        {
+          term: "DFI — Danos Físicos ao Imóvel",
+          def: "Seguro obrigatório em financiamentos imobiliários que protege o imóvel contra danos estruturais como incêndio, desabamento e alagamento.",
+        },
+        {
+          term: "FGTS",
+          def: "Fundo de Garantia do Tempo de Serviço. Depósito mensal feito pelo empregador (8% do salário) que pode ser usado na compra do primeiro imóvel.",
+        },
+        {
+          term: "ITBI",
+          def: "Imposto de Transmissão de Bens Imóveis. Cobrado pelo município no momento da compra do imóvel, geralmente entre 2% e 3% do valor.",
+        },
+        {
+          term: "LTV — Loan to Value",
+          def: "Relação entre o valor financiado e o valor de avaliação do imóvel. Bancos geralmente financiam até 80%–90% do LTV. LTV de 80% = banco financia até R$ 400k em um imóvel de R$ 500k.",
+        },
+        {
+          term: "MIP — Morte e Invalidez Permanente",
+          def: "Seguro obrigatório que quita o saldo devedor em caso de morte ou invalidez permanente do titular do financiamento.",
+        },
+        {
+          term: "Price / Tabela Price",
+          def: "Sistema Francês de Amortização com parcelas fixas ao longo de todo o contrato. No início, a maior parte da parcela é composta de juros.",
+        },
+        {
+          term: "SAC",
+          def: "Sistema de Amortização Constante. A amortização mensal é sempre igual, mas os juros diminuem a cada parcela. Resulta em parcelas decrescentes e menor custo total.",
+        },
+        {
+          term: "SFH — Sistema Financeiro de Habitação",
+          def: "Modalidade de financiamento com regulação do governo, que permite uso do FGTS. Tem teto de valor do imóvel (R$ 1,5 mi em SP, RJ, MG, DF; R$ 800k nos demais estados).",
+        },
+        {
+          term: "TR — Taxa Referencial",
+          def: "Índice histórico de correção monetária, usado na poupança e no FGTS. Tem sido próxima de zero nos últimos anos, tornando o reajuste quase inexistente.",
+        },
+      ];
+
+      const grid = document.getElementById("glossaryGrid");
+      glossario.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "glossary-item";
+        div.innerHTML = `<span class="arrow">›</span><div class="term">${item.term}</div><div class="definition">${item.def}</div>`;
+        div.onclick = () => div.classList.toggle("open");
+        grid.appendChild(div);
+      });
+    </script>
+  </body>
+</html>

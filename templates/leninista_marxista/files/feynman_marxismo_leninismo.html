@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Técnica Feynman — Marxismo & Leninismo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1a1108;
+        --paper: #f5f0e8;
+        --accent: #b5192b;
+        --gold: #c8963e;
+        --muted: #7a6e62;
+        --rule: #d4c9b8;
+        --block-bg: #ede8de;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: "Source Serif 4", Georgia, serif;
+        font-size: 17px;
+        line-height: 1.75;
+        padding: 0;
+      }
+
+      /* Noise texture overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.5;
+      }
+
+      .page {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 60px 40px 100px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Header */
+      .journal-header {
+        border-bottom: 3px double var(--rule);
+        padding-bottom: 32px;
+        margin-bottom: 48px;
+      }
+
+      .eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(32px, 6vw, 52px);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .subtitle {
+        margin-top: 12px;
+        font-size: 15px;
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      .meta-row {
+        display: flex;
+        gap: 24px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .meta-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        padding: 3px 10px;
+        border-radius: 2px;
+      }
+
+      /* Steps */
+      .step {
+        margin-bottom: 56px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.5s ease forwards;
+      }
+
+      .step:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .step:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .step:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .step:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .step:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .step-number {
+        font-family: "Playfair Display", serif;
+        font-size: 72px;
+        font-weight: 900;
+        color: var(--rule);
+        line-height: 1;
+        float: left;
+        margin-right: 16px;
+        margin-top: -8px;
+        letter-spacing: -0.04em;
+      }
+
+      .step-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .step h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 16px;
+        clear: none;
+      }
+
+      .step-content {
+        clear: both;
+      }
+
+      /* Rule divider */
+      .step-divider {
+        border: none;
+        border-top: 1px solid var(--rule);
+        margin-bottom: 32px;
+      }
+
+      /* Concept grid */
+      .concept-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .concept-card {
+        background: var(--block-bg);
+        border-left: 3px solid var(--accent);
+        padding: 16px 18px;
+      }
+
+      .concept-card .term {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        font-size: 15px;
+        color: var(--accent);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .concept-card p {
+        font-size: 14px;
+        line-height: 1.55;
+        color: var(--ink);
+      }
+
+      /* Pullquote */
+      .pullquote {
+        border-top: 2px solid var(--ink);
+        border-bottom: 2px solid var(--ink);
+        padding: 20px 0;
+        margin: 28px 0;
+      }
+
+      .pullquote p {
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-style: italic;
+        line-height: 1.4;
+        color: var(--ink);
+      }
+
+      .pullquote cite {
+        display: block;
+        margin-top: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        font-style: normal;
+      }
+
+      /* Gap table */
+      .gap-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 15px;
+      }
+
+      .gap-table thead tr {
+        border-bottom: 2px solid var(--ink);
+      }
+
+      .gap-table th {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 8px 12px 8px 0;
+        text-align: left;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .gap-table td {
+        padding: 12px 12px 12px 0;
+        border-bottom: 1px solid var(--rule);
+        vertical-align: top;
+        line-height: 1.55;
+      }
+
+      .gap-table td:first-child {
+        font-weight: 600;
+        color: var(--accent);
+        width: 38%;
+        font-family: "Playfair Display", serif;
+      }
+
+      /* Synthesis block */
+      .synthesis {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 32px 36px;
+        margin-top: 20px;
+      }
+
+      .synthesis .syn-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 16px;
+      }
+
+      .synthesis p {
+        font-size: 16px;
+        line-height: 1.7;
+        color: #e8e0d0;
+        margin-bottom: 12px;
+      }
+
+      .synthesis p:last-child {
+        margin-bottom: 0;
+      }
+
+      .synthesis strong {
+        color: #fff;
+        font-weight: 600;
+      }
+
+      /* Test questions */
+      .questions-list {
+        counter-reset: q;
+        list-style: none;
+        margin-top: 20px;
+      }
+
+      .questions-list li {
+        counter-increment: q;
+        padding: 16px 0 16px 52px;
+        border-bottom: 1px solid var(--rule);
+        position: relative;
+        font-size: 16px;
+      }
+
+      .questions-list li::before {
+        content: counter(q, upper-roman);
+        position: absolute;
+        left: 0;
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: 18px;
+        color: var(--gold);
+        top: 16px;
+      }
+
+      .questions-list li:last-child {
+        border-bottom: none;
+      }
+
+      /* References */
+      .references {
+        margin-top: 56px;
+        padding-top: 24px;
+        border-top: 3px double var(--rule);
+      }
+
+      .references h3 {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+
+      .references ul {
+        list-style: none;
+      }
+
+      .references li {
+        font-size: 14px;
+        color: var(--muted);
+        padding: 6px 0;
+        padding-left: 20px;
+        position: relative;
+        border-bottom: 1px dotted var(--rule);
+        line-height: 1.5;
+      }
+
+      .references li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: var(--rule);
+      }
+
+      /* Inline highlight */
+      mark {
+        background: rgba(197, 150, 62, 0.18);
+        color: inherit;
+        padding: 1px 3px;
+        border-radius: 2px;
+      }
+
+      p {
+        margin-bottom: 14px;
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 600px) {
+        .page {
+          padding: 36px 20px 60px;
+        }
+        .concept-grid {
+          grid-template-columns: 1fr;
+        }
+        .step-number {
+          font-size: 52px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Header -->
+      <header class="journal-header">
+        <p class="eyebrow">
+          Análise Teórica · Ciência Política · Nível Universitário
+        </p>
+        <h1>Marxismo &amp; <em>Leninismo</em></h1>
+        <p class="subtitle">
+          Uma análise pelo método Feynman — da compreensão à síntese crítica
+        </p>
+        <div class="meta-row">
+          <span class="meta-tag">Feynman Technique</span>
+          <span class="meta-tag">Teoria Política</span>
+          <span class="meta-tag">Pensamento Crítico</span>
+        </div>
+      </header>
+
+      <!-- ETAPA 1 -->
+      <section class="step">
+        <span class="step-number">1</span>
+        <span class="step-label">Etapa I · Feynman</span>
+        <h2>Domine o conceito em linguagem simples</h2>
+        <hr class="step-divider" />
+        <div class="step-content">
+          <p>
+            O <mark>Marxismo</mark> é um sistema de análise histórica, econômica
+            e filosófica desenvolvido por Karl Marx (1818–1883) e Friedrich
+            Engels. Seu núcleo é a tese de que a
+            <strong
+              >história das sociedades é a história da luta de classes</strong
+            >: conflitos entre grupos que detêm os meios de produção e grupos
+            que vendem sua força de trabalho.
+          </p>
+          <div class="pullquote">
+            <p>
+              "A história de toda a sociedade até hoje é a história da luta de
+              classes."
+            </p>
+            <cite
+              >— Karl Marx &amp; Friedrich Engels, Manifesto Comunista
+              (1848)</cite
+            >
+          </div>
+          <p>
+            O <mark>Leninismo</mark>, elaborado por Vladimir Ilyich Ulianov —
+            Lenin (1870–1924) —, é uma síntese teórico-prática que adapta o
+            marxismo às condições imperialistas do capitalismo tardio. Sua
+            contribuição central é a
+            <strong>teoria do partido de vanguarda</strong>: uma organização de
+            revolucionários profissionais capaz de conduzir o proletariado à
+            tomada do poder.
+          </p>
+          <p>
+            Em termos simples: Marx diagnosticou o problema estrutural do
+            capitalismo; Lenin operacionalizou a estratégia para superá-lo.
+          </p>
+        </div>
+      </section>
+
+      <!-- ETAPA 2 -->
+      <section class="step">
+        <span class="step-number">2</span>
+        <span class="step-label">Etapa II · Feynman</span>
+        <h2>Identifique e defina os conceitos nucleares</h2>
+        <hr class="step-divider" />
+        <div class="step-content">
+          <div class="concept-grid">
+            <div class="concept-card">
+              <span class="term">Materialismo Histórico</span>
+              <p>
+                As condições materiais de produção determinam as formas
+                jurídicas, políticas e ideológicas de uma sociedade — e não o
+                contrário.
+              </p>
+            </div>
+            <div class="concept-card">
+              <span class="term">Mais-Valia</span>
+              <p>
+                Diferença entre o valor produzido pelo trabalhador e o salário
+                recebido. É a fonte do lucro capitalista — e, para Marx, da
+                exploração estrutural.
+              </p>
+            </div>
+            <div class="concept-card">
+              <span class="term">Superestrutura</span>
+              <p>
+                Estado, direito, religião e ideologia. Para Marx, refletem e
+                legitimam a estrutura econômica dominante (base).
+              </p>
+            </div>
+            <div class="concept-card">
+              <span class="term">Ditadura do Proletariado</span>
+              <p>
+                Fase transitória pós-revolução em que o proletariado detém o
+                poder político para suprimir a resistência burguesa antes da
+                chegada ao comunismo.
+              </p>
+            </div>
+            <div class="concept-card">
+              <span class="term">Partido de Vanguarda</span>
+              <p>
+                Conceito leninista: núcleo organizado e disciplinado que eleva a
+                consciência de classe espontânea a uma consciência
+                revolucionária sistematizada.
+              </p>
+            </div>
+            <div class="concept-card">
+              <span class="term">Imperialismo</span>
+              <p>
+                Para Lenin, fase superior do capitalismo: fusão do capital
+                bancário e industrial, exportação de capitais e divisão do mundo
+                entre potências.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 3 -->
+      <section class="step">
+        <span class="step-number">3</span>
+        <span class="step-label">Etapa III · Feynman</span>
+        <h2>Mapeie as lacunas e equívocos frequentes</h2>
+        <hr class="step-divider" />
+        <div class="step-content">
+          <table class="gap-table">
+            <thead>
+              <tr>
+                <th>Equívoco Comum</th>
+                <th>Correção Analítica</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Marxismo = regime soviético</td>
+                <td>
+                  Marx descreveu tendências estruturais do capitalismo. A URSS
+                  foi uma aplicação histórica específica — e profundamente
+                  contestada dentro do próprio marxismo.
+                </td>
+              </tr>
+              <tr>
+                <td>Socialismo e comunismo são sinônimos</td>
+                <td>
+                  Para Marx, o socialismo é uma fase de transição (ainda com
+                  Estado e distribuição por trabalho); o comunismo é a sociedade
+                  sem classes, sem Estado e sem mercado.
+                </td>
+              </tr>
+              <tr>
+                <td>Lenin apenas "aplicou" Marx</td>
+                <td>
+                  Lenin reelaborou categorias centrais: o papel do partido, a
+                  questão nacional e a teoria do imperialismo não estão em Marx
+                  — são contribuições originais.
+                </td>
+              </tr>
+              <tr>
+                <td>Marxismo é determinismo absoluto</td>
+                <td>
+                  Marx afirma primazia das condições materiais, não eliminação
+                  da agência humana. A dialética pressupõe contradição e
+                  transformação, não fatalismo.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ETAPA 4 -->
+      <section class="step">
+        <span class="step-number">4</span>
+        <span class="step-label">Etapa IV · Feynman</span>
+        <h2>Simplifique e sintetize sem perder rigor</h2>
+        <hr class="step-divider" />
+        <div class="step-content">
+          <div class="synthesis">
+            <span class="syn-label">Síntese Crítica</span>
+            <p>
+              <strong>Marxismo:</strong> O capitalismo é um sistema de produção
+              estruturalmente contraditório — acumula riqueza para poucos ao
+              explorar o trabalho de muitos. Essa contradição não se resolve
+              pela reforma, mas pelo conflito histórico entre as classes. A
+              superação do capitalismo conduz, via socialismo, ao comunismo: uma
+              organização social sem propriedade privada dos meios de produção,
+              sem Estado e sem classes.
+            </p>
+            <p>
+              <strong>Leninismo:</strong> A consciência de classe não emerge
+              espontaneamente do proletariado — ela deve ser introduzida de fora
+              por um partido revolucionário organizado. Além disso, no estágio
+              imperialista, a revolução pode eclodir primeiro nos "elos mais
+              fracos" do sistema capitalista global, e não nos países mais
+              industrializados, como Marx havia previsto.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 5 -->
+      <section class="step">
+        <span class="step-number">5</span>
+        <span class="step-label">Etapa V · Feynman</span>
+        <h2>Teste a profundidade do entendimento</h2>
+        <hr class="step-divider" />
+        <div class="step-content">
+          <p>
+            Se você compreendeu os conceitos, deve ser capaz de responder com
+            rigor às questões abaixo sem consultar fontes:
+          </p>
+          <ol class="questions-list">
+            <li>
+              Por que Marx considera a mais-valia o fundamento da exploração
+              capitalista, e como ela se diferencia do lucro comercial?
+            </li>
+            <li>
+              Qual a relação entre base econômica e superestrutura? A relação é
+              unidirecional ou dialética?
+            </li>
+            <li>
+              Em que sentido a teoria do partido de vanguarda de Lenin rompe —
+              ou é coerente — com o projeto emancipatório de Marx?
+            </li>
+            <li>
+              Como a teoria leninista do imperialismo explica por que a
+              revolução ocorreu na Rússia e não na Inglaterra industrializada?
+            </li>
+            <li>
+              Quais são as principais críticas ao marxismo-leninismo formuladas
+              tanto à esquerda (Rosa Luxemburgo, Gramsci) quanto à direita
+              (Hayek, Popper)?
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Referências -->
+      <footer class="references">
+        <h3>Referências Bibliográficas Fundamentais</h3>
+        <ul>
+          <li>
+            MARX, K.; ENGELS, F. <em>Manifesto do Partido Comunista</em>. 1848.
+          </li>
+          <li>
+            MARX, K. <em>O Capital: Crítica da Economia Política</em>. Vol. I.
+            1867.
+          </li>
+          <li>
+            MARX, K. <em>Contribuição à Crítica da Economia Política</em>. 1859.
+            [Prefácio: materialismo histórico]
+          </li>
+          <li>
+            LENIN, V. I. <em>Que Fazer?</em> 1902. [Teoria do partido de
+            vanguarda]
+          </li>
+          <li>
+            LENIN, V. I. <em>O Imperialismo, Fase Superior do Capitalismo</em>.
+            1916.
+          </li>
+          <li>
+            GRAMSCI, A. <em>Cadernos do Cárcere</em>. 1929–1935. [Hegemonia e
+            superestrutura]
+          </li>
+        </ul>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1574 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marxismo & Leninismo — Feynman · Use Cases · Mental Models</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0d0d0d;
+        --surface: #161616;
+        --surface2: #1e1e1e;
+        --border: #2a2a2a;
+        --red: #c0392b;
+        --red-soft: rgba(192, 57, 43, 0.12);
+        --gold: #d4a843;
+        --gold-soft: rgba(212, 168, 67, 0.1);
+        --text: #e8e0d4;
+        --muted: #7a7470;
+        --dim: #3a3530;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 16px;
+        line-height: 1.7;
+        min-height: 100vh;
+      }
+
+      /* NAV TABS */
+      .nav-bar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(13, 13, 13, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 0;
+        padding: 0 24px;
+        overflow-x: auto;
+      }
+
+      .nav-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 15px;
+        color: var(--gold);
+        white-space: nowrap;
+        padding-right: 24px;
+        border-right: 1px solid var(--border);
+        margin-right: 16px;
+      }
+
+      .nav-tab {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 16px 18px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s;
+        white-space: nowrap;
+        background: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+      }
+      .nav-tab:hover {
+        color: var(--text);
+      }
+      .nav-tab.active {
+        color: var(--gold);
+        border-bottom-color: var(--gold);
+      }
+
+      /* PANELS */
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+
+      /* HERO */
+      .hero {
+        padding: 80px 40px 60px;
+        max-width: 900px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-label {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        color: var(--red);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+
+      .hero h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(36px, 7vw, 68px);
+        line-height: 1.05;
+        color: #fff;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .hero-lead {
+        font-size: 18px;
+        color: #b0a89e;
+        max-width: 640px;
+        line-height: 1.65;
+      }
+
+      .method-badges {
+        display: flex;
+        gap: 10px;
+        margin-top: 28px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        padding: 5px 12px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        border-radius: 2px;
+      }
+      .badge.red {
+        border-color: var(--red);
+        color: var(--red);
+      }
+      .badge.gold {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+
+      /* CONTENT LAYOUT */
+      .content-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 40px 100px;
+        animation: fadeIn 0.5s ease;
+      }
+
+      /* SECTION HEADERS */
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 32px;
+        padding-top: 48px;
+        border-top: 1px solid var(--border);
+      }
+
+      .section-head:first-child {
+        border-top: none;
+      }
+
+      .section-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 48px;
+        color: var(--dim);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      .section-meta {
+        flex: 1;
+      }
+
+      .section-tag {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .section-meta h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: 26px;
+        color: #fff;
+        font-weight: 400;
+      }
+
+      /* FEYNMAN BLOCKS */
+      .feynman-simple {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--red);
+        padding: 28px 32px;
+        margin-bottom: 20px;
+      }
+
+      .feynman-simple h3 {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--red);
+        margin-bottom: 14px;
+      }
+
+      .feynman-simple p {
+        color: #ccc4ba;
+        margin-bottom: 12px;
+      }
+      .feynman-simple p:last-child {
+        margin-bottom: 0;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .info-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 24px;
+      }
+
+      .info-card .card-label {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .info-card h4 {
+        font-family: "DM Serif Display", serif;
+        font-size: 20px;
+        color: var(--gold);
+        margin-bottom: 12px;
+      }
+
+      .info-card p {
+        font-size: 14px;
+        color: #a09890;
+        line-height: 1.6;
+      }
+
+      /* DEEP DIVE ACCORDION */
+      .accordion-item {
+        border: 1px solid var(--border);
+        margin-bottom: 8px;
+      }
+
+      .accordion-trigger {
+        width: 100%;
+        background: var(--surface);
+        border: none;
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.2s;
+      }
+
+      .accordion-trigger:hover {
+        background: var(--surface2);
+      }
+
+      .accordion-trigger .trig-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .acc-num {
+        font-family: "Fira Code", monospace;
+        font-size: 12px;
+        color: var(--red);
+        width: 24px;
+      }
+
+      .acc-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 18px;
+        color: #e0d8cc;
+      }
+
+      .acc-arrow {
+        font-size: 12px;
+        color: var(--muted);
+        transition: transform 0.3s;
+      }
+
+      .accordion-item.open .acc-arrow {
+        transform: rotate(180deg);
+      }
+
+      .accordion-body {
+        display: none;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        padding: 28px 32px;
+      }
+
+      .accordion-item.open .accordion-body {
+        display: block;
+      }
+
+      .accordion-body p {
+        color: #b0a89e;
+        margin-bottom: 14px;
+        font-size: 15px;
+      }
+      .accordion-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .accordion-body strong {
+        color: var(--gold);
+        font-weight: 600;
+      }
+
+      .accordion-body .example-box {
+        background: var(--surface);
+        border-left: 3px solid var(--gold);
+        padding: 16px 20px;
+        margin: 16px 0;
+        font-size: 14px;
+        color: #a09888;
+        font-style: italic;
+      }
+
+      /* USE CASES */
+      .usecase-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .usecase-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 28px 24px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+        cursor: default;
+      }
+
+      .usecase-card:hover {
+        border-color: var(--gold);
+        transform: translateY(-2px);
+      }
+
+      .usecase-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s;
+      }
+
+      .usecase-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .uc-icon {
+        font-size: 28px;
+        margin-bottom: 14px;
+        display: block;
+      }
+
+      .uc-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 18px;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .uc-desc {
+        font-size: 14px;
+        color: #8a8278;
+        line-height: 1.6;
+        margin-bottom: 14px;
+      }
+
+      .uc-example {
+        font-family: "Fira Code", monospace;
+        font-size: 12px;
+        color: var(--gold);
+        background: var(--gold-soft);
+        padding: 6px 10px;
+        border-radius: 2px;
+      }
+
+      /* MENTAL MODELS */
+      .mental-model {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 32px;
+        margin-bottom: 20px;
+      }
+
+      .mm-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .mm-icon-wrap {
+        width: 52px;
+        height: 52px;
+        background: var(--red-soft);
+        border: 1px solid var(--red);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+        border-radius: 2px;
+      }
+
+      .mm-info {
+        flex: 1;
+      }
+
+      .mm-tag {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        color: var(--red);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .mm-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 22px;
+        color: #fff;
+      }
+
+      .mm-body p {
+        font-size: 15px;
+        color: #a8a09a;
+        margin-bottom: 14px;
+        line-height: 1.7;
+      }
+
+      .mm-body strong {
+        color: var(--text);
+      }
+
+      .mm-diagram {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 20px 24px;
+        margin: 16px 0;
+        font-family: "Fira Code", monospace;
+        font-size: 13px;
+        color: var(--gold);
+        line-height: 2;
+      }
+
+      .mm-apply {
+        background: var(--gold-soft);
+        border: 1px solid rgba(212, 168, 67, 0.2);
+        padding: 16px 20px;
+        margin-top: 16px;
+      }
+
+      .mm-apply .apply-label {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .mm-apply p {
+        font-size: 14px;
+        color: #c8c0b0;
+        margin: 0;
+      }
+
+      /* CRITIQUE SECTION */
+      .critique-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .critique-col {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 24px;
+      }
+
+      .crit-header {
+        font-family: "Fira Code", monospace;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .crit-header.left {
+        color: var(--red);
+      }
+      .crit-header.right {
+        color: #5b8dd9;
+      }
+
+      .crit-item {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+        color: #9a928a;
+        line-height: 1.55;
+      }
+
+      .crit-item:last-child {
+        border-bottom: none;
+      }
+      .crit-item strong {
+        color: var(--text);
+        font-weight: 500;
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        position: relative;
+        padding-left: 32px;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--border);
+      }
+
+      .tl-item {
+        position: relative;
+        padding: 0 0 32px 24px;
+      }
+
+      .tl-item::before {
+        content: "";
+        position: absolute;
+        left: -26px;
+        top: 8px;
+        width: 8px;
+        height: 8px;
+        background: var(--red);
+        border-radius: 50%;
+      }
+
+      .tl-year {
+        font-family: "Fira Code", monospace;
+        font-size: 12px;
+        color: var(--gold);
+        margin-bottom: 4px;
+      }
+
+      .tl-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 18px;
+        color: #e0d8cc;
+        margin-bottom: 8px;
+      }
+
+      .tl-text {
+        font-size: 14px;
+        color: #8a8278;
+        line-height: 1.6;
+      }
+
+      /* SUMMARY BLOCK */
+      .summary-block {
+        background: linear-gradient(
+          135deg,
+          #1a0a0a 0%,
+          #0d0d0d 60%,
+          #0a0a12 100%
+        );
+        border: 1px solid var(--red);
+        padding: 40px;
+        margin-top: 48px;
+      }
+
+      .sum-label {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--red);
+        margin-bottom: 20px;
+        display: block;
+      }
+
+      .summary-block h3 {
+        font-family: "DM Serif Display", serif;
+        font-size: 28px;
+        color: #fff;
+        margin-bottom: 20px;
+        font-style: italic;
+      }
+
+      .summary-block p {
+        font-size: 16px;
+        color: #b0a89e;
+        margin-bottom: 14px;
+        line-height: 1.75;
+      }
+      .summary-block strong {
+        color: var(--gold);
+      }
+
+      @media (max-width: 640px) {
+        .hero,
+        .content-wrap {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .two-col,
+        .critique-row {
+          grid-template-columns: 1fr;
+        }
+        .usecase-grid {
+          grid-template-columns: 1fr;
+        }
+        .nav-title {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav-bar">
+      <span class="nav-title">Marx · Lenin</span>
+      <button class="nav-tab active" onclick="switchPanel('feynman', this)">
+        / feynman
+      </button>
+      <button class="nav-tab" onclick="switchPanel('usecases', this)">
+        / use cases
+      </button>
+      <button class="nav-tab" onclick="switchPanel('mental', this)">
+        / mental models
+      </button>
+      <button class="nav-tab" onclick="switchPanel('critica', this)">
+        / crítica
+      </button>
+      <button class="nav-tab" onclick="switchPanel('timeline', this)">
+        / timeline
+      </button>
+    </nav>
+
+    <!-- ===== PANEL: FEYNMAN ===== -->
+    <div id="panel-feynman" class="panel active">
+      <div class="hero">
+        <p class="hero-label">/ Método Feynman · Nível Aprofundado</p>
+        <h1>Marxismo &amp;<br /><em>Leninismo</em></h1>
+        <p class="hero-lead">
+          Da compreensão superficial à análise estrutural — passo a passo, com
+          rigor intelectual e linguagem acessível.
+        </p>
+        <div class="method-badges">
+          <span class="badge red">Feynman</span>
+          <span class="badge gold">Use Cases</span>
+          <span class="badge gold">Mental Models</span>
+        </div>
+      </div>
+
+      <div class="content-wrap">
+        <!-- ETAPA 1 -->
+        <div class="section-head">
+          <span class="section-num">01</span>
+          <div class="section-meta">
+            <span class="section-tag">Etapa I — Linguagem Simples</span>
+            <h2>O que é, de verdade?</h2>
+          </div>
+        </div>
+
+        <div class="feynman-simple">
+          <h3>Marxismo — A Ideia Central</h3>
+          <p>
+            Imagine que dez pessoas constroem uma casa. Nove carregam pedra,
+            erguem paredes e instalam fiação. Uma pessoa — a dona do terreno e
+            das ferramentas — fica com a casa inteira e paga às outras apenas o
+            suficiente para sobreviverem.
+            <strong>Marx chama isso de exploração estrutural.</strong>
+          </p>
+          <p>
+            O capitalismo, para Marx, não é uma questão de patrões maldosos — é
+            um <em>sistema</em> em que quem possui os meios de produção
+            (fábricas, terras, máquinas) inevitavelmente extrai valor de quem
+            apenas possui sua força de trabalho. Essa tensão é irresolvível
+            dentro do sistema. Só a revolução muda a estrutura.
+          </p>
+        </div>
+
+        <div class="feynman-simple">
+          <h3>Leninismo — A Adaptação Prática</h3>
+          <p>
+            Marx esperava que a revolução viesse dos países mais
+            industrializados — Inglaterra, Alemanha. Lenin percebeu que a
+            Rússia, atrasada e agrária, poderia ser o "elo mais fraco" do
+            imperialismo global. Mas os trabalhadores russos eram
+            majoritariamente camponeses analfabetos, sem consciência de classe
+            organizada.
+          </p>
+          <p>
+            Solução de Lenin:
+            <strong
+              >um partido de elite, disciplinado, de revolucionários
+              profissionais</strong
+            >
+            que age como cérebro e vanguarda da revolução — levando a
+            consciência que o proletariado ainda não alcançou por si mesmo. Isso
+            é leninismo: marxismo + estratégia de poder + organização de
+            partido.
+          </p>
+        </div>
+
+        <!-- ETAPA 2 -->
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <div class="section-meta">
+            <span class="section-tag">Etapa II — Conceitos Nucleares</span>
+            <h2>Os pilares que sustentam a teoria</h2>
+          </div>
+        </div>
+
+        <div class="accordion-item open">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">1.</span>
+              <span class="acc-title">Materialismo Histórico</span>
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              A tese mais fundamental de Marx:
+              <strong
+                >as condições materiais de produção determinam a consciência
+                humana — e não o contrário.</strong
+              >
+              Não são as ideias que movem a história; são as relações econômicas
+              que produzem as ideias.
+            </p>
+            <p>
+              Hegel acreditava que a história era movida pelo Espírito (ideias,
+              consciência). Marx "virou Hegel de cabeça para baixo": é a base
+              material (como uma sociedade produz e distribui riqueza) que
+              determina a superestrutura (leis, religião, filosofia, moral).
+            </p>
+            <div class="example-box">
+              Exemplo: A moral vitoriana que pregava trabalho duro e frugalidade
+              não era fruto de iluminação espiritual — era a ideologia perfeita
+              para justificar salários baixos e longas jornadas nas fábricas do
+              séc. XIX.
+            </div>
+            <p>
+              Consequência: para mudar a consciência de uma sociedade, não basta
+              mudar ideias — é preciso mudar as
+              <strong>relações de produção</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">2.</span>
+              <span class="acc-title">Mais-Valia (Mehrwert)</span>
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              O conceito econômico central de Marx. Um trabalhador produz,
+              digamos, R$1.000 de valor em uma jornada de 8 horas. O capitalista
+              paga R$400 de salário — o suficiente para o trabalhador sobreviver
+              e retornar amanhã. Os R$600 restantes são a
+              <strong
+                >mais-valia: o trabalho não pago que se torna lucro
+                capitalista.</strong
+              >
+            </p>
+            <p>
+              Importante: para Marx, o capitalista não "rouba" conscientemente.
+              A mais-valia é estrutural — está embutida na lógica do sistema
+              salarial. O capitalista que não extrair mais-valia é engolido pela
+              concorrência.
+            </p>
+            <div class="example-box">
+              Mais-valia absoluta: aumentar a jornada de 8 para 12 horas.<br />
+              Mais-valia relativa: manter a jornada, mas aumentar a
+              produtividade com máquinas — o trabalhador produz mais no mesmo
+              tempo.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">3.</span>
+              <span class="acc-title">Dialética e Contradição</span>
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Marx herda de Hegel o método dialético: toda realidade contém
+              contradições internas que produzem transformação.
+              <strong>Tese → Antítese → Síntese.</strong> Mas Marx aplica isso à
+              história material, não às ideias.
+            </p>
+            <p>
+              O capitalismo carrega em si sua própria contradição fatal:
+              <strong
+                >precisa comprimir salários para maximizar lucros, mas precisa
+                de consumidores para comprar produtos.</strong
+              >
+              Concentra riqueza, mas só funciona se houver demanda. Cria a
+              classe que irá destruí-lo (o proletariado organizado).
+            </p>
+            <div class="example-box">
+              A automação elimina empregos → reduz a massa salarial → encolhe o
+              mercado consumidor → gera crises de superprodução → aprofunda a
+              contradição capitalista.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">4.</span>
+              <span class="acc-title">Partido de Vanguarda (Lenin)</span>
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Lenin discorda de quem acredita que a consciência revolucionária
+              nasce espontaneamente da classe trabalhadora. Em "Que Fazer?"
+              (1902), ele argumenta que
+              <strong
+                >deixados a si mesmos, trabalhadores desenvolvem apenas
+                "consciência sindical"</strong
+              >
+              — lutas por melhores salários, não revolução.
+            </p>
+            <p>
+              A consciência socialista deve ser introduzida
+              <em>de fora</em> pelo partido: uma organização pequena, altamente
+              disciplinada, de revolucionários profissionais — não um partido de
+              massas democrático, mas uma vanguarda que sabe para onde ir e
+              conduz os outros.
+            </p>
+            <div class="example-box">
+              Crítica interna: Rosa Luxemburgo contestou Lenin ainda em vida —
+              um partido elitista e centralizado inevitavelmente substitui a
+              iniciativa das massas por burocracia. O futuro lhe deu razão?
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAcc(this)">
+            <div class="trig-left">
+              <span class="acc-num">5.</span>
+              <span class="acc-title"
+                >Imperialismo como fase do capitalismo</span
+              >
+            </div>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Em "O Imperialismo, Fase Superior do Capitalismo" (1916), Lenin
+              argumenta que o capitalismo evoluiu:
+              <strong
+                >o capital financeiro fundiu-se com o capital industrial,
+                criando oligopólios que exportam capital — não apenas
+                mercadorias.</strong
+              >
+            </p>
+            <p>
+              Países industrializados dividem o mundo em zonas de influência
+              econômica. As colônias e países periféricos fornecem matéria-prima
+              barata e mão de obra, sustentando a prosperidade dos centros
+              imperiais — e permitindo que as burguesias centrais "subornassem"
+              suas classes trabalhadoras com salários mais altos.
+            </p>
+            <div class="example-box">
+              Isso explicaria por que a revolução não veio da Inglaterra: o
+              imperialismo britânico criou uma "aristocracia operária"
+              relativamente satisfeita. A revolução eclodiu na Rússia —
+              capitalismo atrasado, imperialismo fraco, proletariado miserável.
+            </div>
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div class="section-head">
+          <span class="section-num">03</span>
+          <div class="section-meta">
+            <span class="section-tag">Etapa III — Equívocos Frequentes</span>
+            <h2>O que a maioria confunde</h2>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="info-card">
+            <span class="card-label">Equívoco</span>
+            <h4>"Socialismo = Comunismo"</h4>
+            <p>
+              Para Marx, são etapas distintas. O socialismo é a fase transitória
+              com Estado, produção planificada e distribuição "de cada um
+              segundo sua capacidade, a cada um segundo seu trabalho". O
+              comunismo é o estágio final: sem Estado, sem classes, sem mercado
+              — "de cada um segundo sua capacidade, a cada um segundo sua
+              necessidade."
+            </p>
+          </div>
+          <div class="info-card">
+            <span class="card-label">Equívoco</span>
+            <h4>"URSS = Marxismo aplicado"</h4>
+            <p>
+              Marx nunca descreveu como seria o comunismo em detalhe. A URSS de
+              Stalin foi uma interpretação histórica específica, contestada por
+              trotskistas, luxemburguistas, maoístas e autonomistas. Muitos
+              marxistas negam que a URSS tenha sido socialista — foi capitalismo
+              de Estado sob gestão burocrática.
+            </p>
+          </div>
+        </div>
+
+        <div class="summary-block">
+          <span class="sum-label">Síntese Feynman</span>
+          <h3>
+            "Se você não consegue explicar simplesmente, não entendeu bem o
+            suficiente."
+          </h3>
+          <p>
+            <strong>Marx</strong> diz: o capitalismo é injusto não por causa de
+            pessoas más, mas porque sua estrutura obriga a exploração. A solução
+            não é reforma — é transformação radical das relações de propriedade.
+          </p>
+          <p>
+            <strong>Lenin</strong> acrescenta: essa transformação não acontece
+            sozinha. Exige organização disciplinada, consciência estratégica e
+            disposição para capturar o Estado — não apenas protestá-lo.
+          </p>
+          <p>
+            Viver marxista/leninistamente hoje significaria:
+            <strong
+              >analisar o mundo pelas relações de produção, resistir ao
+              consumismo como alienação, priorizar o coletivo, e agir
+              politicamente</strong
+            >
+            — não apenas concordar com ideias em abstracto.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: USE CASES ===== -->
+    <div id="panel-usecases" class="panel">
+      <div class="hero">
+        <p class="hero-label">/ Casos de Uso Concretos</p>
+        <h1>Marxismo na<br /><em>Vida Real</em></h1>
+        <p class="hero-lead">
+          Como as categorias marxistas e leninistas se aplicam a situações
+          concretas — do cotidiano ao geopolítico.
+        </p>
+      </div>
+
+      <div class="content-wrap">
+        <div class="section-head" style="padding-top: 0; border-top: none">
+          <span class="section-num">UC</span>
+          <div class="section-meta">
+            <span class="section-tag">Aplicações Práticas</span>
+            <h2>Onde o marxismo "aparece" sem ser reconhecido</h2>
+          </div>
+        </div>
+
+        <div class="usecase-grid">
+          <div class="usecase-card">
+            <span class="uc-icon">🏭</span>
+            <div class="uc-title">Trabalho & Salário</div>
+            <p class="uc-desc">
+              A relação patrão-empregado é o locus central da mais-valia. Cada
+              vez que um trabalhador gera valor além do seu salário, está
+              produzindo lucro para o capital.
+            </p>
+            <span class="uc-example"
+              >→ Uberização, gig economy, pejotização</span
+            >
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">📱</span>
+            <div class="uc-title">Big Tech & Dados</div>
+            <p class="uc-desc">
+              Marx não previu o capitalismo de plataforma, mas a categoria se
+              aplica: os usuários produzem dados gratuitos que viram commodities
+              vendidas como publicidade. Trabalho não pago em escala global.
+            </p>
+            <span class="uc-example">→ "Se é grátis, o produto é você"</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">🌍</span>
+            <div class="uc-title">Geopolítica Global</div>
+            <p class="uc-desc">
+              A teoria leninista do imperialismo ilumina: por que países ricos
+              extraem recursos de países pobres? Por que guerras ocorrem onde há
+              petróleo? A lógica da expansão capitalista.
+            </p>
+            <span class="uc-example"
+              >→ África, Oriente Médio, América Latina</span
+            >
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">🏘️</span>
+            <div class="uc-title">Crise Habitacional</div>
+            <p class="uc-desc">
+              Moradia virou ativo financeiro. Fundos de investimento compram
+              imóveis como reserva de valor, inflando preços — tornando
+              habitação inacessível. A contradição entre valor de uso e valor de
+              troca, exatamente como Marx descreveu.
+            </p>
+            <span class="uc-example">→ Gentrificação, fundos imobiliários</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">🎓</span>
+            <div class="uc-title">Educação & Ideologia</div>
+            <p class="uc-desc">
+              Para Marx, a escola reproduz as relações de produção — ensina
+              disciplina, hierarquia e a lógica do trabalho assalariado como
+              naturais. Althusser chamou isso de "Aparelhos Ideológicos de
+              Estado".
+            </p>
+            <span class="uc-example"
+              >→ Currículo, meritocracia, ranking de escolas</span
+            >
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">⚕️</span>
+            <div class="uc-title">Saúde como Mercadoria</div>
+            <p class="uc-desc">
+              Quando saúde é privatizada, seu valor de uso (curar pessoas) entra
+              em contradição com seu valor de troca (lucrar). Doenças raras sem
+              mercado lucrativo são negligenciadas; medicamentos são
+              precificados pela demanda, não pela necessidade.
+            </p>
+            <span class="uc-example"
+              >→ Planos de saúde, indústria farmacêutica</span
+            >
+          </div>
+        </div>
+
+        <div class="section-head">
+          <span class="section-num">LC</span>
+          <div class="section-meta">
+            <span class="section-tag">Aplicações Leninistas</span>
+            <h2>O partido de vanguarda em contextos modernos</h2>
+          </div>
+        </div>
+
+        <div class="usecase-grid">
+          <div class="usecase-card">
+            <span class="uc-icon">🗳️</span>
+            <div class="uc-title">Movimentos Sociais</div>
+            <p class="uc-desc">
+              A tensão entre organização de vanguarda e horizontalismo
+              democrático é viva. Movimentos como o MST no Brasil, com liderança
+              centralizada e formação política, vs. movimentos horizontais como
+              Occupy.
+            </p>
+            <span class="uc-example">→ MST, PCB, movimentos estudantis</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">🌐</span>
+            <div class="uc-title">Partidos de Esquerda</div>
+            <p class="uc-desc">
+              Toda esquerda organizada lida com o dilema leninista: construir um
+              partido disciplinado (eficaz, mas burocrático) ou uma frente ampla
+              democrática (inclusiva, mas difusa)?
+            </p>
+            <span class="uc-example">→ PT, PSOL, PCdoB no Brasil</span>
+          </div>
+          <div class="usecase-card">
+            <span class="uc-icon">📢</span>
+            <div class="uc-title">Mídia Alternativa</div>
+            <p class="uc-desc">
+              A ideia leninista de jornal como "organizador coletivo" (Iskra)
+              antecipa o papel de veículos de mídia na construção de consciência
+              política. Quem controla a narrativa?
+            </p>
+            <span class="uc-example"
+              >→ Brasil de Fato, The Intercept, Jacobin</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: MENTAL MODELS ===== -->
+    <div id="panel-mental" class="panel">
+      <div class="hero">
+        <p class="hero-label">/ Modelos Mentais</p>
+        <h1>Ferramentas de<br /><em>Pensamento</em></h1>
+        <p class="hero-lead">
+          Frameworks derivados do marxismo que você pode usar para analisar
+          qualquer sistema social, econômico ou político.
+        </p>
+      </div>
+
+      <div class="content-wrap">
+        <div class="mental-model">
+          <div class="mm-header">
+            <div class="mm-icon-wrap">🔍</div>
+            <div class="mm-info">
+              <span class="mm-tag">Mental Model 01</span>
+              <div class="mm-title">Base × Superestrutura</div>
+            </div>
+          </div>
+          <div class="mm-body">
+            <p>
+              Pergunte sempre:
+              <strong
+                >"Quem se beneficia economicamente desta ideia, lei ou norma
+                cultural?"</strong
+              >
+              Se uma ideologia serve aos interesses da classe dominante,
+              provavelmente foi construída — consciente ou inconscientemente —
+              para isso.
+            </p>
+            <div class="mm-diagram">
+              SUPERESTRUTURA ├── Leis, Estado, Constituição ├── Religião,
+              Filosofia, Arte ├── Mídia, Escola, Família └── Ideologia dominante
+              ("senso comum") ↑ determina / legitima BASE ECONÔMICA ├── Relações
+              de produção (quem possui o quê) └── Forças produtivas (tecnologia,
+              trabalho)
+            </div>
+            <div class="mm-apply">
+              <span class="apply-label">Como usar</span>
+              <p>
+                Ao analisar qualquer lei, política ou norma cultural: mapeie
+                quem detém os meios de produção relevantes e pergunte como a
+                superestrutura os beneficia. Não como teoria conspiratória —
+                como análise estrutural.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mental-model">
+          <div class="mm-header">
+            <div class="mm-icon-wrap">⚖️</div>
+            <div class="mm-info">
+              <span class="mm-tag">Mental Model 02</span>
+              <div class="mm-title">Valor de Uso × Valor de Troca</div>
+            </div>
+          </div>
+          <div class="mm-body">
+            <p>
+              <strong>Valor de uso:</strong> para que serve uma coisa (utilidade
+              real). <strong>Valor de troca:</strong> quanto vale no mercado. No
+              capitalismo, o valor de troca domina — e isso produz absurdos
+              sistêmicos.
+            </p>
+            <div class="mm-diagram">
+              Medicamento para doença rara: Valor de uso → ALTO (salva vidas)
+              Valor de troca → BAIXO (mercado pequeno) Resultado → não
+              desenvolvido / inacessível Imóvel em cidade cara: Valor de uso →
+              moradia Valor de troca → ativo financeiro especulativo Resultado →
+              vazio enquanto famílias dormem na rua
+            </div>
+            <div class="mm-apply">
+              <span class="apply-label">Como usar</span>
+              <p>
+                Sempre que um mercado parecer "irracional", verifique a
+                contradição entre o valor de uso social e o valor de troca
+                privado. Isso explica crises de saúde, habitação, alimentação e
+                educação simultaneamente.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mental-model">
+          <div class="mm-header">
+            <div class="mm-icon-wrap">🎭</div>
+            <div class="mm-info">
+              <span class="mm-tag">Mental Model 03</span>
+              <div class="mm-title">
+                Alienação — O Trabalhador Separado do Produto
+              </div>
+            </div>
+          </div>
+          <div class="mm-body">
+            <p>
+              Marx identifica quatro dimensões de alienação no trabalho
+              capitalista: o trabalhador é alienado do
+              <strong>produto</strong> (não o possui), do
+              <strong>processo</strong> (não controla como trabalha), dos
+              <strong>outros humanos</strong> (competição), e de sua
+              <strong>natureza genérica</strong> (trabalho criativo reduzido a
+              sobrevivência).
+            </p>
+            <div class="mm-diagram">
+              Trabalho criativo ideal: Trabalhador → projeta → produz → possui →
+              usa/vende Trabalho alienado capitalista: Trabalhador → executa
+              tarefas definidas por outros → produz algo que pertence ao patrão
+              → vende sua força de trabalho para sobreviver → resultado:
+              estranhamento, tédio, burnout
+            </div>
+            <div class="mm-apply">
+              <span class="apply-label">Como usar</span>
+              <p>
+                Burnout, falta de sentido no trabalho, "síndrome do impostor" —
+                muitos fenômenos psicológicos modernos têm dimensão estrutural.
+                A alienação não é problema individual de adaptação: é a condição
+                normal do trabalho assalariado.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mental-model">
+          <div class="mm-header">
+            <div class="mm-icon-wrap">🌀</div>
+            <div class="mm-info">
+              <span class="mm-tag">Mental Model 04</span>
+              <div class="mm-title">Contradição → Crise → Transformação</div>
+            </div>
+          </div>
+          <div class="mm-body">
+            <p>
+              O método dialético como ferramenta de análise: todo sistema
+              carrega contradições internas que, sob pressão, produzem crises e
+              potencialmente transformação.
+              <strong
+                >Estabilidade é temporária; contradição é permanente.</strong
+              >
+            </p>
+            <div class="mm-diagram">
+              Contradição do capitalismo financeiro: Bancos precisam de lucro →
+              criam produtos arriscados → sistema fica frágil → crise de 2008 →
+              Estado socializa prejuízo (bail-out) → contradição não resolvida,
+              apenas postergada Perguntas dialéticas úteis: "Que contradição
+              sustenta esta situação?" "O que a crise revela sobre a estrutura?"
+              "Quem paga o preço quando o sistema colapsa?"
+            </div>
+            <div class="mm-apply">
+              <span class="apply-label">Como usar</span>
+              <p>
+                Ao analisar qualquer crise — econômica, política, ambiental —
+                não pergunte "o que deu errado?" mas "qual contradição
+                estrutural produziu isso inevitavelmente?" Isso revela causas,
+                não apenas sintomas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: CRÍTICA ===== -->
+    <div id="panel-critica" class="panel">
+      <div class="hero">
+        <p class="hero-label">/ Análise Crítica</p>
+        <h1>Forças &<br /><em>Limites</em></h1>
+        <p class="hero-lead">
+          Nenhuma teoria sobrevive sem crítica. O marxismo-leninismo tem
+          contribuições genuínas — e falhas sérias que não podem ser ignoradas.
+        </p>
+      </div>
+
+      <div class="content-wrap">
+        <div class="section-head" style="padding-top: 0; border-top: none">
+          <span class="section-num">C</span>
+          <div class="section-meta">
+            <span class="section-tag">Da Esquerda & Da Direita</span>
+            <h2>O que pensadores sérios criticam</h2>
+          </div>
+        </div>
+
+        <div class="critique-row">
+          <div class="critique-col">
+            <div class="crit-header left">⟵ Críticas da Esquerda</div>
+            <div class="crit-item">
+              <strong>Rosa Luxemburgo (1871–1919)</strong>
+              O partido de vanguarda leninista substitui a espontaneidade das
+              massas por burocracia. Sem democracia interna, o partido se torna
+              um aparelho de controle, não de emancipação.
+            </div>
+            <div class="crit-item">
+              <strong>Antonio Gramsci (1891–1937)</strong>
+              Marx subestimou o papel da cultura e do consentimento na
+              dominação. A burguesia mantém poder pela hegemonia cultural — não
+              apenas pela coerção. Mudar estruturas econômicas sem mudar a
+              cultura é insuficiente.
+            </div>
+            <div class="crit-item">
+              <strong>Feministas marxistas</strong>
+              Marx ignorou o trabalho doméstico reprodutivo — cozinhar, criar
+              filhos, cuidar de idosos — que sustenta o capitalismo sem receber
+              salário. A exploração de classe não captura a exploração de
+              gênero.
+            </div>
+            <div class="crit-item">
+              <strong>Trotsky vs. Stalin</strong>
+              A "revolução em um só país" de Stalin traiu o internacionalismo
+              marxista. Sem revolução global, a URSS degenerou em burocracia e
+              capitalismo de Estado.
+            </div>
+          </div>
+          <div class="critique-col">
+            <div class="crit-header right">Críticas da Direita ⟶</div>
+            <div class="crit-item">
+              <strong>Friedrich Hayek (1899–1992)</strong>
+              A economia planificada é epistemicamente impossível: nenhum comitê
+              central pode processar toda a informação dispersa que o sistema de
+              preços coordena espontaneamente. O socialismo inevitavelmente
+              produz escassez e totalitarismo.
+            </div>
+            <div class="crit-item">
+              <strong>Karl Popper (1902–1994)</strong>
+              O marxismo é pseudo-ciência: suas previsões (revolução nos países
+              mais industrializados, colapso iminente do capitalismo) falharam
+              sistematicamente, mas a teoria sempre encontra uma forma de não
+              ser falsificada.
+            </div>
+            <div class="crit-item">
+              <strong>Registro histórico</strong>
+              Todos os estados que se autoproclamaram marxistas-leninistas
+              produziram regimes autoritários com violações massivas de
+              direitos. Coincidência ou consequência estrutural da tomada do
+              Estado pelo partido?
+            </div>
+            <div class="crit-item">
+              <strong>Natureza humana</strong>
+              Críticos liberais argumentam que o marxismo ignora incentivos
+              individuais e a tendência humana à competição — tentando criar um
+              "homem novo" que não existe na prática.
+            </div>
+          </div>
+        </div>
+
+        <div class="feynman-simple" style="border-left-color: var(--gold)">
+          <h3 style="color: var(--gold)">A Posição Intelectualmente Honesta</h3>
+          <p>
+            O marxismo oferece as ferramentas analíticas mais poderosas
+            disponíveis para compreender estruturas de exploração econômica,
+            crises do capitalismo e a relação entre poder e ideologia. Isso é
+            inegável — e é por isso que é ensinado nas melhores universidades do
+            mundo.
+          </p>
+          <p>
+            Ao mesmo tempo, suas receitas políticas — especialmente o leninismo
+            aplicado ao Estado — produziram tragédias históricas que não podem
+            ser descartadas como simples "desvios". A questão do poder e da
+            liberdade política permanece sem resposta satisfatória dentro da
+            tradição.
+          </p>
+          <p>
+            Pensadores como Gramsci, Adorno, Habermas e outros da Teoria Crítica
+            tentam preservar o poder analítico do marxismo sem seu dogmatismo
+            político. Essa tensão ainda está viva.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: TIMELINE ===== -->
+    <div id="panel-timeline" class="panel">
+      <div class="hero">
+        <p class="hero-label">/ Linha do Tempo</p>
+        <h1>A Evolução<br /><em>da Teoria</em></h1>
+        <p class="hero-lead">
+          Do jovem Marx hegeliano ao marxismo ocidental contemporâneo — como o
+          pensamento se ramificou e transformou ao longo de 180 anos.
+        </p>
+      </div>
+
+      <div class="content-wrap">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-year">1844</div>
+            <div class="tl-title">Manuscritos Econômico-Filosóficos</div>
+            <p class="tl-text">
+              Marx jovem, ainda hegeliano, elabora a teoria da alienação. O
+              trabalho criativo humano é distorcido pelo capitalismo em trabalho
+              alienado e desumanizante.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1848</div>
+            <div class="tl-title">Manifesto Comunista</div>
+            <p class="tl-text">
+              Marx & Engels condensam a teoria para ação política. "Um espectro
+              ronda a Europa." A luta de classes como motor da história. Chamado
+              à revolução proletária.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1867</div>
+            <div class="tl-title">O Capital — Volume I</div>
+            <p class="tl-text">
+              A obra magna. Análise científica do modo de produção capitalista:
+              mercadoria, valor, mais-valia, acumulação, crises. A crítica mais
+              sistemática já feita ao capitalismo.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1902</div>
+            <div class="tl-title">Que Fazer? — Lenin</div>
+            <p class="tl-text">
+              Lenin quebra com o marxismo ortodoxo: propõe o partido de
+              vanguarda profissional, disciplinado, como substituto da
+              espontaneidade das massas. Fundamento teórico da Revolução de
+              1917.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1916</div>
+            <div class="tl-title">O Imperialismo — Lenin</div>
+            <p class="tl-text">
+              Atualiza Marx para o capitalismo monopolista do séc. XX. A
+              expansão imperial não é "civilizatória" — é a lógica do capital
+              transbordando fronteiras nacionais.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1917</div>
+            <div class="tl-title">Revolução de Outubro</div>
+            <p class="tl-text">
+              Primeira revolução marxista vitoriosa. O partido bolchevique toma
+              o poder na Rússia. O laboratório histórico do leninismo começa. As
+              contradições também.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1929–1935</div>
+            <div class="tl-title">Cadernos do Cárcere — Gramsci</div>
+            <p class="tl-text">
+              Escrito na prisão de Mussolini: Gramsci elabora hegemonia, guerra
+              de posição, intelectual orgânico. O marxismo se abre para a
+              cultura como campo de luta.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1937–1969</div>
+            <div class="tl-title">Escola de Frankfurt</div>
+            <p class="tl-text">
+              Adorno, Horkheimer, Marcuse: marxismo + psicanálise + crítica da
+              cultura de massa. "A razão iluminista virou dominação." O
+              capitalismo domina não só o trabalho, mas o desejo.
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1991</div>
+            <div class="tl-title">Colapso da URSS</div>
+            <p class="tl-text">
+              O "socialismo realmente existente" entra em colapso. Crise
+              profunda na esquerda mundial. Marxistas revisam: era o leninismo
+              inevitavelmente autoritário? Era possível outro caminho?
+            </p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2008–hoje</div>
+            <div class="tl-title">Renascimento marxista</div>
+            <p class="tl-text">
+              A crise financeira de 2008 relança o interesse em Marx. "O
+              Capital" vira best-seller. Piketty, David Harvey, Slavoj Žižek. O
+              marxismo como ferramenta crítica — sem o peso da URSS.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function switchPanel(name, btn) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document.getElementById("panel-" + name).classList.add("active");
+        btn.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function toggleAcc(btn) {
+        const item = btn.closest(".accordion-item");
+        item.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

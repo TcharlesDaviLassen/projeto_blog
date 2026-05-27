@@ -58,54 +58,55 @@ const CATALOG = {
       templates: [],
       children: [
         /* ── Alquimia ───────────────────────────── */
-        {
-          id: "alquimia",
-          name: "Alquimia",
-          glyph: "☿",
-          description: "Sol, lua, mercúrio. A grande obra em HTML.",
-          templates: [
-            {
-              id: "alq-001",
-              title: "Tábua de Esmeralda",
-              path: "templates/simbolismo/alquimia/tabua-esmeralda.html",
-              description:
-                "Landing page editorial com tipografia serifada e ornamentos.",
-              tags: ["landing", "editorial", "dark"],
-              date: "2026-05-20",
-            },
-          ],
-          children: [
-            {
-              id: "ouro",
-              name: "Opus Magnum",
-              glyph: "☉",
-              description:
-                "A última etapa: ouro filosofal. Subcategoria dentro de subcategoria.",
-              templates: [],
-              children: [],
-            },
-          ],
-        },
+        // {
+        //   id: "alquimia",
+        //   name: "Alquimia",
+        //   glyph: "☿",
+        //   description: "Sol, lua, mercúrio. A grande obra em HTML.",
+        //   templates: [
+        //     {
+        //       id: "alq-001",
+        //       title: "Tábua de Esmeralda",
+        //       path: "templates/simbolismo/alquimia/tabua-esmeralda.html",
+        //       description:
+        //         "Landing page editorial com tipografia serifada e ornamentos.",
+        //       tags: ["landing", "editorial", "dark"],
+        //       date: "2026-05-20",
+        //     },
+        //   ],
+        //   children: [],
+        //   // children: [
+        //   //   {
+        //   //     id: "ouro",
+        //   //     name: "Opus Magnum",
+        //   //     glyph: "☉",
+        //   //     description:
+        //   //       "A última etapa: ouro filosofal. Subcategoria dentro de subcategoria.",
+        //   //     templates: [],
+        //   //     children: [],
+        //   //   },
+        //   // ],
+        // },
 
         /* ── Tarot ──────────────────────────────── */
-        {
-          id: "tarot",
-          name: "Tarot",
-          glyph: "✷",
-          description: "Os 22 arcanos maiores como sistema de design.",
-          children: [],
-          templates: [
-            {
-              id: "tar-001",
-              title: "O Eremita",
-              path: "templates/simbolismo/tarot/eremita.html",
-              description:
-                "Card layout com lanterna, capuz e gradientes noturnos.",
-              tags: ["card", "dark", "interativo"],
-              date: "2026-05-18",
-            },
-          ],
-        },
+        // {
+        //   id: "tarot",
+        //   name: "Tarot",
+        //   glyph: "✷",
+        //   description: "Os 22 arcanos maiores como sistema de design.",
+        //   children: [],
+        //   templates: [
+        //     {
+        //       id: "tar-001",
+        //       title: "O Eremita",
+        //       path: "templates/simbolismo/tarot/eremita.html",
+        //       description:
+        //         "Card layout com lanterna, capuz e gradientes noturnos.",
+        //       tags: ["card", "dark", "interativo"],
+        //       date: "2026-05-18",
+        //     },
+        //   ],
+        // },
 
         /* ── Cultismo ───────────────────────────── */
         {
@@ -146,52 +147,159 @@ const CATALOG = {
         },
       ],
     },
+    /* ============================================
+     * TUNELAMENTO QUÂNTICO
+     * ============================================ */
+
+    {
+      id: "tunelamento_quantico",
+      name: "Tunelamento Quântico",
+      glyph: "✦",
+      description:
+        "Fenômeno quântico-mecânico pelo qual uma partícula atravessa uma barreira.",
+      tags: ["esotérico", "místico", "mecânica quântica"],
+      children: [],
+      templates: [
+        {
+          id: "tun-001",
+          title: "Tunelamento Quântico",
+          path: "templates/tunelamento_quantico/tunelamento_quantico.html",
+          description:
+            "Fenômeno quântico-mecânico pelo qual uma partícula atravessa uma barreira.",
+          tags: ["esotérico", "místico", "mecânica quântica"],
+          date: "2026-05-20",
+        },
+      ],
+    },
+
+    /* ============================================
+     * O CAPTALISMO POR PLATÃO
+     * ============================================ */
+
+    {
+      id: "capitalismo",
+      name: "Capitalismo por Platão",
+      glyph: "◇",
+      description:
+        "O capitalismo não é bom — é o que melhor usa nossa natureza imperfeita.",
+      tags: ["capitalismo", "platônico", "política"],
+      children: [],
+      templates: [
+        {
+          id: "cap-001",
+          title: "Platão",
+          path: "templates/Platão/plato-capitalism.html",
+          description:
+            "O capitalismo não é bom — é o que melhor usa nossa natureza imperfeita.",
+          tags: ["capitalismo", "platônico", "política"],
+          date: "2026-05-20",
+        },
+      ],
+    },
+
+    /* ============================================
+     * BURACO NEGRO DE KERR
+     * ============================================ */
+
+    {
+      id: "buraco_negro_Kerr",
+      name: "Buraco Negro de Kerr",
+      glyph: "◉",
+      description:
+        "Modelo de buraco negro em rotação, descrito pela solução de Kerr.",
+      tags: ["física", "astronomia", "relatividade"],
+      children: [],
+      templates: [
+        {
+          id: "bur-001",
+          title: "Buraco Negro de Kerr",
+          path: "templates/buraco_negro_Kerr/kerr_black_hole.html",
+          description:
+            "Modelo de buraco negro em rotação, descrito pela solução de Kerr.",
+          tags: ["física", "astronomia", "relatividade"],
+          date: "2026-05-20",
+        },
+      ],
+    },
+
+    /* ============================================
+     * BATERIA
+     * ============================================ */
+
+    {
+      id: "bateria_bagda",
+      name: "Bateria Bagda",
+      glyph: "◉",
+      description: "Bateria Bagda.",
+      tags: ["antigo", "mesopotâmia", "arqueologia"],
+      templates: [
+        // {
+        //   id: "bat-001",
+        //   title: "Bateria Bagda",
+        //   path: "templates/bateria_bagda/bateria_de_bagda.html",
+        //   description:
+        //     "Nas profundezas silenciosas da antiga Mesopotâmia, onde o vento atravessa ruínas enterradas pelo tempo e a areia parece esconder memórias esquecidas da humanidade, arqueólogos encontraram um objeto que desafiaria séculos de compreensão histórica.",
+        //   tags: ["antigo", "mesopotâmia", "arqueologia"],
+        //   date: "2026-05-20",
+        // },
+        {
+          id: "bat-001",
+          title: "Bateria Bagda",
+          path: "templates/bateria_bagda/bateria_bagda.html",
+          description:
+            "Nas profundezas silenciosas da antiga Mesopotâmia, onde o vento atravessa ruínas enterradas pelo tempo e a areia parece esconder memórias esquecidas da humanidade, arqueólogos encontraram um objeto que desafiaria séculos de compreensão histórica.",
+          tags: ["antigo", "mesopotâmia", "arqueologia"],
+          date: "2026-05-20",
+        },
+      ],
+      children: [],
+    },
 
     /* ============================================
      * MINIMALISMO
      * ============================================ */
-    {
-      id: "minimalismo",
-      name: "Minimalismo",
-      glyph: "◯",
-      description:
-        "Subtração como ferramenta. Espaço, ritmo, silêncio tipográfico.",
-      tags: ["clean", "moderno"],
-      children: [],
-      templates: [
-        {
-          id: "min-001",
-          title: "Branco Absoluto",
-          path: "templates/minimalismo/branco-absoluto.html",
-          description:
-            "Página de portfolio com grid suíço e tipografia sem-serifa.",
-          tags: ["portfolio", "light", "swiss"],
-          date: "2026-05-15",
-        },
-      ],
-    },
+    // {
+    //   id: "minimalismo",
+    //   name: "Minimalismo",
+    //   glyph: "◯",
+    //   description:
+    //     "Subtração como ferramenta. Espaço, ritmo, silêncio tipográfico.",
+    //   tags: ["clean", "moderno"],
+    //   children: [],
+    //   templates: [
+    //     {
+    //       id: "min-001",
+    //       title: "Branco Absoluto",
+    //       path: "templates/minimalismo/branco-absoluto.html",
+    //       description:
+    //         "Página de portfolio com grid suíço e tipografia sem-serifa.",
+    //       tags: ["portfolio", "light", "swiss"],
+    //       date: "2026-05-15",
+    //     },
+    //   ],
+    // },
 
     /* ============================================
      * CYBERPUNK
      * ============================================ */
-    {
-      id: "cyberpunk",
-      name: "Cyberpunk",
-      glyph: "◉",
-      description:
-        "Neon, ruído, tipografia mono. Estética dos becos de Neo-Tokyo.",
-      tags: ["neon", "glitch", "futurista"],
-      children: [],
-      templates: [
-        {
-          id: "cyb-001",
-          title: "Neon Sprawl",
-          path: "templates/cyberpunk/neon-sprawl.html",
-          description: "Dashboard com elementos brutalistas e cores saturadas.",
-          tags: ["dashboard", "dark", "glitch"],
-          date: "2026-05-22",
-        },
-      ],
-    },
+    // {
+    //   id: "cyberpunk",
+    //   name: "Cyberpunk",
+    //   glyph: "◉",
+    //   description:
+    //     "Neon, ruído, tipografia mono. Estética dos becos de Neo-Tokyo.",
+    //   tags: ["neon", "glitch", "futurista"],
+    //   children: [],
+    //   templates: [
+    //     {
+    //       id: "cyb-001",
+    //       title: "Neon Sprawl",
+    //       path: "templates/cyberpunk/neon-sprawl.html",
+    //       description: "Dashboard com elementos brutalistas e cores saturadas.",
+    //       tags: ["dashboard", "dark", "glitch"],
+    //       date: "2026-05-22",
+    //     },
+    //   ],
+    // },
   ],
 };

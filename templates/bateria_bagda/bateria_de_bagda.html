@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      :root {
+        --color-background-primary: light-dark(
+          rgba(255, 255, 255, 1),
+          rgba(48, 48, 46, 1)
+        );
+        --color-background-secondary: light-dark(
+          rgba(245, 244, 237, 1),
+          rgba(38, 38, 36, 1)
+        );
+        --color-background-tertiary: light-dark(
+          rgba(250, 249, 245, 1),
+          rgba(20, 20, 19, 1)
+        );
+        --color-background-inverse: light-dark(
+          rgba(20, 20, 19, 1),
+          rgba(250, 249, 245, 1)
+        );
+        --color-background-ghost: light-dark(
+          rgba(255, 255, 255, 0),
+          rgba(48, 48, 46, 0)
+        );
+        --color-background-info: light-dark(
+          rgba(214, 228, 246, 1),
+          rgba(37, 62, 95, 1)
+        );
+        --color-background-danger: light-dark(
+          rgba(247, 236, 236, 1),
+          rgba(96, 42, 40, 1)
+        );
+        --color-background-success: light-dark(
+          rgba(233, 241, 220, 1),
+          rgba(27, 70, 20, 1)
+        );
+        --color-background-warning: light-dark(
+          rgba(246, 238, 223, 1),
+          rgba(72, 58, 15, 1)
+        );
+        --color-background-disabled: light-dark(
+          rgba(255, 255, 255, 0.5),
+          rgba(48, 48, 46, 0.5)
+        );
+        --color-text-primary: light-dark(
+          rgba(20, 20, 19, 1),
+          rgba(250, 249, 245, 1)
+        );
+        --color-text-secondary: light-dark(
+          rgba(61, 61, 58, 1),
+          rgba(194, 192, 182, 1)
+        );
+        --color-text-tertiary: light-dark(
+          rgba(115, 114, 108, 1),
+          rgba(156, 154, 146, 1)
+        );
+        --color-text-inverse: light-dark(
+          rgba(255, 255, 255, 1),
+          rgba(20, 20, 19, 1)
+        );
+        --color-text-info: light-dark(
+          rgba(50, 102, 173, 1),
+          rgba(128, 170, 221, 1)
+        );
+        --color-text-danger: light-dark(
+          rgba(127, 44, 40, 1),
+          rgba(238, 136, 132, 1)
+        );
+        --color-text-success: light-dark(
+          rgba(38, 91, 25, 1),
+          rgba(122, 185, 72, 1)
+        );
+        --color-text-warning: light-dark(
+          rgba(90, 72, 21, 1),
+          rgba(209, 160, 65, 1)
+        );
+        --color-text-disabled: light-dark(
+          rgba(20, 20, 19, 0.5),
+          rgba(250, 249, 245, 0.5)
+        );
+        --color-text-ghost: light-dark(
+          rgba(115, 114, 108, 0.5),
+          rgba(156, 154, 146, 0.5)
+        );
+        --color-border-primary: light-dark(
+          rgba(31, 30, 29, 0.4),
+          rgba(222, 220, 209, 0.4)
+        );
+        --color-border-secondary: light-dark(
+          rgba(31, 30, 29, 0.3),
+          rgba(222, 220, 209, 0.3)
+        );
+        --color-border-tertiary: light-dark(
+          rgba(31, 30, 29, 0.15),
+          rgba(222, 220, 209, 0.15)
+        );
+        --color-border-inverse: light-dark(
+          rgba(255, 255, 255, 0.3),
+          rgba(20, 20, 19, 0.15)
+        );
+        --color-border-ghost: light-dark(
+          rgba(31, 30, 29, 0),
+          rgba(222, 220, 209, 0)
+        );
+        --color-border-info: light-dark(
+          rgba(70, 130, 213, 1),
+          rgba(70, 130, 213, 1)
+        );
+        --color-border-danger: light-dark(
+          rgba(167, 61, 57, 1),
+          rgba(205, 92, 88, 1)
+        );
+        --color-border-success: light-dark(
+          rgba(67, 116, 38, 1),
+          rgba(89, 145, 48, 1)
+        );
+        --color-border-warning: light-dark(
+          rgba(128, 92, 31, 1),
+          rgba(168, 120, 41, 1)
+        );
+        --color-border-disabled: light-dark(
+          rgba(31, 30, 29, 0.1),
+          rgba(222, 220, 209, 0.1)
+        );
+        --color-ring-primary: light-dark(
+          rgba(20, 20, 19, 0.7),
+          rgba(250, 249, 245, 0.7)
+        );
+        --color-ring-secondary: light-dark(
+          rgba(61, 61, 58, 0.7),
+          rgba(194, 192, 182, 0.7)
+        );
+        --color-ring-inverse: light-dark(
+          rgba(255, 255, 255, 0.7),
+          rgba(20, 20, 19, 0.7)
+        );
+        --color-ring-info: light-dark(
+          rgba(50, 102, 173, 0.5),
+          rgba(128, 170, 221, 0.5)
+        );
+        --color-ring-danger: light-dark(
+          rgba(167, 61, 57, 0.5),
+          rgba(205, 92, 88, 0.5)
+        );
+        --color-ring-success: light-dark(
+          rgba(67, 116, 38, 0.5),
+          rgba(89, 145, 48, 0.5)
+        );
+        --color-ring-warning: light-dark(
+          rgba(128, 92, 31, 0.5),
+          rgba(168, 120, 41, 0.5)
+        );
+        --font-sans: Anthropic Sans, sans-serif;
+        --font-mono: ui-monospace, monospace;
+        --font-weight-normal: 400;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+        --font-text-xs-size: 12px;
+        --font-text-sm-size: 14px;
+        --font-text-md-size: 16px;
+        --font-text-lg-size: 20px;
+        --font-heading-xs-size: 12px;
+        --font-heading-sm-size: 14px;
+        --font-heading-md-size: 16px;
+        --font-heading-lg-size: 20px;
+        --font-heading-xl-size: 24px;
+        --font-heading-2xl-size: 28px;
+        --font-heading-3xl-size: 36px;
+        --font-text-xs-line-height: 1.4;
+        --font-text-sm-line-height: 1.4;
+        --font-text-md-line-height: 1.4;
+        --font-text-lg-line-height: 1.25;
+        --font-heading-xs-line-height: 1.4;
+        --font-heading-sm-line-height: 1.4;
+        --font-heading-md-line-height: 1.4;
+        --font-heading-lg-line-height: 1.25;
+        --font-heading-xl-line-height: 1.25;
+        --font-heading-2xl-line-height: 1.1;
+        --font-heading-3xl-line-height: 1;
+        --border-radius-xs: 4px;
+        --border-radius-sm: 6px;
+        --border-radius-md: 8px;
+        --border-radius-lg: 10px;
+        --border-radius-xl: 12px;
+        --border-radius-full: 9999px;
+        --border-width-regular: 0.5px;
+        --shadow-hairline: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-sm:
+          0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        --shadow-md:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-lg:
+          0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-sans);
+      }
+      .container {
+        padding: 1.5rem 0;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .header h2 {
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 6px;
+      }
+      .header p {
+        font-size: 14px;
+        color: var(--color-text-secondary);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      .card {
+        background: var(--color-background-primary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        padding: 1.25rem;
+      }
+      .card h3 {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 1rem;
+      }
+      .layer {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .dot-copper {
+        background: #b87333;
+      }
+      .dot-iron {
+        background: #888780;
+      }
+      .dot-clay {
+        background: #c49a6c;
+      }
+      .dot-bitumen {
+        background: #2c2c2a;
+      }
+      .dot-acid {
+        background: #639922;
+      }
+      .layer-text {
+        font-size: 13px;
+        color: var(--color-text-secondary);
+        line-height: 1.5;
+      }
+      .layer-label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+      }
+      .volt-demo {
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        padding: 1rem;
+        margin-top: 0.75rem;
+      }
+      .volt-label {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 8px;
+      }
+      .volt-bar-bg {
+        background: var(--color-border-tertiary);
+        border-radius: 4px;
+        height: 8px;
+        width: 100%;
+        margin-bottom: 6px;
+        position: relative;
+      }
+      .volt-bar-fill {
+        height: 8px;
+        border-radius: 4px;
+        background: #639922;
+        transition: width 0.6s ease;
+      }
+      .volt-range {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+      }
+      .volt-value {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 4px;
+      }
+      select {
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        padding: 6px 10px;
+        font-size: 13px;
+        color: var(--color-text-primary);
+        width: 100%;
+        margin-top: 4px;
+        font-family: var(--font-sans);
+      }
+      .timeline {
+        margin-top: 1.5rem;
+      }
+      .tl-item {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 1rem;
+        align-items: flex-start;
+      }
+      .tl-dot-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        flex-shrink: 0;
+      }
+      .tl-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 500;
+      }
+      .tl-line {
+        width: 1px;
+        background: var(--color-border-tertiary);
+        height: 28px;
+      }
+      .tl-body {
+        flex: 1;
+        padding-top: 4px;
+      }
+      .tl-date {
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+      }
+      .tl-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+      }
+      .tl-desc {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        line-height: 1.5;
+        margin-top: 2px;
+      }
+      .section-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-text-secondary);
+        text-transform: none;
+        letter-spacing: 0;
+        margin-bottom: 12px;
+      }
+      .debate {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 0.75rem;
+      }
+      .debate-col {
+        padding: 10px 12px;
+        border-radius: var(--border-radius-md);
+      }
+      .debate-favor {
+        background: var(--color-background-success);
+        border: 0.5px solid var(--color-border-success);
+      }
+      .debate-contra {
+        background: var(--color-background-danger);
+        border: 0.5px solid var(--color-border-danger);
+      }
+      .debate-title {
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .debate-favor .debate-title {
+        color: var(--color-text-success);
+      }
+      .debate-contra .debate-title {
+        color: var(--color-text-danger);
+      }
+      .debate-item {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 4px;
+        line-height: 1.4;
+      }
+      .btn-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 1.5rem;
+        justify-content: center;
+      }
+      button {
+        padding: 8px 16px;
+        font-size: 13px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-secondary);
+        background: transparent;
+        color: var(--color-text-primary);
+        cursor: pointer;
+        font-family: var(--font-sans);
+      }
+      button:hover {
+        background: var(--color-background-secondary);
+      }
+    </style>
+
+    <div class="container">
+      <div class="header">
+        <h2>Bateria de Bagdá</h2>
+        <p>Artefato parta · aprox. 250 a.C. – 224 d.C.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Componentes do artefato</h3>
+          <div class="layer">
+            <div class="dot dot-clay"></div>
+            <div>
+              <div class="layer-label">Vaso de argila</div>
+              <div class="layer-text">~13 cm · contêiner externo</div>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="dot dot-bitumen"></div>
+            <div>
+              <div class="layer-label">Tampa de betume</div>
+              <div class="layer-text">Isolante natural (asfalto)</div>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="dot dot-copper"></div>
+            <div>
+              <div class="layer-label">Cilindro de cobre</div>
+              <div class="layer-text">Cátodo · condutor</div>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="dot dot-iron"></div>
+            <div>
+              <div class="layer-label">Haste de ferro</div>
+              <div class="layer-text">Ânodo · se oxida</div>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="dot dot-acid"></div>
+            <div>
+              <div class="layer-label">Líquido ácido (hipótese)</div>
+              <div class="layer-text">Eletrólito · viabiliza a reação</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Tensão gerada pelo eletrólito</h3>
+          <div class="volt-label">Selecione o líquido ácido hipotético:</div>
+          <select id="liquid-select" onchange="updateVolt()">
+            <option value="0.5">Água salgada (~0,5 V)</option>
+            <option value="0.8" selected>Vinagre (~0,8 V)</option>
+            <option value="1.0">Suco de limão (~1,0 V)</option>
+            <option value="1.1">Vinho fermentado (~1,1 V)</option>
+            <option value="1.4">Solução ácida forte (~1,4 V)</option>
+          </select>
+          <div class="volt-demo" style="margin-top: 1rem">
+            <div class="volt-value" id="volt-display">0,8 V</div>
+            <div class="volt-label">tensão estimada</div>
+            <div class="volt-bar-bg">
+              <div class="volt-bar-fill" id="volt-bar" style="width: 57%"></div>
+            </div>
+            <div class="volt-range"><span>0 V</span><span>1,4 V</span></div>
+            <div class="volt-label" style="margin-top: 8px" id="volt-note">
+              Suficiente para galvanoplastia simples.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem">
+        <h3>O debate arqueológico</h3>
+        <div class="section-title">
+          Hipóteses de uso · o que dizem os pesquisadores
+        </div>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1rem;
+          "
+        >
+          <div
+            style="
+              padding: 10px 12px;
+              background: var(--color-background-info);
+              border: 0.5px solid var(--color-border-info);
+              border-radius: var(--border-radius-md);
+            "
+          >
+            <div
+              style="
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--color-text-info);
+                margin-bottom: 4px;
+              "
+            >
+              Galvanoplastia
+            </div>
+            <div style="font-size: 12px; color: var(--color-text-secondary)">
+              Douração eletroquímica de joias e objetos de metal
+            </div>
+          </div>
+          <div
+            style="
+              padding: 10px 12px;
+              background: var(--color-background-warning);
+              border: 0.5px solid var(--color-border-warning);
+              border-radius: var(--border-radius-md);
+            "
+          >
+            <div
+              style="
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--color-text-warning);
+                margin-bottom: 4px;
+              "
+            >
+              Rituais sagrados
+            </div>
+            <div style="font-size: 12px; color: var(--color-text-secondary)">
+              Pequenos choques elétricos em cerimônias religiosas
+            </div>
+          </div>
+          <div
+            style="
+              padding: 10px 12px;
+              background: var(--color-background-secondary);
+              border: 0.5px solid var(--color-border-tertiary);
+              border-radius: var(--border-radius-md);
+            "
+          >
+            <div
+              style="
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--color-text-primary);
+                margin-bottom: 4px;
+              "
+            >
+              Recipiente comum
+            </div>
+            <div style="font-size: 12px; color: var(--color-text-secondary)">
+              Armazenamento de pergaminhos ou substâncias
+            </div>
+          </div>
+        </div>
+        <div class="debate">
+          <div class="debate-col debate-favor">
+            <div class="debate-title">Argumentos a favor</div>
+            <div class="debate-item">
+              · Estrutura compatível com célula galvânica
+            </div>
+            <div class="debate-item">· Réplicas geraram voltagem real</div>
+            <div class="debate-item">
+              · Materiais orgânicos podem ter desaparecido
+            </div>
+          </div>
+          <div class="debate-col debate-contra">
+            <div class="debate-title">Argumentos contra</div>
+            <div class="debate-item">
+              · Sem registros escritos sobre eletricidade
+            </div>
+            <div class="debate-item">· Nenhum fio ou circuito encontrado</div>
+            <div class="debate-item">
+              · Nenhum equipamento elétrico associado
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Linha do tempo · do barro ao lítio</h3>
+        <div class="timeline" id="timeline">
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div
+                class="tl-circle"
+                style="background: #c49a6c22; color: #9b6a2f"
+              >
+                BC
+              </div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-body">
+              <div class="tl-date">~250 a.C. – 224 d.C.</div>
+              <div class="tl-title">Bateria de Bagdá</div>
+              <div class="tl-desc">
+                Artefato parta encontrado próximo a Bagdá; estrutura
+                eletroquímica desconhecida na época.
+              </div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div
+                class="tl-circle"
+                style="background: #e6f1fb; color: #185fa5"
+              >
+                GA
+              </div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-body">
+              <div class="tl-date">1780</div>
+              <div class="tl-title">Galvani e a "eletricidade animal"</div>
+              <div class="tl-desc">
+                Luigi Galvani observa contrações musculares em rãs ao contato
+                metálico.
+              </div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div
+                class="tl-circle"
+                style="background: #eaf3de; color: #3b6d11"
+              >
+                VA
+              </div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-body">
+              <div class="tl-date">1800</div>
+              <div class="tl-title">Pilha voltaica de Alessandro Volta</div>
+              <div class="tl-desc">
+                Primeira fonte contínua de corrente elétrica — discos de cobre e
+                zinco com eletrólito.
+              </div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div
+                class="tl-circle"
+                style="background: #faece7; color: #993c1d"
+              >
+                36
+              </div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-body">
+              <div class="tl-date">1936</div>
+              <div class="tl-title">Descoberta do artefato</div>
+              <div class="tl-desc">
+                Arqueólogos descobrem o vaso perto de Ctesifonte; Wilhelm König
+                propõe a hipótese de bateria.
+              </div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div
+                class="tl-circle"
+                style="background: #eeedfe; color: #534ab7"
+              >
+                Li
+              </div>
+            </div>
+            <div class="tl-body">
+              <div class="tl-date">Hoje</div>
+              <div class="tl-title">Baterias de íons de lítio</div>
+              <div class="tl-desc">
+                Mesmo princípio — transformar reação química em fluxo elétrico —
+                agora em smartphones e veículos elétricos.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button
+          onclick="
+            sendPrompt(
+              'Como funciona exatamente a reação eletroquímica numa célula galvânica?',
+            )
+          "
+        >
+          Como funciona a célula galvânica ↗
+        </button>
+        <button
+          onclick="
+            sendPrompt(
+              'Quais outros enigmas tecnológicos da antiguidade existem além da Bateria de Bagdá?',
+            )
+          "
+        >
+          Outros enigmas da antiguidade ↗
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const notes = {
+        0.5: "Tensão muito baixa; uso incerto.",
+        0.8: "Suficiente para galvanoplastia simples.",
+        "1.0": "Compatível com revestimentos metálicos leves.",
+        1.1: "Tensão razoável para aplicações artesanais.",
+        1.4: "Tensão máxima estimada; aplicações mais amplas.",
+      };
+      function updateVolt() {
+        const sel = document.getElementById("liquid-select");
+        const v = parseFloat(sel.value);
+        const pct = Math.round((v / 1.4) * 100);
+        document.getElementById("volt-display").textContent =
+          v.toFixed(1).replace(".", ",") + " V";
+        document.getElementById("volt-bar").style.width = pct + "%";
+        document.getElementById("volt-note").textContent = notes[sel.value];
+      }
+    </script>
+  </body>
+</html>

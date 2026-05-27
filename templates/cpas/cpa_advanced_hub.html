@@ -1,0 +1,4883 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>CPA Advanced Hub 2026</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+    <style>
+      :root {
+        --bg: #0b0f1c;
+        --surface: #131a27;
+        --surface2: #1a2336;
+        --surface3: #1f2d42;
+        --border: rgba(255, 255, 255, 0.07);
+        --border2: rgba(255, 255, 255, 0.13);
+        --text: #e8edf5;
+        --muted: #7a8fa8;
+        --hint: #4a5e72;
+        --blue: #3b82f6;
+        --cyan: #06b6d4;
+        --gold: #f59e0b;
+        --green: #10b981;
+        --red: #ef4444;
+        --purple: #8b5cf6;
+        --cpa: #06b6d4;
+        --cpror: #f59e0b;
+        --cproi: #10b981;
+        --r: 10px;
+        --r2: 14px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+      }
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        font-size: 14px;
+        min-height: 100vh;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 13px;
+      }
+
+      /* SIDEBAR */
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 220px;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 0;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+      }
+      .sb-logo {
+        padding: 0 1rem 1.2rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 0.8rem;
+      }
+      .sb-logo-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.3px;
+      }
+      .sb-logo-sub {
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-top: 0.15rem;
+      }
+      .sb-section {
+        padding: 0.2rem 1rem;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--hint);
+        margin: 0.6rem 0 0.2rem;
+      }
+      .sb-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 1rem;
+        color: var(--muted);
+        border-radius: 0;
+        transition: 0.15s;
+        cursor: pointer;
+        border-left: 2px solid transparent;
+      }
+      .sb-item:hover {
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+      }
+      .sb-item.active {
+        background: rgba(6, 182, 212, 0.08);
+        color: var(--cyan);
+        border-left-color: var(--cyan);
+      }
+      .sb-item i {
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .sb-item span {
+        font-size: 0.82rem;
+      }
+      .sb-badge {
+        margin-left: auto;
+        background: rgba(6, 182, 212, 0.15);
+        color: var(--cyan);
+        font-size: 0.65rem;
+        padding: 0.1rem 0.4rem;
+        border-radius: 20px;
+        font-weight: 700;
+      }
+
+      /* MAIN */
+      .main {
+        flex: 1;
+        overflow-x: hidden;
+      }
+      .topbar {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      .topbar-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fff;
+      }
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.25rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+      }
+      .pill.cpa {
+        background: rgba(6, 182, 212, 0.12);
+        color: var(--cpa);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+      }
+      .pill.cpror {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--cpror);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+      }
+      .pill.cproi {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--cproi);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+      }
+      .pill.red {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--red);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      .content {
+        padding: 1.5rem;
+      }
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+
+      /* CARDS */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: 1.2rem;
+      }
+      .card-sm {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 0.9rem 1rem;
+      }
+      .card-label {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--muted);
+        margin-bottom: 0.4rem;
+      }
+      .card-value {
+        font-size: 1.6rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .card-sub {
+        font-size: 0.72rem;
+        color: var(--muted);
+        margin-top: 0.3rem;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .grid4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.8rem;
+      }
+      .gridauto {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.8rem;
+      }
+
+      /* PROGRESS RING */
+      .ring-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .ring-label {
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-align: center;
+      }
+      svg.ring {
+        transform: rotate(-90deg);
+      }
+      .ring-track {
+        fill: none;
+        stroke: var(--border2);
+      }
+      .ring-fill {
+        fill: none;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.6s ease;
+      }
+
+      /* SECTION HEADER */
+      .sec-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+      .sec-title {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .sec-title i {
+        font-size: 16px;
+        color: var(--muted);
+      }
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 1.2rem 0;
+      }
+
+      /* EXERCISES */
+      .ex-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: 1.2rem;
+        margin-bottom: 0.8rem;
+        transition: 0.15s;
+      }
+      .ex-card:hover {
+        border-color: var(--border2);
+      }
+      .ex-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.75rem;
+      }
+      .ex-num {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .tag {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.55rem;
+        border-radius: 20px;
+        font-weight: 700;
+      }
+      .tag.easy {
+        background: rgba(16, 185, 129, 0.12);
+        color: var(--green);
+      }
+      .tag.med {
+        background: rgba(245, 158, 11, 0.12);
+        color: var(--gold);
+      }
+      .tag.hard {
+        background: rgba(239, 68, 68, 0.12);
+        color: var(--red);
+      }
+      .tag.topic {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+      }
+      .tag.type {
+        background: rgba(139, 92, 246, 0.12);
+        color: var(--purple);
+      }
+      .ex-ctx {
+        background: rgba(6, 182, 212, 0.05);
+        border: 1px solid rgba(6, 182, 212, 0.15);
+        border-radius: var(--r);
+        padding: 0.7rem 0.9rem;
+        margin-bottom: 0.75rem;
+        font-size: 0.82rem;
+        line-height: 1.65;
+        color: var(--text);
+      }
+      .ex-ctx-label {
+        font-size: 0.63rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--cyan);
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+      }
+      .ex-q {
+        font-size: 0.88rem;
+        line-height: 1.65;
+        margin-bottom: 0.75rem;
+        color: var(--text);
+      }
+      .opts {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .opt {
+        display: flex;
+        gap: 0.55rem;
+        align-items: flex-start;
+        padding: 0.55rem 0.85rem;
+        border-radius: var(--r);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        transition: 0.12s;
+        background: transparent;
+      }
+      .opt:hover:not(.locked) {
+        border-color: rgba(6, 182, 212, 0.35);
+        background: rgba(6, 182, 212, 0.04);
+        color: var(--text);
+      }
+      .opt.correct {
+        border-color: var(--green) !important;
+        background: rgba(16, 185, 129, 0.08) !important;
+        color: var(--green) !important;
+      }
+      .opt.wrong {
+        border-color: var(--red) !important;
+        background: rgba(239, 68, 68, 0.07) !important;
+        color: var(--red) !important;
+      }
+      .opt.locked {
+        pointer-events: none;
+      }
+      .opt-l {
+        font-weight: 700;
+        flex-shrink: 0;
+        min-width: 14px;
+        color: var(--muted);
+      }
+      .opt.correct .opt-l,
+      .opt.wrong .opt-l {
+        color: inherit;
+      }
+      .explain {
+        display: none;
+        margin-top: 0.8rem;
+        padding: 0.75rem 0.9rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-left: 2px solid var(--cyan);
+        border-radius: 0 var(--r) var(--r) 0;
+        font-size: 0.8rem;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+      .explain.show {
+        display: block;
+      }
+      .explain strong {
+        color: var(--text);
+      }
+
+      /* FLASHCARD */
+      .fc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 0.8rem;
+      }
+      .fc {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: 1.1rem;
+        cursor: pointer;
+        transition: 0.2s;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .fc:hover {
+        border-color: var(--border2);
+        transform: translateY(-1px);
+      }
+      .fc.flipped {
+        border-color: var(--green);
+        background: rgba(16, 185, 129, 0.04);
+      }
+      .fc-tag {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: var(--cyan);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .fc-front-q {
+        font-size: 0.85rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #fff;
+      }
+      .fc-back-a {
+        font-size: 0.83rem;
+        line-height: 1.6;
+        color: var(--green);
+        display: none;
+      }
+      .fc.flipped .fc-front-q {
+        display: none;
+      }
+      .fc.flipped .fc-back-a {
+        display: block;
+      }
+      .fc-hint {
+        font-size: 0.68rem;
+        color: var(--hint);
+        margin-top: 0.5rem;
+      }
+      .fc.flipped .fc-hint {
+        color: rgba(16, 185, 129, 0.5);
+      }
+
+      /* CALC */
+      .calc-row {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .calc-label {
+        font-size: 0.78rem;
+        color: var(--muted);
+        min-width: 100px;
+      }
+      .calc-input {
+        background: var(--surface2);
+        border: 1px solid var(--border2);
+        border-radius: var(--r);
+        padding: 0.4rem 0.7rem;
+        color: var(--text);
+        font-size: 0.85rem;
+        width: 120px;
+      }
+      .calc-input:focus {
+        outline: none;
+        border-color: var(--cyan);
+      }
+      .calc-result {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 0.8rem 1rem;
+        margin-top: 0.5rem;
+      }
+      .calc-result-label {
+        font-size: 0.68rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .calc-result-val {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-top: 0.2rem;
+      }
+
+      /* SIMULATOR */
+      .profile-btn {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 0.5rem 0.9rem;
+        color: var(--muted);
+        transition: 0.15s;
+      }
+      .profile-btn:hover {
+        border-color: var(--border2);
+        color: var(--text);
+      }
+      .profile-btn.active {
+        background: rgba(6, 182, 212, 0.1);
+        border-color: var(--cyan);
+        color: var(--cyan);
+      }
+      .product-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+      }
+      .product-table th {
+        text-align: left;
+        padding: 0.5rem 0.8rem;
+        color: var(--muted);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--border);
+      }
+      .product-table td {
+        padding: 0.55rem 0.8rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        color: var(--muted);
+      }
+      .product-table tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text);
+      }
+      .rec-badge {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.5rem;
+        border-radius: 20px;
+        font-weight: 700;
+      }
+      .rec-ok {
+        background: rgba(16, 185, 129, 0.12);
+        color: var(--green);
+      }
+      .rec-no {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--red);
+      }
+      .rec-warn {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--gold);
+      }
+
+      /* TIMELINE */
+      .timeline {
+        position: relative;
+        padding-left: 1.5rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0.5rem;
+        top: 0.4rem;
+        bottom: 0.4rem;
+        width: 1px;
+        background: linear-gradient(
+          180deg,
+          var(--cyan),
+          var(--cpror),
+          var(--cproi)
+        );
+      }
+      .tl-item {
+        position: relative;
+        margin-bottom: 1.2rem;
+      }
+      .tl-dot {
+        position: absolute;
+        left: -1.2rem;
+        top: 0.3rem;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid var(--bg);
+        flex-shrink: 0;
+      }
+      .tl-week {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--cyan);
+        font-weight: 700;
+      }
+      .tl-title {
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 0.15rem 0 0.2rem;
+      }
+      .tl-desc {
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      /* GLOSSARY */
+      .gloss-search {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid var(--border2);
+        border-radius: var(--r);
+        padding: 0.5rem 0.85rem;
+        color: var(--text);
+        font-size: 0.85rem;
+        margin-bottom: 0.9rem;
+      }
+      .gloss-search:focus {
+        outline: none;
+        border-color: var(--cyan);
+      }
+      .gloss-item {
+        padding: 0.7rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .gloss-term {
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 0.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .gloss-def {
+        font-size: 0.79rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* CHART WRAPPER */
+      .chart-wrap {
+        position: relative;
+        width: 100%;
+      }
+
+      /* MODAL QUIZ */
+      .quiz-banner {
+        background: linear-gradient(
+          90deg,
+          rgba(6, 182, 212, 0.08),
+          rgba(245, 158, 11, 0.06)
+        );
+        border: 1px solid rgba(6, 182, 212, 0.2);
+        border-radius: var(--r2);
+        padding: 1.2rem 1.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        background: var(--cyan);
+        color: #000;
+        font-weight: 700;
+        border: none;
+        border-radius: var(--r);
+        padding: 0.5rem 1.1rem;
+        transition: 0.15s;
+      }
+      .btn-primary:hover {
+        opacity: 0.85;
+      }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid var(--border2);
+        color: var(--text);
+        border-radius: var(--r);
+        padding: 0.5rem 1.1rem;
+        transition: 0.15s;
+      }
+      .btn-ghost:hover {
+        border-color: var(--border2);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .score-ring-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 1rem;
+      }
+      .score-num {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      @media (max-width: 700px) {
+        .sidebar {
+          display: none;
+        }
+        .grid4,
+        .grid3 {
+          grid-template-columns: 1fr 1fr;
+        }
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2
+      class="sr-only"
+      style="
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+      "
+    >
+      CPA Advanced Hub — Portal de estudos para certificações ANBIMA 2026
+    </h2>
+
+    <div class="layout">
+      <!-- SIDEBAR -->
+      <nav class="sidebar" aria-label="Navegação principal">
+        <div class="sb-logo">
+          <div class="sb-logo-title">CPA Advanced Hub</div>
+          <div class="sb-logo-sub">ANBIMA 2026 — Novo Modelo</div>
+        </div>
+        <span class="sb-section">Visão geral</span>
+        <div class="sb-item active" onclick="goTab('dashboard', this)">
+          <i class="ti ti-layout-dashboard" aria-hidden="true"></i
+          ><span>Dashboard</span>
+        </div>
+        <div class="sb-item" onclick="goTab('roadmap', this)">
+          <i class="ti ti-route" aria-hidden="true"></i><span>Roadmap</span>
+        </div>
+        <span class="sb-section">Exercícios</span>
+        <div class="sb-item" onclick="goTab('cpa', this)">
+          <i class="ti ti-certificate" aria-hidden="true"></i
+          ><span>CPA Base</span><span class="sb-badge">20q</span>
+        </div>
+        <div class="sb-item" onclick="goTab('cpror', this)">
+          <i class="ti ti-star" aria-hidden="true"></i><span>C-Pro R</span
+          ><span class="sb-badge">16q</span>
+        </div>
+        <div class="sb-item" onclick="goTab('cproi', this)">
+          <i class="ti ti-diamond" aria-hidden="true"></i><span>C-Pro I</span
+          ><span class="sb-badge">12q</span>
+        </div>
+        <span class="sb-section">Ferramentas</span>
+        <div class="sb-item" onclick="goTab('flashcards', this)">
+          <i class="ti ti-cards" aria-hidden="true"></i><span>Flashcards</span>
+        </div>
+        <div class="sb-item" onclick="goTab('calculadoras', this)">
+          <i class="ti ti-calculator" aria-hidden="true"></i
+          ><span>Calculadoras</span>
+        </div>
+        <div class="sb-item" onclick="goTab('simulador', this)">
+          <i class="ti ti-user-check" aria-hidden="true"></i
+          ><span>Simulador API</span>
+        </div>
+        <div class="sb-item" onclick="goTab('glossario', this)">
+          <i class="ti ti-book" aria-hidden="true"></i><span>Glossário</span>
+        </div>
+        <div
+          style="
+            margin-top: auto;
+            padding: 0.8rem 1rem;
+            border-top: 1px solid var(--border);
+          "
+        >
+          <button
+            class="btn-ghost"
+            style="
+              width: 100%;
+              font-size: 0.75rem;
+              display: flex;
+              align-items: center;
+              gap: 0.4rem;
+              justify-content: center;
+            "
+            onclick="resetAll()"
+          >
+            <i class="ti ti-refresh" aria-hidden="true"></i>Resetar progresso
+          </button>
+        </div>
+      </nav>
+
+      <!-- MAIN -->
+      <div class="main">
+        <div class="topbar">
+          <span class="topbar-title" id="topbar-title">Dashboard</span>
+          <div class="topbar-right">
+            <span class="pill cpa">CPA</span>
+            <span class="pill cpror">C-Pro R</span>
+            <span class="pill cproi">C-Pro I</span>
+          </div>
+        </div>
+
+        <div class="content">
+          <!-- ===== DASHBOARD ===== -->
+          <div class="panel active" id="tab-dashboard">
+            <div class="gridauto" style="margin-bottom: 1.2rem">
+              <div class="card-sm">
+                <div class="card-label">Questões respondidas</div>
+                <div class="card-value" id="d-total" style="color: #fff">0</div>
+                <div class="card-sub">de 48 totais</div>
+              </div>
+              <div class="card-sm">
+                <div class="card-label">CPA acertos</div>
+                <div class="card-value" id="d-cpa" style="color: var(--cpa)">
+                  0%
+                </div>
+                <div class="card-sub" id="d-cpa-s">0/20</div>
+              </div>
+              <div class="card-sm">
+                <div class="card-label">C-Pro R acertos</div>
+                <div
+                  class="card-value"
+                  id="d-cpror"
+                  style="color: var(--cpror)"
+                >
+                  0%
+                </div>
+                <div class="card-sub" id="d-cpror-s">0/16</div>
+              </div>
+              <div class="card-sm">
+                <div class="card-label">C-Pro I acertos</div>
+                <div
+                  class="card-value"
+                  id="d-cproi"
+                  style="color: var(--cproi)"
+                >
+                  0%
+                </div>
+                <div class="card-sub" id="d-cproi-s">0/12</div>
+              </div>
+            </div>
+
+            <div class="grid2" style="margin-bottom: 1.2rem">
+              <div class="card">
+                <div class="sec-header">
+                  <span class="sec-title"
+                    ><i class="ti ti-chart-pie" aria-hidden="true"></i>Progresso
+                    por módulo</span
+                  >
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-around;
+                    padding: 0.5rem 0;
+                  "
+                >
+                  <div class="ring-wrap">
+                    <svg
+                      class="ring"
+                      width="70"
+                      height="70"
+                      aria-label="Progresso CPA"
+                    >
+                      <circle
+                        class="ring-track"
+                        cx="35"
+                        cy="35"
+                        r="28"
+                        stroke-width="5"
+                      />
+                      <circle
+                        class="ring-fill"
+                        cx="35"
+                        cy="35"
+                        r="28"
+                        stroke-width="5"
+                        stroke="var(--cpa)"
+                        stroke-dasharray="175.9"
+                        stroke-dashoffset="175.9"
+                        id="ring-cpa"
+                      />
+                    </svg>
+                    <div class="ring-label" style="color: var(--cpa)">
+                      CPA<br /><strong id="ring-cpa-pct">0%</strong>
+                    </div>
+                  </div>
+                  <div class="ring-wrap">
+                    <svg
+                      class="ring"
+                      width="70"
+                      height="70"
+                      aria-label="Progresso C-Pro R"
+                    >
+                      <circle
+                        class="ring-track"
+                        cx="35"
+                        cy="35"
+                        r="28"
+                        stroke-width="5"
+                      />
+                      <circle
+                        class="ring-fill"
+                        cx="35"
+                        cy="35"
+                        r="28"
+                        stroke-width="5"
+                        stroke="var(--cpror)"
+                        stroke-dasharray="175.9"
+                        stroke-dashoffset="175.9"
+                        id="ring-cpror"
+                      />
+                    </svg>
+                    <div class="ring-label" style="color: var(--cpror)">
+                      C-Pro R<br /><strong id="ring-cpror-pct">0%</strong>
+                    </div>
+                  </div>
+                  <div class="ring-wrap">
+                    <svg
+                      class="ring"
+                      width="70"
+                      height="70"
+                      aria-label="Progresso C-Pro I"
+                    >
+                      <circle
+                        class="ring-track"
+                        cx="35"
+                        cy="35"
+                        r="28"
+                        stroke-width="5"
+                      />
+                      <circle
+                        class="ring-fill"
+                        cx="35"
+                        cy="35"
+                        r="28"
+                        stroke-width="5"
+                        stroke="var(--cproi)"
+                        stroke-dasharray="175.9"
+                        stroke-dashoffset="175.9"
+                        id="ring-cproi"
+                      />
+                    </svg>
+                    <div class="ring-label" style="color: var(--cproi)">
+                      C-Pro I<br /><strong id="ring-cproi-pct">0%</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec-header">
+                  <span class="sec-title"
+                    ><i class="ti ti-chart-bar" aria-hidden="true"></i>Acertos
+                    por tema</span
+                  >
+                </div>
+                <div class="chart-wrap" style="height: 140px">
+                  <canvas
+                    id="chartTemas"
+                    role="img"
+                    aria-label="Acertos por tema de estudo"
+                    >Gráfico de acertos por tema.</canvas
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="quiz-banner">
+              <div>
+                <div
+                  style="
+                    font-size: 0.88rem;
+                    font-weight: 600;
+                    color: #fff;
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  Pronto para um simulado completo?
+                </div>
+                <div style="font-size: 0.78rem; color: var(--muted)">
+                  Simule as condições reais da prova ANBIMA 2026 com timer
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.6rem; flex-wrap: wrap">
+                <button
+                  class="btn-primary"
+                  onclick="
+                    goTab('cpa', document.querySelectorAll('.sb-item')[3])
+                  "
+                >
+                  <i class="ti ti-player-play" aria-hidden="true"></i> Iniciar
+                  CPA
+                </button>
+                <button
+                  class="btn-ghost"
+                  onclick="
+                    goTab('cpror', document.querySelectorAll('.sb-item')[4])
+                  "
+                >
+                  C-Pro R
+                </button>
+                <button
+                  class="btn-ghost"
+                  onclick="
+                    goTab('cproi', document.querySelectorAll('.sb-item')[5])
+                  "
+                >
+                  C-Pro I
+                </button>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="sec-header">
+              <span class="sec-title"
+                ><i class="ti ti-info-circle" aria-hidden="true"></i>Formato
+                real das provas 2026</span
+              >
+            </div>
+            <div class="grid3">
+              <div class="card-sm" style="border-color: rgba(6, 182, 212, 0.2)">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin-bottom: 0.6rem;
+                  "
+                >
+                  <span class="pill cpa">CPA</span>
+                </div>
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--muted);
+                    line-height: 1.65;
+                  "
+                >
+                  50 questões · 2h30<br />40 múltipla escolha contextual<br />10
+                  questões de decisão<br />Aprovação: 70%
+                </div>
+              </div>
+              <div
+                class="card-sm"
+                style="border-color: rgba(245, 158, 11, 0.2)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin-bottom: 0.6rem;
+                  "
+                >
+                  <span class="pill cpror">C-Pro R</span>
+                </div>
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--muted);
+                    line-height: 1.65;
+                  "
+                >
+                  45 questões · 2h30<br />Múltipla escolha + cases<br />Competências
+                  comportamentais<br />Pré-req: CPA ativa
+                </div>
+              </div>
+              <div
+                class="card-sm"
+                style="border-color: rgba(16, 185, 129, 0.2)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin-bottom: 0.6rem;
+                  "
+                >
+                  <span class="pill cproi">C-Pro I</span>
+                </div>
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--muted);
+                    line-height: 1.65;
+                  "
+                >
+                  40 questões · 2h30<br />Cases complexos<br />Planejamento +
+                  Adv. products<br />Pré-req: CPA + C-Pro R
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== ROADMAP ===== -->
+          <div class="panel" id="tab-roadmap">
+            <div class="grid2">
+              <div class="card">
+                <div class="sec-header">
+                  <span class="sec-title"
+                    ><i class="ti ti-route" aria-hidden="true"></i>Cronograma 9
+                    semanas</span
+                  >
+                </div>
+                <div class="timeline">
+                  <div class="tl-item">
+                    <div class="tl-dot" style="background: var(--cpa)"></div>
+                    <div class="tl-week">Sem 1–2</div>
+                    <div class="tl-title">Sistema Financeiro Nacional</div>
+                    <div class="tl-desc">
+                      CMN, BACEN, CVM, B3, SPB, Open Finance, Fintechs. Feynman:
+                      explique cada órgão como se fosse para alguém sem nenhuma
+                      experiência financeira.
+                    </div>
+                  </div>
+                  <div class="tl-item">
+                    <div class="tl-dot" style="background: var(--cyan)"></div>
+                    <div class="tl-week">Sem 3–4</div>
+                    <div class="tl-title">Produtos de Investimento</div>
+                    <div class="tl-desc">
+                      CDB, LCI, LCA, Tesouro, Fundos, FII, COE, BDR, Seguros.
+                      Para cada produto: o que é · para quem · tributação · FGC
+                      sim/não.
+                    </div>
+                  </div>
+                  <div class="tl-item">
+                    <div class="tl-dot" style="background: var(--gold)"></div>
+                    <div class="tl-week">Sem 5</div>
+                    <div class="tl-title">Suitability, Ética e PLD</div>
+                    <div class="tl-desc">
+                      API, perfis, Código ANBIMA, KYC, PLD/COAF. Estude com
+                      casos práticos — é o tema mais cobrado nas questões
+                      comportamentais 2026.
+                    </div>
+                  </div>
+                  <div class="tl-item">
+                    <div class="tl-dot" style="background: var(--gold)"></div>
+                    <div class="tl-week">Sem 6</div>
+                    <div class="tl-title">Tributação completa</div>
+                    <div class="tl-desc">
+                      IR regressivo, IOF, come-cotas, isenções (LCI/LCA/FII),
+                      PGBL vs VGBL, ações. Monte uma tabela comparativa de
+                      tributação.
+                    </div>
+                  </div>
+                  <div class="tl-item">
+                    <div class="tl-dot" style="background: var(--cpror)"></div>
+                    <div class="tl-week">Sem 7</div>
+                    <div class="tl-title">C-Pro R: Portfólio e Derivativos</div>
+                    <div class="tl-desc">
+                      Sharpe, Beta, Duration, correlação, VaR. Derivativos:
+                      futuros, opções, swap. Construção e rebalanceamento de
+                      carteiras.
+                    </div>
+                  </div>
+                  <div class="tl-item">
+                    <div class="tl-dot" style="background: var(--cproi)"></div>
+                    <div class="tl-week">Sem 8</div>
+                    <div class="tl-title">
+                      C-Pro I: Previdência e Planejamento
+                    </div>
+                    <div class="tl-desc">
+                      PGBL/VGBL, regimes tributários, holding familiar, seguro
+                      de vida, planejamento sucessório, TIR/VPL, Fisher, VaR.
+                    </div>
+                  </div>
+                  <div class="tl-item">
+                    <div class="tl-dot" style="background: var(--green)"></div>
+                    <div class="tl-week">Sem 9</div>
+                    <div class="tl-title">Simulados e revisão final</div>
+                    <div class="tl-desc">
+                      3 simulados completos. Revisão Feynman dos temas com mais
+                      erro. Flashcards 15min/dia. Acesse ANBIMA Edu.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 1rem">
+                <div class="card">
+                  <div class="sec-header">
+                    <span class="sec-title"
+                      ><i class="ti ti-bulb" aria-hidden="true"></i>Macetes de
+                      prova</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      gap: 0.5rem;
+                      font-size: 0.8rem;
+                    "
+                  >
+                    <div
+                      style="
+                        padding: 0.5rem 0.7rem;
+                        background: var(--surface2);
+                        border-radius: var(--r);
+                        border-left: 2px solid var(--cyan);
+                      "
+                    >
+                      <strong style="color: var(--text)">FGC cobre:</strong>
+                      <span style="color: var(--muted)"
+                        >CDB, LCI, LCA, Poupança, LC, RDB → até
+                        R$250k/CPF/instituição</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        padding: 0.5rem 0.7rem;
+                        background: var(--surface2);
+                        border-radius: var(--r);
+                        border-left: 2px solid var(--red);
+                      "
+                    >
+                      <strong style="color: var(--text)">FGC NÃO cobre:</strong>
+                      <span style="color: var(--muted)"
+                        >Fundos, Debêntures, Ações, Títulos Públicos, COE</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        padding: 0.5rem 0.7rem;
+                        background: var(--surface2);
+                        border-radius: var(--r);
+                        border-left: 2px solid var(--green);
+                      "
+                    >
+                      <strong style="color: var(--text)">IR isentos PF:</strong>
+                      <span style="color: var(--muted)"
+                        >LCI, LCA, CRI, CRA, Deb. incentivada, FII dividendos,
+                        Ações &lt;R$20k/mês</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        padding: 0.5rem 0.7rem;
+                        background: var(--surface2);
+                        border-radius: var(--r);
+                        border-left: 2px solid var(--gold);
+                      "
+                    >
+                      <strong style="color: var(--text)">Tabela IR RF:</strong>
+                      <span style="color: var(--muted)"
+                        >22,5% (≤180d) → 20% (181–360) → 17,5% (361–720) → 15%
+                        (&gt;720d)</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        padding: 0.5rem 0.7rem;
+                        background: var(--surface2);
+                        border-radius: var(--r);
+                        border-left: 2px solid var(--purple);
+                      "
+                    >
+                      <strong style="color: var(--text)">Come-cotas:</strong>
+                      <span style="color: var(--muted)"
+                        >Maio e novembro, só fundos RF/Multimercado. 15% (LP) ou
+                        20% (CP)</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        padding: 0.5rem 0.7rem;
+                        background: var(--surface2);
+                        border-radius: var(--r);
+                        border-left: 2px solid var(--cyan);
+                      "
+                    >
+                      <strong style="color: var(--text)">BACEN:</strong>
+                      <span style="color: var(--muted)"
+                        >pol. monetária, câmbio, bancos. CVM: ações, fundos,
+                        debêntures. SUSEP: seguros</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        padding: 0.5rem 0.7rem;
+                        background: var(--surface2);
+                        border-radius: var(--r);
+                        border-left: 2px solid var(--green);
+                      "
+                    >
+                      <strong style="color: var(--text)">Selic sobe →</strong>
+                      <span style="color: var(--muted)"
+                        >preço dos títulos cai (relação inversa). Duration alta
+                        = + sensível a juros</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        padding: 0.5rem 0.7rem;
+                        background: var(--surface2);
+                        border-radius: var(--r);
+                        border-left: 2px solid var(--gold);
+                      "
+                    >
+                      <strong style="color: var(--text)">Beta &gt; 1:</strong>
+                      <span style="color: var(--muted)"
+                        >+ volátil que o mercado. Sharpe &gt; 1: boa relação
+                        risco/retorno. Sharpe &lt;0: ruim</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="sec-header">
+                    <span class="sec-title"
+                      ><i class="ti ti-link" aria-hidden="true"></i>Links
+                      oficiais</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      gap: 0.4rem;
+                      font-size: 0.8rem;
+                    "
+                  >
+                    <div style="color: var(--muted)">
+                      <i
+                        class="ti ti-external-link"
+                        style="
+                          font-size: 13px;
+                          margin-right: 0.3rem;
+                          color: var(--cyan);
+                        "
+                        aria-hidden="true"
+                      ></i
+                      >anbima.com.br/edu — Plataforma ANBIMA Edu
+                    </div>
+                    <div style="color: var(--muted)">
+                      <i
+                        class="ti ti-external-link"
+                        style="
+                          font-size: 13px;
+                          margin-right: 0.3rem;
+                          color: var(--cyan);
+                        "
+                        aria-hidden="true"
+                      ></i
+                      >tesouro.fazenda.gov.br — Tesouro Direto
+                    </div>
+                    <div style="color: var(--muted)">
+                      <i
+                        class="ti ti-external-link"
+                        style="
+                          font-size: 13px;
+                          margin-right: 0.3rem;
+                          color: var(--cyan);
+                        "
+                        aria-hidden="true"
+                      ></i
+                      >bcb.gov.br/meubc — BACEN Educação Financeira
+                    </div>
+                    <div style="color: var(--muted)">
+                      <i
+                        class="ti ti-external-link"
+                        style="
+                          font-size: 13px;
+                          margin-right: 0.3rem;
+                          color: var(--cyan);
+                        "
+                        aria-hidden="true"
+                      ></i
+                      >cvmtv.cvm.gov.br — CVM Educacional
+                    </div>
+                    <div style="color: var(--muted)">
+                      <i
+                        class="ti ti-external-link"
+                        style="
+                          font-size: 13px;
+                          margin-right: 0.3rem;
+                          color: var(--cyan);
+                        "
+                        aria-hidden="true"
+                      ></i
+                      >topinvest.com.br — Preparatório parceiro
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== CPA BASE EXERCISES ===== -->
+          <div class="panel" id="tab-cpa">
+            <div class="quiz-banner" style="margin-bottom: 1.2rem">
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 600; color: #fff">
+                  CPA — Certificado Profissional ANBIMA
+                </div>
+                <div style="font-size: 0.75rem; color: var(--muted)">
+                  20 questões · Múltipla escolha contextualizada + Árvore de
+                  diálogo
+                </div>
+              </div>
+              <span class="pill cpa" id="cpa-score-pill"
+                >0 / 20 respondidas</span
+              >
+            </div>
+
+            <!-- Módulo A -->
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cyan);
+                font-weight: 700;
+                margin-bottom: 0.6rem;
+              "
+            >
+              Módulo A — Sistema Financeiro e Regulação
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  1
+                </div>
+                <span class="tag easy">Fácil</span
+                ><span class="tag topic">SFN</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Contexto</div>
+                Um banco digital lança produto de investimento prometendo
+                rentabilidade garantida de 25% ao ano sem informar riscos.
+              </div>
+              <div class="ex-q">
+                Qual órgão tem competência para investigar essa irregularidade e
+                aplicar sanções?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>CMN — formula as regras do mercado
+                  financeiro
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>CVM — fiscaliza valores
+                  mobiliários e veda promessa de rentabilidade garantida
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>BACEN — todo produto bancário é
+                  sua competência exclusiva
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>B3 — os produtos são negociados em
+                  bolsa
+                </div>
+              </div>
+              <div class="explain">
+                <strong>CVM</strong> fiscaliza valores mobiliários (fundos,
+                ações, debêntures). Prometer rentabilidade garantida é vedado. O
+                BACEN fiscaliza a instituição em si; a irregularidade do produto
+                é da alçada da CVM.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  2
+                </div>
+                <span class="tag easy">Fácil</span
+                ><span class="tag topic">BACEN</span>
+              </div>
+              <div class="ex-q">
+                O BACEN é responsável por TODAS as funções abaixo, EXCETO:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Executar a política monetária e
+                  controlar a oferta de moeda
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Fiscalizar e autorizar o
+                  funcionamento de instituições financeiras
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Regular e fiscalizar o mercado de
+                  valores mobiliários
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Gerenciar as reservas
+                  internacionais e controlar o câmbio
+                </div>
+              </div>
+              <div class="explain">
+                Valores mobiliários (ações, fundos, debêntures) são competência
+                da <strong>CVM</strong>, não do BACEN. O BACEN cuida de política
+                monetária, câmbio, reservas e supervisão bancária.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  3
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">PIX / SPB</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Contexto</div>
+                Uma fintech lança serviço de pagamento instantâneo 24h por dia,
+                7 dias por semana, inclusive feriados, com liquidação em
+                segundos.
+              </div>
+              <div class="ex-q">
+                Qual sistema de pagamentos regulado pelo BACEN essa fintech
+                utiliza?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>PIX — sistema de pagamentos
+                  instantâneos do Banco Central
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>TED — Transferência Eletrônica
+                  Disponível
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>DOC — Documento de Ordem de
+                  Crédito
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>SWIFT — sistema internacional de
+                  mensagens bancárias
+                </div>
+              </div>
+              <div class="explain">
+                <strong>PIX</strong>: pagamento instantâneo criado pelo BACEN,
+                operando 24/7 com liquidação em segundos. TED e DOC têm horários
+                restritos. SWIFT é para transferências internacionais.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  4
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Seguros / SUSEP</span>
+              </div>
+              <div class="ex-q">
+                O mercado de seguros privados, capitalização e previdência
+                complementar aberta no Brasil é regulado e fiscalizado por:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>BACEN
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>SUSEP — Superintendência de
+                  Seguros Privados
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>CVM
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>PREVIC — fiscaliza previdência
+                  complementar fechada (fundos de pensão)
+                </div>
+              </div>
+              <div class="explain">
+                <strong>SUSEP</strong>: seguros, capitalização e previdência
+                aberta (PGBL/VGBL). <strong>PREVIC</strong>: previdência fechada
+                (fundos de pensão de empresas). BACEN e CVM não fiscalizam
+                seguros.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  5
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Open Finance</span
+                ><span class="tag type">Árvore</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Situação — Árvore de diálogo</div>
+                Cliente pergunta: "O banco compartilhou meus dados com outras
+                empresas sem eu saber. Isso é permitido pelo Open Finance?"
+              </div>
+              <div class="ex-q">
+                Qual a resposta correta e adequada do profissional?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Não. No Open Finance, o
+                  compartilhamento de dados exige consentimento expresso do
+                  cliente — nunca é automático. O banco pode ter agido
+                  irregularmente.
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Sim, o Open Finance permite
+                  compartilhamento automático como parte dos termos do contrato
+                  bancário
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Só é permitido para dados de
+                  crédito, nunca de investimentos
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>O BACEN autoriza o
+                  compartilhamento livre para fintechs parceiras
+                </div>
+              </div>
+              <div class="explain">
+                O <strong>Open Finance</strong> é baseado em
+                <strong>consentimento</strong>: nada é compartilhado sem
+                autorização expressa do cliente. Dados podem ser revogados a
+                qualquer momento. Compartilhamento sem consentimento é violação
+                regulatória grave.
+              </div>
+            </div>
+
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cyan);
+                font-weight: 700;
+                margin: 0.9rem 0 0.6rem;
+              "
+            >
+              Módulo B — Produtos e Tributação
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  6
+                </div>
+                <span class="tag easy">Fácil</span
+                ><span class="tag topic">FGC</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Contexto</div>
+                Roberto tem R$600.000 e quer dividir entre dois bancos
+                diferentes para maximizar a cobertura do FGC.
+              </div>
+              <div class="ex-q">
+                Qual o limite correto do FGC por CPF e por instituição?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>R$ 100.000
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>R$ 150.000
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>R$ 250.000
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>R$ 1.000.000
+                </div>
+              </div>
+              <div class="explain">
+                <strong>R$250.000</strong> por CPF por instituição, com teto
+                global de R$1 milhão a cada 4 anos. Roberto pode ter R$250k em
+                cada banco com cobertura total. <strong>NÃO cobre</strong>:
+                fundos, ações, debêntures, títulos públicos, COE.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  7
+                </div>
+                <span class="tag easy">Fácil</span
+                ><span class="tag topic">IR — Isenções</span>
+              </div>
+              <div class="ex-q">
+                Quais produtos de renda fixa são ISENTOS de IR para pessoas
+                físicas?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>CDB e Tesouro IPCA+
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>LCI, LCA, CRI e CRA
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Fundos de renda fixa de longo
+                  prazo
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Debêntures simples e Letras de
+                  Câmbio
+                </div>
+              </div>
+              <div class="explain">
+                <strong>LCI, LCA, CRI e CRA</strong> são isentos de IR para PF.
+                Debêntures de infraestrutura (Lei 12.431) também. CDB e Tesouro
+                pagam IR regressivo (22,5% a 15%). Fundos têm come-cotas.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  8
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">IR regressivo</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Cálculo</div>
+                Um CDB foi resgatado após 400 dias com rendimento bruto de
+                R$10.000.
+              </div>
+              <div class="ex-q">
+                Qual alíquota de IR e qual o valor do imposto?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>22,5% → IR = R$2.250
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>20% → IR = R$2.000
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>15% → IR = R$1.500
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>17,5% → IR = R$1.750 (prazo entre
+                  361 e 720 dias)
+                </div>
+              </div>
+              <div class="explain">
+                Tabela regressiva:
+                <strong
+                  >até 180d → 22,5% | 181–360d → 20% | 361–720d → 17,5% |
+                  &gt;720d → 15%</strong
+                >. 400 dias = faixa 361–720 →
+                <strong>17,5% × R$10.000 = R$1.750</strong>. Memorize essa
+                tabela — cai sempre.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  9
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Come-cotas</span>
+              </div>
+              <div class="ex-q">
+                O come-cotas em fundos de investimento ocorre:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Somente no resgate das cotas
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Trimestralmente, em todos os
+                  fundos
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Apenas em fundos de ações
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Semestralmente, último dia útil de
+                  maio e novembro, em fundos RF e multimercado
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Come-cotas</strong>: antecipação semestral de IR em
+                <strong>maio e novembro</strong>. Aplica-se a fundos de RF e
+                multimercado (não a fundos de ações). Alíquota: 15% (LP) ou 20%
+                (CP). Reduz a quantidade de cotas — não sai do bolso, sai do
+                patrimônio investido.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  10
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Tesouro Direto</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Perfil</div>
+                Ana, 30 anos, quer investir para aposentadoria em 25 anos e tem
+                medo da inflação corroer o patrimônio.
+              </div>
+              <div class="ex-q">
+                Qual título do Tesouro Direto é mais adequado?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Tesouro IPCA+ 2050 — garante
+                  rendimento real acima da inflação no longo prazo
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Tesouro Selic — liquidez diária e
+                  segurança
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Tesouro Prefixado 2026 — taxa já
+                  definida
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Tesouro Prefixado com juros
+                  semestrais — paga cupons regulares
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Tesouro IPCA+</strong> paga IPCA + taxa real. Para
+                horizonte de 25 anos e proteção inflacionária, é o mais
+                adequado. Selic é para reserva de emergência. Prefixado carrega
+                risco de mercado se a Selic subir.
+              </div>
+            </div>
+
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cyan);
+                font-weight: 700;
+                margin: 0.9rem 0 0.6rem;
+              "
+            >
+              Módulo C — Suitability, Ética e PLD
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  11
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Suitability</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Situação</div>
+                Pedro, 62 anos, aposentado, perfil conservador, sem experiência
+                em RV. Quer alocar R$80.000 em ações de empresas small caps.
+              </div>
+              <div class="ex-q">
+                Qual a conduta correta do profissional certificado?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Executar imediatamente — o cliente
+                  é livre para investir onde quiser
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Recusar totalmente sem explicar
+                  motivos
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Explicar os riscos, mostrar a
+                  inadequação ao perfil, registrar formalmente e oferecer
+                  alternativas. Se insistir, registrar "operação fora do perfil"
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Aplicar 50% em ações e 50% em RF
+                  como meio-termo sem alertar
+                </div>
+              </div>
+              <div class="explain">
+                Pelo <strong>Código ANBIMA</strong>: alertar sobre inadequação,
+                oferecer alternativas e — se o cliente insistir — registrar
+                formalmente a declaração de investimento fora do perfil
+                ("aware"). A responsabilidade passa para o cliente, mas tudo
+                deve ser documentado.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  12
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">PLD — Smurfing</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Caso</div>
+                Cliente com renda de R$3.000/mês deposita R$9.800 em espécie por
+                dia durante 2 semanas consecutivas.
+              </div>
+              <div class="ex-q">
+                Qual a obrigação do profissional e da instituição?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Reportar ao COAF como operação
+                  suspeita — comportamento incompatível com o perfil,
+                  independentemente do valor individual
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Não fazer nada — cada depósito
+                  está abaixo do limite de R$10.000
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Bloquear a conta imediatamente sem
+                  comunicar o cliente
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Avisar o cliente para parar os
+                  depósitos
+                </div>
+              </div>
+              <div class="explain">
+                Isso é <strong>smurfing</strong> (fracionamento): técnica de
+                lavagem para fugir de alertas automáticos. O gatilho é o
+                <strong>comportamento atípico</strong>, não o valor. Avisar o
+                cliente é vedado — configura cumplicidade. Reportar ao COAF é
+                obrigação legal.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  13
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Ações — IR</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Cálculo</div>
+                Carlos vendeu R$25.000 em ações no mercado à vista em outubro.
+                Lucro líquido: R$4.000.
+              </div>
+              <div class="ex-q">Qual a tributação correta?</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Isento — vendas abaixo de R$30.000
+                  são isentas
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>IR 20% — renda variável sempre
+                  paga 20%
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>IR 15% sobre os R$25.000 de venda
+                  bruta
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>IR 15% sobre o lucro líquido →
+                  R$600 via DARF até o último dia útil do mês seguinte
+                </div>
+              </div>
+              <div class="explain">
+                Ações, mercado à vista:
+                <strong
+                  >isenção se vendas no mês ≤ R$20.000; acima → 15% sobre o
+                  lucro</strong
+                >. Carlos vendeu R$25.000 → tributado. IR = 15% × R$4.000 =
+                <strong>R$600</strong>. Day trade: 20%. Pago via DARF pelo
+                próprio investidor.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  14
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Seguro de vida</span>
+              </div>
+              <div class="ex-q">
+                O valor recebido de um seguro de vida pelo beneficiário:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Entra em inventário e paga ITCMD
+                  como qualquer herança
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Não entra em inventário e é isento
+                  de IR — vai direto ao beneficiário por força do Código Civil
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Entra em inventário se acima de
+                  R$500.000
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Paga IR de 15% como ganho de
+                  capital
+                </div>
+              </div>
+              <div class="explain">
+                Seguro de vida <strong>não integra a herança</strong>, não entra
+                em inventário e é <strong>isento de IR e ITCMD</strong>. Vai
+                diretamente ao beneficiário indicado, independentemente do
+                testamento. É um dos instrumentos mais eficientes de
+                planejamento sucessório.
+              </div>
+            </div>
+
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cyan);
+                font-weight: 700;
+                margin: 0.9rem 0 0.6rem;
+              "
+            >
+              Módulo D — Inovação, Produtos Avançados e Conduta
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  15
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">FII</span>
+              </div>
+              <div class="ex-q">
+                Os rendimentos distribuídos por Fundos de Investimento
+                Imobiliário (FII) são isentos de IR para PF quando:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>O fundo tem mais de 50 cotistas e
+                  as cotas são negociadas exclusivamente em bolsa ou mercado de
+                  balcão organizado
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>O fundo tem patrimônio acima de
+                  R$1 bilhão
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>O investidor detém menos de 10%
+                  das cotas
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Todos os FIIs são isentos, sem
+                  restrições
+                </div>
+              </div>
+              <div class="explain">
+                Dividendos de FII: isentos de IR para PF quando o fundo tem
+                <strong>mais de 50 cotistas</strong> e as cotas são negociadas
+                em <strong>bolsa ou balcão organizado</strong>. FIIs não são
+                cobertos pelo FGC. São fundos fechados — resgate via venda em
+                bolsa.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  16
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">COE</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Produto</div>
+                Banco oferece produto com "capital protegido" que paga a
+                valorização do S&P500 se positiva, ou devolve o principal se
+                negativa.
+              </div>
+              <div class="ex-q">Esse produto é denominado:</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>COE — Certificado de Operações
+                  Estruturadas: combina renda fixa + derivativos com capital
+                  protegido
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>BDR — recibo de ação estrangeira
+                  negociado na B3
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>FII com hedge cambial
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>CDB atrelado ao câmbio
+                </div>
+              </div>
+              <div class="explain">
+                <strong>COE</strong>: produto estruturado = renda fixa (protege
+                capital) + derivativos (exposição a ativos). Na versão "capital
+                protegido", o pior caso é devolver o principal.
+                <strong>Não coberto pelo FGC</strong> — risco de crédito do
+                banco emissor.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  17
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Fintechs — SCD/SEP</span>
+              </div>
+              <div class="ex-q">
+                As Sociedades de Crédito Direto (SCD) e Sociedades de Empréstimo
+                entre Pessoas (SEP) são:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Bancos públicos federais de
+                  crédito rural
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Cooperativas de crédito reguladas
+                  pela CVM
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Fintechs de crédito reguladas pelo
+                  BACEN que operam exclusivamente de forma digital
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Gestoras de fundos de investimento
+                  alternativo
+                </div>
+              </div>
+              <div class="explain">
+                <strong>SCD</strong> usa capital próprio para crédito digital.
+                <strong>SEP</strong> conecta tomadores e credores
+                (peer-to-peer). Ambas reguladas pelo BACEN (Res. 4.656/2018).
+                Operam 100% digitalmente. Novo tema frequente na CPA 2026.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  18
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Conduta — Pressão comercial</span
+                ><span class="tag type">Comportamental</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Dilema ético</div>
+                Sua gerente pressiona você a vender um COE de alto risco para
+                todos os clientes com mais de R$50.000, independentemente do
+                perfil, para bater a meta do mês.
+              </div>
+              <div class="ex-q">
+                Qual conduta ética e regulatória é esperada?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Vender para todos — meta é
+                  prioridade
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Vender apenas para clientes que
+                  não vão questionar
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Recusar a orientação. Oferecer
+                  somente a clientes com perfil adequado e acionar o canal de
+                  compliance da instituição
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Ignorar e esperar o mês acabar
+                </div>
+              </div>
+              <div class="explain">
+                O Código ANBIMA tem
+                <strong>precedência sobre metas comerciais</strong>. O
+                profissional deve recusar a orientação inadequada, proteger o
+                cliente e acionar o <strong>compliance</strong>. Competência
+                comportamental central na CPA 2026.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  19
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">IOF</span>
+              </div>
+              <div class="ex-q">
+                Um investidor resgatou um CDB após apenas 15 dias. Além do IR,
+                qual tributo incide?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>ISS — Imposto sobre Serviços
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>IOF — regressivo nos primeiros 30
+                  dias, cobrado antes do IR sobre o rendimento
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>CSLL sobre o lucro
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Nenhum outro tributo além do IR
+                </div>
+              </div>
+              <div class="explain">
+                <strong>IOF</strong>: incide sobre rendimentos de renda fixa
+                resgatados em menos de 30 dias. Regressivo: 96% no 1º dia → 0%
+                no 30º. Cobrado <strong>antes do IR</strong>. Após 30 dias, IOF
+                = zero.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpa" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="background: rgba(6, 182, 212, 0.2); color: var(--cyan)"
+                >
+                  20
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Risco x Retorno x Liquidez</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Conceito fundamental</div>
+                Investidor quer produto com alta rentabilidade, total segurança
+                e liquidez imediata ao mesmo tempo.
+              </div>
+              <div class="ex-q">
+                Como o profissional deve explicar essa situação?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>É impossível ter as três
+                  características simultaneamente — o triângulo impossível dos
+                  investimentos exige abrir mão de ao menos uma dimensão
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>O Tesouro Selic oferece as três
+                  características ao mesmo tempo
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Fundos multimercado de alta
+                  liquidez resolvem os três objetivos
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>LCI com prazo de 1 ano oferece
+                  alta rentabilidade, segurança e liquidez diária
+                </div>
+              </div>
+              <div class="explain">
+                O <strong>triângulo impossível</strong>: todo investimento
+                equilibra segurança, rentabilidade e liquidez. Você pode ter
+                duas — nunca as três ao máximo. O profissional deve ajudar o
+                cliente a priorizar conforme seus objetivos reais.
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== C-PRO R ===== -->
+          <div class="panel" id="tab-cpror">
+            <div
+              class="quiz-banner"
+              style="
+                margin-bottom: 1.2rem;
+                border-color: rgba(245, 158, 11, 0.2);
+              "
+            >
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 600; color: #fff">
+                  C-Pro R — Certificado de Relacionamento
+                </div>
+                <div style="font-size: 0.75rem; color: var(--muted)">
+                  16 questões · Portfólio · Derivativos · Fundos Avançados
+                </div>
+              </div>
+              <span class="pill cpror" id="cpror-score-pill"
+                >0 / 16 respondidas</span
+              >
+            </div>
+
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cpror);
+                font-weight: 700;
+                margin-bottom: 0.6rem;
+              "
+            >
+              Módulo E — Análise e Construção de Portfólios
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  1
+                </div>
+                <span class="tag easy">Fácil</span
+                ><span class="tag topic">Risco sistêmico</span>
+              </div>
+              <div class="ex-q">
+                Sobre risco sistemático e não sistemático, é CORRETO:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Diversificação elimina
+                  completamente ambos os tipos de risco
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Risco sistemático é específico de
+                  cada empresa — eliminável por diversificação
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Diversificação elimina o risco não
+                  sistemático (específico), mas o risco sistemático (de mercado)
+                  permanece
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Risco não sistemático afeta todo o
+                  mercado ao mesmo tempo
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Risco não sistemático</strong> = específico de um
+                ativo/empresa → eliminável por diversificação.
+                <strong>Risco sistemático</strong> = afeta todo o mercado
+                (inflação, juros, crises) → não eliminável por diversificação,
+                medido pelo Beta.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  2
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Índice de Sharpe</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Cálculo comparativo</div>
+                Fundo A: retorno 12%, desvio padrão 8%, Rf 10,5%. Fundo B:
+                retorno 18%, desvio padrão 15%, Rf 10,5%.
+              </div>
+              <div class="ex-q">
+                Qual fundo tem melhor relação risco-retorno pelo Índice de
+                Sharpe?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Fundo A — tem menor volatilidade
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Fundo B — Sharpe B = (18−10,5)/15
+                  = 0,50 vs Sharpe A = (12−10,5)/8 = 0,19
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>São iguais — mesma taxa livre de
+                  risco
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Fundo A — pois tem retorno mais
+                  próximo do CDI
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Sharpe = (Retorno − Rf) / Desvio Padrão</strong>. A:
+                (12−10,5)/8 = <strong>0,19</strong>. B: (18−10,5)/15 =
+                <strong>0,50</strong>. Fundo B entrega mais retorno por unidade
+                de risco → Sharpe maior = melhor eficiência.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  3
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Beta</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Cálculo</div>
+                Ação XYZ tem Beta = 1,8. O Ibovespa sobe 10% no mês.
+              </div>
+              <div class="ex-q">
+                Qual o retorno esperado da ação XYZ considerando apenas o Beta?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>+18% — Beta 1,8 × variação do
+                  mercado 10%
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>+10% — acompanha o mercado
+                  exatamente
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>+1,8% — Beta é multiplicado pela
+                  taxa do CDI
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>+8% — Beta 1,8 é inferior a 2
+                </div>
+              </div>
+              <div class="explain">
+                Beta 1,8 → para cada 1% do Ibovespa, a ação varia 1,8%. Mercado
+                +10% → ação <strong>+18%</strong>. Beta &gt; 1: mais volátil.
+                Beta &lt; 1: menos volátil. Beta negativo: move inversamente ao
+                mercado.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  4
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Duration</span>
+              </div>
+              <div class="ex-q">
+                Sobre Duration de títulos de renda fixa, é CORRETO:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Duration é sempre igual ao prazo
+                  de vencimento
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Títulos com Duration alta são
+                  menos sensíveis a variações de juros
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Zero-cupom tem Duration menor que
+                  seu prazo de vencimento
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Duration alta = maior
+                  sensibilidade do preço a variações de taxa de juros
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Duration alta = maior sensibilidade</strong>. Selic sobe
+                → títulos longos caem mais. Zero-cupom: Duration = prazo de
+                vencimento (sem pagamentos intermediários). Títulos com cupon
+                têm Duration menor que o prazo. Medida central de risco de
+                mercado em RF.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  5
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Marcação a mercado</span>
+              </div>
+              <div class="ex-q">
+                A marcação a mercado (MtM) dos ativos em fundos de investimento
+                tem como objetivo principal:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Garantir rentabilidade mínima ao
+                  cotista
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Aumentar o patrimônio líquido do
+                  fundo artificialmente
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Refletir o preço justo de mercado
+                  dos ativos, prevenindo transferência de riqueza entre cotistas
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Permitir ao gestor esconder perdas
+                  temporárias
+                </div>
+              </div>
+              <div class="explain">
+                <strong>MtM previne arbitragem entre cotistas</strong>: sem ela,
+                quem entra/sai em dias com preços "antigos" se beneficia em
+                detrimento dos demais. Obrigatória para fundos abertos no Brasil
+                pela CVM.
+              </div>
+            </div>
+
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cpror);
+                font-weight: 700;
+                margin: 0.9rem 0 0.6rem;
+              "
+            >
+              Módulo F — Derivativos
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  6
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Opções — Call</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Cálculo</div>
+                Compra de call VALE3 com strike R$75, prêmio R$3. No vencimento:
+                ação a R$85.
+              </div>
+              <div class="ex-q">
+                Qual o resultado financeiro do comprador da call?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Lucro R$7: valor intrínseco
+                  (85−75=10) menos prêmio pago (3) = R$7
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Lucro R$15: ação subiu R$15 no
+                  período
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Prejuízo R$3: prêmio sempre é
+                  perdido
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Lucro R$10: apenas o valor
+                  intrínseco
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Resultado call = (Preço atual − Strike) − Prêmio</strong
+                >. (85−75) − 3 = <strong>R$7 por ação</strong>. Comprador de
+                call: ganho potencialmente ilimitado, perda limitada ao prêmio
+                (R$3 se ficar abaixo de R$75).
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  7
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Futuros — Hedge importador</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Caso real</div>
+                Empresa importadora vai pagar US$500.000 em 3 meses e teme alta
+                do dólar.
+              </div>
+              <div class="ex-q">Qual operação de hedge deve realizar?</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Vender contratos futuros de dólar
+                  (posição vendida)
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Comprar contratos futuros de dólar
+                  (posição comprada)
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Aplicar os reais em Tesouro Selic
+                  até o vencimento
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Vender ações de exportadoras para
+                  se proteger
+                </div>
+              </div>
+              <div class="explain">
+                Importadora <strong>precisa comprar dólares</strong> no futuro.
+                Se o dólar subir, paga mais reais. Solução:
+                <strong>compra futuros de dólar</strong> (posição comprada) — se
+                o dólar subir, ganha nos futuros e compensa o custo maior.
+                Lógica do hedge: posição no derivativo oposta ao risco do
+                negócio.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  8
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Swap CDI × Prefixado</span>
+              </div>
+              <div class="ex-q">
+                Empresa com dívida indexada ao CDI quer se proteger de alta de
+                juros. O swap correto é:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Receber CDI + pagar IPCA
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Receber IPCA + pagar prefixado
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Receber prefixado + pagar CDI
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Receber CDI + pagar prefixado —
+                  cancela o custo variável e trava custo fixo
+                </div>
+              </div>
+              <div class="explain">
+                A empresa <strong>paga CDI</strong> na dívida. No swap:
+                <strong>recebe CDI</strong> (cancela o custo variável) +
+                <strong>paga prefixado</strong> (custo fixo e previsível). Se
+                CDI subir, ganha no swap e compensa o custo maior da dívida. O
+                swap mais comum do mercado brasileiro.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  9
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Futuros — Ajuste diário</span>
+              </div>
+              <div class="ex-q">
+                Característica EXCLUSIVA dos contratos futuros em relação aos
+                contratos a termo:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Não exigem margem de garantia
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Liquidação apenas no vencimento,
+                  sem movimentação diária
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Ajuste diário de posições (MtM) —
+                  a câmara B3 credita ou debita a diferença todo dia
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Negociados exclusivamente no
+                  balcão OTC, sem câmara de compensação
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Ajuste diário</strong>: característica central dos
+                futuros. B3 (câmara de compensação) credita/debita a diferença
+                de preço diariamente → elimina risco de contraparte acumulado.
+                Contratos a termo: liquidados só no vencimento. Futuros também
+                exigem margem de garantia.
+              </div>
+            </div>
+
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cpror);
+                font-weight: 700;
+                margin: 0.9rem 0 0.6rem;
+              "
+            >
+              Módulo G — Fundos, Análise e Conduta Avançada
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  10
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Tipos de fundos</span>
+              </div>
+              <div class="ex-q">
+                Um fundo que investe em qualquer classe de ativos sem
+                concentração mínima obrigatória e pode usar alavancagem é
+                classificado como:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Fundo Multimercado
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Fundo de Renda Fixa Simples
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Fundo de Ações
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Fundo Cambial
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Multimercado</strong>: mais flexível, sem concentração
+                mínima, pode usar alavancagem. RF: mínimo 80% em RF. Ações:
+                mínimo 67% em ações. Cambial: mínimo 80% em câmbio.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  11
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Debêntures incentivadas</span>
+              </div>
+              <div class="ex-q">
+                Sobre debêntures incentivadas (Lei 12.431 — infraestrutura), é
+                CORRETO:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>São isentas de IR apenas para
+                  pessoas jurídicas
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>São isentas de IR para PF e com
+                  alíquota reduzida (15%) para PJ e residentes no exterior
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>São garantidas pelo FGC
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Podem ser emitidas por qualquer
+                  empresa, inclusive financeiras
+                </div>
+              </div>
+              <div class="explain">
+                Debêntures incentivadas: emitidas por empresas de
+                infraestrutura. <strong>Isentas de IR para PF</strong>. Para PJ
+                e não-residentes: 15%. <strong>Não cobertas pelo FGC</strong>.
+                Apenas S.A.s não-financeiras do setor de infraestrutura
+                (energia, saneamento, transporte).
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  12
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Taxa de performance</span>
+              </div>
+              <div class="ex-q">
+                Fundo cobra taxa de adm. 1,5% a.a. + taxa de performance de 20%
+                sobre o que exceder IPCA+6%. Isso significa:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>O fundo garante IPCA+6% ao cotista
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>A taxa de performance substitui a
+                  de administração quando o fundo supera o benchmark
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>O cotista paga 20% de IR sobre os
+                  rendimentos
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Taxa de adm. cobrada sempre.
+                  Performance cobrada SOMENTE se superar o benchmark IPCA+6%,
+                  geralmente com high-water mark
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Taxa de adm.</strong>: sempre cobrada, independentemente
+                do resultado. <strong>Taxa de performance</strong>: só quando
+                supera o benchmark, com linha d'água (high-water mark) — não
+                paga duas vezes pela mesma performance. Ambas deduzidas do
+                patrimônio, não são IR.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  13
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">P/L — Valuation</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Análise</div>
+                Ação XPTO3: preço R$40, lucro por ação R$4 → P/L = 10x. Média do
+                setor = 8x.
+              </div>
+              <div class="ex-q">Como interpretar corretamente?</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>A ação está descontada —
+                  oportunidade de compra imediata
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>P/L 10x significa crescimento de
+                  10% ao ano garantido
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>P/L acima da média do setor indica
+                  que o mercado paga mais por cada real de lucro — pode refletir
+                  prêmio de crescimento ou sobrevalorização
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>P/L alto significa mais dívida que
+                  patrimônio
+                </div>
+              </div>
+              <div class="explain">
+                <strong>P/L = Preço / Lucro por ação</strong> = quantos anos de
+                lucro você paga. P/L 10 &gt; média 8 → mercado paga prêmio.
+                <em>Não é necessariamente ruim</em> — pode refletir expectativa
+                de crescimento superior. Análise fundamentalista essencial no
+                C-Pro R.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  14
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Rebalanceamento</span
+                ><span class="tag type">Comportamental</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Situação</div>
+                Carteira 60/40 (RF/RV) após forte alta da bolsa ficou em 40/60.
+                Cliente não sabe o que fazer.
+              </div>
+              <div class="ex-q">Como o assessor deve orientar?</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Não fazer nada — bolsa está
+                  subindo, mudar seria perder dinheiro
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Rebalancear para 60/40: vender
+                  parte da RV que valorizou e realocar em RF — captura lucros e
+                  mantém o risco dentro do perfil
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Vender toda a RV — pode cair a
+                  qualquer momento
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Aumentar ainda mais em RV para
+                  aproveitar a alta
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Rebalanceamento</strong>: restaurar a alocação original
+                após variações de mercado. Objetivos: (1) manter o risco no
+                nível adequado ao perfil; (2) disciplinar o processo ("vender o
+                que subiu, comprar o que caiu"). Competência central do C-Pro R.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  15
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">ETF vs Fundo ativo</span>
+              </div>
+              <div class="ex-q">
+                Um ETF indexado ao Ibovespa se diferencia de um fundo de ações
+                ativo principalmente por:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Buscar superar o índice por
+                  seleção ativa de ações
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Ser isento de IR para PF
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Não poder ser comprado por PF
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Replicar passivamente o índice com
+                  custos menores, negociado em bolsa como uma ação, sem
+                  come-cotas
+                </div>
+              </div>
+              <div class="explain">
+                <strong>ETF</strong>: gestão passiva, taxa mínima, negociado em
+                bolsa como ação ao longo do dia. IR 15% sobre ganho de capital
+                (<strong>sem come-cotas</strong>). Fundo ativo: busca superar
+                benchmark, taxas maiores. Vantagem do ETF: custo e eficiência
+                tributária.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cpror" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(245, 158, 11, 0.15);
+                    color: var(--cpror);
+                  "
+                >
+                  16
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">BDR</span>
+              </div>
+              <div class="ex-q">
+                Investidor quer exposição às ações da Apple sem abrir conta no
+                exterior. O instrumento correto negociado na B3 é:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>BDR — Brazilian Depositary
+                  Receipt: recibo de ação estrangeira negociado na B3 em reais
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>ETF cambial
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Fundo cambial
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>COE atrelado ao S&P 500
+                </div>
+              </div>
+              <div class="explain">
+                <strong>BDR</strong>: recibo lastreado em ações estrangeiras,
+                negociado na B3 em reais. Disponível a qualquer investidor desde
+                2020. Risco cambial embutido. IR 15% sobre ganho de capital.
+                Acesso à Apple, Microsoft, Amazon etc. sem conta no exterior.
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== C-PRO I ===== -->
+          <div class="panel" id="tab-cproi">
+            <div
+              class="quiz-banner"
+              style="
+                margin-bottom: 1.2rem;
+                border-color: rgba(16, 185, 129, 0.2);
+              "
+            >
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 600; color: #fff">
+                  C-Pro I — Certificado de Investimento
+                </div>
+                <div style="font-size: 0.75rem; color: var(--muted)">
+                  12 questões · Previdência · Planejamento Patrimonial · Análise
+                  Avançada
+                </div>
+              </div>
+              <span class="pill cproi" id="cproi-score-pill"
+                >0 / 12 respondidas</span
+              >
+            </div>
+
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cproi);
+                font-weight: 700;
+                margin-bottom: 0.6rem;
+              "
+            >
+              Módulo H — Previdência e Planejamento Patrimonial
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  1
+                </div>
+                <span class="tag easy">Fácil</span
+                ><span class="tag topic">PGBL vs VGBL</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Perfil</div>
+                Médico, renda anual R$400.000, declara IR no modelo completo,
+                quer eficiência fiscal na previdência.
+              </div>
+              <div class="ex-q">
+                Qual produto de previdência é mais indicado e por quê?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>PGBL — deduz até 12% da renda
+                  bruta tributável no IR anual. Para modelo completo, gera
+                  economia fiscal real de até ~R$48.000 dedutíveis
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>VGBL — IR incide só sobre os
+                  rendimentos no resgate
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>São equivalentes para quem declara
+                  no modelo completo
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>VGBL tem taxa de administração
+                  menor
+                </div>
+              </div>
+              <div class="explain">
+                <strong>PGBL</strong>: deduz até 12% da renda bruta anual →
+                R$48.000 dedutíveis → economia de ~R$13.440/ano (alíquota 28%).
+                No resgate, IR incide sobre tudo. <strong>VGBL</strong>: sem
+                dedução, IR só sobre rendimentos. PGBL ideal para quem usa
+                modelo completo + contribui ao INSS.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  2
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Regime tributário previdência</span>
+              </div>
+              <div class="ex-q">
+                Investidor de 35 anos inicia previdência agora e pretende
+                resgatar em 25 anos. Qual regime tributário é mais vantajoso?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Progressivo — alíquotas menores no
+                  início
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Progressivo — pode ser trocado
+                  depois
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Regressivo — alíquota de 10% após
+                  10 anos. Para 25 anos de acumulação, é altamente vantajoso
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Regressivo exige mínimo de 30 anos
+                  de contribuição
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Regressivo</strong>: 35%→30%→25%→20%→15%→<strong
+                  >10% após 10 anos</strong
+                >. Para 25 anos: alíquota de 10% — a menor possível. Progressivo
+                usa tabela do IR (até 27,5%). Para longo prazo, regressivo quase
+                sempre mais eficiente. Escolha <strong>irrevogável</strong>.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  3
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">Sucessão — Inventário</span>
+              </div>
+              <div class="ex-q">
+                Qual instrumento NÃO entra em inventário e vai diretamente ao
+                beneficiário?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Imóveis registrados em nome do
+                  falecido
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Seguro de vida e VGBL com
+                  beneficiários indicados
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Contas bancárias sem
+                  cotitularidade
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Ações sem herdeiro designado
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Seguro de vida</strong> e
+                <strong>VGBL com beneficiários</strong>: não integram o espólio,
+                vão direto ao beneficiário sem inventário e sem ITCMD. Imóveis,
+                contas e ações sem instrumento específico vão a inventário —
+                processo demorado e custoso.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  4
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Holding familiar</span>
+              </div>
+              <div class="ex-q">
+                A holding familiar é utilizada no planejamento patrimonial
+                principalmente para:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Obter isenção total de impostos
+                  sobre todos os ativos
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Transferir obrigações
+                  previdenciárias dos sócios
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Concentrar investimentos em renda
+                  fixa com isenção
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Centralizar gestão do patrimônio,
+                  facilitar a sucessão, proteger ativos de riscos jurídicos e
+                  otimizar a carga tributária dentro da legalidade
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Holding familiar</strong>: PJ que detém os ativos da
+                família. Vantagens: facilita doação/herança com planejamento,
+                protege bens de dívidas pessoais, centraliza governança, pode
+                reduzir ITCMD. Não é isenção total — é planejamento legal.
+              </div>
+            </div>
+
+            <div
+              style="
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                color: var(--cproi);
+                font-weight: 700;
+                margin: 0.9rem 0 0.6rem;
+              "
+            >
+              Módulo I — Análise Avançada de Investimentos
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  5
+                </div>
+                <span class="tag med">Médio</span
+                ><span class="tag topic">VaR</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Dado</div>
+                Carteira com VaR 1 dia de R$50.000 a 95% de confiança.
+              </div>
+              <div class="ex-q">A interpretação correta é:</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>A carteira perderá exatamente
+                  R$50.000 no próximo dia
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>95% de chance de ganhar R$50.000
+                  no dia
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>95% de probabilidade de que a
+                  perda máxima no dia não exceda R$50.000 — e 5% de chance de
+                  perda superior
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Ganho médio diário da carteira é
+                  R$50.000
+                </div>
+              </div>
+              <div class="explain">
+                <strong>VaR</strong>: perda máxima esperada dado um nível de
+                confiança e horizonte. VaR 95%/dia R$50k: em 95% dos dias, perda
+                não passa de R$50k. Nos outros 5% (1 dia em 20), pode ser maior.
+                Medida de risco de cauda usada por reguladores e gestores.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  6
+                </div>
+                <span
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                    width: auto;
+                    height: auto;
+                    border-radius: 0;
+                    font-size: 0.72rem;
+                    font-weight: 700;
+                    padding: 0;
+                  "
+                >
+                </span>
+                <div>
+                  <span class="tag med">Médio</span>
+                  <span class="tag topic">Correlação</span>
+                </div>
+              </div>
+
+              <div class="ex-q">
+                Dois ativos com correlação −1 (perfeitamente negativa) têm qual
+                característica em uma carteira?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Risco potencialmente nulo se os
+                  pesos forem ajustados — os movimentos opostos se cancelam
+                  completamente
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Maior risco que cada ativo
+                  individualmente
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Correlação −1 significa que ambos
+                  caem ao mesmo tempo
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Sem benefício de diversificação
+                </div>
+              </div>
+              <div class="explain">
+                Correlação <strong>−1</strong>: quando um sobe, o outro cai na
+                mesma magnitude. Com pesos corretos, os movimentos se cancelam →
+                risco da carteira tende a zero. É o princípio da diversificação
+                perfeita. Correlação +1: sem benefício de diversificação.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  7
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Viés comportamental</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Situação</div>
+                Investidor recusa vender ação que caiu 40% porque "não quer
+                realizar o prejuízo" e espera voltar ao preço de compra.
+              </div>
+              <div class="ex-q">Esse viés cognitivo é chamado de:</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Excesso de confiança
+                  (overconfidence)
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Aversão a perdas + efeito âncora —
+                  o preço de compra vira referência irracional e a dor da perda
+                  supera o raciocínio econômico
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Viés de confirmação
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Efeito manada
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Aversão a perdas</strong> (Kahneman & Tversky): perdas
+                psicológicas "doem" ~2x mais que ganhos equivalentes.
+                <strong>Efeito âncora</strong>: o preço de compra vira
+                referência irracional. O profissional C-Pro I deve identificar
+                esses vieses e auxiliar na tomada de decisão racional.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="1">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  8
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Fisher — Juro real</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Dados</div>
+                Selic: 13,75% a.a. | IPCA projetado: 5,0% a.a.
+              </div>
+              <div class="ex-q">
+                Qual a taxa de juro real pela fórmula exata de Fisher?
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>8,75% — diferença simples entre
+                  Selic e IPCA
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>8,33% — Fisher: (1,1375 / 1,05) −
+                  1 ≈ 8,33%
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>13,75% — Selic já é taxa real
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>5,0% — taxa real = inflação
+                  projetada
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Fisher</strong>: (1 + juro nominal) / (1 + inflação) − 1
+                = (1,1375 / 1,05) − 1 = <strong>8,33%</strong> a.a. real.
+                Diferença simples (8,75%) é aproximação. A fórmula exata é
+                cobrada no C-Pro I. Juros reais elevados indicam atratividade da
+                renda fixa brasileira.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  9
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">TIR — Decisão</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Dado</div>
+                Investimento: R$100.000 hoje. Retorno: R$30.000/ano por 5 anos.
+                TMA: 12% a.a. TIR calculada: 15,2%.
+              </div>
+              <div class="ex-q">Qual a decisão correta?</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Aceitar — TIR (15,2%) &gt; TMA
+                  (12%) → projeto gera valor acima do custo de oportunidade
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Rejeitar — R$30k × 5 = R$150k &gt;
+                  R$100k, sem lucro real
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Aceitar somente se inflação for
+                  abaixo de 5%
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Rejeitar — TIR não considera o
+                  valor do dinheiro no tempo
+                </div>
+              </div>
+              <div class="explain">
+                <strong>TIR &gt; TMA → aceitar</strong>. A TIR é a taxa que zera
+                o VPL do projeto. Se supera o custo de oportunidade, o projeto
+                cria valor. Comparar R$150k com R$100k sem valor do dinheiro no
+                tempo é erro clássico. A TIR incorpora os fluxos no tempo.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="2">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  10
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Investidor Profissional</span>
+              </div>
+              <div class="ex-q">
+                Segundo a Resolução CVM 30, é considerado Investidor
+                Profissional:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Qualquer pessoa com renda mensal
+                  acima de R$20.000
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>PF com investimentos acima de R$1
+                  milhão (esse é Qualificado)
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>PF ou PJ com investimentos acima
+                  de R$10 milhões, ou detentora de certificações como CFA, CFP,
+                  C-Pro I e similares
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Qualquer gerente de banco com
+                  certificação CPA
+                </div>
+              </div>
+              <div class="explain">
+                <strong>Qualificado</strong>: patrimônio &gt; R$1 mi ou certif.
+                técnicas (CPA, C-Pro R). <strong>Profissional</strong>:
+                patrimônio &gt; R$10 mi ou certif. avançadas (CFA, CFP, C-Pro I,
+                CNPI, CGA). Profissionais acessam produtos restritos: FIPs,
+                fundos exclusivos, operações estruturadas.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="3">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  11
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">Conflito de interesses</span
+                ><span class="tag type">Ética C-Pro I</span>
+              </div>
+              <div class="ex-ctx">
+                <div class="ex-ctx-label">Dilema</div>
+                Especialista recebe proposta de gestora parceira: recomendar um
+                fundo em troca de benefícios pessoais (viagem, bônus).
+              </div>
+              <div class="ex-q">A conduta ética e regulatória correta é:</div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Aceitar os benefícios e recomendar
+                  somente para perfil adequado
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Aceitar com disclosure informal
+                  para o cliente
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Recomendar para todos — o fundo
+                  tem boa gestão
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Recusar os benefícios, comunicar
+                  ao compliance e recomendar somente quando genuinamente
+                  adequado ao perfil do cliente
+                </div>
+              </div>
+              <div class="explain">
+                Código ANBIMA e CVM proíbem remuneração oculta que crie conflito
+                de interesse não gerenciado.
+                <strong>Recusar benefícios</strong>, comunicar ao
+                <strong>compliance</strong>, recomendar somente quando adequado.
+                Princípio máximo: o interesse do cliente é sempre prioritário.
+              </div>
+            </div>
+
+            <div class="ex-card" data-mod="cproi" data-ans="0">
+              <div class="ex-meta">
+                <div
+                  class="ex-num"
+                  style="
+                    background: rgba(16, 185, 129, 0.12);
+                    color: var(--cproi);
+                  "
+                >
+                  12
+                </div>
+                <span class="tag hard">Difícil</span
+                ><span class="tag topic">FIP — Private Equity</span>
+              </div>
+              <div class="ex-q">
+                Um FIP (Fundo de Investimento em Participações) é caracterizado
+                por:
+              </div>
+              <div class="opts">
+                <div class="opt" onclick="ans(this, 0)">
+                  <span class="opt-l">A</span>Investir em empresas não listadas
+                  (private equity/VC), com participação ativa na gestão, baixa
+                  liquidez — destinado a investidores qualificados
+                </div>
+                <div class="opt" onclick="ans(this, 1)">
+                  <span class="opt-l">B</span>Investir exclusivamente em títulos
+                  públicos federais
+                </div>
+                <div class="opt" onclick="ans(this, 2)">
+                  <span class="opt-l">C</span>Ter liquidez diária e ser
+                  negociado em bolsa como ETF
+                </div>
+                <div class="opt" onclick="ans(this, 3)">
+                  <span class="opt-l">D</span>Ser acessível a qualquer
+                  investidor com R$1.000 de entrada
+                </div>
+              </div>
+              <div class="explain">
+                <strong>FIP</strong> (Private Equity/Venture Capital): investe
+                em participações de empresas fechadas, com assento no conselho e
+                influência na gestão. Alta concentração, baixa liquidez, prazo
+                definido. Destinado a
+                <strong>investidores qualificados</strong> (patrimônio &gt; R$1
+                mi). Potencial de retorno elevado, risco elevado.
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== FLASHCARDS ===== -->
+          <div class="panel" id="tab-flashcards">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+              "
+            >
+              <span style="font-size: 0.82rem; color: var(--muted)"
+                >Clique para revelar · <span id="fc-done">0</span> de
+                <span id="fc-total">0</span> revisados</span
+              >
+              <div style="display: flex; gap: 0.4rem">
+                <button
+                  class="btn-ghost"
+                  style="font-size: 0.75rem; padding: 0.3rem 0.7rem"
+                  onclick="filterFC('all')"
+                >
+                  Todos
+                </button>
+                <button
+                  class="btn-ghost"
+                  style="font-size: 0.75rem; padding: 0.3rem 0.7rem"
+                  onclick="filterFC('cpa')"
+                >
+                  CPA
+                </button>
+                <button
+                  class="btn-ghost"
+                  style="font-size: 0.75rem; padding: 0.3rem 0.7rem"
+                  onclick="filterFC('cpror')"
+                >
+                  C-Pro R
+                </button>
+                <button
+                  class="btn-ghost"
+                  style="font-size: 0.75rem; padding: 0.3rem 0.7rem"
+                  onclick="filterFC('cproi')"
+                >
+                  C-Pro I
+                </button>
+              </div>
+            </div>
+            <div class="fc-grid" id="fc-container"></div>
+          </div>
+
+          <!-- ===== CALCULADORAS ===== -->
+          <div class="panel" id="tab-calculadoras">
+            <div class="grid2">
+              <div class="card">
+                <div class="sec-title" style="margin-bottom: 1rem">
+                  <i class="ti ti-calculator" aria-hidden="true"></i>Calculadora
+                  de IR — Renda Fixa
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Rendimento (R$)</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="c-rend"
+                    value="10000"
+                    oninput="calcIR()"
+                  />
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Prazo (dias)</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="c-dias"
+                    value="400"
+                    oninput="calcIR()"
+                  />
+                </div>
+                <div class="calc-result">
+                  <div class="calc-result-label">Alíquota IR</div>
+                  <div
+                    class="calc-result-val"
+                    id="c-aliq"
+                    style="color: var(--gold)"
+                  >
+                    17,5%
+                  </div>
+                  <div style="display: flex; gap: 1.5rem; margin-top: 0.6rem">
+                    <div>
+                      <div class="calc-result-label">IR a pagar</div>
+                      <div
+                        style="
+                          font-size: 1rem;
+                          font-weight: 700;
+                          color: var(--red);
+                          margin-top: 0.15rem;
+                        "
+                        id="c-ir"
+                      >
+                        R$ 1.750
+                      </div>
+                    </div>
+                    <div>
+                      <div class="calc-result-label">Líquido</div>
+                      <div
+                        style="
+                          font-size: 1rem;
+                          font-weight: 700;
+                          color: var(--green);
+                          margin-top: 0.15rem;
+                        "
+                        id="c-liq"
+                      >
+                        R$ 8.250
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec-title" style="margin-bottom: 1rem">
+                  <i class="ti ti-trending-up" aria-hidden="true"></i
+                  >Calculadora Sharpe
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Retorno fundo (%)</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="s-ret"
+                    value="18"
+                    oninput="calcSharpe()"
+                  />
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Taxa livre risco (%)</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="s-rf"
+                    value="10.5"
+                    oninput="calcSharpe()"
+                  />
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Desvio padrão (%)</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="s-dp"
+                    value="15"
+                    oninput="calcSharpe()"
+                  />
+                </div>
+                <div class="calc-result">
+                  <div class="calc-result-label">Índice de Sharpe</div>
+                  <div
+                    class="calc-result-val"
+                    id="s-val"
+                    style="color: var(--cpa)"
+                  >
+                    0,50
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.75rem;
+                      color: var(--muted);
+                      margin-top: 0.4rem;
+                    "
+                    id="s-interp"
+                  >
+                    Bom — retorno ajustado ao risco positivo
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec-title" style="margin-bottom: 1rem">
+                  <i class="ti ti-currency-dollar" aria-hidden="true"></i>Taxa
+                  Real de Juros (Fisher)
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Taxa nominal (%)</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="f-nom"
+                    value="13.75"
+                    oninput="calcFisher()"
+                  />
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Inflação (%) IPCA</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="f-inf"
+                    value="5"
+                    oninput="calcFisher()"
+                  />
+                </div>
+                <div class="calc-result">
+                  <div class="calc-result-label">Taxa real (Fisher exato)</div>
+                  <div
+                    class="calc-result-val"
+                    id="f-val"
+                    style="color: var(--cproi)"
+                  >
+                    8,33%
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.75rem;
+                      color: var(--muted);
+                      margin-top: 0.4rem;
+                    "
+                  >
+                    Aproximação simples: <span id="f-aprox">8,75%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="sec-title" style="margin-bottom: 1rem">
+                  <i class="ti ti-chart-line" aria-hidden="true"></i>Retorno
+                  esperado — Beta
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Beta do ativo</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="b-beta"
+                    value="1.8"
+                    step="0.1"
+                    oninput="calcBeta()"
+                  />
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Variação mercado (%)</span
+                  ><input
+                    class="calc-input"
+                    type="number"
+                    id="b-mkt"
+                    value="10"
+                    oninput="calcBeta()"
+                  />
+                </div>
+                <div class="calc-result">
+                  <div class="calc-result-label">Retorno esperado do ativo</div>
+                  <div
+                    class="calc-result-val"
+                    id="b-val"
+                    style="color: var(--cpror)"
+                  >
+                    18,0%
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.75rem;
+                      color: var(--muted);
+                      margin-top: 0.4rem;
+                    "
+                    id="b-interp"
+                  >
+                    Mais volátil que o mercado
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== SIMULADOR API ===== -->
+          <div class="panel" id="tab-simulador">
+            <div class="card" style="margin-bottom: 1rem">
+              <div class="sec-title" style="margin-bottom: 0.8rem">
+                <i class="ti ti-user-check" aria-hidden="true"></i>Simulador de
+                Suitability — Análise de Perfil do Investidor
+              </div>
+              <div
+                style="
+                  font-size: 0.8rem;
+                  color: var(--muted);
+                  margin-bottom: 1rem;
+                "
+              >
+                Selecione o perfil e veja quais produtos são adequados —
+                exatamente como funciona na prova.
+              </div>
+              <div
+                style="
+                  display: flex;
+                  gap: 0.5rem;
+                  flex-wrap: wrap;
+                  margin-bottom: 1rem;
+                "
+              >
+                <button
+                  class="profile-btn active"
+                  id="pb-c"
+                  onclick="setProfile('conservador', this)"
+                >
+                  Conservador
+                </button>
+                <button
+                  class="profile-btn"
+                  id="pb-m"
+                  onclick="setProfile('moderado', this)"
+                >
+                  Moderado
+                </button>
+                <button
+                  class="profile-btn"
+                  id="pb-a"
+                  onclick="setProfile('arrojado', this)"
+                >
+                  Arrojado
+                </button>
+              </div>
+              <div
+                id="profile-desc"
+                style="
+                  font-size: 0.8rem;
+                  color: var(--muted);
+                  margin-bottom: 1rem;
+                  padding: 0.6rem 0.8rem;
+                  background: var(--surface2);
+                  border-radius: var(--r);
+                "
+              ></div>
+              <table class="product-table">
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Risco</th>
+                    <th>Liquidez</th>
+                    <th>FGC</th>
+                    <th>Adequado?</th>
+                  </tr>
+                </thead>
+                <tbody id="product-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ===== GLOSSÁRIO ===== -->
+          <div class="panel" id="tab-glossario">
+            <input
+              class="gloss-search"
+              type="text"
+              placeholder="Buscar termo..."
+              oninput="filterGlossary(this.value)"
+              aria-label="Buscar no glossário"
+            />
+            <div id="glossary-list"></div>
+          </div>
+        </div>
+        <!-- content -->
+      </div>
+      <!-- main -->
+    </div>
+    <!-- layout -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script>
+      const state = {
+        cpa: { c: 0, t: 0, tot: 20 },
+        cpror: { c: 0, t: 0, tot: 16 },
+        cproi: { c: 0, t: 0, tot: 12 },
+      };
+      const circumference = 2 * Math.PI * 28;
+      let chartTemas = null;
+      const temaScores = {};
+
+      function goTab(id, el) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".sb-item")
+          .forEach((i) => i.classList.remove("active"));
+        document.getElementById("tab-" + id).classList.add("active");
+        if (el) el.classList.add("active");
+        const titles = {
+          dashboard: "Dashboard",
+          roadmap: "Roadmap de Estudos",
+          cpa: "CPA Base — Exercícios",
+          cpror: "C-Pro R — Exercícios",
+          cproi: "C-Pro I — Exercícios",
+          flashcards: "Flashcards",
+          calculadoras: "Calculadoras Financeiras",
+          simulador: "Simulador de Suitability",
+          glossario: "Glossário Financeiro",
+        };
+        document.getElementById("topbar-title").textContent = titles[id] || id;
+        if (id === "flashcards") renderFlashcards("all");
+        if (id === "glossario") renderGlossary();
+        if (id === "simulador")
+          setProfile("conservador", document.getElementById("pb-c"));
+      }
+
+      function ans(el, chosen) {
+        const ex = el.closest(".ex-card");
+        if (ex.dataset.answered) return;
+        ex.dataset.answered = "1";
+        const correct = parseInt(ex.dataset.ans);
+        const mod = ex.dataset.mod;
+        const opts = ex.querySelectorAll(".opt");
+        opts.forEach((o, i) => {
+          o.classList.add("locked");
+          if (i === correct) o.classList.add("correct");
+          else if (i === chosen && chosen !== correct) o.classList.add("wrong");
+        });
+        const exp = ex.querySelector(".explain");
+        if (exp) exp.classList.add("show");
+        const hit = chosen === correct;
+        if (hit) state[mod].c++;
+        state[mod].t++;
+        const topic = ex.querySelector(".tag.topic");
+        if (topic) {
+          const k = topic.textContent;
+          temaScores[k] = temaScores[k] || { c: 0, t: 0 };
+          temaScores[k].t++;
+          if (hit) temaScores[k].c++;
+        }
+        updateAll();
+        const pill = document.getElementById(mod + "-score-pill");
+        if (pill)
+          pill.textContent =
+            state[mod].t + " / " + state[mod].tot + " respondidas";
+      }
+
+      function updateAll() {
+        let total = 0;
+        ["cpa", "cpror", "cproi"].forEach((m) => {
+          const s = state[m];
+          total += s.t;
+          const pct = s.tot > 0 ? Math.round((s.c / s.tot) * 100) : 0;
+          const pctT = s.tot > 0 ? Math.round((s.t / s.tot) * 100) : 0;
+          const v = (el) => document.getElementById(el);
+          if (v("d-" + m)) v("d-" + m).textContent = pct + "%";
+          if (v("d-" + m + "-s"))
+            v("d-" + m + "-s").textContent = s.c + "/" + s.tot;
+          const ring = document.getElementById("ring-" + m);
+          if (ring) {
+            const offset = circumference - (pctT / 100) * circumference;
+            ring.style.strokeDashoffset = offset;
+          }
+          if (v("ring-" + m + "-pct"))
+            v("ring-" + m + "-pct").textContent = pctT + "%";
+        });
+        document.getElementById("d-total").textContent = total;
+        updateTemasChart();
+      }
+
+      function updateTemasChart() {
+        const labels = Object.keys(temaScores).slice(0, 8);
+        const data = labels.map((k) =>
+          temaScores[k].t > 0
+            ? Math.round((temaScores[k].c / temaScores[k].t) * 100)
+            : 0,
+        );
+        if (!chartTemas) {
+          const ctx = document.getElementById("chartTemas");
+          if (!ctx) return;
+          chartTemas = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels,
+              datasets: [
+                {
+                  label: "Acerto %",
+                  data,
+                  backgroundColor: "rgba(6,182,212,.6)",
+                  borderColor: "#06b6d4",
+                  borderWidth: 1,
+                  borderRadius: 4,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100,
+                  ticks: { color: "#7a8fa8", font: { size: 11 } },
+                  grid: { color: "rgba(255,255,255,.05)" },
+                },
+                x: {
+                  ticks: {
+                    color: "#7a8fa8",
+                    font: { size: 10 },
+                    maxRotation: 30,
+                  },
+                  grid: { display: false },
+                },
+              },
+            },
+          });
+        } else {
+          chartTemas.data.labels = labels;
+          chartTemas.data.datasets[0].data = data;
+          chartTemas.update("none");
+        }
+      }
+
+      function resetAll() {
+        ["cpa", "cpror", "cproi"].forEach((m) => {
+          state[m] = { c: 0, t: 0, tot: state[m].tot };
+        });
+        Object.keys(temaScores).forEach((k) => delete temaScores[k]);
+        document.querySelectorAll(".ex-card").forEach((ex) => {
+          delete ex.dataset.answered;
+          ex.querySelectorAll(".opt").forEach((o) =>
+            o.classList.remove("correct", "wrong", "locked"),
+          );
+          ex.querySelectorAll(".explain").forEach((e) =>
+            e.classList.remove("show"),
+          );
+        });
+        ["cpa", "cpror", "cproi"].forEach((m) => {
+          const p = document.getElementById(m + "-score-pill");
+          if (p) p.textContent = "0 / " + state[m].tot + " respondidas";
+        });
+        updateAll();
+        goTab("dashboard", document.querySelector(".sb-item"));
+      }
+
+      // CALCULADORAS
+      function calcIR() {
+        const rend = parseFloat(document.getElementById("c-rend").value) || 0;
+        const dias = parseInt(document.getElementById("c-dias").value) || 0;
+        let aliq = 22.5;
+        if (dias > 720) aliq = 15;
+        else if (dias > 360) aliq = 17.5;
+        else if (dias > 180) aliq = 20;
+        const ir = (rend * aliq) / 100;
+        document.getElementById("c-aliq").textContent = aliq.toFixed(1) + "%";
+        document.getElementById("c-ir").textContent =
+          "R$ " +
+          ir.toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        document.getElementById("c-liq").textContent =
+          "R$ " +
+          (rend - ir).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+      }
+      function calcSharpe() {
+        const ret = parseFloat(document.getElementById("s-ret").value) || 0;
+        const rf = parseFloat(document.getElementById("s-rf").value) || 0;
+        const dp = parseFloat(document.getElementById("s-dp").value) || 1;
+        const s = (ret - rf) / dp;
+        document.getElementById("s-val").textContent = s.toFixed(2);
+        const interp =
+          s > 1
+            ? "Excelente — alta eficiência"
+            : s > 0.5
+              ? "Bom — retorno ajustado positivo"
+              : s > 0
+                ? "Moderado — avaliar alternativas"
+                : "Ruim — não compensa o risco";
+        document.getElementById("s-interp").textContent = interp;
+      }
+      function calcFisher() {
+        const nom = parseFloat(document.getElementById("f-nom").value) || 0;
+        const inf = parseFloat(document.getElementById("f-inf").value) || 0;
+        const real = ((1 + nom / 100) / (1 + inf / 100) - 1) * 100;
+        const aprox = nom - inf;
+        document.getElementById("f-val").textContent = real.toFixed(2) + "%";
+        document.getElementById("f-aprox").textContent = aprox.toFixed(2) + "%";
+      }
+      function calcBeta() {
+        const beta = parseFloat(document.getElementById("b-beta").value) || 0;
+        const mkt = parseFloat(document.getElementById("b-mkt").value) || 0;
+        const ret = beta * mkt;
+        document.getElementById("b-val").textContent = ret.toFixed(1) + "%";
+        const interp =
+          beta > 1
+            ? "Mais volátil que o mercado"
+            : beta === 1
+              ? "Igual ao mercado"
+              : beta > 0
+                ? "Menos volátil que o mercado"
+                : "Move inversamente ao mercado";
+        document.getElementById("b-interp").textContent = interp;
+      }
+      calcIR();
+      calcSharpe();
+      calcFisher();
+      calcBeta();
+
+      // FLASHCARDS
+      const flashcards = [
+        {
+          tag: "SFN",
+          mod: "cpa",
+          q: "Qual a diferença entre CMN e BACEN?",
+          a: "CMN formula as regras (legislativo financeiro). BACEN executa e fiscaliza (executivo). CMN não fiscaliza bancos diretamente.",
+        },
+        {
+          tag: "Produtos",
+          mod: "cpa",
+          q: "O que é um CDB e qual sua cobertura?",
+          a: "Certificado de Depósito Bancário — banco toma dinheiro emprestado e paga juros. Coberto pelo FGC até R$250k. IR regressivo: 22,5% a 15%.",
+        },
+        {
+          tag: "Produtos",
+          mod: "cpa",
+          q: "Diferença entre LCI e LCA?",
+          a: "LCI financia o setor imobiliário. LCA financia o agronegócio. Ambos isentos de IR para PF e cobertos pelo FGC.",
+        },
+        {
+          tag: "Tributação",
+          mod: "cpa",
+          q: "Tabela regressiva de IR em renda fixa?",
+          a: "Até 180 dias: 22,5% | 181–360: 20% | 361–720: 17,5% | Acima de 720: 15%. Quanto mais tempo investido, menos imposto.",
+        },
+        {
+          tag: "Suitability",
+          mod: "cpa",
+          q: "Quais são os 3 perfis de investidor?",
+          a: "Conservador (prioriza segurança), Moderado (equilibra risco e retorno) e Arrojado (aceita alta volatilidade por maior retorno).",
+        },
+        {
+          tag: "PLD",
+          mod: "cpa",
+          q: "Quais são as 3 fases da lavagem de dinheiro?",
+          a: "1) Colocação (inserir dinheiro sujo no sistema). 2) Ocultação (movimentar para disfarçar origem). 3) Integração (usar como dinheiro limpo).",
+        },
+        {
+          tag: "Novo Modelo 2026",
+          mod: "cpa",
+          q: "O que substitui a CPA-10 em 2026?",
+          a: "A nova CPA (Certificado Profissional ANBIMA). Porta de entrada obrigatória para toda a trilha. Valor: R$225. Atualização anual via ANBIMA Edu.",
+        },
+        {
+          tag: "Produtos",
+          mod: "cpa",
+          q: "O que é o come-cotas?",
+          a: "Antecipação semestral do IR em fundos de RF e multimercado, cobrada no último dia útil de maio e novembro. Reduz a quantidade de cotas do investidor.",
+        },
+        {
+          tag: "FGC",
+          mod: "cpa",
+          q: "O que o FGC NÃO cobre?",
+          a: "Fundos de investimento, debêntures, ações, títulos públicos, COE, LIG. Cobre: CDB, LCI, LCA, Poupança, LC, RDB — até R$250k por CPF/instituição.",
+        },
+        {
+          tag: "Produtos",
+          mod: "cpa",
+          q: "O que é o Tesouro Selic e para quem é indicado?",
+          a: "Título pós-fixado que rende a taxa Selic. Ideal para reserva de emergência: baixo risco, liquidez diária, sem marcação a mercado negativa no curto prazo.",
+        },
+        {
+          tag: "Performance",
+          mod: "cpror",
+          q: "O que mede o Índice de Sharpe?",
+          a: "Retorno excedente por unidade de risco: (Retorno − Rf) / Desvio padrão. Sharpe > 1: excelente. Sharpe > 0,5: bom. Sharpe < 0: não compensa o risco.",
+        },
+        {
+          tag: "Derivativos",
+          mod: "cpror",
+          q: "Call in the money vs out of the money?",
+          a: "Call in the money: preço do ativo > strike (tem valor intrínseco). At the money: preço = strike. Out of the money: preço < strike (sem valor intrínseco).",
+        },
+        {
+          tag: "Portfólio",
+          mod: "cpror",
+          q: "O que é Duration de Macaulay?",
+          a: "Prazo médio ponderado dos fluxos de caixa do título. Duration alta = maior sensibilidade a variações de juros. Zero-cupom: Duration = prazo de vencimento.",
+        },
+        {
+          tag: "Derivativos",
+          mod: "cpror",
+          q: "Diferença entre futuro e contrato a termo?",
+          a: "Futuro: ajuste diário (MtM), padronizado, negociado em bolsa, câmara de compensação. A termo: liquidação só no vencimento, sem ajuste diário, mais flexível.",
+        },
+        {
+          tag: "Fundos",
+          mod: "cpror",
+          q: "O que é marcação a mercado e por que é obrigatória?",
+          a: "Atualização diária dos ativos pelo preço justo de mercado. Obrigatória para fundos abertos (CVM). Previne transferência de riqueza entre cotistas que entram e saem.",
+        },
+        {
+          tag: "Portfólio",
+          mod: "cpror",
+          q: "O que é correlação negativa e qual seu benefício?",
+          a: "Correlação −1: quando um ativo sobe, o outro cai. Benefício: reduz o risco da carteira. Diversificação máxima quando a correlação é próxima de −1.",
+        },
+        {
+          tag: "Previdência",
+          mod: "cproi",
+          q: "PGBL ou VGBL — quando usar cada um?",
+          a: "PGBL: para quem declara IR completo e contribui ao INSS (deduz 12% da renda bruta). VGBL: para quem declara simplificado ou aporta acima do limite do PGBL. IR sobre tudo (PGBL) vs só rendimentos (VGBL).",
+        },
+        {
+          tag: "Previdência",
+          mod: "cproi",
+          q: "Regime regressivo vs progressivo na previdência?",
+          a: "Regressivo: alíquota cai com o tempo (35% a 10% após 10 anos). Progressivo: tabela do IR (até 27,5%). Para longo prazo, regressivo é mais eficiente. Escolha irrevogável.",
+        },
+        {
+          tag: "Sucessão",
+          mod: "cproi",
+          q: "O que é holding familiar e seus principais benefícios?",
+          a: "PJ que centraliza o patrimônio familiar. Benefícios: facilita sucessão (doação de cotas), protege bens de dívidas pessoais, centraliza governança, pode otimizar ITCMD.",
+        },
+        {
+          tag: "Análise",
+          mod: "cproi",
+          q: "TIR > TMA: aceitar ou rejeitar o projeto?",
+          a: "Aceitar. TIR é a taxa que zera o VPL do projeto. Se TIR > TMA (custo de oportunidade), o projeto cria valor. TIR < TMA → rejeitar.",
+        },
+        {
+          tag: "Comportamental",
+          mod: "cproi",
+          q: "O que é aversão a perdas (Kahneman)?",
+          a: 'Viés cognitivo onde perdas psicológicas "doem" cerca de 2x mais que ganhos equivalentes. Leva a decisões irracionais como segurar ativos em queda e vender vencedores cedo demais.',
+        },
+        {
+          tag: "Análise",
+          mod: "cproi",
+          q: "O que é VaR e como interpretar VaR 95%?",
+          a: "Value at Risk: perda máxima esperada dado um nível de confiança e horizonte. VaR 95% de R$50k/dia: 95% dos dias a perda não passa de R$50k. Nos outros 5%, pode ser maior.",
+        },
+      ];
+      let currentFilter = "all";
+      let fcDone = new Set();
+      function renderFlashcards(filter) {
+        currentFilter = filter;
+        const filtered = flashcards.filter(
+          (f) => filter === "all" || f.mod === filter,
+        );
+        document.getElementById("fc-total").textContent = filtered.length;
+        document.getElementById("fc-done").textContent =
+          filtered.filter((_, i) =>
+            fcDone.has(
+              filter === "all"
+                ? i
+                : flashcards.indexOf(
+                    flashcards.filter(
+                      (f) => filter === "all" || f.mod === filter,
+                    )[i],
+                  ),
+            ),
+          ).size || "...";
+        const container = document.getElementById("fc-container");
+        container.innerHTML = filtered
+          .map(
+            (f, i) => `
+    <div class="fc" onclick="flipFC(this)" data-idx="${i}">
+      <div>
+        <div class="fc-tag">${f.tag} · ${f.mod.toUpperCase()}</div>
+        <div class="fc-front-q">${f.q}</div>
+        <div class="fc-back-a">${f.a}</div>
+      </div>
+      <div class="fc-hint">Clique para revelar a resposta</div>
+    </div>`,
+          )
+          .join("");
+        document.getElementById("fc-done").textContent = "0";
+      }
+      function filterFC(f) {
+        renderFlashcards(f);
+      }
+      function flipFC(el) {
+        el.classList.toggle("flipped");
+        el.querySelector(".fc-hint").textContent = el.classList.contains(
+          "flipped",
+        )
+          ? "Clique para esconder"
+          : "Clique para revelar a resposta";
+        const done = document.querySelectorAll(".fc.flipped").length;
+        document.getElementById("fc-done").textContent = done;
+      }
+
+      // SIMULADOR API
+      const products = [
+        {
+          name: "Tesouro Selic",
+          risco: "Baixo",
+          liquidez: "Alta",
+          fgc: "Não (Gov.)",
+          c: true,
+          m: true,
+          a: true,
+        },
+        {
+          name: "CDB Liquidez Diária",
+          risco: "Baixo",
+          liquidez: "Alta",
+          fgc: "Sim",
+          c: true,
+          m: true,
+          a: true,
+        },
+        {
+          name: "LCI / LCA (1 ano)",
+          risco: "Baixo",
+          liquidez: "Média",
+          fgc: "Sim",
+          c: true,
+          m: true,
+          a: true,
+        },
+        {
+          name: "Fundo RF Simples",
+          risco: "Baixo",
+          liquidez: "Alta",
+          fgc: "Não",
+          c: true,
+          m: true,
+          a: true,
+        },
+        {
+          name: "Tesouro IPCA+ Longo",
+          risco: "Médio",
+          liquidez: "Média",
+          fgc: "Não",
+          c: false,
+          m: true,
+          a: true,
+        },
+        {
+          name: "Fundo Multimercado",
+          risco: "Médio-Alto",
+          liquidez: "Média",
+          fgc: "Não",
+          c: false,
+          m: true,
+          a: true,
+        },
+        {
+          name: "Debêntures Incentivadas",
+          risco: "Médio",
+          liquidez: "Baixa",
+          fgc: "Não",
+          c: false,
+          m: true,
+          a: true,
+        },
+        {
+          name: "FII (Fundos Imobiliários)",
+          risco: "Médio",
+          liquidez: "Alta",
+          fgc: "Não",
+          c: false,
+          m: true,
+          a: true,
+        },
+        {
+          name: "Ações ON / PN",
+          risco: "Alto",
+          liquidez: "Alta",
+          fgc: "Não",
+          c: false,
+          m: false,
+          a: true,
+        },
+        {
+          name: "ETF Ibovespa",
+          risco: "Alto",
+          liquidez: "Alta",
+          fgc: "Não",
+          c: false,
+          m: false,
+          a: true,
+        },
+        {
+          name: "Opções / Futuros",
+          risco: "Muito Alto",
+          liquidez: "Alta",
+          fgc: "Não",
+          c: false,
+          m: false,
+          a: true,
+        },
+        {
+          name: "COE Capital Protegido",
+          risco: "Médio",
+          liquidez: "Baixa",
+          fgc: "Não",
+          c: false,
+          m: true,
+          a: true,
+        },
+        {
+          name: "BDR",
+          risco: "Alto",
+          liquidez: "Alta",
+          fgc: "Não",
+          c: false,
+          m: false,
+          a: true,
+        },
+        {
+          name: "FIP (Private Equity)",
+          risco: "Muito Alto",
+          liquidez: "Muito Baixa",
+          fgc: "Não",
+          c: false,
+          m: false,
+          a: false,
+        },
+      ];
+      const profileDescs = {
+        conservador:
+          "Prioriza segurança e liquidez. Tolera pouca ou nenhuma perda. Horizonte curto a médio. Foco em preservação do patrimônio.",
+        moderado:
+          "Equilibra segurança e rentabilidade. Aceita alguma volatilidade por retorno maior. Horizonte médio a longo prazo.",
+        arrojado:
+          "Busca máxima rentabilidade. Aceita alta volatilidade e possibilidade de perdas significativas. Horizonte longo.",
+      };
+      function setProfile(p, btn) {
+        document
+          .querySelectorAll(".profile-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("profile-desc").textContent = profileDescs[p];
+        const tbody = document.getElementById("product-tbody");
+        tbody.innerHTML = products
+          .map((prod) => {
+            const ok = prod[p[0]];
+            return `<tr><td style="color:var(--text);font-weight:500">${prod.name}</td><td>${prod.risco}</td><td>${prod.liquidez}</td><td>${prod.fgc}</td><td><span class="rec-badge ${ok ? "rec-ok" : "rec-no"}">${ok ? "Adequado" : "Não indicado"}</span></td></tr>`;
+          })
+          .join("");
+      }
+
+      // GLOSSÁRIO
+      const glossaryItems = [
+        {
+          term: "BACEN",
+          nivel: "CPA",
+          def: "Banco Central do Brasil. Executa a política monetária, controla o câmbio, emite moeda e fiscaliza instituições financeiras.",
+        },
+        {
+          term: "CMN",
+          nivel: "CPA",
+          def: "Conselho Monetário Nacional. Órgão máximo do SFN — formula as políticas de moeda e crédito. Não fiscaliza diretamente.",
+        },
+        {
+          term: "CVM",
+          nivel: "CPA",
+          def: "Comissão de Valores Mobiliários. Regula e fiscaliza o mercado de capitais: ações, fundos, debêntures e demais valores mobiliários.",
+        },
+        {
+          term: "SUSEP",
+          nivel: "CPA",
+          def: "Superintendência de Seguros Privados. Fiscaliza seguros privados, capitalização e previdência complementar aberta (PGBL/VGBL).",
+        },
+        {
+          term: "FGC",
+          nivel: "CPA",
+          def: "Fundo Garantidor de Créditos. Protege depósitos em bancos em caso de falência. Limite: R$250.000 por CPF por instituição. Teto global: R$1 milhão/4 anos.",
+        },
+        {
+          term: "Suitability (API)",
+          nivel: "CPA",
+          def: "Análise de Perfil do Investidor. Processo obrigatório para identificar se o produto ofertado é adequado ao perfil, objetivos e situação financeira do cliente.",
+        },
+        {
+          term: "Come-cotas",
+          nivel: "CPA",
+          def: "Antecipação semestral do IR em fundos de RF e multimercado. Ocorre no último dia útil de maio e novembro. Reduz a quantidade de cotas do cotista.",
+        },
+        {
+          term: "PIX",
+          nivel: "CPA",
+          def: "Sistema de pagamento instantâneo criado pelo BACEN. Opera 24h/7 dias, inclusive feriados. Liquidação em segundos. Regulado pelo BACEN via BACEN STR.",
+        },
+        {
+          term: "Smurfing",
+          nivel: "CPA",
+          def: "Técnica de lavagem de dinheiro que fraciona depósitos em valores menores para evitar o alerta automático do sistema. O comportamento atípico deve ser reportado ao COAF independentemente do valor.",
+        },
+        {
+          term: "Open Finance",
+          nivel: "CPA",
+          def: "Sistema regulado pelo BACEN que permite compartilhamento de dados financeiros entre instituições, com consentimento expresso do cliente. Nunca automático.",
+        },
+        {
+          term: "Índice de Sharpe",
+          nivel: "C-Pro R",
+          def: "(Retorno − Taxa livre de risco) / Desvio padrão. Mede o retorno ajustado ao risco. Sharpe > 1: excelente. < 0: não compensa o risco assumido.",
+        },
+        {
+          term: "Beta",
+          nivel: "C-Pro R",
+          def: "Sensibilidade do ativo em relação ao mercado. Beta 1,5 = ativo oscila 50% mais que o índice. Beta > 1: mais volátil. Beta < 1: menos volátil. Beta negativo: movimento inverso.",
+        },
+        {
+          term: "Duration",
+          nivel: "C-Pro R",
+          def: "Prazo médio ponderado dos fluxos de caixa de um título. Quanto maior a Duration, maior a sensibilidade do preço às variações de taxa de juros.",
+        },
+        {
+          term: "Marcação a Mercado",
+          nivel: "C-Pro R",
+          def: "Atualização diária dos ativos do fundo pelo preço justo de mercado. Obrigatória pela CVM para fundos abertos. Previne transferência de riqueza entre cotistas.",
+        },
+        {
+          term: "VaR",
+          nivel: "C-Pro I",
+          def: "Value at Risk. Perda máxima esperada dado um nível de confiança e horizonte temporal. VaR 95%/dia de R$50k: em 95% dos dias, a perda não passa de R$50k.",
+        },
+        {
+          term: "PGBL",
+          nivel: "C-Pro I",
+          def: "Plano Gerador de Benefício Livre. Deduz até 12% da renda bruta no IR anual. Ideal para quem declara no modelo completo. IR incide sobre tudo no resgate.",
+        },
+        {
+          term: "VGBL",
+          nivel: "C-Pro I",
+          def: "Vida Gerador de Benefício Livre. Sem dedução fiscal. IR incide apenas sobre os rendimentos no resgate. Ideal para declaração simplificada ou aportes acima do limite do PGBL.",
+        },
+        {
+          term: "Holding familiar",
+          nivel: "C-Pro I",
+          def: "Pessoa jurídica que centraliza o patrimônio familiar. Facilita sucessão, protege bens de dívidas pessoais, centraliza governança e pode otimizar ITCMD.",
+        },
+        {
+          term: "TIR",
+          nivel: "C-Pro I",
+          def: "Taxa Interna de Retorno. Taxa que zera o VPL do projeto. TIR > TMA: aceitar o investimento. TIR < TMA: rejeitar. Considera o valor do dinheiro no tempo.",
+        },
+        {
+          term: "Aversão a perdas",
+          nivel: "C-Pro I",
+          def: 'Viés cognitivo (Kahneman & Tversky): perdas psicológicas "doem" ~2x mais que ganhos equivalentes. Leva a decisões irracionais como segurar ativos em queda indefinidamente.',
+        },
+        {
+          term: "Fisher",
+          nivel: "C-Pro I",
+          def: "Fórmula: (1 + juro nominal) / (1 + inflação) − 1 = taxa real. Ex: Selic 13,75% e IPCA 5% → taxa real = (1,1375/1,05) − 1 = 8,33%.",
+        },
+        {
+          term: "COE",
+          nivel: "CPA",
+          def: 'Certificado de Operações Estruturadas. Combina renda fixa (proteção do capital) + derivativos (exposição a ativos). Na versão "capital protegido", o pior cenário é devolver o principal. Não coberto pelo FGC.',
+        },
+        {
+          term: "BDR",
+          nivel: "C-Pro R",
+          def: "Brazilian Depositary Receipt. Recibo de ação estrangeira negociado na B3 em reais. Permite exposição a empresas como Apple e Amazon sem conta no exterior. Risco cambial embutido.",
+        },
+        {
+          term: "ETF",
+          nivel: "C-Pro R",
+          def: "Exchange Traded Fund. Fundo de gestão passiva que replica um índice (ex: Ibovespa). Negociado em bolsa como ação. Taxas menores que fundos ativos. Sem come-cotas. IR 15% sobre ganho de capital.",
+        },
+        {
+          term: "FIP",
+          nivel: "C-Pro I",
+          def: "Fundo de Investimento em Participações. Investe em empresas fechadas (private equity/VC) com participação ativa na gestão. Baixa liquidez, fundo fechado. Destinado a investidores qualificados.",
+        },
+      ];
+      function renderGlossary(filter = "") {
+        const filtered = glossaryItems.filter(
+          (g) =>
+            !filter ||
+            g.term.toLowerCase().includes(filter.toLowerCase()) ||
+            g.def.toLowerCase().includes(filter.toLowerCase()),
+        );
+        const modColors = {
+          CPA: "var(--cpa)",
+          "C-Pro R": "var(--cpror)",
+          "C-Pro I": "var(--cproi)",
+        };
+        document.getElementById("glossary-list").innerHTML = filtered
+          .map(
+            (g) => `
+    <div class="gloss-item">
+      <div class="gloss-term">${g.term}<span style="font-size:.65rem;padding:.1rem .45rem;border-radius:20px;font-weight:700;background:rgba(255,255,255,.06);color:${modColors[g.nivel] || "var(--muted)"}">${g.nivel}</span></div>
+      <div class="gloss-def">${g.def}</div>
+    </div>`,
+          )
+          .join("");
+      }
+      function filterGlossary(v) {
+        renderGlossary(v);
+      }
+
+      // INIT
+      updateAll();
+    </script>
+  </body>
+</html>

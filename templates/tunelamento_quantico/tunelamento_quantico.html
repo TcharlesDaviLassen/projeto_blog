@@ -1,0 +1,2112 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tunelamento Quântico — O Efeito Túnel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #04080f;
+        --bg2: #080e1a;
+        --bg3: #0d1525;
+        --surface: #111827;
+        --surface2: #1a2540;
+        --accent: #38bdf8;
+        --accent2: #818cf8;
+        --accent3: #34d399;
+        --gold: #fbbf24;
+        --danger: #f87171;
+        --text: #e2e8f0;
+        --text2: #94a3b8;
+        --text3: #64748b;
+        --border: rgba(56, 189, 248, 0.12);
+        --border2: rgba(56, 189, 248, 0.25);
+        --glow: rgba(56, 189, 248, 0.08);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter", sans-serif;
+        font-weight: 300;
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+
+      /* ─── STARFIELD CANVAS ─── */
+      #stars-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.5;
+      }
+
+      /* ─── LAYOUT ─── */
+      .wrapper {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ─── HERO ─── */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 4rem 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 50%,
+          rgba(56, 189, 248, 0.06) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .hero-eyebrow {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--accent);
+        opacity: 0.85;
+        margin-bottom: 2rem;
+        animation: fadeUp 1s ease 0.2s both;
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(3rem, 10vw, 7.5rem);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: #fff;
+        text-shadow: 0 0 80px rgba(56, 189, 248, 0.3);
+        animation: fadeUp 1s ease 0.4s both;
+      }
+
+      .hero-title span {
+        color: var(--accent);
+      }
+
+      .hero-subtitle {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: clamp(1rem, 2.5vw, 1.45rem);
+        color: var(--text2);
+        margin-top: 1.5rem;
+        max-width: 680px;
+        animation: fadeUp 1s ease 0.6s both;
+      }
+
+      .hero-cta {
+        margin-top: 3.5rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        animation: fadeUp 1s ease 0.8s both;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.85rem 2rem;
+        border-radius: 2px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: all 0.25s ease;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: var(--bg);
+        font-weight: 700;
+      }
+      .btn-primary:hover {
+        background: #7dd3fc;
+        transform: translateY(-2px);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--border2);
+        color: var(--accent);
+      }
+      .btn-outline:hover {
+        background: var(--glow);
+        border-color: var(--accent);
+      }
+
+      /* ─── SCROLL INDICATOR ─── */
+      .scroll-hint {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        opacity: 0.4;
+        animation: fadeUp 1s ease 1.2s both;
+      }
+      .scroll-hint span {
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .scroll-arrow {
+        width: 1px;
+        height: 48px;
+        background: linear-gradient(to bottom, var(--accent), transparent);
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+
+      /* ─── TUNNEL ANIMATION ─── */
+      .tunnel-visual {
+        width: min(520px, 90vw);
+        height: 180px;
+        position: relative;
+        margin: 3rem auto 1rem;
+        animation: fadeUp 1s ease 1s both;
+      }
+
+      .tunnel-visual svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+
+      /* ─── SECTIONS ─── */
+      .section {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 5rem 2rem;
+      }
+
+      .section-full {
+        padding: 5rem 2rem;
+        position: relative;
+      }
+
+      .section-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--accent);
+        opacity: 0.7;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .section-tag::after {
+        content: "";
+        flex: 1;
+        max-width: 40px;
+        height: 1px;
+        background: var(--accent);
+        opacity: 0.4;
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .section-title em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .lead {
+        font-size: 1.15rem;
+        color: var(--text2);
+        line-height: 1.9;
+        max-width: 680px;
+      }
+
+      p {
+        color: var(--text2);
+        line-height: 1.9;
+        margin-bottom: 1.25rem;
+        font-size: 1.02rem;
+      }
+      p strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      /* ─── DIVIDER ─── */
+      .divider {
+        border: none;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--border2),
+          transparent
+        );
+        margin: 0;
+      }
+
+      /* ─── QUOTE BLOCK ─── */
+      .blockquote {
+        border-left: 2px solid var(--accent);
+        padding: 1.25rem 2rem;
+        margin: 3rem 0;
+        background: rgba(56, 189, 248, 0.04);
+      }
+
+      .blockquote p {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: 1.25rem;
+        color: var(--text);
+        margin: 0 0 0.75rem;
+        line-height: 1.7;
+      }
+
+      .blockquote cite {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        color: var(--text3);
+        text-transform: uppercase;
+      }
+
+      /* ─── MATH BLOCK ─── */
+      .math-block {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 4px 4px 0;
+        padding: 1.5rem 2rem;
+        margin: 2rem 0;
+        overflow-x: auto;
+      }
+
+      .math-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        opacity: 0.7;
+        margin-bottom: 0.75rem;
+      }
+
+      .math-eq {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(1rem, 3vw, 1.45rem);
+        color: #fff;
+        letter-spacing: 0.05em;
+      }
+
+      .math-vars {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      .math-var {
+        font-family: "Space Mono", monospace;
+        font-size: 0.78rem;
+        color: var(--text3);
+      }
+
+      .math-var strong {
+        color: var(--accent);
+      }
+
+      /* ─── COMPARISON TABLE ─── */
+      .table-wrapper {
+        overflow-x: auto;
+        margin: 2.5rem 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.92rem;
+      }
+
+      thead tr {
+        border-bottom: 1px solid var(--border2);
+      }
+
+      th {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        padding: 0.85rem 1rem;
+        text-align: left;
+        font-weight: 400;
+      }
+
+      td {
+        padding: 0.85rem 1rem;
+        color: var(--text2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        vertical-align: top;
+      }
+
+      tr:hover td {
+        background: rgba(56, 189, 248, 0.03);
+      }
+      td:first-child {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      /* ─── PHYSICIST CARDS ─── */
+      .physicists-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.25rem;
+        margin: 2.5rem 0;
+      }
+
+      .physicist-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .physicist-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(to right, var(--accent), var(--accent2));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+      }
+
+      .physicist-card:hover::before {
+        transform: scaleX(1);
+      }
+      .physicist-card:hover {
+        border-color: var(--border2);
+        transform: translateY(-3px);
+      }
+
+      .physicist-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        color: #fff;
+        margin-bottom: 0.35rem;
+      }
+
+      .physicist-year {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--accent);
+        letter-spacing: 0.15em;
+        margin-bottom: 0.85rem;
+      }
+
+      .physicist-desc {
+        font-size: 0.88rem;
+        color: var(--text3);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /* ─── FACT CARDS ─── */
+      .facts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin: 2.5rem 0;
+      }
+
+      .fact-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 1.75rem;
+        position: relative;
+      }
+
+      .fact-number {
+        font-family: "Playfair Display", serif;
+        font-size: 3.5rem;
+        color: var(--accent);
+        opacity: 0.12;
+        position: absolute;
+        top: 0.75rem;
+        right: 1rem;
+        line-height: 1;
+        font-weight: 700;
+      }
+
+      .fact-icon {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .fact-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+      }
+
+      .fact-text {
+        font-size: 0.88rem;
+        color: var(--text3);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /* ─── DARK BAND ─── */
+      .band {
+        background: var(--bg2);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .band-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 5rem 2rem;
+      }
+
+      /* ─── INTERACTIVE TUNNEL ─── */
+      .tunnel-demo {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 2rem;
+        margin: 2.5rem 0;
+      }
+
+      .demo-title {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+      }
+
+      .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .control-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .control-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--text3);
+        min-width: 160px;
+        flex-shrink: 0;
+      }
+
+      .control-label strong {
+        color: var(--accent);
+      }
+
+      input[type="range"] {
+        flex: 1;
+        min-width: 120px;
+        -webkit-appearance: none;
+        height: 3px;
+        background: var(--surface2);
+        border-radius: 2px;
+        outline: none;
+        cursor: pointer;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--accent);
+        cursor: pointer;
+        transition: transform 0.1s;
+      }
+
+      input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.3);
+      }
+
+      .control-value {
+        font-family: "Space Mono", monospace;
+        font-size: 0.85rem;
+        color: #fff;
+        min-width: 60px;
+        text-align: right;
+      }
+
+      .tunnel-canvas-wrap {
+        position: relative;
+        height: 120px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 1.25rem;
+      }
+
+      #tunnelCanvas {
+        width: 100%;
+        height: 100%;
+      }
+
+      .prob-display {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .prob-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--text3);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .prob-value {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: var(--accent3);
+        font-weight: 700;
+      }
+
+      .prob-bar-wrap {
+        flex: 1;
+        min-width: 120px;
+        height: 4px;
+        background: var(--surface2);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .prob-bar {
+        height: 100%;
+        background: var(--accent3);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+
+      /* ─── TIMELINE ─── */
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+        margin: 2.5rem 0;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          var(--accent),
+          var(--accent2),
+          transparent
+        );
+        opacity: 0.3;
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-bottom: 2.5rem;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -2rem;
+        top: 0.5rem;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+      }
+
+      .timeline-year {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--accent);
+        letter-spacing: 0.15em;
+        margin-bottom: 0.35rem;
+      }
+
+      .timeline-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.1rem;
+        color: #fff;
+        margin-bottom: 0.35rem;
+      }
+
+      .timeline-text {
+        font-size: 0.9rem;
+        color: var(--text3);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /* ─── APPLICATIONS ─── */
+      .apps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin: 2.5rem 0;
+      }
+
+      .app-item {
+        background: var(--bg);
+        padding: 1.75rem 1.5rem;
+        transition: background 0.2s;
+        cursor: default;
+      }
+
+      .app-item:hover {
+        background: var(--surface);
+      }
+
+      .app-emoji {
+        font-size: 1.75rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .app-name {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 0.4rem;
+      }
+
+      .app-desc {
+        font-size: 0.82rem;
+        color: var(--text3);
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      /* ─── PHILOSOPHY SECTION ─── */
+      .philosophy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2.5rem 0;
+      }
+
+      .philo-card {
+        padding: 2rem;
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+        transition: border-color 0.25s;
+      }
+
+      .philo-card:hover {
+        border-color: var(--border2);
+      }
+
+      .philo-card::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .philo-card:nth-child(1)::after {
+        background: var(--accent);
+      }
+      .philo-card:nth-child(2)::after {
+        background: var(--accent2);
+      }
+      .philo-card:nth-child(3)::after {
+        background: var(--accent3);
+      }
+      .philo-card:nth-child(4)::after {
+        background: var(--gold);
+      }
+      .philo-card:hover::after {
+        opacity: 1;
+      }
+
+      .philo-q {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: 0.85rem;
+        line-height: 1.55;
+      }
+
+      .philo-a {
+        font-size: 0.88rem;
+        color: var(--text3);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /* ─── CLOSING ─── */
+      .closing {
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 6rem 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .closing::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 60% 60% at 50% 50%,
+          rgba(129, 140, 248, 0.07) 0%,
+          transparent 70%
+        );
+      }
+
+      .closing-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 6vw, 4.5rem);
+        color: #fff;
+        line-height: 1.15;
+        max-width: 720px;
+        margin-bottom: 2rem;
+      }
+
+      .closing-text {
+        max-width: 620px;
+        font-size: 1.05rem;
+        color: var(--text2);
+        line-height: 1.9;
+        margin-bottom: 1.25rem;
+      }
+
+      .closing-line {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: 1.3rem;
+        color: var(--accent);
+        margin-top: 2rem;
+      }
+
+      /* ─── FOOTER ─── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2.5rem 2rem;
+        text-align: center;
+      }
+
+      .footer-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .footer-brand {
+        font-family: "Playfair Display", serif;
+        font-size: 1.1rem;
+        color: var(--text2);
+      }
+      .footer-sub {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--text3);
+        letter-spacing: 0.15em;
+        margin-top: 0.5rem;
+      }
+
+      /* ─── NAV ─── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(4, 8, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        transition: padding 0.3s;
+      }
+
+      .nav-logo {
+        font-family: "Space Mono", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--text3);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      @media (max-width: 640px) {
+        .nav-links {
+          display: none;
+        }
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 0.9;
+        }
+      }
+
+      @keyframes particleMove {
+        0% {
+          transform: translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(var(--travel));
+          opacity: 0;
+        }
+      }
+
+      /* Reveal on scroll */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Glowing number */
+      .glow-num {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--accent3);
+        letter-spacing: 0.1em;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="nav-logo">Efeito Túnel</a>
+      <ul class="nav-links">
+        <li><a href="#o-que-e">O Fenômeno</a></li>
+        <li><a href="#matematica">Matemática</a></li>
+        <li><a href="#sol">O Sol</a></li>
+        <li><a href="#tecnologia">Tecnologia</a></li>
+        <li><a href="#filosofia">Filosofia</a></li>
+      </ul>
+    </nav>
+
+    <div class="wrapper">
+      <!-- HERO -->
+      <section class="hero">
+        <p class="hero-eyebrow">Mecânica Quântica · Documentário Científico</p>
+        <h1 class="hero-title">Tunelamento<br /><span>Quântico</span></h1>
+        <p class="hero-subtitle">
+          Quando partículas atravessam o impossível — e revelam que a realidade
+          é feita de probabilidades, não de certezas.
+        </p>
+
+        <!-- Tunnel SVG animation -->
+        <div class="tunnel-visual">
+          <svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0" />
+                <stop offset="40%" stop-color="#38bdf8" stop-opacity="1" />
+                <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.3" />
+                <stop offset="100%" stop-color="#34d399" stop-opacity="0.8" />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  stdDeviation="3"
+                  result="blur"
+                />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Barrier -->
+            <rect
+              x="220"
+              y="20"
+              width="40"
+              height="120"
+              fill="rgba(99,102,241,0.15)"
+              stroke="rgba(99,102,241,0.4)"
+              stroke-width="1"
+            />
+            <text
+              x="240"
+              y="14"
+              text-anchor="middle"
+              font-family="Space Mono,monospace"
+              font-size="9"
+              fill="#818cf8"
+              letter-spacing="0.1em"
+            >
+              BARREIRA V₀
+            </text>
+
+            <!-- Incoming wave (left) -->
+            <g filter="url(#glow)">
+              <path
+                id="waveL"
+                d=""
+                fill="none"
+                stroke="#38bdf8"
+                stroke-width="2.5"
+                opacity="0.9"
+              />
+            </g>
+            <!-- Evanescent inside barrier -->
+            <g filter="url(#glow)">
+              <path
+                id="waveM"
+                d=""
+                fill="none"
+                stroke="#a78bfa"
+                stroke-width="1.5"
+                opacity="0.7"
+                stroke-dasharray="4 3"
+              />
+            </g>
+            <!-- Transmitted wave (right) -->
+            <g filter="url(#glow)">
+              <path
+                id="waveR"
+                d=""
+                fill="none"
+                stroke="#34d399"
+                stroke-width="2"
+                opacity="0.8"
+              />
+            </g>
+
+            <!-- Reflected wave label -->
+            <text
+              x="100"
+              y="148"
+              text-anchor="middle"
+              font-family="Space Mono,monospace"
+              font-size="8"
+              fill="#38bdf8"
+              opacity="0.6"
+            >
+              onda incidente
+            </text>
+            <text
+              x="385"
+              y="148"
+              text-anchor="middle"
+              font-family="Space Mono,monospace"
+              font-size="8"
+              fill="#34d399"
+              opacity="0.6"
+            >
+              onda transmitida
+            </text>
+            <text
+              x="240"
+              y="148"
+              text-anchor="middle"
+              font-family="Space Mono,monospace"
+              font-size="8"
+              fill="#a78bfa"
+              opacity="0.6"
+            >
+              decaimento exp.
+            </text>
+
+            <!-- Energy label -->
+            <line
+              x1="30"
+              y1="80"
+              x2="215"
+              y2="80"
+              stroke="#38bdf8"
+              stroke-width="0.5"
+              stroke-dasharray="3 3"
+              opacity="0.3"
+            />
+            <text
+              x="18"
+              y="84"
+              font-family="Space Mono,monospace"
+              font-size="9"
+              fill="#38bdf8"
+              opacity="0.5"
+            >
+              E
+            </text>
+            <line
+              x1="265"
+              y1="50"
+              x2="265"
+              y2="130"
+              stroke="#818cf8"
+              stroke-width="0.5"
+              opacity="0.4"
+            />
+            <text
+              x="268"
+              y="47"
+              font-family="Space Mono,monospace"
+              font-size="9"
+              fill="#818cf8"
+              opacity="0.5"
+            >
+              V₀
+            </text>
+          </svg>
+        </div>
+
+        <div class="hero-cta">
+          <a href="#o-que-e" class="btn btn-primary">Explorar ↓</a>
+          <a href="#matematica" class="btn btn-outline">Ver Matemática</a>
+        </div>
+
+        <div class="scroll-hint">
+          <span>Role</span>
+          <div class="scroll-arrow"></div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SECTION 1 — O QUE É -->
+      <section id="o-que-e" class="section">
+        <div class="reveal">
+          <p class="section-tag">Capítulo I</p>
+          <h2 class="section-title">
+            O Fenômeno que<br /><em>Quebra a Intuição</em>
+          </h2>
+          <p class="lead">
+            Uma partícula subatômica se aproxima de uma barreira que ela
+            classicamente não poderia atravessar. E atravessa. Sem furar a
+            barreira. Sem ter energia suficiente. Simplesmente aparece do outro
+            lado.
+          </p>
+        </div>
+
+        <div class="reveal" style="transition-delay: 0.1s">
+          <div class="blockquote">
+            <p>
+              "Se você não ficou chocado com a mecânica quântica, é porque não a
+              entendeu."
+            </p>
+            <cite>— Niels Bohr</cite>
+          </div>
+        </div>
+
+        <div class="reveal" style="transition-delay: 0.2s">
+          <p>
+            No mundo clássico — o mundo das bolas de bilhar, dos automóveis, dos
+            planetas — obstáculos são obstáculos. Uma partícula com energia E
+            menor que a altura da barreira V₀ <strong>jamais atravessa</strong>.
+            É refletida. Volta. Ponto final.
+          </p>
+          <p>
+            Na mecânica quântica, essa lógica colapsa. A partícula não é um
+            objeto pontual com posição e velocidade bem definidas. Ela é
+            descrita por uma <strong>função de onda</strong> — uma entidade
+            matemática que se estende pelo espaço, penetra em regiões proibidas
+            e emerge do outro lado com probabilidade não nula.
+          </p>
+          <p>
+            Isso é o <strong>Tunelamento Quântico</strong>. E acontece agora —
+            dentro do seu processador, no coração do Sol, nas enzimas das suas
+            células.
+          </p>
+        </div>
+
+        <div class="reveal" style="transition-delay: 0.3s">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Propriedade</th>
+                  <th>Física Clássica</th>
+                  <th>Mecânica Quântica</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Trajetória</td>
+                  <td>Determinística, bem definida</td>
+                  <td>Probabilística — função de onda</td>
+                </tr>
+                <tr>
+                  <td>Diante de barreiras (E &lt; V₀)</td>
+                  <td>Reflexão total, 100%</td>
+                  <td>Probabilidade de transmissão ≠ 0</td>
+                </tr>
+                <tr>
+                  <td>Natureza</td>
+                  <td>Corpuscular (ponto)</td>
+                  <td>Dualidade onda-partícula</td>
+                </tr>
+                <tr>
+                  <td>Determinismo</td>
+                  <td>Absoluto</td>
+                  <td>Fundamentalmente probabilístico</td>
+                </tr>
+                <tr>
+                  <td>Superposição</td>
+                  <td>Impossível</td>
+                  <td>Fundamental</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SECTION 2 — MATEMÁTICA -->
+      <section id="matematica" class="band">
+        <div class="band-inner">
+          <div class="reveal">
+            <p class="section-tag">Capítulo II</p>
+            <h2 class="section-title">A <em>Matemática</em> do Impossível</h2>
+            <p>
+              A equação que governa todo o universo quântico é a equação de
+              Schrödinger. Ela descreve como a função de onda Ψ evolui no tempo
+              — e prevê explicitamente o tunelamento.
+            </p>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.1s">
+            <div class="math-block">
+              <div class="math-label">Equação de Schrödinger</div>
+              <div class="math-eq">iℏ ∂Ψ/∂t = ĤΨ(x,t)</div>
+              <div class="math-vars">
+                <div class="math-var">
+                  <strong>i</strong> = unidade imaginária (√−1)
+                </div>
+                <div class="math-var">
+                  <strong>ℏ</strong> = constante de Planck reduzida ≈ 1,055 ×
+                  10⁻³⁴ J·s
+                </div>
+                <div class="math-var">
+                  <strong>Ψ(x,t)</strong> = função de onda — distribuição de
+                  probabilidade
+                </div>
+                <div class="math-var">
+                  <strong>Ĥ</strong> = operador hamiltoniano — energia total do
+                  sistema
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.15s">
+            <div class="math-block">
+              <div class="math-label">Barreira de Potencial Retangular</div>
+              <div class="math-eq">
+                V(x) = {0, se x &lt; 0 | V₀, se 0 ≤ x ≤ a | 0, se x &gt; a}
+              </div>
+              <div class="math-vars">
+                <div class="math-var">
+                  <strong>V₀</strong> = altura da barreira de potencial
+                </div>
+                <div class="math-var">
+                  <strong>a</strong> = largura da barreira — fator mais crítico
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.2s">
+            <div class="math-block">
+              <div class="math-label">
+                Coeficiente de Transmissão (aproximação de barreira opaca)
+              </div>
+              <div class="math-eq">T ≈ e<sup>−2κa</sup></div>
+              <div class="math-vars">
+                <div class="math-var">
+                  <strong>κ</strong> = √(2m(V₀ − E)) / ℏ
+                </div>
+                <div class="math-var">
+                  <strong>m</strong> = massa da partícula (↑ massa → ↓
+                  tunelamento)
+                </div>
+                <div class="math-var">
+                  <strong>E</strong> = energia cinética da partícula (↑ E → ↑
+                  tunelamento)
+                </div>
+                <div class="math-var">
+                  <strong>a</strong> = largura da barreira (dependência
+                  exponencial — mais crítico)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTERACTIVE DEMO -->
+          <div class="reveal" style="transition-delay: 0.3s">
+            <div class="tunnel-demo">
+              <div class="demo-title">
+                ⬡ Simulador — Probabilidade de Tunelamento
+              </div>
+              <div class="controls">
+                <div class="control-row">
+                  <span class="control-label"
+                    >Largura da barreira <strong>a</strong></span
+                  >
+                  <input
+                    type="range"
+                    id="sliderA"
+                    min="1"
+                    max="20"
+                    value="5"
+                    step="0.5"
+                  />
+                  <span class="control-value" id="valA">0.5 nm</span>
+                </div>
+                <div class="control-row">
+                  <span class="control-label">Energia V₀ − E</span>
+                  <input
+                    type="range"
+                    id="sliderV"
+                    min="1"
+                    max="30"
+                    value="10"
+                    step="1"
+                  />
+                  <span class="control-value" id="valV">1.0 eV</span>
+                </div>
+              </div>
+
+              <div class="tunnel-canvas-wrap">
+                <canvas id="tunnelCanvas"></canvas>
+              </div>
+
+              <div class="prob-display">
+                <span class="prob-label">Probabilidade T</span>
+                <span class="prob-value" id="probVal">—</span>
+                <div class="prob-bar-wrap">
+                  <div class="prob-bar" id="probBar" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SECTION 3 — HISTÓRIA -->
+      <section class="section">
+        <div class="reveal">
+          <p class="section-tag">Capítulo III</p>
+          <h2 class="section-title">
+            Os Gigantes que<br /><em>Descobriram o Abismo</em>
+          </h2>
+          <p>
+            A mecânica quântica não foi inventada por um único gênio. Nasceu do
+            esforço coletivo de mentes extraordinárias que enfrentaram o
+            desconcertante com coragem intelectual.
+          </p>
+        </div>
+
+        <div class="reveal" style="transition-delay: 0.15s">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">1900</div>
+              <div class="timeline-name">Max Planck</div>
+              <p class="timeline-text">
+                Postula que energia é emitida em quanta discretos: E = hν. Nasce
+                a mecânica quântica — contra a vontade do próprio Planck, que
+                considerou a ideia "um truque matemático desesperado".
+              </p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1913</div>
+              <div class="timeline-name">Niels Bohr</div>
+              <p class="timeline-text">
+                Propõe o modelo do átomo com órbitas quantizadas e elétrons que
+                saltam entre níveis sem irradiar continuamente — contradizendo
+                toda a eletrodinâmica clássica.
+              </p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1926</div>
+              <div class="timeline-name">Erwin Schrödinger</div>
+              <p class="timeline-text">
+                Deriva a equação de onda que governa a mecânica quântica.
+                Aplicada a barreiras de potencial, a solução matemática prevê
+                explicitamente o tunelamento — a função de onda não zera dentro
+                da barreira.
+              </p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1927</div>
+              <div class="timeline-name">Werner Heisenberg</div>
+              <p class="timeline-text">
+                Enuncia o Princípio da Incerteza: ΔxΔp ≥ ℏ/2. A incerteza não é
+                ignorância — é a estrutura da realidade. Posição e momento não
+                podem ser conhecidos simultaneamente com precisão arbitrária.
+              </p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1928</div>
+              <div class="timeline-name">George Gamow</div>
+              <p class="timeline-text">
+                Explica o decaimento alfa radioativo pelo tunelamento quântico —
+                a primeira aplicação física do efeito. O modelo prevê
+                quantitativamente as meias-vidas de dezenas de radionuclídeos,
+                estabelecendo o tunelamento como fenômeno físico real.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal" style="transition-delay: 0.2s">
+          <div class="physicists-grid">
+            <div class="physicist-card">
+              <div class="physicist-name">Max Planck</div>
+              <div class="physicist-year">Nobel 1918 · E = hν</div>
+              <p class="physicist-desc">
+                Fundador involuntário da mecânica quântica. Quantizou a energia
+                para resolver a catástrofe ultravioleta, abrindo um universo que
+                ele mesmo relutou em aceitar.
+              </p>
+            </div>
+            <div class="physicist-card">
+              <div class="physicist-name">Niels Bohr</div>
+              <div class="physicist-year">Nobel 1922 · Modelo Atômico</div>
+              <p class="physicist-desc">
+                Criador do modelo quântico do átomo. Defensor da Interpretação
+                de Copenhague — a visão de que a realidade é fundamentalmente
+                probabilística.
+              </p>
+            </div>
+            <div class="physicist-card">
+              <div class="physicist-name">Werner Heisenberg</div>
+              <div class="physicist-year">Nobel 1932 · Incerteza</div>
+              <p class="physicist-desc">
+                Formulou o princípio da incerteza e a mecânica matricial.
+                Demonstrou que o determinismo absoluto é incompatível com a
+                natureza quântica.
+              </p>
+            </div>
+            <div class="physicist-card">
+              <div class="physicist-name">Erwin Schrödinger</div>
+              <div class="physicist-year">Nobel 1933 · Equação de Onda</div>
+              <p class="physicist-desc">
+                Derivou a equação que governa toda a mecânica quântica. Sua
+                famosa equação prevê explicitamente o tunelamento através de
+                barreiras de potencial.
+              </p>
+            </div>
+            <div class="physicist-card">
+              <div class="physicist-name">George Gamow</div>
+              <div class="physicist-year">1928 · Decaimento Alfa</div>
+              <p class="physicist-desc">
+                Primeiro a aplicar o tunelamento a um fenômeno físico real. Seu
+                modelo do decaimento alfa transformou o efeito túnel de
+                curiosidade matemática em física experimental.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SECTION 4 — O SOL -->
+      <section id="sol" class="band">
+        <div class="band-inner">
+          <div class="reveal">
+            <p class="section-tag">Capítulo IV</p>
+            <h2 class="section-title">Por Que o<br /><em>Sol Existe</em></h2>
+            <p class="lead">
+              Sem o tunelamento quântico, o Sol seria 10⁴⁰ vezes menos
+              brilhante. A vida na Terra seria impossível. Você não existiria.
+            </p>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.1s">
+            <p>
+              No núcleo solar (T ≈ 15 × 10⁶ K), prótons colidem continuamente.
+              Para se fundirem, precisam superar a
+              <strong>Barreira de Coulomb</strong> — a repulsão eletrostática
+              entre cargas positivas.
+            </p>
+            <p>
+              O problema: a energia cinética média dos prótons a essa
+              temperatura é de apenas ~1,9 keV. A barreira de Coulomb à
+              distância de fusão tem altura de ~1,44 MeV.
+            </p>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.15s">
+            <div class="math-block">
+              <div class="math-label">
+                Força de Coulomb — Repulsão entre prótons
+              </div>
+              <div class="math-eq">F = k · q₁q₂ / r²</div>
+              <div class="math-vars">
+                <div class="math-var">
+                  <strong>k</strong> = 8,99 × 10⁹ N·m²/C² (constante de Coulomb)
+                </div>
+                <div class="math-var">
+                  <strong>q₁, q₂</strong> = cargas dos prótons (cada = +1,6 ×
+                  10⁻¹⁹ C)
+                </div>
+                <div class="math-var">
+                  <strong>r</strong> = distância — quanto menor, maior a
+                  repulsão
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.2s">
+            <div class="math-block">
+              <div class="math-label">Einstein — Energia da Fusão Nuclear</div>
+              <div class="math-eq">E = mc²</div>
+              <div class="math-vars">
+                <div class="math-var">
+                  <strong>Δm</strong> = diferença de massa entre reagentes e
+                  produtos
+                </div>
+                <div class="math-var">
+                  <strong>c</strong> = 3 × 10⁸ m/s (velocidade da luz)
+                </div>
+                <div class="math-var">
+                  4 prótons → ⁴He + 27,2 MeV | O Sol converte 4 × 10⁶ t de
+                  massa/segundo
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.25s">
+            <p>
+              A barreira é <strong>~750 vezes maior</strong> que a energia
+              disponível. Classicamente, a fusão solar seria impossível — e o
+              Sol não existiria.
+            </p>
+            <p>
+              O tunelamento quântico salva o Sol. Prótons não precisam chegar ao
+              topo da barreira. A função de onda penetra exponencialmente e
+              emerge do outro lado com probabilidade minúscula — mas amplificada
+              por 10⁵⁷ pares de prótons em colisão contínua. O resultado:
+              <strong>uma estrela que brilha por 10 bilhões de anos</strong>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SECTION 5 — TECNOLOGIA -->
+      <section id="tecnologia" class="section">
+        <div class="reveal">
+          <p class="section-tag">Capítulo V</p>
+          <h2 class="section-title">
+            O Efeito Túnel<br /><em>no Seu Bolso</em>
+          </h2>
+          <p>
+            O fenômeno que parecia curiosidade de laboratório tornou-se a base
+            de tecnologias que definem a civilização moderna.
+          </p>
+        </div>
+
+        <div class="reveal" style="transition-delay: 0.1s">
+          <div class="apps-grid">
+            <div class="app-item">
+              <div class="app-emoji">🔬</div>
+              <div class="app-name">Microscópio STM</div>
+              <p class="app-desc">
+                Imagens de átomos individuais usando corrente de tunelamento.
+                Resolução subangstrom. Nobel de Física 1986 (Binnig & Rohrer).
+              </p>
+            </div>
+            <div class="app-item">
+              <div class="app-emoji">💾</div>
+              <div class="app-name">Memória Flash</div>
+              <p class="app-desc">
+                SSDs, pendrives e cartões de memória gravam dados por
+                tunelamento Fowler-Nordheim de elétrons em floating gates.
+              </p>
+            </div>
+            <div class="app-item">
+              <div class="app-emoji">⚛️</div>
+              <div class="app-name">Qubits Supercondutores</div>
+              <p class="app-desc">
+                IBM Quantum e Google baseiam seus qubits em junções Josephson —
+                tunelamento de pares de Cooper entre supercondutores.
+              </p>
+            </div>
+            <div class="app-item">
+              <div class="app-emoji">📱</div>
+              <div class="app-name">Chips Nanométricos</div>
+              <p class="app-desc">
+                Em transistores de 3nm, correntes de tunelamento indesejadas são
+                um dos maiores desafios da engenharia de semicondutores.
+              </p>
+            </div>
+            <div class="app-item">
+              <div class="app-emoji">🧲</div>
+              <div class="app-name">SQUIDs</div>
+              <p class="app-desc">
+                Sensores magnéticos de femtotesla baseados em junções Josephson.
+                Mapeiam atividade cerebral por magnetoencefalografia.
+              </p>
+            </div>
+            <div class="app-item">
+              <div class="app-emoji">☢️</div>
+              <div class="app-name">Energia Nuclear</div>
+              <p class="app-desc">
+                Todo decaimento radioativo — base da energia nuclear e da
+                medicina nuclear — é governado pelo tunelamento quântico.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SECTION 6 — FILOSOFIA -->
+      <section id="filosofia" class="band">
+        <div class="band-inner">
+          <div class="reveal">
+            <p class="section-tag">Capítulo VI</p>
+            <h2 class="section-title">
+              A Realidade é<br /><em>Feita de Possibilidades?</em>
+            </h2>
+            <p>
+              O tunelamento quântico não é apenas física. É uma provocação
+              filosófica sobre a natureza da realidade, do determinismo e dos
+              limites do conhecimento humano.
+            </p>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.1s">
+            <div class="philosophy-grid">
+              <div class="philo-card">
+                <div class="philo-q">"O universo é determinístico?"</div>
+                <p class="philo-a">
+                  O Princípio da Incerteza de Heisenberg diz que não. A
+                  probabilidade quântica é fundamental — não ignorância. O
+                  universo é genuinamente aberto em seu nível mais básico.
+                </p>
+              </div>
+              <div class="philo-card">
+                <div class="philo-q">"O que existe antes de uma medição?"</div>
+                <p class="philo-a">
+                  Na Interpretação de Copenhague: nada definido. A partícula
+                  existe em superposição até ser medida. A realidade não é
+                  descoberta — é criada pelo ato de observar.
+                </p>
+              </div>
+              <div class="philo-card">
+                <div class="philo-q">
+                  "E se todos os resultados ocorressem?"
+                </div>
+                <p class="philo-a">
+                  A Interpretação de Muitos Mundos (Everett) propõe que o
+                  universo se bifurca a cada evento quântico. Em um ramo, a
+                  partícula tunelou. Em outro, foi refletida. Ambos existem.
+                </p>
+              </div>
+              <div class="philo-card">
+                <div class="philo-q">
+                  "O universo mesmo surgiu por tunelamento?"
+                </div>
+                <p class="philo-a">
+                  Modelos cosmológicos de Hartle-Hawking sugerem que o cosmos
+                  emergiu do nada por um processo análogo ao tunelamento
+                  quântico — uma singularidade de probabilidade atravessando a
+                  barreira entre a inexistência e a existência.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="transition-delay: 0.2s">
+            <div class="blockquote">
+              <p>
+                "Não apenas é o universo mais estranho do que imaginamos — é
+                mais estranho do que podemos imaginar."
+              </p>
+              <cite>— J.B.S. Haldane</cite>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SECTION 7 — CURIOSIDADES -->
+      <section class="section">
+        <div class="reveal">
+          <p class="section-tag">Capítulo VII</p>
+          <h2 class="section-title">
+            Fatos que<br /><em>Redefinem a Realidade</em>
+          </h2>
+        </div>
+        <div class="reveal" style="transition-delay: 0.1s">
+          <div class="facts-grid">
+            <div class="fact-card">
+              <div class="fact-number">01</div>
+              <div class="fact-icon">☀️</div>
+              <div class="fact-title">Você existe por causa do tunelamento</div>
+              <p class="fact-text">
+                Sem o efeito túnel, prótons não fundem no Sol. O Sol não
+                brilharia. A vida na Terra seria impossível.
+              </p>
+            </div>
+            <div class="fact-card">
+              <div class="fact-number">02</div>
+              <div class="fact-icon">🧬</div>
+              <div class="fact-title">Seu DNA tunela</div>
+              <p class="fact-text">
+                Prótons tunelarão entre pares de bases do DNA, contribuindo para
+                mutações espontâneas e, possivelmente, para a própria evolução
+                biológica.
+              </p>
+            </div>
+            <div class="fact-card">
+              <div class="fact-number">03</div>
+              <div class="fact-icon">💻</div>
+              <div class="fact-title">Chips modernos vazam quanticamente</div>
+              <p class="fact-text">
+                Em transistores de 3nm, correntes de tunelamento indesejadas
+                representam parcela significativa do consumo de energia dos
+                processadores.
+              </p>
+            </div>
+            <div class="fact-card">
+              <div class="fact-number">04</div>
+              <div class="fact-icon">🌌</div>
+              <div class="fact-title">
+                Buracos negros evaporam por tunelamento
+              </div>
+              <p class="fact-text">
+                A Radiação de Hawking — emissão térmica de buracos negros — é
+                gerada por um mecanismo análogo ao tunelamento no horizonte de
+                eventos.
+              </p>
+            </div>
+            <div class="fact-card">
+              <div class="fact-number">05</div>
+              <div class="fact-icon">👃</div>
+              <div class="fact-title">Seu olfato pode ser quântico</div>
+              <p class="fact-text">
+                Teorias recentes sugerem que receptores olfativos discriminam
+                moléculas por tunelamento eletrônico sensível a frequências de
+                vibração — não apenas por forma molecular.
+              </p>
+            </div>
+            <div class="fact-card">
+              <div class="fact-number">06</div>
+              <div class="fact-icon">⚗️</div>
+              <div class="fact-title">Enzimas usam tunelamento</div>
+              <p class="fact-text">
+                Prótons e elétrons tunelarão em reações enzimáticas, tornando
+                enzimas dezenas de ordens de grandeza mais eficientes do que
+                catalisadores clássicos permitiriam.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- CLOSING -->
+      <section class="closing">
+        <h2 class="closing-title reveal">A Parede Jamais Foi Sólida</h2>
+        <p class="closing-text reveal" style="transition-delay: 0.1s">
+          O universo, em seu nível mais fundamental, é uma névoa probabilística
+          de potencialidades. Não é feito de coisas sólidas — é feito de
+          <strong>possibilidades</strong>.
+        </p>
+        <p class="closing-text reveal" style="transition-delay: 0.2s">
+          O Sol brilha por tunelamento. Seu chip pensa por tunelamento. Seu DNA
+          evolui por tunelamento. E o universo inteiro pode ter surgido de um
+          evento de tunelamento cósmico — uma singularidade atravessando a
+          barreira entre a inexistência e a existência.
+        </p>
+        <p class="closing-line reveal" style="transition-delay: 0.3s">
+          No universo quântico,<br />improvável nunca significa impossível.
+        </p>
+      </section>
+
+      <!-- FOOTER -->
+      <footer>
+        <div class="footer-inner">
+          <div class="footer-brand">Tunelamento Quântico — O Efeito Túnel</div>
+          <div class="footer-sub">
+            Mecânica Quântica · Física Moderna · Filosofia da Ciência
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- .wrapper -->
+
+    <script>
+      // ─── STARFIELD ───────────────────────────────────────────────
+      const canvas = document.getElementById("stars-canvas");
+      const ctx = canvas.getContext("2d");
+      let stars = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function initStars(count = 200) {
+        stars = Array.from({ length: count }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.2,
+          alpha: Math.random() * 0.7 + 0.1,
+          speed: Math.random() * 0.3 + 0.05,
+        }));
+      }
+
+      function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(226,232,240,${s.alpha})`;
+          ctx.fill();
+          s.alpha += (Math.random() - 0.5) * 0.01;
+          s.alpha = Math.max(0.05, Math.min(0.9, s.alpha));
+        });
+      }
+
+      resizeCanvas();
+      initStars();
+      window.addEventListener("resize", () => {
+        resizeCanvas();
+        initStars();
+      });
+      setInterval(drawStars, 80);
+
+      // ─── WAVE ANIMATION ──────────────────────────────────────────
+      let t = 0;
+      const waveL = document.getElementById("waveL");
+      const waveM = document.getElementById("waveM");
+      const waveR = document.getElementById("waveR");
+
+      function buildWave() {
+        const amp = 22,
+          freq = 0.035;
+        const cy = 80;
+        // Left wave (incident)
+        let dL = `M 30 ${cy}`;
+        for (let x = 30; x <= 218; x++) {
+          dL += ` L ${x} ${cy + amp * Math.sin(freq * x - t)}`;
+        }
+        // Middle (evanescent — decaying exp)
+        let dM = `M 220 ${cy + amp * Math.sin(freq * 220 - t)}`;
+        for (let x = 220; x <= 258; x++) {
+          const decay = Math.exp(-0.09 * (x - 220));
+          dM += ` L ${x} ${cy + amp * decay * Math.sin(freq * x - t)}`;
+        }
+        // Right wave (transmitted, reduced amplitude)
+        let dR = `M 262 ${cy + amp * 0.22 * Math.sin(freq * 262 - t)}`;
+        for (let x = 262; x <= 490; x++) {
+          dR += ` L ${x} ${cy + amp * 0.22 * Math.sin(freq * x - t)}`;
+        }
+        if (waveL) waveL.setAttribute("d", dL);
+        if (waveM) waveM.setAttribute("d", dM);
+        if (waveR) waveR.setAttribute("d", dR);
+        t += 0.06;
+        requestAnimationFrame(buildWave);
+      }
+      buildWave();
+
+      // ─── TUNNEL SIMULATOR ────────────────────────────────────────
+      const tunnelCanvas = document.getElementById("tunnelCanvas");
+      const tc = tunnelCanvas ? tunnelCanvas.getContext("2d") : null;
+      const sliderA = document.getElementById("sliderA");
+      const sliderV = document.getElementById("sliderV");
+      const valA = document.getElementById("valA");
+      const valV = document.getElementById("valV");
+      const probVal = document.getElementById("probVal");
+      const probBar = document.getElementById("probBar");
+
+      let simT = 0;
+
+      function computeT(a_nm, dV_eV) {
+        const hbar = 1.055e-34;
+        const me = 9.109e-31;
+        const eV = 1.602e-19;
+        const a = a_nm * 1e-10;
+        const dV = dV_eV * eV;
+        const kappa = Math.sqrt(2 * me * dV) / hbar;
+        const T = Math.exp(-2 * kappa * a);
+        return T;
+      }
+
+      function drawTunnel() {
+        if (!tc) return;
+        const W = tunnelCanvas.clientWidth;
+        const H = tunnelCanvas.clientHeight;
+        tunnelCanvas.width = W;
+        tunnelCanvas.height = H;
+
+        const a = parseFloat(sliderA.value);
+        const v = parseFloat(sliderV.value);
+
+        // Barrier position: center
+        const bx = W * 0.42;
+        const bw = a * 5;
+
+        // Background
+        tc.fillStyle = "#04080f";
+        tc.fillRect(0, 0, W, H);
+
+        // Barrier
+        const bg = tc.createLinearGradient(bx, 0, bx + bw, 0);
+        bg.addColorStop(0, "rgba(99,102,241,0.25)");
+        bg.addColorStop(1, "rgba(99,102,241,0.08)");
+        tc.fillStyle = bg;
+        tc.fillRect(bx, 0, bw, H);
+        tc.strokeStyle = "rgba(99,102,241,0.4)";
+        tc.lineWidth = 0.5;
+        tc.strokeRect(bx, 0, bw, H);
+
+        const T = computeT(a * 0.1, v * 0.1);
+        const cy = H / 2;
+        const amp = H * 0.28;
+        const freq = 0.04;
+        const tAmplitude = Math.max(0.03, Math.min(1, T * 30));
+
+        // Left wave
+        tc.beginPath();
+        tc.moveTo(10, cy);
+        for (let x = 10; x < bx; x++) {
+          tc.lineTo(x, cy + amp * Math.sin(freq * x - simT));
+        }
+        tc.strokeStyle = "#38bdf8";
+        tc.lineWidth = 2;
+        tc.shadowColor = "#38bdf8";
+        tc.shadowBlur = 8;
+        tc.stroke();
+        tc.shadowBlur = 0;
+
+        // Evanescent (inside barrier)
+        tc.beginPath();
+        const startAmp = amp * Math.sin(freq * bx - simT);
+        tc.moveTo(bx, cy + startAmp);
+        for (let x = bx; x < bx + bw; x++) {
+          const decay = Math.exp(-0.1 * (x - bx));
+          tc.lineTo(x, cy + amp * decay * Math.sin(freq * x - simT));
+        }
+        tc.strokeStyle = "rgba(167,139,250,0.7)";
+        tc.lineWidth = 1.5;
+        tc.setLineDash([4, 3]);
+        tc.stroke();
+        tc.setLineDash([]);
+
+        // Transmitted wave
+        if (T > 1e-15) {
+          tc.beginPath();
+          const tx0 = bx + bw;
+          tc.moveTo(tx0, cy);
+          for (let x = tx0; x < W - 10; x++) {
+            tc.lineTo(x, cy + amp * tAmplitude * Math.sin(freq * x - simT));
+          }
+          tc.strokeStyle = "#34d399";
+          tc.lineWidth = 2;
+          tc.shadowColor = "#34d399";
+          tc.shadowBlur = 6;
+          tc.stroke();
+          tc.shadowBlur = 0;
+        }
+
+        // Update probability display
+        let displayT, barW, color;
+        if (T >= 0.01) {
+          displayT = (T * 100).toFixed(1) + "%";
+          barW = Math.min(100, T * 100);
+          color = "#34d399";
+        } else if (T >= 1e-10) {
+          displayT = T.toExponential(2);
+          barW = 1;
+          color = "#fbbf24";
+        } else {
+          displayT = "≈ 0";
+          barW = 0;
+          color = "#f87171";
+        }
+        if (probVal) {
+          probVal.textContent = displayT;
+          probVal.style.color = color;
+        }
+        if (probBar) {
+          probBar.style.width = barW + "%";
+          probBar.style.background = color;
+        }
+
+        simT += 0.05;
+        requestAnimationFrame(drawTunnel);
+      }
+
+      function updateLabels() {
+        const a = parseFloat(sliderA.value);
+        const v = parseFloat(sliderV.value);
+        if (valA) valA.textContent = (a * 0.1).toFixed(1) + " nm";
+        if (valV) valV.textContent = (v * 0.1).toFixed(1) + " eV";
+      }
+
+      if (sliderA) sliderA.addEventListener("input", updateLabels);
+      if (sliderV) sliderV.addEventListener("input", updateLabels);
+      updateLabels();
+      if (tc) drawTunnel();
+
+      // ─── SCROLL REVEAL ───────────────────────────────────────────
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
