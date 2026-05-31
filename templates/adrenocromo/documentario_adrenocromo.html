@@ -1,0 +1,1231 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      ADRENOCROMO — Ciência, História, Mitos e a Construção de uma Lenda Moderna
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0a090b;
+        --ink-2: #100e11;
+        --panel: #16131a;
+        --line: #322b38;
+        --bone: #ece6dc;
+        --bone-dim: #a99f93;
+        --bone-faint: #6f6659;
+        --blood: #c0392b;
+        --blood-deep: #7a211a;
+        --gold: #c7a25a;
+        --teal: #4fae9b;
+        --blue: #6c9fc4;
+        --violet: #a583c2;
+        --display: "Bodoni Moda", serif;
+        --body: "Newsreader", Georgia, serif;
+        --mono: "IBM Plex Mono", monospace;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--ink);
+        color: var(--bone);
+        font-family: var(--body);
+        font-weight: 300;
+        font-size: 19px;
+        line-height: 1.78;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      /* progress bar */
+      #progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0;
+        background: linear-gradient(90deg, var(--blood-deep), var(--blood));
+        z-index: 50;
+      }
+
+      /* grain */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 40;
+        opacity: 0.045;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      /* ---------- HERO ---------- */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 40px 24px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            60% 50% at 50% 35%,
+            rgba(192, 57, 43, 0.18),
+            transparent 70%
+          ),
+          radial-gradient(
+            120% 90% at 50% 120%,
+            rgba(0, 0, 0, 0.8),
+            transparent 60%
+          );
+      }
+      .hero .kicker {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--blood);
+        position: relative;
+        z-index: 2;
+        margin-bottom: 34px;
+      }
+      .hero h1 {
+        font-family: var(--display);
+        font-weight: 900;
+        font-size: clamp(56px, 13vw, 170px);
+        line-height: 0.86;
+        letter-spacing: -0.02em;
+        position: relative;
+        z-index: 2;
+        text-shadow: 0 0 80px rgba(192, 57, 43, 0.25);
+      }
+      .hero .tagline {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(18px, 2.6vw, 30px);
+        color: var(--bone-dim);
+        margin-top: 30px;
+        max-width: 24ch;
+        position: relative;
+        z-index: 2;
+        line-height: 1.3;
+      }
+      .hero .scroll {
+        position: absolute;
+        bottom: 38px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        color: var(--bone-faint);
+        text-transform: uppercase;
+        z-index: 2;
+        animation: bob 2.4s ease-in-out infinite;
+      }
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.5;
+        }
+        50% {
+          transform: translateY(8px);
+          opacity: 1;
+        }
+      }
+
+      /* ---------- LAYOUT ---------- */
+      article {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 26px;
+        position: relative;
+        z-index: 3;
+      }
+
+      /* chapter opener */
+      .chapter {
+        padding-top: 120px;
+      }
+      .chapter-mark {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+      .chapter-mark .no {
+        font-family: var(--display);
+        font-weight: 500;
+        font-style: italic;
+        font-size: 64px;
+        color: var(--blood);
+        line-height: 1;
+      }
+      .chapter-mark .rule {
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+      .chapter-mark .eyebrow {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--bone-faint);
+      }
+      .chapter h2 {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(32px, 5.5vw, 52px);
+        line-height: 1.02;
+        letter-spacing: -0.01em;
+        margin-bottom: 36px;
+      }
+      .chapter h2 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .sub {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin: 46px 0 16px;
+      }
+
+      p {
+        margin-bottom: 26px;
+      }
+      p.lead {
+        font-size: 23px;
+        line-height: 1.6;
+        color: var(--bone);
+      }
+      .dropcap::first-letter {
+        font-family: var(--display);
+        font-weight: 900;
+        float: left;
+        font-size: 84px;
+        line-height: 0.74;
+        padding: 8px 14px 0 0;
+        color: var(--blood);
+      }
+      strong {
+        font-weight: 500;
+        color: #fff;
+      }
+      em.term {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      /* pull quote */
+      blockquote {
+        margin: 54px 0;
+        padding: 0 0 0 34px;
+        border-left: 3px solid var(--blood);
+      }
+      blockquote p {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(24px, 3.6vw, 34px);
+        line-height: 1.25;
+        color: var(--bone);
+        margin: 0;
+      }
+      blockquote cite {
+        display: block;
+        font-family: var(--mono);
+        font-style: normal;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        color: var(--bone-faint);
+        margin-top: 18px;
+        text-transform: uppercase;
+      }
+
+      /* verification callouts */
+      .verify {
+        margin: 38px 0;
+        padding: 22px 24px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-left: 4px solid var(--vc);
+        position: relative;
+      }
+      .verify .tag {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--vc);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 11px;
+      }
+      .verify .tag::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--vc);
+        box-shadow: 0 0 10px var(--vc);
+      }
+      .verify p {
+        font-size: 16.5px;
+        line-height: 1.62;
+        color: var(--bone-dim);
+        margin: 0;
+      }
+      .verify p strong {
+        color: var(--bone);
+      }
+      .v-fato {
+        --vc: var(--teal);
+      }
+      .v-hipotese {
+        --vc: var(--blue);
+      }
+      .v-especulacao {
+        --vc: var(--gold);
+      }
+      .v-desinfo {
+        --vc: var(--blood);
+      }
+
+      /* molecule formula */
+      .formula {
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 30px;
+        letter-spacing: 0.05em;
+        color: var(--gold);
+        margin: 34px 0;
+      }
+      .formula sub {
+        font-size: 0.62em;
+        vertical-align: -0.25em;
+      }
+
+      /* equation strip */
+      .equation {
+        text-align: center;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: clamp(20px, 3vw, 28px);
+        color: var(--bone);
+        margin: 38px 0;
+        padding: 26px;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .equation span {
+        color: var(--blood);
+      }
+
+      hr.div {
+        border: none;
+        height: 1px;
+        background: var(--line);
+        margin: 90px auto;
+        max-width: 120px;
+      }
+      hr.div.dots {
+        background: none;
+        text-align: center;
+        height: auto;
+      }
+      hr.div.dots::after {
+        content: "✦  ✦  ✦";
+        font-size: 11px;
+        color: var(--blood);
+        letter-spacing: 1.2em;
+      }
+
+      /* legend strip */
+      .legend-strip {
+        max-width: 900px;
+        margin: 80px auto;
+        padding: 0 26px;
+      }
+      .legend-strip h3 {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--bone-faint);
+        text-align: center;
+        margin-bottom: 26px;
+      }
+      .legend-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+      }
+      .legend-grid div {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-top: 3px solid var(--c);
+        padding: 14px 16px;
+      }
+      .legend-grid .l {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--c);
+        font-weight: 600;
+      }
+      .legend-grid .d {
+        font-size: 13.5px;
+        color: var(--bone-dim);
+        margin-top: 7px;
+        line-height: 1.45;
+      }
+
+      /* footer / epilogue */
+      footer {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 90px 26px 120px;
+        text-align: center;
+      }
+      footer .seal {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 28px;
+        color: var(--blood);
+        margin-bottom: 20px;
+      }
+      footer p {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--bone-faint);
+        line-height: 2;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: 0.8s cubic-bezier(0.2, 0.7, 0.3, 1);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          font-size: 18px;
+        }
+        .chapter-mark .no {
+          font-size: 46px;
+        }
+        .dropcap::first-letter {
+          font-size: 66px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="progress"></div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="kicker">Documentário investigativo</div>
+      <h1>ADRENOCROMO</h1>
+      <p class="tagline">
+        Ciência, história, mitos e a construção de uma lenda moderna
+      </p>
+      <div class="scroll">Role para começar ↓</div>
+    </section>
+
+    <article>
+      <!-- PRÓLOGO -->
+      <div class="chapter">
+        <div class="chapter-mark">
+          <span class="no">0</span><span class="eyebrow">Prólogo</span
+          ><span class="rule"></span>
+        </div>
+        <h2>O mistério por trás de uma molécula</h2>
+        <p class="lead dropcap">
+          Poucas substâncias químicas modernas guardam uma distância tão grande
+          entre a realidade do laboratório e o que a imaginação popular fez
+          delas. Para o químico, o adrenocromo é apenas um composto — estudado,
+          catalogado, compreendido em suas linhas gerais desde meados do século
+          XX. Para uma parcela da internet, tornou-se o emblema de uma das
+          conspirações mais persistentes da era digital.
+        </p>
+        <p>
+          Seu nome circula entre artigos de bioquímica e fóruns obscuros; entre
+          teses de psiquiatria experimental e vídeos virais; entre a ficção
+          literária e movimentos políticos que se apropriaram dele como prova de
+          horrores secretos. A mesma palavra serve a dois mundos que quase não
+          se tocam.
+        </p>
+        <p>
+          Esta investigação se propõe a percorrer a distância entre esses dois
+          mundos. Não para escolher um lado, mas para fazer o que a ciência e o
+          jornalismo sério fazem de melhor:
+          <strong
+            >separar o que é fato do que é hipótese, o que é hipótese do que é
+            especulação, e o que é especulação do que é, simplesmente,
+            falso.</strong
+          >
+        </p>
+        <p>
+          Começamos onde a história de fato começa — não nos porões da
+          imaginação, mas no banco de um laboratório.
+        </p>
+      </div>
+
+      <!-- LEGENDA -->
+      <div class="legend-strip reveal">
+        <h3>Como leremos cada afirmação</h3>
+        <div class="legend-grid">
+          <div style="--c: var(--teal)">
+            <div class="l">Fato</div>
+            <div class="d">
+              Documentado e verificável em fontes revisadas por pares.
+            </div>
+          </div>
+          <div style="--c: var(--blue)">
+            <div class="l">Hipótese</div>
+            <div class="d">
+              Proposta testável — confirmada, em aberto ou abandonada.
+            </div>
+          </div>
+          <div style="--c: var(--gold)">
+            <div class="l">Especulação</div>
+            <div class="d">
+              Interpretação possível, sem base empírica sólida.
+            </div>
+          </div>
+          <div style="--c: var(--blood)">
+            <div class="l">Desinformação</div>
+            <div class="d">Afirmação refutada ou comprovadamente falsa.</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="div dots" />
+
+      <!-- CAPÍTULO 1 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">1</span><span class="eyebrow">A substância real</span
+          ><span class="rule"></span>
+        </div>
+        <h2>O que é o <em>adrenocromo</em>?</h2>
+        <p class="dropcap">
+          A própria palavra entrega sua origem. <em class="term">Adreno</em>, de
+          adrenalina; <em class="term">cromo</em>, do grego <em>khrôma</em>, cor
+          — uma referência à coloração que surge quando a adrenalina se
+          transforma. O nome é, literalmente, uma descrição química: o produto
+          colorido da oxidação da adrenalina.
+        </p>
+
+        <p class="sub">Da adrenalina ao adrenocromo</p>
+        <p>
+          A adrenalina, ou epinefrina, é um hormônio fabricado pelas glândulas
+          suprarrenais. É a molécula da resposta de
+          <strong>luta ou fuga</strong>: diante do perigo, do estresse ou da
+          excitação intensa, ela inunda a corrente sanguínea, acelera o coração,
+          eleva a pressão e desvia o fluxo de sangue para os músculos. Quando
+          essa molécula é exposta ao oxigênio e oxida, sua estrutura se
+          reorganiza e dá origem a um composto novo, de tom avermelhado.
+        </p>
+
+        <div class="equation">
+          Adrenalina + oxidação <span>→</span> Adrenocromo
+        </div>
+
+        <p>
+          A transformação não é mágica nem rara. É o mesmo princípio químico que
+          escurece uma maçã cortada ou enferruja o ferro: a oxidação. O que muda
+          é o que resta no fim — uma molécula com propriedades, estabilidade e
+          atividade biológica distintas da original.
+        </p>
+
+        <p class="sub">A estrutura</p>
+        <p>A fórmula molecular do adrenocromo é compacta:</p>
+        <div class="formula">C<sub>9</sub>H<sub>9</sub>NO<sub>3</sub></div>
+        <p>
+          Por trás dessa aparência simples está um composto da família dos
+          aminocromos, de interesse genuíno para a bioquímica. Não há nada de
+          oculto em sua síntese: a partir de adrenalina purificada e de agentes
+          oxidantes controlados, o adrenocromo pode ser produzido em laboratório
+          de forma rotineira.
+        </p>
+
+        <div class="verify v-fato">
+          <div class="tag">Fato</div>
+          <p>
+            O adrenocromo é sintetizado em laboratório a partir de reagentes
+            comerciais.
+            <strong
+              >Não existe necessidade de obtenção a partir de seres
+              humanos</strong
+            >
+            — ponto que contradiz diretamente o núcleo das narrativas
+            conspiratórias modernas.
+          </p>
+        </div>
+
+        <p class="sub">Para que serve, de fato</p>
+        <p>
+          O adrenocromo nunca foi um medicamento de uso amplo. Seu derivado
+          próximo, o carbazocromo, chegou a ser empregado como agente
+          hemostático em alguns países, mas o composto em si interessou
+          sobretudo à <strong>pesquisa</strong>: psiquiatria experimental,
+          bioquímica, farmacologia, neurologia. Foi mais objeto de estudo do que
+          ferramenta clínica.
+        </p>
+
+        <div class="verify v-desinfo">
+          <div class="tag">Desinformação</div>
+          <p>
+            Não há evidência científica robusta de que o adrenocromo prolongue a
+            vida, reverta o envelhecimento, conceda capacidades especiais ou
+            produza qualquer dos efeitos "extraordinários" que lhe atribuem.
+            Essas alegações
+            <strong>nunca foram confirmadas experimentalmente</strong>.
+          </p>
+        </div>
+      </div>
+
+      <hr class="div" />
+
+      <!-- CAPÍTULO 2 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">2</span><span class="eyebrow">As origens</span
+          ><span class="rule"></span>
+        </div>
+        <h2>A história da descoberta</h2>
+        <p class="dropcap">
+          O início do século XX foi uma era de fronteira para a química e a
+          medicina. Hormônios e neurotransmissores estavam apenas começando a
+          ser nomeados; o funcionamento do cérebro era um continente quase
+          inexplorado. A adrenalina, isolada e identificada nas primeiras
+          décadas do século, abriu uma pergunta sedutora: se ela influenciava de
+          forma tão poderosa o corpo e o comportamento, o que fariam seus
+          derivados?
+        </p>
+
+        <p>
+          Nos anos 1930 e 1940, observou-se que a adrenalina oxidada produzia
+          compostos distintos — entre eles, o adrenocromo. Na época, porém,
+          faltava quase tudo o que hoje consideramos básico: um mapa dos
+          neurotransmissores, uma psicofarmacologia consolidada, uma química
+          cerebral. As hipóteses eram, por necessidade, exploratórias.
+        </p>
+
+        <blockquote>
+          <p>
+            E se certas doenças da mente fossem causadas por substâncias
+            produzidas pelo próprio organismo?
+          </p>
+          <cite>A pergunta que moveria uma geração de pesquisadores</cite>
+        </blockquote>
+
+        <p>
+          Foi dessa pergunta que nasceu, nos anos 1950, uma das ideias mais
+          ambiciosas da psiquiatria do período: a chamada
+          <strong>hipótese adrenocromo da esquizofrenia</strong>. Por algum
+          tempo, ela ocuparia o centro do debate.
+        </p>
+
+        <div class="verify v-fato">
+          <div class="tag">Fato</div>
+          <p>
+            O adrenocromo foi, ao longo de boa parte do século XX, sobretudo um
+            <strong>objeto de pesquisa</strong> — não um produto comercial nem
+            um medicamento de prateleira.
+          </p>
+        </div>
+      </div>
+
+      <hr class="div" />
+
+      <!-- CAPÍTULO 3 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">3</span><span class="eyebrow">A grande hipótese</span
+          ><span class="rule"></span>
+        </div>
+        <h2>Adrenocromo e a <em>psiquiatria</em></h2>
+        <p class="dropcap">
+          Na metade do século XX, a esquizofrenia era um enigma de primeira
+          grandeza. Os médicos descreviam alucinações, delírios, alterações
+          profundas de cognição e comportamento — mas a causa permanecia
+          obscura. Foi nesse vazio que dois pesquisadores propuseram uma
+          resposta ousada.
+        </p>
+
+        <p>
+          <strong>Humphry Osmond</strong> e <strong>Abram Hoffer</strong>,
+          trabalhando no Canadá, sugeriram que compostos derivados da adrenalina
+          poderiam interferir no funcionamento cerebral. Entre eles, o
+          adrenocromo. Osmond, vale registrar, é o mesmo psiquiatra que mais
+          tarde cunharia o termo <em class="term">psicodélico</em> — sinal do
+          quanto aquela geração estava fascinada pela química da percepção.
+        </p>
+
+        <p class="sub">O que a hipótese afirmava</p>
+        <p>
+          O raciocínio tinha uma lógica elegante: o organismo produziria
+          adrenocromo; esse composto chegaria ao cérebro; ali alteraria a
+          percepção e a cognição; e poderia, assim, contribuir para os sintomas
+          psicóticos. Em uma época sem ressonância magnética, sem PET scan, sem
+          neuroimagem funcional nem sequenciamento genético, a proposta parecia
+          plausível.
+        </p>
+
+        <div class="verify v-hipotese">
+          <div class="tag">Hipótese</div>
+          <p>
+            A "hipótese adrenocromo" era uma
+            <strong>proposta científica legítima e testável</strong> para a
+            época. Sua falha posterior não a torna fraude — torna-a ciência
+            funcionando como deve: uma ideia levada ao teste.
+          </p>
+        </div>
+
+        <p class="sub">O problema</p>
+        <p>
+          Com o avanço dos métodos, vieram as dificuldades. Experimentos
+          posteriores trouxeram resultados inconsistentes e de baixa
+          reprodutibilidade; laboratórios diferentes não conseguiam confirmar as
+          conclusões iniciais. Aos poucos, a psiquiatria migrou para modelos
+          mais complexos, que combinavam genética, neurotransmissores,
+          desenvolvimento cerebral e fatores ambientais. A hipótese adrenocromo
+          foi <strong>gradualmente abandonada</strong> como explicação central
+          da esquizofrenia.
+        </p>
+
+        <blockquote>
+          <p>
+            A ciência avançou justamente porque a hipótese foi testada,
+            questionada e, quando necessário, descartada.
+          </p>
+          <cite>O método em ação</cite>
+        </blockquote>
+
+        <p>
+          Esse é, talvez, o ponto mais importante de todo o capítulo científico.
+          O abandono da hipótese não foi um fracasso, mas o funcionamento normal
+          do conhecimento. E foi essa mesma molécula descartada pela ciência
+          séria que, décadas depois, seria ressuscitada por um tipo muito
+          diferente de narrativa.
+        </p>
+      </div>
+
+      <hr class="div dots" />
+
+      <!-- CAPÍTULO 4 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">4</span
+          ><span class="eyebrow">O salto para a cultura</span
+          ><span class="rule"></span>
+        </div>
+        <h2>Adrenocromo na <em>literatura</em> e na cultura pop</h2>
+        <p class="dropcap">
+          Se a ciência havia colocado o adrenocromo numa gaveta, foi a
+          literatura que o tirou de lá e o devolveu à imaginação pública —
+          transformado. O momento decisivo veio em 1971, com a publicação de
+          <em>Fear and Loathing in Las Vegas</em>, de
+          <strong>Hunter S. Thompson</strong>, pilar do chamado jornalismo
+          gonzo.
+        </p>
+
+        <p>
+          No livro, o adrenocromo aparece como uma droga de potência
+          alucinatória extrema, descrita em termos deliberadamente exagerados e
+          perturbadores — inclusive a alegação ficcional de que viria de uma
+          glândula humana. É preciso ser claro: aquilo é
+          <strong>literatura, não farmacologia</strong>. Thompson construía uma
+          obra de excesso e sátira, não um tratado clínico. A descrição não
+          corresponde ao que o composto real faz.
+        </p>
+
+        <div class="verify v-especulacao">
+          <div class="tag">Ficção</div>
+          <p>
+            O retrato do adrenocromo na obra de Thompson (livro de 1971;
+            adaptação ao cinema em 1998) é <strong>invenção literária</strong>.
+            Foi essa imagem — e não a molécula de laboratório — que se fixou no
+            imaginário popular.
+          </p>
+        </div>
+
+        <p>
+          A potência cultural desse retrato é difícil de superestimar. Durante
+          décadas, para boa parte do público, o adrenocromo <em>era</em> o que
+          Thompson havia escrito. A ficção tornou-se a referência. E quando a
+          internet começou a procurar uma substância misteriosa para ancorar
+          suas teorias, encontrou uma já carregada de mística — pronta para ser
+          distorcida ainda mais.
+        </p>
+      </div>
+
+      <hr class="div" />
+
+      <!-- CAPÍTULO 5 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">5</span><span class="eyebrow">A semente digital</span
+          ><span class="rule"></span>
+        </div>
+        <h2>O surgimento das <em>teorias da conspiração</em></h2>
+        <p class="dropcap">
+          As primeiras versões conspiratórias não nasceram de um documento ou de
+          um autor identificável, mas de um caldo difuso de fóruns, imageboards
+          e comunidades marginais da internet. Ali, o adrenocromo herdou
+          simultaneamente duas coisas: a aura sombria emprestada pela ficção e a
+          desconfiança genérica em relação a elites e instituições.
+        </p>
+
+        <p>
+          A narrativa que se formou tinha um formato reconhecível — o de uma
+          lenda urbana digital: uma substância secreta, supostamente extraída de
+          seres humanos, capaz de conceder juventude e poder a um grupo oculto
+          de privilegiados. Não havia evidência. Havia uma
+          <strong>história boa demais para checar</strong> — emocionante,
+          indignante, fácil de compartilhar.
+        </p>
+
+        <p class="sub">Por que se espalhou</p>
+        <p>
+          A viralização não foi acidente. As plataformas digitais premiam o
+          engajamento, e poucos conteúdos engajam tanto quanto o medo e a
+          indignação. Algoritmos de recomendação aprenderam a empurrar material
+          extremo porque ele prende a atenção. Cada compartilhamento, cada
+          comentário revoltado, alimentava o alcance — independentemente de a
+          história ser verdadeira.
+        </p>
+
+        <div class="verify v-desinfo">
+          <div class="tag">Desinformação</div>
+          <p>
+            A ideia de "extração" de adrenocromo de seres humanos para consumo
+            de elites <strong>não tem qualquer base científica</strong>. O
+            composto é sintetizável de forma trivial em laboratório; não há
+            razão química, médica ou econômica para o cenário descrito.
+          </p>
+        </div>
+      </div>
+
+      <hr class="div" />
+
+      <!-- CAPÍTULO 6 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">6</span><span class="eyebrow">O movimento</span
+          ><span class="rule"></span>
+        </div>
+        <h2>O adrenocromo e o fenômeno <em>QAnon</em></h2>
+        <p class="dropcap">
+          Em outubro de 2017, surgiu nos fóruns mais radicais da internet uma
+          figura anônima que assinava como "Q", alegando ter acesso a segredos
+          do alto escalão do governo dos Estados Unidos. Em torno dessas
+          postagens crípticas formou-se o QAnon — um movimento que se espalharia
+          globalmente e que, nos anos seguintes, absorveria o adrenocromo em seu
+          repertório.
+        </p>
+
+        <p>
+          A teoria central do QAnon imaginava uma cabala secreta de figuras
+          poderosas envolvidas em crimes hediondos. O adrenocromo encaixou-se
+          nesse enredo como a suposta substância que essa elite consumiria — uma
+          reciclagem direta da lenda dos fóruns, agora amplificada por uma
+          narrativa política de alcance massivo.
+        </p>
+
+        <div class="verify v-desinfo">
+          <div class="tag">Desinformação</div>
+          <p>
+            As alegações do QAnon sobre o adrenocromo são
+            <strong>falsas e reiteradamente refutadas</strong>. Elas reembalam
+            tropos antigos — incluindo ecos da "calúnia de sangue", uma acusação
+            antissemita medieval contra a qual historiadores e investigadores
+            alertam há séculos.
+          </p>
+        </div>
+
+        <p class="sub">A anatomia da crença coletiva</p>
+        <p>
+          O sucesso do QAnon não se explica pela qualidade de suas provas — que
+          inexistem — mas pela engenharia psicológica e social de suas
+          histórias. Elas ofereciam o que muitas pessoas buscavam: um inimigo
+          nítido, um sentido de propósito, uma comunidade e a sensação
+          embriagante de ter acesso a uma verdade oculta dos demais. Compreender
+          por que essas narrativas funcionam é a chave para resistir a elas — e
+          é o tema dos capítulos seguintes.
+        </p>
+      </div>
+
+      <hr class="div dots" />
+
+      <!-- CAPÍTULO 7 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">7</span><span class="eyebrow">O veredito</span
+          ><span class="rule"></span>
+        </div>
+        <h2>O que diz a <em>ciência moderna</em>?</h2>
+        <p class="dropcap">
+          Depois de percorrer o laboratório, a clínica, a ficção e o fórum, é
+          hora de uma pergunta direta: o que, afinal, está estabelecido? O
+          consenso científico atual é menos dramático do que qualquer das
+          narrativas — e, por isso mesmo, mais confiável.
+        </p>
+
+        <p class="sub">O que se sabe</p>
+        <p>
+          Sabe-se que o adrenocromo existe, que é o produto da oxidação da
+          adrenalina, que tem fórmula C<sub>9</sub>H<sub>9</sub>NO<sub>3</sub> e
+          que pode ser produzido em laboratório. Sabe-se que foi objeto de
+          pesquisa em psiquiatria e bioquímica, e que seu derivado carbazocromo
+          teve algum uso médico.
+        </p>
+
+        <p class="sub">O que permanece em aberto</p>
+        <p>
+          Como em qualquer área viva da ciência, restam detalhes bioquímicos
+          sobre seu metabolismo e seus efeitos que continuam sob investigação.
+          Reconhecer essas lacunas é parte da honestidade científica — e não
+          deve ser confundido com confirmação das alegações extraordinárias.
+        </p>
+
+        <p class="sub">O que foi refutado ou nunca comprovado</p>
+        <p>
+          A hipótese adrenocromo da esquizofrenia foi
+          <strong>abandonada</strong> por falta de reprodutibilidade. As
+          propriedades sobrenaturais atribuídas pela cultura conspiratória
+          <strong>nunca tiveram qualquer confirmação experimental</strong>. E o
+          cenário de "extração humana" é, do ponto de vista químico,
+          desnecessário e desprovido de evidência.
+        </p>
+
+        <div class="verify v-fato">
+          <div class="tag">Síntese</div>
+          <p>
+            Fato: é uma molécula real e estudada. Hipótese (abandonada): sua
+            ligação causal com a esquizofrenia. Desinformação: tudo o que a
+            transformou em elixir secreto de elites.
+          </p>
+        </div>
+      </div>
+
+      <hr class="div" />
+
+      <!-- CAPÍTULO 8 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">8</span><span class="eyebrow">A mente</span
+          ><span class="rule"></span>
+        </div>
+        <h2>A psicologia das <em>teorias da conspiração</em></h2>
+        <p class="dropcap">
+          Por que pessoas inteligentes acreditam em histórias sem prova? A
+          resposta não está na falta de inteligência, mas na arquitetura comum
+          da mente humana — e em vieses que afetam a todos nós.
+        </p>
+
+        <p>
+          O <strong>viés de confirmação</strong> nos leva a procurar e valorizar
+          informações que reforçam o que já acreditamos, e a descartar as que
+          contrariam. O <strong>efeito de câmara de eco</strong>, amplificado
+          pelas redes, cerca a pessoa de vozes que repetem a mesma versão até
+          que ela pareça óbvia. E há uma necessidade humana profunda de
+          <strong>explicações ordenadas</strong>: aceitar que eventos terríveis
+          às vezes acontecem por acaso é mais angustiante do que acreditar que
+          alguém, em algum lugar, está no controle — mesmo que esse alguém seja
+          um vilão.
+        </p>
+
+        <blockquote>
+          <p>
+            Uma conspiração transforma o caos em enredo. E o enredo, por mais
+            sombrio, é mais confortável que o caos.
+          </p>
+          <cite>Psicologia da crença</cite>
+        </blockquote>
+
+        <p>
+          Estudos em psicologia cognitiva, sociologia, neurociência e
+          antropologia convergem para um quadro consistente: a propensão a ver
+          padrões e agentes ocultos é, em parte, um traço adaptativo da nossa
+          espécie. O mesmo cérebro que nos ajudou a sobreviver detectando
+          ameaças também nos torna vulneráveis a inventá-las.
+        </p>
+      </div>
+
+      <hr class="div" />
+
+      <!-- CAPÍTULO 9 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">9</span><span class="eyebrow">Ecos da história</span
+          ><span class="rule"></span>
+        </div>
+        <h2>Adrenocromo como <em>mito moderno</em></h2>
+        <p class="dropcap">
+          A teoria do adrenocromo parece um produto da internet — e é, em sua
+          forma. Mas seu conteúdo é antiquíssimo. Ele pertence a uma linhagem de
+          medos que reaparece em quase todas as épocas: a crença de que um grupo
+          secreto e poderoso comete atrocidades contra inocentes para obter
+          poder.
+        </p>
+
+        <p>
+          Os paralelos históricos são desconfortavelmente exatos. As
+          <strong>caças às bruxas</strong> dos séculos XVI e XVII acusavam
+          mulheres de pactos ocultos e rituais sanguinários. A
+          <strong>calúnia de sangue</strong> medieval atribuía a minorias o
+          assassinato ritual de crianças — uma mentira que custou incontáveis
+          vidas. O <strong>pânico satânico</strong> dos anos 1980 imaginou redes
+          de abuso ritual que investigações posteriores demonstraram não
+          existir.
+        </p>
+
+        <div class="verify v-especulacao">
+          <div class="tag">Análise histórica</div>
+          <p>
+            A narrativa do adrenocromo reproduz a estrutura clássica do pânico
+            moral: um inimigo oculto, vítimas inocentes, uma substância ou
+            ritual proibido, e uma comunidade que se une contra a ameaça
+            imaginada. <strong>O figurino muda; o roteiro permanece.</strong>
+          </p>
+        </div>
+
+        <p>
+          Reconhecer essa genealogia não diminui o fenômeno — ao contrário, o
+          ilumina. Mostra que não estamos diante de algo inédito, mas de um
+          padrão humano muito estudado, que a tecnologia apenas acelerou e
+          amplificou.
+        </p>
+      </div>
+
+      <hr class="div" />
+
+      <!-- CAPÍTULO 10 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">10</span><span class="eyebrow">A máquina</span
+          ><span class="rule"></span>
+        </div>
+        <h2>Internet, <em>desinformação</em> e realidade</h2>
+        <p class="dropcap">
+          Se o conteúdo do mito é antigo, sua velocidade é nova. Nunca uma
+          falsidade pôde viajar tão longe, tão rápido e a custo tão baixo.
+          Entender a mecânica dessa propagação é essencial para entender por que
+          o adrenocromo saiu dos fóruns e alcançou milhões.
+        </p>
+
+        <p>
+          As plataformas digitais foram desenhadas para maximizar a atenção, e a
+          atenção é capturada com mais eficiência por emoções intensas — medo,
+          raiva, indignação.
+          <strong>Algoritmos de recomendação</strong> aprendem que conteúdo
+          extremo retém o usuário, e o servem em doses crescentes. Vídeos virais
+          comprimem alegações complexas em segundos memoráveis. Influenciadores
+          emprestam credibilidade e alcance.
+        </p>
+
+        <p class="sub">A nova fronteira</p>
+        <p>
+          A inteligência artificial generativa adiciona um agravante histórico.
+          <strong>Deepfakes</strong> e mídia sintética tornam possível fabricar
+          "provas" — imagens, áudios e vídeos convincentes de eventos que nunca
+          ocorreram. Quando ver deixa de ser crer, o terreno fica fértil para
+          qualquer narrativa, por mais absurda.
+        </p>
+
+        <div class="verify v-fato">
+          <div class="tag">O que isso exige de nós</div>
+          <p>
+            A defesa não é técnica, é cognitiva: verificar a fonte, desconfiar
+            do conteúdo que confirma rápido demais o que já queríamos acreditar,
+            e buscar a evidência <strong>antes</strong> do compartilhamento, não
+            depois.
+          </p>
+        </div>
+      </div>
+
+      <hr class="div dots" />
+
+      <!-- CAPÍTULO 11 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">11</span
+          ><span class="eyebrow">O plano das ideias</span
+          ><span class="rule"></span>
+        </div>
+        <h2>Análise <em>filosófica</em></h2>
+        <p class="dropcap">
+          No fundo, a história do adrenocromo é uma história sobre o
+          conhecimento: sobre como sabemos o que sabemos, e como distinguimos a
+          crença justificada da mera convicção. Três pensadores ajudam a
+          iluminar esse terreno.
+        </p>
+
+        <p>
+          <strong>Karl Popper</strong> propôs que o que separa a ciência da
+          pseudociência é a <em class="term">falseabilidade</em>: uma afirmação
+          científica precisa poder, em princípio, ser refutada por evidência. A
+          hipótese adrenocromo da esquizofrenia era científica precisamente
+          porque podia ser testada — e foi, e falhou. A teoria conspiratória, ao
+          contrário, costuma se blindar: toda ausência de prova é reinterpretada
+          como prova do encobrimento. Isso a torna irrefutável — e, no sentido
+          de Popper, não-científica.
+        </p>
+
+        <p>
+          <strong>Thomas Kuhn</strong> mostrou que a ciência evolui em
+          paradigmas, que mudam quando o peso das anomalias se torna
+          insustentável. O abandono da hipótese adrenocromo foi exatamente esse
+          tipo de virada: não uma traição à verdade, mas a substituição de um
+          modelo insuficiente por outros melhores.
+        </p>
+
+        <blockquote>
+          <p>Afirmações extraordinárias exigem evidências extraordinárias.</p>
+          <cite>Carl Sagan</cite>
+        </blockquote>
+
+        <p>
+          A máxima de <strong>Carl Sagan</strong> é, talvez, a bússola mais útil
+          de toda esta investigação. Uma molécula que oxida e muda de cor é uma
+          afirmação ordinária, sustentada por evidência ordinária e abundante.
+          Uma rede secreta que colhe substâncias de seres humanos para a
+          imortalidade é uma afirmação extraordinária — e não traz consigo nada
+          que se aproxime da evidência extraordinária que exigiria.
+        </p>
+      </div>
+
+      <hr class="div" />
+
+      <!-- CAPÍTULO 12 -->
+      <div class="chapter reveal">
+        <div class="chapter-mark">
+          <span class="no">12</span><span class="eyebrow">O encerramento</span
+          ><span class="rule"></span>
+        </div>
+        <h2><em>Conclusão</em></h2>
+        <p class="dropcap">
+          Chegamos ao fim da distância que nos propusemos a percorrer — entre a
+          molécula e o mito. E agora podemos nomear, com clareza, cada coisa em
+          seu lugar.
+        </p>
+
+        <p>
+          <strong>O fato</strong> é que o adrenocromo é um composto químico
+          real, derivado da oxidação da adrenalina, estudado desde o século XX e
+          sintetizável em laboratório. <strong>A hipótese</strong> — hoje
+          abandonada — foi sua suposta ligação causal com a esquizofrenia, uma
+          ideia legítima da psiquiatria dos anos 1950 que não sobreviveu ao
+          teste. <strong>A ficção</strong> é a droga lendária de Hunter S.
+          Thompson, invenção literária que emprestou ao composto uma mística que
+          ele nunca teve. E <strong>a teoria da conspiração</strong> é tudo o
+          que veio depois: uma reciclagem digital de medos antiquíssimos, sem
+          qualquer base, espalhada por algoritmos que premiam a indignação.
+        </p>
+
+        <p>
+          O que a ciência realmente sabe hoje é, portanto, modesto e firme ao
+          mesmo tempo: uma molécula, suas propriedades, sua história de pesquisa
+          — e o reconhecimento honesto do que ainda não sabemos, sem que essa
+          honestidade abra espaço para o fantástico.
+        </p>
+
+        <blockquote>
+          <p>
+            Distinguir o fato da alegação extraordinária não é cinismo. É a
+            forma mais alta de respeito pela verdade.
+          </p>
+          <cite>Reflexão final</cite>
+        </blockquote>
+
+        <p>
+          Se há uma lição que atravessa este documentário, ela não é sobre
+          química. É sobre método. O adrenocromo nos ensina que o pensamento
+          crítico não consiste em duvidar de tudo, nem em acreditar em tudo, mas
+          em <strong>graduar a crença conforme a evidência</strong> — em pedir
+          provas proporcionais às afirmações, em tolerar a incerteza sem
+          preenchê-la com fantasias, e em lembrar que, muitas vezes, a
+          explicação verdadeira é menos espetacular e mais valiosa do que o
+          mito.
+        </p>
+
+        <p>
+          A história desta molécula é, no fim, a história de uma escolha que
+          cada um de nós faz diariamente diante de uma tela: a escolha entre a
+          história que confirma o que queremos crer e o trabalho, mais árduo, de
+          descobrir o que é verdade.
+        </p>
+      </div>
+    </article>
+
+    <footer>
+      <div class="seal">✦</div>
+      <p>
+        Adrenocromo · Ciência, História, Mitos e Conspirações<br />
+        Documentário investigativo · Conteúdo educativo<br />
+        Fato · Hipótese · Especulação · Desinformação
+      </p>
+    </footer>
+
+    <script>
+      // reading progress
+      const bar = document.getElementById("progress");
+      addEventListener("scroll", () => {
+        const h = document.documentElement;
+        const p = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        bar.style.width = p + "%";
+      });
+      // reveal
+      const io = new IntersectionObserver(
+        (es) =>
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          }),
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

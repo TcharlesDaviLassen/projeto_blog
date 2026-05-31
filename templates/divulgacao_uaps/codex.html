@@ -1,0 +1,1406 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CODEX · OVNIs, Anjos e Seres Interdimensionais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --void: #06070e;
+        --void-2: #0a0c18;
+        --ink: #0d1022;
+        --parchment: #e9e2cf;
+        --parchment-dim: #b6ad97;
+        --gold: #d9b362;
+        --gold-bright: #f4d894;
+        --gold-deep: #8a6a2c;
+        --signal: #6fc6cf;
+        --signal-dim: #3a6d72;
+        --blood: #9c3b3b;
+        --line: rgba(217, 179, 98, 0.16);
+        --serif: "Cormorant Garamond", Georgia, serif;
+        --display: "Cinzel", serif;
+        --mono: "IBM Plex Mono", monospace;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--void);
+        color: var(--parchment);
+        font-family: var(--serif);
+        font-size: 20px;
+        line-height: 1.75;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---------- atmospheric layers ---------- */
+      .starfield {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            1px 1px at 20% 30%,
+            rgba(233, 226, 207, 0.9),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 70% 60%,
+            rgba(233, 226, 207, 0.7),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 40% 80%,
+            rgba(233, 226, 207, 0.6),
+            transparent
+          ),
+          radial-gradient(
+            1.5px 1.5px at 85% 20%,
+            rgba(217, 179, 98, 0.8),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 15% 70%,
+            rgba(233, 226, 207, 0.5),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 55% 15%,
+            rgba(111, 198, 207, 0.6),
+            transparent
+          ),
+          radial-gradient(
+            1.5px 1.5px at 90% 85%,
+            rgba(233, 226, 207, 0.7),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 30% 50%,
+            rgba(233, 226, 207, 0.4),
+            transparent
+          );
+        background-repeat: repeat;
+        background-size: 600px 600px;
+        animation: drift 200s linear infinite;
+        opacity: 0.6;
+      }
+      @keyframes drift {
+        to {
+          background-position: 600px 600px;
+        }
+      }
+
+      .aurora {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            ellipse 80% 50% at 50% -10%,
+            rgba(217, 179, 98, 0.1),
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 60% 40% at 80% 110%,
+            rgba(111, 198, 207, 0.07),
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 50% 50% at 10% 40%,
+            rgba(156, 59, 59, 0.05),
+            transparent 60%
+          );
+      }
+
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0.05;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      .scanlines {
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        pointer-events: none;
+        opacity: 0.4;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent 0 3px,
+          rgba(0, 0, 0, 0.12) 3px 4px
+        );
+      }
+
+      /* ---------- nav ---------- */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 32px;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        background: linear-gradient(
+          180deg,
+          rgba(6, 7, 14, 0.92),
+          rgba(6, 7, 14, 0)
+        );
+        backdrop-filter: blur(2px);
+      }
+      nav .sigil {
+        color: var(--gold);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      nav .sigil b {
+        font-family: var(--display);
+        font-size: 14px;
+        letter-spacing: 0.2em;
+        font-weight: 600;
+      }
+      nav .status {
+        color: var(--signal);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      nav .status .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--signal);
+        box-shadow: 0 0 8px var(--signal);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 2;
+      }
+      .col {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 0 28px;
+      }
+
+      /* ---------- HERO ---------- */
+      header {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        text-align: center;
+        padding: 120px 24px 80px;
+      }
+
+      .ophanim {
+        width: min(72vw, 440px);
+        height: min(72vw, 440px);
+        position: relative;
+        margin-bottom: 8px;
+        filter: drop-shadow(0 0 40px rgba(217, 179, 98, 0.25));
+      }
+      .ophanim svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .ring-outer {
+        animation: spin 60s linear infinite;
+      }
+      .ring-mid {
+        animation: spin 38s linear infinite reverse;
+        transform-origin: center;
+      }
+      .ring-inner {
+        animation: spin 24s linear infinite;
+      }
+      .eyes {
+        animation: spin 90s linear infinite reverse;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .glyph-core {
+        animation: breathe 6s ease-in-out infinite;
+      }
+      @keyframes breathe {
+        0%,
+        100% {
+          opacity: 0.55;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.06);
+        }
+      }
+
+      .kicker {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.45em;
+        text-transform: uppercase;
+        color: var(--signal);
+        margin-bottom: 24px;
+        opacity: 0;
+        animation: rise 1s 0.3s forwards;
+      }
+      h1 {
+        font-family: var(--display);
+        font-weight: 600;
+        line-height: 1.05;
+        font-size: clamp(2.4rem, 7vw, 5rem);
+        letter-spacing: 0.04em;
+        background: linear-gradient(
+          180deg,
+          var(--gold-bright),
+          var(--gold) 50%,
+          var(--gold-deep)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin: 8px 0 4px;
+        opacity: 0;
+        animation: rise 1.1s 0.5s forwards;
+      }
+      h1 .sub {
+        display: block;
+        font-family: var(--serif);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(1.1rem, 3vw, 1.7rem);
+        letter-spacing: 0.02em;
+        color: var(--parchment-dim);
+        -webkit-text-fill-color: var(--parchment-dim);
+        margin-top: 14px;
+      }
+      .hero-line {
+        width: 60px;
+        height: 1px;
+        background: var(--gold);
+        margin: 34px auto 22px;
+        opacity: 0;
+        animation: rise 1s 0.8s forwards;
+      }
+      header p.lede {
+        max-width: 560px;
+        font-size: 1.25rem;
+        color: var(--parchment-dim);
+        font-style: italic;
+        opacity: 0;
+        animation: rise 1.1s 0.9s forwards;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .scroll-cue {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        color: var(--parchment-dim);
+        text-transform: uppercase;
+        opacity: 0;
+        animation: rise 1s 1.4s forwards;
+      }
+      .scroll-cue::after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 34px;
+        margin: 10px auto 0;
+        background: linear-gradient(var(--gold), transparent);
+        animation: cue 2s infinite;
+      }
+      @keyframes cue {
+        0% {
+          transform: scaleY(0);
+          transform-origin: top;
+        }
+        50% {
+          transform: scaleY(1);
+          transform-origin: top;
+        }
+        50.1% {
+          transform-origin: bottom;
+        }
+        100% {
+          transform: scaleY(0);
+          transform-origin: bottom;
+        }
+      }
+
+      /* ---------- intro ---------- */
+      .intro {
+        padding: 90px 0 40px;
+        position: relative;
+      }
+      .pull {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(1.5rem, 4vw, 2.3rem);
+        line-height: 1.4;
+        text-align: center;
+        color: var(--gold-bright);
+        letter-spacing: 0.02em;
+        max-width: 720px;
+        margin: 0 auto 50px;
+        position: relative;
+      }
+      .pull::before,
+      .pull::after {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 1px;
+        background: var(--line);
+        margin: 26px auto;
+      }
+      .intro p {
+        margin-bottom: 22px;
+      }
+      .intro p .drop {
+        float: left;
+        font-family: var(--display);
+        font-size: 4.4rem;
+        line-height: 0.8;
+        color: var(--gold);
+        padding: 6px 14px 0 0;
+        font-weight: 600;
+      }
+
+      .ledger {
+        list-style: none;
+        margin: 34px 0;
+        border-top: 1px solid var(--line);
+      }
+      .ledger li {
+        display: flex;
+        gap: 18px;
+        align-items: baseline;
+        padding: 14px 4px;
+        border-bottom: 1px solid var(--line);
+        font-size: 1.05rem;
+      }
+      .ledger li span {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--signal);
+        letter-spacing: 0.15em;
+        min-width: 34px;
+      }
+
+      /* ---------- legend / key ---------- */
+      .key {
+        margin: 70px 0;
+        padding: 38px 30px;
+        border: 1px solid var(--line);
+        position: relative;
+        background: linear-gradient(
+          180deg,
+          rgba(13, 16, 34, 0.6),
+          rgba(6, 7, 14, 0.3)
+        );
+      }
+      .key::before {
+        content: "PROTOCOLO DE LEITURA";
+        position: absolute;
+        top: -9px;
+        left: 24px;
+        background: var(--void);
+        padding: 0 12px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        color: var(--gold);
+      }
+      .key-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+      .key-item {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .tag {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        padding: 4px 9px;
+        border: 1px solid;
+        border-radius: 2px;
+        white-space: nowrap;
+        text-transform: uppercase;
+        margin-top: 3px;
+      }
+      .tag.fato {
+        color: var(--signal);
+        border-color: var(--signal-dim);
+        background: rgba(111, 198, 207, 0.06);
+      }
+      .tag.hipotese {
+        color: var(--gold);
+        border-color: var(--gold-deep);
+        background: rgba(217, 179, 98, 0.06);
+      }
+      .tag.espec {
+        color: #b98ad1;
+        border-color: #5c3f6e;
+        background: rgba(185, 138, 209, 0.06);
+      }
+      .tag.crenca {
+        color: var(--blood);
+        border-color: #5e2a2a;
+        background: rgba(156, 59, 59, 0.08);
+      }
+      .key-item small {
+        display: block;
+        font-size: 0.95rem;
+        color: var(--parchment-dim);
+        line-height: 1.5;
+      }
+
+      /* ---------- chapters ---------- */
+      .chapter {
+        padding: 64px 0;
+        border-top: 1px solid var(--line);
+        position: relative;
+      }
+      .chapter .head {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        margin-bottom: 6px;
+        flex-wrap: wrap;
+      }
+      .chapter .num {
+        font-family: var(--display);
+        font-size: 3.2rem;
+        font-weight: 600;
+        line-height: 1;
+        color: transparent;
+        -webkit-text-stroke: 1px var(--gold-deep);
+        opacity: 0.8;
+      }
+      .chapter h2 {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+        letter-spacing: 0.02em;
+        color: var(--parchment);
+        flex: 1;
+      }
+      .chapter .tagline {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        color: var(--signal);
+        text-transform: uppercase;
+        margin: 2px 0 26px;
+        padding-left: 2px;
+      }
+      .chapter p {
+        margin-bottom: 18px;
+      }
+      .chapter p strong {
+        color: var(--gold-bright);
+        font-weight: 600;
+      }
+      .chapter em {
+        color: var(--parchment);
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+          transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+
+      blockquote {
+        border-left: 2px solid var(--gold-deep);
+        padding: 6px 0 6px 24px;
+        margin: 24px 0;
+        font-style: italic;
+        font-size: 1.2rem;
+        color: var(--gold-bright);
+      }
+
+      .fact-strip {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        line-height: 1.9;
+        letter-spacing: 0.04em;
+        color: var(--parchment-dim);
+        background: rgba(13, 16, 34, 0.5);
+        border: 1px solid var(--line);
+        padding: 20px 22px;
+        margin: 26px 0;
+        border-radius: 3px;
+      }
+      .fact-strip .lbl {
+        color: var(--signal);
+        letter-spacing: 0.2em;
+      }
+      .fact-strip b {
+        color: var(--gold);
+      }
+
+      /* declassified stamp */
+      .stamp {
+        display: inline-block;
+        font-family: var(--mono);
+        font-weight: 500;
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        color: var(--blood);
+        border: 2px solid var(--blood);
+        padding: 6px 14px;
+        transform: rotate(-5deg);
+        border-radius: 3px;
+        opacity: 0.85;
+        margin: 8px 0;
+      }
+
+      /* ---------- triptych (cap 10) ---------- */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin: 32px 0;
+      }
+      .panel {
+        border: 1px solid var(--line);
+        padding: 24px 20px;
+        background: linear-gradient(180deg, rgba(13, 16, 34, 0.5), transparent);
+        transition:
+          transform 0.4s,
+          border-color 0.4s;
+      }
+      .panel:hover {
+        transform: translateY(-6px);
+        border-color: var(--gold-deep);
+      }
+      .panel .pn {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        color: var(--signal);
+      }
+      .panel h3 {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        margin: 8px 0 14px;
+        color: var(--gold-bright);
+        line-height: 1.2;
+      }
+      .panel p {
+        font-size: 0.98rem;
+        line-height: 1.6;
+        margin-bottom: 12px;
+        color: var(--parchment-dim);
+      }
+      .panel .pro {
+        color: var(--signal);
+      }
+      .panel .con {
+        color: var(--blood);
+      }
+
+      /* ---------- conclusion ---------- */
+      .finale {
+        padding: 110px 0;
+        text-align: center;
+        position: relative;
+      }
+      .finale .pull {
+        color: var(--parchment);
+      }
+      .finale .verdict {
+        font-family: var(--display);
+        font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+        color: var(--gold-bright);
+        letter-spacing: 0.03em;
+        line-height: 1.4;
+        margin-top: 30px;
+        font-weight: 600;
+      }
+      .finale .small {
+        font-size: 1rem;
+        color: var(--parchment-dim);
+        font-style: italic;
+        max-width: 600px;
+        margin: 40px auto 0;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 40px 28px 60px;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        color: var(--parchment-dim);
+        text-transform: uppercase;
+        line-height: 2.2;
+      }
+      footer .note {
+        font-family: var(--serif);
+        font-size: 0.95rem;
+        text-transform: none;
+        letter-spacing: normal;
+        color: var(--parchment-dim);
+        font-style: italic;
+        max-width: 640px;
+        margin: 0 auto 30px;
+        line-height: 1.7;
+      }
+
+      ::selection {
+        background: var(--gold);
+        color: var(--void);
+      }
+
+      @media (max-width: 680px) {
+        body {
+          font-size: 18px;
+        }
+        nav {
+          padding: 14px 18px;
+        }
+        nav .sigil span,
+        nav .status span.txt {
+          display: none;
+        }
+        .triptych {
+          grid-template-columns: 1fr;
+        }
+        .key-grid {
+          grid-template-columns: 1fr;
+        }
+        .chapter .num {
+          font-size: 2.4rem;
+        }
+        .intro p .drop {
+          font-size: 3.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="starfield"></div>
+    <div class="aurora"></div>
+    <div class="scanlines"></div>
+    <div class="grain"></div>
+
+    <nav>
+      <div class="sigil"><b>CODEX</b><span>· ARQUIVO DO CÉU</span></div>
+      <div class="status">
+        <span class="dot"></span><span class="txt">SINAL ABERTO · 2026</span>
+      </div>
+    </nav>
+
+    <!-- ===================== HERO ===================== -->
+    <header>
+      <div class="ophanim">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="core" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#f4d894" />
+              <stop offset="60%" stop-color="#d9b362" />
+              <stop offset="100%" stop-color="#8a6a2c" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <!-- outer ring -->
+          <g class="ring-outer" style="transform-origin: 200px 200px">
+            <circle
+              cx="200"
+              cy="200"
+              r="185"
+              fill="none"
+              stroke="#d9b362"
+              stroke-width="1"
+              stroke-opacity=".5"
+            />
+            <circle
+              cx="200"
+              cy="200"
+              r="172"
+              fill="none"
+              stroke="#d9b362"
+              stroke-width="1"
+              stroke-opacity=".25"
+              stroke-dasharray="2 8"
+            />
+            <g stroke="#d9b362" stroke-width="1" stroke-opacity=".4">
+              <!-- radial ticks -->
+              <line x1="200" y1="15" x2="200" y2="35" />
+              <line x1="200" y1="365" x2="200" y2="385" />
+              <line x1="15" y1="200" x2="35" y2="200" />
+              <line x1="365" y1="200" x2="385" y2="200" />
+              <line x1="65" y1="65" x2="80" y2="80" />
+              <line x1="335" y1="65" x2="320" y2="80" />
+              <line x1="65" y1="335" x2="80" y2="320" />
+              <line x1="335" y1="335" x2="320" y2="320" />
+            </g>
+          </g>
+          <!-- eyes ring (ophanim full of eyes) -->
+          <g class="eyes" style="transform-origin: 200px 200px">
+            <g
+              fill="none"
+              stroke="#6fc6cf"
+              stroke-width="1.2"
+              stroke-opacity=".7"
+            >
+              <g transform="translate(200,42)">
+                <ellipse rx="9" ry="5" />
+                <circle r="2" fill="#6fc6cf" />
+              </g>
+              <g transform="translate(200,358)">
+                <ellipse rx="9" ry="5" />
+                <circle r="2" fill="#6fc6cf" />
+              </g>
+              <g transform="translate(42,200)">
+                <ellipse rx="5" ry="9" />
+                <circle r="2" fill="#6fc6cf" />
+              </g>
+              <g transform="translate(358,200)">
+                <ellipse rx="5" ry="9" />
+                <circle r="2" fill="#6fc6cf" />
+              </g>
+              <g transform="translate(89,89) rotate(45)">
+                <ellipse rx="9" ry="5" />
+                <circle r="2" fill="#6fc6cf" />
+              </g>
+              <g transform="translate(311,89) rotate(-45)">
+                <ellipse rx="9" ry="5" />
+                <circle r="2" fill="#6fc6cf" />
+              </g>
+              <g transform="translate(89,311) rotate(-45)">
+                <ellipse rx="9" ry="5" />
+                <circle r="2" fill="#6fc6cf" />
+              </g>
+              <g transform="translate(311,311) rotate(45)">
+                <ellipse rx="9" ry="5" />
+                <circle r="2" fill="#6fc6cf" />
+              </g>
+            </g>
+          </g>
+          <!-- mid ring -->
+          <g class="ring-mid">
+            <circle
+              cx="200"
+              cy="200"
+              r="130"
+              fill="none"
+              stroke="#e9e2cf"
+              stroke-width="1"
+              stroke-opacity=".35"
+            />
+            <circle
+              cx="200"
+              cy="200"
+              r="130"
+              fill="none"
+              stroke="#d9b362"
+              stroke-width="6"
+              stroke-opacity=".12"
+              stroke-dasharray="40 24"
+            />
+          </g>
+          <!-- inner ring (wheel within a wheel) -->
+          <g class="ring-inner" style="transform-origin: 200px 200px">
+            <circle
+              cx="200"
+              cy="200"
+              r="92"
+              fill="none"
+              stroke="#d9b362"
+              stroke-width="1.5"
+              stroke-opacity=".6"
+            />
+            <g stroke="#d9b362" stroke-width="1" stroke-opacity=".4">
+              <line x1="200" y1="108" x2="200" y2="292" />
+              <line x1="108" y1="200" x2="292" y2="200" />
+              <line x1="135" y1="135" x2="265" y2="265" />
+              <line x1="265" y1="135" x2="135" y2="265" />
+            </g>
+            <circle
+              cx="200"
+              cy="200"
+              r="60"
+              fill="none"
+              stroke="#6fc6cf"
+              stroke-width="1"
+              stroke-opacity=".5"
+            />
+          </g>
+          <!-- luminous throne core -->
+          <circle
+            class="glyph-core"
+            cx="200"
+            cy="200"
+            r="46"
+            fill="url(#core)"
+          />
+          <circle cx="200" cy="200" r="14" fill="#f4d894" fill-opacity=".9" />
+        </svg>
+      </div>
+
+      <div class="kicker">Disclosure · Manuscritos · Anomalias</div>
+      <h1>
+        O Arquivo do Céu
+        <span class="sub">OVNIs, anjos bíblicos e seres interdimensionais</span>
+      </h1>
+      <div class="hero-line"></div>
+      <p class="lede">
+        A revelação que talvez peça uma releitura da história humana —
+        separando, a cada passo, o fato, a hipótese, a especulação e a crença.
+      </p>
+
+      <div class="scroll-cue">Descer ao arquivo</div>
+    </header>
+
+    <div class="wrap">
+      <div class="col">
+        <!-- ===================== INTRO ===================== -->
+        <section class="intro">
+          <p class="pull">
+            E se aquilo que chamamos de anjos, vigilantes e tronos celestiais
+            fosse uma interpretação antiga de algo que ainda não compreendemos?
+          </p>
+
+          <p>
+            <span class="drop">H</span>á uma pergunta que atravessa os milênios
+            sem pedir licença. Ela aparece nas tábuas da Mesopotâmia, nos rolos
+            do Mar Morto, nas catedrais góticas e — agora — nos vídeos
+            granulados captados por câmeras infravermelhas de caças militares. A
+            pergunta é simples e desconcertante:
+            <em
+              >o que estamos vendo quando vemos algo que não deveríamos estar
+              vendo?</em
+            >
+          </p>
+
+          <p>
+            Por séculos, a resposta veio embrulhada em linguagem sagrada. Hoje,
+            ela vem embrulhada em sigilo de Estado. O cenário do nosso tempo tem
+            sabor de roteiro — exceto que está documentado:
+          </p>
+
+          <ul class="ledger">
+            <li>
+              <span>01</span> Arquivos governamentais sobre UAP sendo lentamente
+              abertos.
+            </li>
+            <li>
+              <span>02</span> Vídeos militares oficialmente reconhecidos como
+              autênticos.
+            </li>
+            <li>
+              <span>03</span> Audiências no Congresso dos EUA, as primeiras em
+              mais de 50 anos.
+            </li>
+            <li>
+              <span>04</span> Senadores, generais e pilotos falando, sob
+              juramento, do que não souberam nomear.
+            </li>
+            <li>
+              <span>05</span> E uma hipótese antiga que se recusa a morrer: a
+              interdimensional.
+            </li>
+          </ul>
+
+          <p>
+            Este documento não dirá no que acreditar. Fará algo mais honesto:
+            mostrar o que sabemos, o que suspeitamos, o que inventamos e o que
+            sempre quisemos que fosse verdade — e deixar você diante do abismo,
+            com uma lanterna na mão.
+          </p>
+        </section>
+
+        <!-- ===================== KEY ===================== -->
+        <section class="key reveal">
+          <div class="key-grid">
+            <div class="key-item">
+              <span class="tag fato">Fato</span
+              ><small
+                >Documentado e verificável: audiências, relatórios, patentes,
+                manuscritos.</small
+              >
+            </div>
+            <div class="key-item">
+              <span class="tag hipotese">Hipótese</span
+              ><small
+                >Explicação plausível, ainda sem prova: extraterrestre,
+                interdimensional.</small
+              >
+            </div>
+            <div class="key-item">
+              <span class="tag espec">Especulação</span
+              ><small
+                >Exercício de imaginação na fronteira do pensável: simulação,
+                zoológico cósmico.</small
+              >
+            </div>
+            <div class="key-item">
+              <span class="tag crenca">Crença</span
+              ><small
+                >Experiência vivida e fé: o pavor sagrado, o "não tenha
+                medo".</small
+              >
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ===================== CHAPTERS ===================== -->
+      <div class="col">
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">I</span>
+            <h2>A Disclosure dos OVNIs</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag fato" style="margin-right: 8px">Fato</span> com
+            margem em aberto
+          </div>
+          <p>
+            Em 2017, o <em>New York Times</em> revelou um programa do Pentágono
+            e divulgou vídeos da Marinha —
+            <strong>FLIR, GIMBAL e GOFAST</strong> — depois reconhecidos como
+            autênticos pelo Departamento de Defesa. Reconhecida é a
+            <em>autenticidade das imagens</em>, não a natureza dos objetos.
+          </p>
+          <p>
+            Em 2022, o Congresso realizou a primeira audiência pública em mais
+            de meio século. Em julho de 2023, pilotos e um ex-oficial de
+            inteligência testemunharam sob juramento — alegações, não provas. O
+            Pentágono criou o <strong>AARO</strong> para analisar relatos com
+            método científico.
+          </p>
+          <div class="fact-strip">
+            <span class="lbl">RELATÓRIO AARO · 2024 —</span> revisão de quase 80
+            anos: <b>nenhuma evidência verificável</b> de tecnologia
+            extraterrestre.<br />
+            <span class="lbl">RELATÓRIO ANUAL · NOV/2024 —</span> de 757 casos
+            novos (1.652 no total), a maioria resolvida como balões, drones,
+            pássaros e satélites.<br />
+            <span class="lbl">RESÍDUO —</span> <b>21 casos</b> classificados
+            como "verdadeiras anomalias", ainda sem explicação.
+          </div>
+          <p>
+            É esse resíduo — a margem de mistério que sobrevive à investigação
+            séria — que mantém viva uma pergunta muito mais antiga.
+          </p>
+        </article>
+
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">II</span>
+            <h2>As Rodas de Ezequiel</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag fato" style="margin-right: 8px">Fato textual</span>
+            + interpretação
+          </div>
+          <p>
+            Por volta de 593 a.C., o sacerdote Ezequiel estava entre os exilados
+            na Babilônia. O livro abre com uma das visões mais estranhas da
+            literatura sagrada: um vento de tempestade, criaturas de
+            <strong>quatro faces</strong> e quatro asas, e
+            <strong>rodas dentro de rodas</strong> cujas bordas eram
+            <em>cheias de olhos</em>.
+          </p>
+          <p>
+            O sistema se movia em qualquer direção sem girar, "para onde o
+            espírito fosse". Acima de tudo, um trono luminoso cercado por um
+            arco de cores. Para a tradição, é a <strong>Merkabah</strong> — a
+            carruagem divina. Para o leitor moderno, soa como vocabulário antigo
+            tentando descrever algo sem nome: movimento multidirecional, metal
+            brilhante, sensores.
+          </p>
+        </article>
+
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">III</span>
+            <h2>Josef Blumrich e a NASA</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag fato" style="margin-right: 8px">Fato</span>
+            separado da tese
+          </div>
+          <p>
+            <strong>Josef F. Blumrich</strong> (1913–2002), engenheiro da NASA
+            no Marshall Space Flight Center, contribuiu para o Saturno V e o
+            Skylab. Irritado com a leitura ufológica de Ezequiel, decidiu
+            refutá-la — e relatou ter-se convencido do contrário, publicando
+            <em>The Spaceships of Ezekiel</em> (1974).
+          </p>
+          <div class="fact-strip">
+            <span class="lbl">VERIFICÁVEL —</span> a partir das "rodas dentro de
+            rodas", Blumrich projetou e patenteou uma
+            <b>roda omnidirecional</b>. Patente <b>US 3.789.947</b>, concedida
+            em 5/fev/1974, cedida à NASA. O princípio é real e usado até hoje.
+          </div>
+          <p>
+            A roda funciona — isso é fato. Que Ezequiel tenha visto uma nave é
+            <em>interpretação dele</em>, não da ciência. Engenheiros conseguem
+            projetar máquinas que se encaixem em quase qualquer descrição vaga.
+            A lição talvez não seja sobre Ezequiel, e sim sobre nós:
+            <strong>vemos máquinas onde temos máquinas.</strong>
+          </p>
+        </article>
+
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">IV</span>
+            <h2>Como a Bíblia Descreve os Anjos</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag fato" style="margin-right: 8px">Fato textual</span>
+          </div>
+          <p>
+            O anjo sereno de túnica branca é, em grande parte, criação da arte
+            renascentista. O texto é outro. <strong>Serafins</strong> de seis
+            asas e fogo; <strong>querubins</strong> guardiões de múltiplas
+            faces; <strong>ofanins</strong> — as próprias rodas cheias de olhos.
+            Asas em excesso, rostos simultâneos, vozes ensurdecedoras, metal e
+            fogo.
+          </p>
+          <blockquote>
+            Tantas dessas aparições começam com a mesma frase: "Não tenha medo."
+          </blockquote>
+          <p>
+            O encontro com o celestial, nesses textos, é descrito como
+            <em>aterrorizante</em> — e essa estranheza é o que alimenta as
+            hipóteses seguintes.
+          </p>
+        </article>
+
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">V</span>
+            <h2>O Livro de Enoque</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag fato" style="margin-right: 8px"
+              >Fato histórico</span
+            >
+            + eco especulativo
+          </div>
+          <p>
+            O <strong>Livro de Enoque</strong> é apócrifo — fora da maioria dos
+            cânones, mas canônico na Igreja Ortodoxa Etíope. Fragmentos em
+            aramaico estavam entre os <strong>Manuscritos do Mar Morto</strong>,
+            confirmando sua antiguidade. Nele, os
+            <strong>Vigilantes</strong> descem, unem-se a humanas, geram os
+            <strong>Nefilins</strong> e ensinam conhecimento proibido —
+            metalurgia, armas, astrologia.
+          </p>
+          <p>
+            Para a ufologia, é quase um roteiro de "contato" antes da palavra
+            existir — leitura <em>especulativa</em>. Para os estudiosos, é
+            literatura apocalíptica sobre a origem do mal. O que importa é a
+            intuição antiga: a fronteira entre céu e terra era porosa, povoada e
+            nem sempre amistosa.
+          </p>
+        </article>
+
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">VI</span>
+            <h2>Seres Interdimensionais</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag hipotese" style="margin-right: 8px">Hipótese</span>
+            sem suporte científico
+          </div>
+          <p>
+            Em vez de viajantes do espaço, <em>vizinhos</em>: entidades que
+            existiriam em outra camada da realidade. A hipótese "explica" o que
+            a extraterrestre não explica — aparecer e sumir, mover-se de modo
+            impossível. A física <em>de verdade</em> discute dimensões
+            adicionais (Teoria das Cordas) e multiversos.
+          </p>
+          <p>
+            <strong>Porém</strong> — e o porém é enorme — nada disso sugere que
+            tais dimensões sejam habitáveis ou atravessáveis por "seres". A
+            ufologia empresta o vocabulário da física e o reveste de um sentido
+            que a física não autoriza. É
+            <strong
+              >filosoficamente sedutora e cientificamente sem suporte</strong
+            >: por ora, não-científica, porque explica tudo e não pode ser
+            refutada por nada.
+          </p>
+        </article>
+
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">VII</span>
+            <h2>A Teoria dos Antigos Astronautas</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag hipotese" style="margin-right: 8px">Hipótese</span>
+            amplamente criticada
+          </div>
+          <p>
+            Em 1968, <strong>Erich von Däniken</strong> popularizou a tese de
+            que os "deuses" antigos seriam visitantes de outros mundos:
+            monumentos "impossíveis", mitologias globais, arte reinterpretada
+            como astronautas.
+          </p>
+          <p>
+            A crítica é pesada e quase unânime: sabemos <em>como</em> os antigos
+            construíram seus monumentos. Atribuir tudo a alienígenas
+            <strong>subestima a inteligência dos povos antigos</strong> — e a
+            teoria seleciona o que confirma e descarta o que contradiz. Sobra,
+            porém, uma intuição cultural curiosa: a recorrência de "deuses que
+            descem do céu" em culturas que nunca se contataram.
+          </p>
+        </article>
+
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">VIII</span>
+            <h2>Religião, Ufologia e Consciência</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag crenca" style="margin-right: 8px">Crença</span> +
+            neurociência
+          </div>
+          <p>
+            "Qualquer tecnologia suficientemente avançada é indistinguível de
+            magia." Vire a frase: toda magia antiga seria, vista hoje,
+            indistinguível de tecnologia? Uma civilização milênios à frente
+            seria percebida como o divino.
+          </p>
+          <p>
+            O espelho dessa ideia olha para dentro do crânio: estados alterados
+            de consciência, experiências de quase-morte e a
+            <strong>paralisia do sono</strong> (presença, terror, figuras ao pé
+            da cama) produzem visões intensas. Mas atenção — ter
+            <em>correlato cerebral</em> não prova que a experiência é "só"
+            cérebro. A mesma vivência pode ter
+            <strong
+              >múltiplas explicações verdadeiras em níveis diferentes</strong
+            >.
+          </p>
+        </article>
+
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">IX</span>
+            <h2>A Terra como Experimento</h2>
+          </div>
+          <div class="tagline">
+            <span class="tag espec" style="margin-right: 8px">Especulação</span>
+            filosófica deliberada
+          </div>
+          <p>
+            Se há inteligências superiores, por que não se apresentam de forma
+            inequívoca? A <strong>Hipótese do Zoológico</strong> sugere que nos
+            observam sem interferir. A
+            <strong>Hipótese da Simulação</strong> propõe que vivemos numa
+            simulação de alta fidelidade. A
+            <strong>dos Vigilantes</strong> costura a teologia de Enoque à
+            supervisão externa. A
+            <strong>da Intervenção Periódica</strong> aposta em visitas nos
+            momentos-chave da história.
+          </p>
+          <p>
+            Nenhuma é afirmada como verdadeira. Valem como espelhos: a esperança
+            de não estar só, o medo de não estar no controle.
+            <em>A beleza de uma ideia não é evidência de sua verdade.</em>
+          </p>
+        </article>
+      </div>
+
+      <!-- ===================== CHAPTER X — TRIPTYCH ===================== -->
+      <div class="col">
+        <article class="chapter reveal">
+          <div class="head">
+            <span class="num">X</span>
+            <h2>O Grande Mistério</h2>
+          </div>
+          <div class="tagline">Três interpretações · nenhuma vencedora</div>
+          <div class="triptych">
+            <div class="panel">
+              <div class="pn">VIA 01</div>
+              <h3>Puramente tecnológico</h3>
+              <p>
+                Objetos físicos: drones, fenômenos, sensores enganados. Os
+                textos antigos são mito e cérebro.
+              </p>
+              <p class="pro">
+                + a mais econômica; a maioria dos casos resolve-se assim.
+              </p>
+              <p class="con">− não cobre o resíduo de anomalias verdadeiras.</p>
+            </div>
+            <div class="panel">
+              <div class="pn">VIA 02</div>
+              <h3>Espiritual / religioso</h3>
+              <p>
+                Há uma realidade não-material que os textos e certos encontros
+                tocam.
+              </p>
+              <p class="pro">+ honra a experiência vivida de bilhões.</p>
+              <p class="con">
+                − escapa ao método; depende de fé, não de prova pública.
+              </p>
+            </div>
+            <div class="panel">
+              <div class="pn">VIA 03</div>
+              <h3>Interdimensional / desconhecido</h3>
+              <p>
+                Algo genuinamente novo — uma categoria de realidade ainda sem
+                ciência.
+              </p>
+              <p class="pro">+ tem a humildade de admitir o desconhecido.</p>
+              <p class="con">
+                − beira o infalsificável; "não sabemos" em jargão elegante.
+              </p>
+            </div>
+          </div>
+          <p>
+            A verdade desconfortável: um observador honesto
+            <strong>não consegue, hoje, fechar a questão</strong>. E talvez essa
+            incapacidade não seja uma falha — seja a resposta mais sincera
+            disponível.
+          </p>
+        </article>
+      </div>
+
+      <!-- ===================== FINALE ===================== -->
+      <div class="col">
+        <section class="finale reveal">
+          <span class="stamp">FIM DO ARQUIVO · MARGEM DO MAPA</span>
+          <p class="pull">
+            Talvez os antigos não estivessem descrevendo deuses. Talvez não
+            fossem máquinas. Talvez tentassem explicar algo que ultrapassa
+            nossas categorias de ciência, religião e filosofia.
+          </p>
+          <p style="color: var(--parchment-dim); font-style: italic">
+            Estamos observando visitantes de outros mundos, entidades de outras
+            dimensões, manifestações da própria consciência humana — ou algo
+            ainda mais estranho?
+          </p>
+          <p class="verdict">
+            Ainda não sabemos.<br />E talvez seja por isso que continuamos
+            olhando para o céu.
+          </p>
+          <p class="small">
+            Os cartógrafos antigos escreviam, nas bordas inexploradas,
+            <em>"aqui há dragões"</em>. Não era ignorância — era a marcação
+            honesta do ponto onde o conhecimento terminava e o mistério
+            começava. Este arquivo é um mapa dessas margens.
+          </p>
+        </section>
+      </div>
+
+      <footer>
+        <p class="note">
+          Nota metodológica: este documento distingue deliberadamente fatos
+          documentados, hipóteses, especulações filosóficas e crenças. Onde uma
+          afirmação extraordinária aparece sem prova pública, ela é assinalada
+          como alegação. O objetivo não é convencer, mas equipar o leitor para
+          pensar por conta própria.
+        </p>
+        CODEX · ARQUIVO DO CÉU &nbsp;·&nbsp; COMPILADO EM 2026 &nbsp;·&nbsp;
+        SINAL PERMANECE ABERTO
+      </footer>
+    </div>
+
+    <script>
+      // staggered scroll reveals
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      // subtle parallax on the ophanim wheel
+      const wheel = document.querySelector(".ophanim");
+      window.addEventListener(
+        "scroll",
+        () => {
+          const y = window.scrollY;
+          if (y < window.innerHeight) {
+            wheel.style.transform = `translateY(${y * 0.18}px) scale(${1 - y * 0.0004})`;
+            wheel.style.opacity = `${1 - y * 0.0016}`;
+          }
+        },
+        { passive: true },
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1575 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>O Arquivo do Céu · Roteiro de Produção</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,16..72,400;0,16..72,500;1,16..72,400;1,16..72,500&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --void: #070809;
+        --panel: #0e1013;
+        --panel-2: #13161b;
+        --rule: rgba(214, 178, 102, 0.14);
+        --rule-strong: rgba(214, 178, 102, 0.34);
+        --paper: #ece6d8;
+        --paper-dim: #9a937f;
+        --gold: #d6b266;
+        --gold-bright: #f3da93;
+        --gold-deep: #7d5f28;
+        --cyan: #67c2cb;
+        --cyan-dim: #356a6f;
+        --purple: #bd8fd6;
+        --purple-dim: #5a3f6c;
+        --blood: #c0524f;
+        --blood-dim: #5e2826;
+        --tc: "JetBrains Mono", monospace;
+        --disp: "Oswald", sans-serif;
+        --read: "Newsreader", Georgia, serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--void);
+        color: var(--paper);
+        font-family: var(--read);
+        font-size: 18px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* film-strip texture on the far edges */
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 26px;
+        z-index: 1;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          180deg,
+          transparent 0 16px,
+          rgba(214, 178, 102, 0.05) 16px 22px,
+          transparent 22px 38px
+        );
+        border-right: 1px solid var(--rule);
+        border-left: 1px solid var(--rule);
+      }
+      body::before {
+        left: 0;
+        border-left: none;
+      }
+      body::after {
+        right: 0;
+        border-right: none;
+      }
+      @media (max-width: 900px) {
+        body::before,
+        body::after {
+          display: none;
+        }
+      }
+
+      /* ---------- top control bar ---------- */
+      .bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 30px;
+        background: rgba(7, 8, 9, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--rule);
+      }
+      .bar .brand {
+        font-family: var(--disp);
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-size: 14px;
+        color: var(--gold);
+      }
+      .bar .brand span {
+        color: var(--paper-dim);
+        font-weight: 300;
+      }
+      .bar .meta {
+        font-family: var(--tc);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: var(--paper-dim);
+        text-transform: uppercase;
+      }
+      .bar .spacer {
+        flex: 1;
+      }
+      .bar button {
+        font-family: var(--tc);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+        background: transparent;
+        color: var(--paper);
+        border: 1px solid var(--rule-strong);
+        padding: 8px 14px;
+        border-radius: 3px;
+        transition: all 0.25s;
+      }
+      .bar button:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .bar button.on {
+        background: var(--gold);
+        color: var(--void);
+        border-color: var(--gold);
+      }
+      .tp-tools {
+        display: none;
+        align-items: center;
+        gap: 10px;
+      }
+      .tp-tools.show {
+        display: flex;
+      }
+      .tp-tools .play {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        display: grid;
+        place-items: center;
+        font-size: 13px;
+      }
+      .tp-tools input[type="range"] {
+        width: 90px;
+        accent-color: var(--gold);
+      }
+      .tp-tools label {
+        font-family: var(--tc);
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--paper-dim);
+        text-transform: uppercase;
+      }
+
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold), var(--cyan));
+        z-index: 45;
+        width: 0;
+      }
+
+      /* ---------- act nav ---------- */
+      .actnav {
+        position: fixed;
+        top: 50%;
+        right: 14px;
+        transform: translateY(-50%);
+        z-index: 30;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .actnav a {
+        font-family: var(--tc);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        color: var(--paper-dim);
+        text-decoration: none;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        opacity: 0.6;
+        transition: 0.25s;
+        border-right: 2px solid transparent;
+        padding-right: 6px;
+      }
+      .actnav a:hover,
+      .actnav a.active {
+        color: var(--gold);
+        opacity: 1;
+        border-color: var(--gold);
+      }
+      @media (max-width: 1100px) {
+        .actnav {
+          display: none;
+        }
+      }
+
+      .page {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 34px;
+      }
+
+      /* ---------- hero / title card ---------- */
+      .titlecard {
+        min-height: 88vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 130px 0 70px;
+        position: relative;
+      }
+      .slate {
+        border: 2px solid var(--rule-strong);
+        padding: 34px 34px 30px;
+        position: relative;
+        background: linear-gradient(
+          180deg,
+          rgba(19, 22, 27, 0.7),
+          rgba(14, 16, 19, 0.3)
+        );
+      }
+      .slate::before {
+        content: "PROD. 001 · ROTEIRO DE NARRAÇÃO";
+        position: absolute;
+        top: -10px;
+        left: 22px;
+        background: var(--void);
+        padding: 0 10px;
+        font-family: var(--tc);
+        font-size: 9px;
+        letter-spacing: 0.28em;
+        color: var(--gold);
+      }
+      .clap {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 22px;
+      }
+      .clap i {
+        flex: 1;
+        height: 18px;
+        background: repeating-linear-gradient(
+          115deg,
+          var(--paper) 0 14px,
+          var(--void) 14px 28px
+        );
+        opacity: 0.5;
+      }
+      .titlecard h1 {
+        font-family: var(--disp);
+        font-weight: 700;
+        font-size: clamp(2.6rem, 8vw, 5.4rem);
+        line-height: 0.92;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        color: var(--paper);
+      }
+      .titlecard h1 b {
+        color: var(--gold);
+        font-weight: 700;
+      }
+      .titlecard .logline {
+        font-family: var(--read);
+        font-style: italic;
+        font-size: 1.15rem;
+        color: var(--paper-dim);
+        margin: 20px 0 26px;
+        max-width: 560px;
+        line-height: 1.6;
+      }
+      .specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 10px;
+      }
+      .specs span {
+        font-family: var(--tc);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--paper-dim);
+        border: 1px solid var(--rule);
+        padding: 6px 11px;
+        border-radius: 3px;
+      }
+      .specs span b {
+        color: var(--cyan);
+        font-weight: 500;
+      }
+
+      /* ---------- act header ---------- */
+      .act {
+        margin: 70px 0 0;
+        padding-top: 30px;
+        border-top: 1px solid var(--rule-strong);
+      }
+      .act .actlabel {
+        font-family: var(--tc);
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        color: var(--gold);
+        text-transform: uppercase;
+      }
+      .act h2 {
+        font-family: var(--disp);
+        font-weight: 600;
+        font-size: clamp(1.8rem, 5vw, 3rem);
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        line-height: 1;
+        margin-top: 6px;
+        color: var(--paper);
+      }
+
+      /* ---------- scene block ---------- */
+      .scene {
+        margin: 42px 0;
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.8s,
+          transform 0.8s;
+      }
+      .scene.in {
+        opacity: 1;
+        transform: none;
+      }
+      .scene-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .tcode {
+        font-family: var(--tc);
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        color: var(--void);
+        background: var(--gold);
+        padding: 5px 9px;
+        border-radius: 3px;
+      }
+      .scene-head .sn {
+        font-family: var(--tc);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        color: var(--cyan);
+      }
+      .scene-head h3 {
+        font-family: var(--disp);
+        font-weight: 500;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: var(--paper);
+        flex: 1;
+        min-width: 200px;
+      }
+
+      /* cue: IMAGEM */
+      .cue {
+        font-family: var(--tc);
+        font-size: 0.78rem;
+        line-height: 1.65;
+        letter-spacing: 0.02em;
+        margin: 14px 0;
+        padding: 11px 14px 11px 40px;
+        border-radius: 3px;
+        position: relative;
+      }
+      .cue.img {
+        color: var(--paper-dim);
+        background: rgba(19, 22, 27, 0.55);
+        border: 1px dashed var(--rule);
+      }
+      .cue.img::before {
+        content: "▣";
+        position: absolute;
+        left: 14px;
+        top: 11px;
+        color: var(--cyan);
+      }
+      .cue.img b {
+        color: var(--cyan);
+        font-weight: 500;
+        letter-spacing: 0.14em;
+      }
+      /* cue: TRILHA */
+      .cue.trilha {
+        color: var(--paper-dim);
+        background: transparent;
+        border-left: 2px solid var(--purple-dim);
+        padding-left: 38px;
+      }
+      .cue.trilha::before {
+        content: "♪";
+        position: absolute;
+        left: 14px;
+        top: 10px;
+        color: var(--purple);
+        font-size: 1rem;
+      }
+      .cue.trilha b {
+        color: var(--purple);
+        font-weight: 500;
+        letter-spacing: 0.14em;
+      }
+
+      /* V.O. narration */
+      .vo {
+        margin: 24px 0;
+        padding-left: 22px;
+        border-left: 3px solid var(--gold-deep);
+        position: relative;
+      }
+      .vo .who {
+        font-family: var(--tc);
+        font-size: 10px;
+        letter-spacing: 0.26em;
+        color: var(--gold);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 8px;
+      }
+      .vo p {
+        font-family: var(--read);
+        font-size: 1.22rem;
+        line-height: 1.72;
+        color: var(--paper);
+        margin-bottom: 12px;
+      }
+      .vo p:last-child {
+        margin-bottom: 0;
+      }
+      .vo p em {
+        color: var(--gold-bright);
+        font-style: italic;
+      }
+
+      /* legenda chips */
+      .legenda {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 14px 0 4px;
+        align-items: center;
+      }
+      .legenda .lk {
+        font-family: var(--tc);
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        color: var(--paper-dim);
+        text-transform: uppercase;
+      }
+      .chip {
+        font-family: var(--tc);
+        font-size: 9.5px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        padding: 4px 9px;
+        border: 1px solid;
+        border-radius: 2px;
+        text-transform: uppercase;
+      }
+      .chip.fato {
+        color: var(--cyan);
+        border-color: var(--cyan-dim);
+        background: rgba(103, 194, 203, 0.07);
+      }
+      .chip.hip {
+        color: var(--gold);
+        border-color: var(--gold-deep);
+        background: rgba(214, 178, 102, 0.07);
+      }
+      .chip.esp {
+        color: var(--purple);
+        border-color: var(--purple-dim);
+        background: rgba(189, 143, 214, 0.07);
+      }
+      .chip.cre {
+        color: var(--blood);
+        border-color: var(--blood-dim);
+        background: rgba(192, 82, 79, 0.08);
+      }
+
+      /* cartela */
+      .cartela {
+        text-align: center;
+        margin: 40px 0;
+        padding: 34px 24px;
+        border: 1px solid var(--rule-strong);
+        background: radial-gradient(
+          ellipse at center,
+          rgba(214, 178, 102, 0.06),
+          transparent 70%
+        );
+      }
+      .cartela .lbl {
+        font-family: var(--tc);
+        font-size: 9px;
+        letter-spacing: 0.3em;
+        color: var(--paper-dim);
+        text-transform: uppercase;
+      }
+      .cartela .big {
+        font-family: var(--disp);
+        font-weight: 700;
+        font-size: clamp(1.8rem, 6vw, 3rem);
+        text-transform: uppercase;
+        color: var(--gold);
+        letter-spacing: 0.04em;
+        margin: 10px 0;
+      }
+      .cartela p {
+        font-family: var(--read);
+        font-style: italic;
+        color: var(--paper-dim);
+        font-size: 1rem;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+
+      /* appendix */
+      .appendix {
+        margin: 70px 0 0;
+        padding: 34px 0 0;
+        border-top: 1px solid var(--rule-strong);
+      }
+      .appendix h4 {
+        font-family: var(--disp);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 1.2rem;
+        color: var(--paper);
+        margin-bottom: 18px;
+      }
+      .appendix ul {
+        list-style: none;
+      }
+      .appendix li {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--rule);
+        font-family: var(--tc);
+        font-size: 0.78rem;
+        line-height: 1.6;
+        color: var(--paper-dim);
+      }
+      .goldrule {
+        font-family: var(--read);
+        font-style: italic;
+        color: var(--gold-bright);
+        font-size: 1.05rem;
+        margin-top: 24px;
+        padding: 18px 22px;
+        border: 1px solid var(--gold-deep);
+        border-radius: 3px;
+        background: rgba(214, 178, 102, 0.05);
+      }
+
+      footer {
+        text-align: center;
+        padding: 50px 30px 70px;
+        font-family: var(--tc);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--paper-dim);
+        text-transform: uppercase;
+        line-height: 2.4;
+        margin-top: 40px;
+        border-top: 1px solid var(--rule);
+      }
+
+      ::selection {
+        background: var(--gold);
+        color: var(--void);
+      }
+
+      /* ============ TELEPROMPTER MODE ============ */
+      body.tp .bar .brand span,
+      body.tp .actnav,
+      body.tp .progress {
+        display: none;
+      }
+      body.tp .page {
+        max-width: 920px;
+      }
+      body.tp .titlecard,
+      body.tp .appendix,
+      body.tp .specs,
+      body.tp .clap,
+      body.tp .slate::before {
+        display: none;
+      }
+      body.tp .cue,
+      body.tp .legenda,
+      body.tp .scene-head .sn,
+      body.tp .tcode {
+        display: none;
+      }
+      body.tp .scene-head h3,
+      body.tp .act h2,
+      body.tp .act .actlabel {
+        opacity: 0.35;
+        font-weight: 300;
+      }
+      body.tp .scene {
+        opacity: 1;
+        transform: none;
+        margin: 60px 0;
+      }
+      body.tp .vo {
+        border-left: none;
+        padding-left: 0;
+        text-align: center;
+      }
+      body.tp .vo .who {
+        display: none;
+      }
+      body.tp .vo p {
+        font-size: clamp(1.7rem, 4.2vw, 2.8rem);
+        line-height: 1.5;
+        color: var(--paper);
+        max-width: 880px;
+        margin: 0 auto 28px;
+      }
+      body.tp .cartela {
+        border-color: var(--rule);
+      }
+      body.tp .titlecard {
+        display: none;
+      }
+      /* center reading guide line in tp */
+      body.tp::after {
+        content: "";
+        position: fixed;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--rule);
+        z-index: 5;
+        pointer-events: none;
+      }
+
+      @media (max-width: 680px) {
+        body {
+          font-size: 16px;
+        }
+        .bar {
+          padding: 10px 16px;
+          gap: 10px;
+        }
+        .bar .meta {
+          display: none;
+        }
+        .page {
+          padding: 0 20px;
+        }
+        .vo p {
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress" id="prog"></div>
+
+    <div class="bar">
+      <div class="brand">O Arquivo do Céu <span>· Roteiro</span></div>
+      <div class="meta" id="runtime">42–48 MIN · V.O.</div>
+      <div class="spacer"></div>
+      <div class="tp-tools" id="tptools">
+        <button class="play" id="playBtn" title="Rolagem automática">▶</button>
+        <label>Vel.</label
+        ><input type="range" id="speed" min="1" max="10" value="3" />
+      </div>
+      <button id="tpBtn">Modo Teleprompter</button>
+    </div>
+
+    <nav class="actnav" id="actnav">
+      <a href="#teaser">Teaser</a>
+      <a href="#ato1">Ato I</a>
+      <a href="#ato2">Ato II</a>
+      <a href="#ato3">Ato III</a>
+      <a href="#ato4">Ato IV</a>
+      <a href="#ato5">Ato V</a>
+      <a href="#fim">Fim</a>
+    </nav>
+
+    <div class="page">
+      <!-- TITLE CARD -->
+      <section class="titlecard">
+        <div class="slate">
+          <div class="clap"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <h1>O Arquivo<br />do <b>Céu</b></h1>
+          <p class="logline">
+            Uma investigação que costura os vídeos militares desclassificados às
+            visões de fogo e rodas dos textos antigos — perguntando, sem fechar
+            a resposta, se os profetas e os pilotos descreveram a mesma coisa.
+          </p>
+          <div class="specs">
+            <span>Formato: <b>Documentário V.O.</b></span>
+            <span>Duração: <b>42–48 min</b></span>
+            <span>Atos: <b>5</b></span>
+            <span>Segmentos: <b>7</b></span>
+            <span>Tom: <b>investigativo / neutro</b></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= TEASER ======= -->
+      <section class="act" id="teaser">
+        <div class="actlabel">Abertura</div>
+        <h2>Teaser / Cold Open</h2>
+      </section>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">00:00</span><span class="sn">PRÉ-CRÉDITOS</span>
+          <h3>O ponto branco no escuro</h3>
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — silêncio quase total. Um zumbido grave, sub-bass,
+          crescendo lentamente.
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — tela preta. Em ruído de vídeo infravermelho, um ponto
+          branco se move contra o céu. Crosshair militar. Telemetria piscando no
+          canto.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Há uma pergunta que atravessa os milênios sem nunca pedir licença.
+          </p>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — corte: página de manuscrito iluminado, ouro sobre
+          pergaminho. Uma roda dentro de uma roda, cercada de olhos.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Ela aparece nas tábuas da Mesopotâmia. Nos rolos do Mar Morto. Nas
+            abóbadas das catedrais. E, agora, nos vídeos granulados captados por
+            câmeras de caças militares.
+          </p>
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — o sub-bass cessa de repente. Silêncio.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            A pergunta é simples. E desconcertante.
+            <em
+              >O que estamos vendo… quando vemos algo que não deveríamos estar
+              vendo?</em
+            >
+          </p>
+        </div>
+        <div class="cartela">
+          <div class="lbl">Cartela de título</div>
+          <div class="big">O Arquivo do Céu</div>
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Por séculos, a resposta veio embrulhada em linguagem sagrada. Hoje,
+            ela vem embrulhada em sigilo de Estado.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo de tela:</span
+          ><span class="chip fato">Fato</span
+          ><span class="chip hip">Hipótese</span
+          ><span class="chip esp">Especulação</span
+          ><span class="chip cre">Crença</span
+          ><span class="lk">— distinguidos a cada passo.</span>
+        </div>
+      </div>
+
+      <!-- ======= ATO I ======= -->
+      <section class="act" id="ato1">
+        <div class="actlabel">Ato I</div>
+        <h2>O que o céu nos devolveu</h2>
+      </section>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">02:10</span><span class="sn">SEG. 1</span>
+          <h3>A Disclosure dos OVNIs</h3>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — arquivo real: manchetes de 2017, salas de audiência do
+          Congresso, o logotipo do Pentágono.
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — pulso eletrônico contido, ritmo de investigação.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            "Disclosure". Divulgação. Tornou-se uma das palavras mais carregadas
+            da ufologia moderna. Ela nomeia o processo pelo qual governos,
+            forças armadas e agências de inteligência tornariam público aquilo
+            que mantiveram, por décadas, em segredo.
+          </p>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — os três vídeos da Marinha: FLIR, GIMBAL e GOFAST.
+          Objetos contra o céu e o mar, em infravermelho.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            O tema ganhou força com a divulgação de vídeos militares. Neles,
+            objetos pareciam executar manobras difíceis de conciliar com
+            qualquer tecnologia conhecida.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk"
+            >Vídeos reconhecidos como autênticos pelo Departamento de
+            Defesa.</span
+          >
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Pilotos experientes — treinados justamente para não se enganar —
+            relataram acelerações instantâneas. Mudanças bruscas de direção.
+            Ausência de qualquer propulsão visível. E, às vezes, um
+            comportamento que parecia… inteligente.
+          </p>
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — a música recua para quase nada. A frase precisa
+          respirar.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Mas aqui é preciso parar. E traçar uma linha que muda tudo.
+            <em
+              >O que foi confirmado não é a existência de alienígenas. O que foi
+              confirmado é a existência de fenômenos que ainda não têm
+              explicação definitiva.</em
+            >
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk"
+            >A autenticidade das imagens é reconhecida; a natureza dos objetos,
+            não.</span
+          >
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Entre um objeto não identificado e uma nave de outro mundo existe um
+            espaço imenso. E esse espaço se chama investigação.
+          </p>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — arquivo: primeira audiência pública em mais de 50 anos
+          (2022); depois 2023, depoimentos sob juramento.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Para dar método ao que antes era estigma, o Pentágono criou um
+            escritório dedicado, o AARO. E foi o próprio governo que entregou a
+            conclusão mais incômoda para os dois lados: numa revisão de quase
+            oitenta anos de arquivos, nenhuma evidência verificável de
+            tecnologia extraterrestre.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selos:</span><span class="chip fato">Fato</span
+          ><span class="lk">Relatório do AARO, 2024.</span
+          ><span class="chip hip">Hipótese</span
+          ><span class="lk"
+            >Alegações de "naves recuperadas" seguem sem prova pública.</span
+          >
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — uma única nota suspensa, não resolvida.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            E, ainda assim, um resíduo. Vinte e um casos. Classificados —
+            palavra do próprio relatório — como "verdadeiras anomalias". Sem
+            explicação. É esse resíduo que mantém viva uma pergunta muito mais
+            antiga do que qualquer radar. Porque, milênios antes dos caças,
+            alguém já descrevera luzes no céu, rodas de fogo… e seres que
+            mandavam não ter medo.
+          </p>
+        </div>
+      </div>
+
+      <!-- ======= ATO II ======= -->
+      <section class="act" id="ato2">
+        <div class="actlabel">Ato II</div>
+        <h2>Os que viram primeiro</h2>
+      </section>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">11:00</span><span class="sn">SEG. 2</span>
+          <h3>As Rodas de Ezequiel</h3>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — recriação: um rio largo e barrento sob céu carregado.
+          Tendas de um povo deslocado. Babilônia, séc. VI a.C.
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — cordas antigas, modais, solitárias.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Poucos textos antigos provocam tanto fascínio quanto a visão de um
+            único homem. Século sexto antes de Cristo. Um sacerdote chamado
+            Ezequiel está entre os exilados de seu povo, levados à força para a
+            Babilônia. É um tempo de catástrofe. De terra arrancada.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk">Contexto histórico: o exílio babilônico.</span>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — o céu se abre numa tempestade luminosa. Sombras,
+          brilhos de metal, fogo que se enrola sobre si mesmo. Ao lado, as rodas
+          — uma dentro da outra, perpendiculares, girando.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Uma tempestade de luz se aproxima. Dentro dela, criaturas de
+            aparência impossível: múltiplos rostos, asas, traços que escapam a
+            qualquer biologia. E, junto a elas, estruturas que o texto chama de
+            rodas dentro de rodas — capazes de se mover em qualquer direção sem
+            precisar girar. As bordas, cobertas por algo que o relato descreve
+            como olhos.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk">Descrição textual (Ezequiel, cap. 1).</span>
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — sobe, depois silencia de golpe.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Para a tradição, isto é a Merkabah — a carruagem divina. Uma
+            afirmação teológica: o Deus daquele povo não estava preso ao templo
+            destruído; era móvel, presente até no exílio.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip cre">Crença</span
+          ><span class="lk">Leitura mística tradicional.</span>
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Mas há outra forma de ouvir esse texto. Rodas que se movem em todas
+            as direções. Metal incandescente. "Olhos" que parecem observar. Para
+            certos leitores, não soa como metáfora — soa como um vocabulário
+            antigo tentando descrever algo que não tinha nome.
+            <em
+              >Ezequiel registrava uma visão espiritual? Ou lutava para explicar
+              uma tecnologia que ultrapassava o seu mundo?</em
+            >
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip hip">Hipótese</span
+          ><span class="lk">Leitura tecnológica do relato.</span>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">18:30</span><span class="sn">SEG. 3</span>
+          <h3>Blumrich e a régua do engenheiro</h3>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — arquivo da era espacial: o Saturno V, salas de
+          controle da NASA, pranchetas de engenharia.
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — algo metódico, mecânico, quase um relógio.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Décadas atrás, um homem decidiu submeter essa pergunta a algo
+            implacável: a régua de um engenheiro. Josef F. Blumrich. Trabalhou
+            na NASA, contribuindo para o foguete Saturno V e a estação Skylab.
+            Não era um sonhador de fim de semana — era um construtor de máquinas
+            reais.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk"
+            >Blumrich, engenheiro do Marshall Space Flight Center.</span
+          >
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            E Blumrich estava irritado. Decidiu fazer o que um engenheiro faz:
+            provar que a leitura ufológica de Ezequiel era impossível. O
+            resultado foi o oposto. Ao destrinchar cada linha, relatou ter-se
+            convencido do contrário. Disse que raramente se sentira tão
+            satisfeito por estar errado.
+          </p>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — capa de "The Spaceships of Ezekiel" (1974); páginas
+          com diagramas técnicos de uma nave.
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip hip">Hipótese</span
+          ><span class="lk"
+            >A tese de Blumrich é dele, não um consenso científico.</span
+          >
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — o documento da patente; zoom no número e na data.
+          Depois, rodas omnidirecionais reais em uso (robótica, cargas).
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Mas há um detalhe nessa história que não é hipótese. A partir das
+            "rodas dentro de rodas", Blumrich projetou — e patenteou — uma roda
+            capaz de se mover para frente, para trás e para os lados. Uma roda
+            omnidirecional. A roda funciona. Isso é real.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk"
+            >Patente US 3.789.947 (1974), cedida à NASA. Usada até hoje.</span
+          >
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — a batida mecânica desacelera, ganha tom reflexivo.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Que Ezequiel tenha visto uma máquina, isso continua interpretação —
+            um bom engenheiro encaixa um aparelho em quase qualquer descrição
+            vaga. E talvez seja essa a verdadeira lição de Blumrich. Ela não é
+            sobre Ezequiel. É sobre nós.
+            <em
+              >Nós vemos máquinas onde temos máquinas. Os antigos viam deuses,
+              porque deuses eram o que eles tinham.</em
+            >
+          </p>
+        </div>
+      </div>
+
+      <!-- ======= ATO III ======= -->
+      <section class="act" id="ato3">
+        <div class="actlabel">Ato III</div>
+        <h2>A forma do que não tem forma</h2>
+      </section>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">26:00</span><span class="sn">SEG. 4</span>
+          <h3>Como os textos descrevem os anjos</h3>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — o anjo doce e familiar (pintura renascentista) que
+          lentamente se desfaz.
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — um coral angelical que se distorce, fica dissonante.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            O anjo que você imagina — sereno, de asas brancas — é, em grande
+            parte, invenção da arte renascentista. Os textos antigos descrevem
+            outra coisa. Serafins de seis asas e fogo. Querubins de múltiplos
+            rostos. E os ofanins: as próprias rodas, cheias de olhos. Vozes que
+            fazem tremer as estruturas.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk"
+            >Descrições em Isaías, Ezequiel e tradições posteriores.</span
+          >
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — corte para silêncio absoluto.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            E há um padrão. Quase sempre, a primeira coisa que essas aparições
+            dizem é a mesma: <em>"Não tenha medo."</em> O crente entende: o
+            sagrado é, por natureza, esmagador. O cético pergunta: por que algo
+            bondoso precisaria, antes de tudo, acalmar o terror de quem o vê?
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selos:</span><span class="chip cre">Crença</span
+          ><span class="chip hip">Hipótese</span
+          ><span class="lk">Duas leituras do mesmo detalhe.</span>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">31:30</span><span class="sn">SEG. 5</span>
+          <h3>O Livro de Enoque e os Vigilantes</h3>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — recriação dos Manuscritos do Mar Morto: fragmentos sob
+          vidro, luz baixa de arquivo.
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — percussão grave, ancestral.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Existe um livro que quase não chegou até nós: o Livro de Enoque.
+            Apócrifo. E, no entanto, fragmentos seus em aramaico estavam entre
+            os Manuscritos do Mar Morto — prova de que circulava, e importava,
+            há mais de dois mil anos.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk"
+            >Origem antiga confirmada pelos achados de Qumran.</span
+          >
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — figuras descendo de uma luz; forjas acendendo; o mundo
+          se enchendo de violência.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            E o que esse livro conta é uma queda. Os Vigilantes descem à Terra,
+            unem-se a humanas, geram os Nefilins — gigantes — e ensinam à
+            humanidade um conhecimento proibido: a metalurgia e as armas, a
+            astrologia. Note o que é o pecado aqui: a transferência de um saber
+            para o qual a humanidade não estava pronta.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip hip">Hipótese</span
+          ><span class="lk"
+            >Eco ufológico: "contato" e transferência de tecnologia.</span
+          >
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Para os estudiosos, é literatura apocalíptica sobre a origem do mal.
+            Para a ufologia, é quase um roteiro de primeiro contato. As duas
+            leituras não se provam — mas revelam a mesma intuição antiga: a
+            fronteira entre o céu e a terra era porosa. Povoada. E nem sempre
+            amistosa.
+          </p>
+        </div>
+      </div>
+
+      <!-- ======= ATO IV ======= -->
+      <section class="act" id="ato4">
+        <div class="actlabel">Ato IV</div>
+        <h2>As portas que não sabemos abrir</h2>
+      </section>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">36:30</span><span class="sn">SEG. 6</span>
+          <h3>Interdimensionais e antigos astronautas</h3>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — animação abstrata: o espaço se dobrando; camadas
+          translúcidas; um objeto que aparece e some sem trajetória.
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — drone eletrônico, etéreo, sem chão.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Por décadas, a explicação padrão foi a mais intuitiva: naves físicas
+            vindas de outro planeta. Mas as distâncias são monstruosas, e o
+            comportamento "impossível" de certos objetos combina mal com uma
+            viagem interestelar. Daí nasce uma alternativa mais estranha. Não
+            viajantes do espaço. Vizinhos — entidades que existiriam em outra
+            camada da realidade.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip hip">Hipótese</span
+          ><span class="lk">A hipótese interdimensional.</span>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — quadro-negro com equações reais; corte para o céu
+          noturno.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            E aqui é preciso o máximo de honestidade. Sim, a física teórica fala
+            em dimensões adicionais; a Teoria das Cordas as postula. Porém — e
+            este "porém" é gigantesco — nada disso sugere que essas dimensões
+            sejam habitadas, ou atravessáveis por seres. A ufologia toma
+            emprestado o vocabulário da ciência e o veste de um sentido que a
+            ciência não autoriza.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip hip">Hipótese</span
+          ><span class="lk"
+            >Sedutora; sem suporte e não testável, por ora.</span
+          >
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — monumentos megalíticos; arte antiga reinterpretada;
+          depois, arqueólogos trabalhando a pedra.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            E há a mais ousada das leituras: a de que os "deuses" antigos teriam
+            sido visitantes confundidos com divindades. É popular — e quase
+            unanimemente criticada. Sabemos como os antigos ergueram seus
+            monumentos: com engenhosidade. Atribuir tudo a alienígenas tem um
+            custo desconfortável — o de subestimar a inteligência dos próprios
+            povos antigos.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip hip">Hipótese</span
+          ><span class="lk"
+            >Antigos astronautas: rejeitada pela maioria dos
+            especialistas.</span
+          >
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            E mesmo assim sobra uma coincidência que ninguém explica de todo: a
+            imagem de "deuses que descem do céu" reaparece em culturas que
+            jamais se encontraram. Talvez seja a estrutura universal do mito.
+            Talvez o céu seja, para toda mente humana, o lugar do sagrado. Ou
+            talvez seja outra coisa.
+          </p>
+        </div>
+      </div>
+
+      <!-- ======= ATO V ======= -->
+      <section class="act" id="ato5">
+        <div class="actlabel">Ato V</div>
+        <h2>A margem do mapa</h2>
+      </section>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">41:30</span><span class="sn">SEG. 7</span>
+          <h3>Consciência, e as três portas</h3>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — rosto humano em close, olhos fechados; depois,
+          ressonância cerebral, padrões acendendo.
+        </div>
+        <div class="cue trilha"><b>TRILHA</b> — íntima, um piano só.</div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            E se uma parte desses encontros não viesse de fora, mas de dentro?
+            Jejum, isolamento, privação de sono, transe — todos podem produzir
+            visões intensas, com luz, seres e a sensação avassaladora de uma
+            presença. A neurociência reconhece a paralisia do sono: a presença
+            sentida, a impossibilidade de mover-se, a figura ao pé da cama, o
+            terror. Real. Documentado.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selo:</span><span class="chip fato">Fato</span
+          ><span class="lk"
+            >Estados alterados e paralisia do sono são fenômenos reais.</span
+          >
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Mas cuidado com a conclusão fácil. Dizer que uma experiência tem
+            correlato no cérebro não prova que ela seja "só" cérebro — assim
+            como o amor ter uma química não o torna ilusão. A ciência descreve o
+            mecanismo. Não necessariamente esgota o significado.
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selos:</span><span class="chip cre">Crença</span
+          ><span class="chip fato">Fato</span
+          ><span class="lk">Mecanismo e sentido podem coexistir.</span>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — triptych na tela: três painéis, três caminhos.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            No fim, todas as pistas conduzem a três portas — e nenhuma pode ser
+            trancada hoje. A primeira: tudo é tecnológico e humano. A mais
+            econômica; só não cobre o resíduo de anomalias. A segunda: existe
+            uma realidade não-material que os textos tocaram. Honra a
+            experiência de bilhões; mas escapa ao método. A terceira: algo
+            genuinamente novo, sem ciência ainda. Tem a humildade de admitir o
+            desconhecido — e o risco de ser só um nome elegante para "não
+            sabemos".
+          </p>
+        </div>
+        <div class="legenda">
+          <span class="lk">Selos:</span><span class="chip hip">Hipótese</span
+          ><span class="lk">Via 1</span><span class="chip cre">Crença</span
+          ><span class="lk">Via 2</span><span class="chip esp">Especulação</span
+          ><span class="lk">Via 3</span>
+        </div>
+      </div>
+
+      <!-- ======= ENCERRAMENTO ======= -->
+      <section class="act" id="fim">
+        <div class="actlabel">Encerramento</div>
+        <h2>Aqui há dragões</h2>
+      </section>
+
+      <div class="scene">
+        <div class="scene-head">
+          <span class="tcode">45:30</span><span class="sn">FINAL</span>
+          <h3>A pergunta em aberto</h3>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — lenta: um mapa antigo. A câmera desliza até a borda
+          inexplorada, onde se lê "aqui há dragões".
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — o tema principal retorna, completo, mas contido,
+          aberto, sem clímax triunfal.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Os cartógrafos antigos escreviam, nas bordas de seus mapas: aqui há
+            dragões. Não era ignorância. Era honestidade — a marcação exata do
+            ponto onde o conhecimento terminava e o mistério começava.
+          </p>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — montagem final, lenta: o ponto branco no infravermelho
+          / a roda no pergaminho / o céu noturno em time-lapse.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            Talvez os antigos não estivessem descrevendo deuses. Talvez não
+            fossem máquinas. Talvez estivessem tentando explicar algo que
+            ultrapassa por completo as nossas categorias de ciência, de religião
+            e de filosofia.
+          </p>
+        </div>
+        <div class="cue trilha">
+          <b>TRILHA</b> — recua para um único acorde sustentado.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            <em
+              >Estamos observando visitantes de outros mundos? Entidades de
+              outras dimensões? Manifestações da própria consciência humana? Ou
+              algo ainda mais estranho?</em
+            >
+          </p>
+        </div>
+        <div class="cue img">
+          <b>IMAGEM</b> — corta para o céu. Apenas o céu.
+        </div>
+        <div class="vo">
+          <span class="who">Narrador (V.O.)</span>
+          <p>
+            A resposta honesta, com tudo o que sabemos e tudo o que ainda nos
+            escapa, é a mais antiga e a mais humana de todas. Ainda não sabemos.
+            E talvez seja exatamente por isso… que continuamos olhando para
+            cima.
+          </p>
+        </div>
+        <div class="cartela">
+          <div class="lbl">Cartela final</div>
+          <p>
+            Este documentário separou deliberadamente o fato, a hipótese, a
+            especulação e a crença. Onde uma afirmação extraordinária surgiu sem
+            prova pública, foi assinalada como alegação. O objetivo não foi
+            convencer — foi convidar você a pensar por conta própria.
+          </p>
+          <div class="big" style="font-size: 1.6rem; margin-top: 18px">
+            Fim.
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= APPENDIX ======= -->
+      <section class="appendix">
+        <h4>Apêndice de produção — banco de selos</h4>
+        <ul>
+          <li>
+            <span class="chip fato">Fato</span> Vídeos autenticados · criação do
+            AARO · números dos relatórios · exílio babilônico · patente de
+            Blumrich · achados do Mar Morto · paralisia do sono.
+          </li>
+          <li>
+            <span class="chip hip">Hipótese</span> Leitura tecnológica de
+            Ezequiel · tese de Blumrich · antigos astronautas · interdimensional
+            · naves recuperadas.
+          </li>
+          <li>
+            <span class="chip esp">Especulação</span> Simulação · zoológico
+            cósmico · vigilantes como supervisores · intervenção periódica · via
+            3.
+          </li>
+          <li>
+            <span class="chip cre">Crença</span> Merkabah · o "não tenha medo" ·
+            a via espiritual · a dimensão de sentido das experiências.
+          </li>
+        </ul>
+        <p class="goldrule">
+          Regra de ouro da narração: sempre que a voz subir rumo ao espanto, o
+          selo na tela deve trazer o espectador de volta ao chão. O espanto é o
+          convite; a honestidade é o contrato.
+        </p>
+      </section>
+    </div>
+
+    <footer>
+      O Arquivo do Céu · Roteiro de Narração · Prod. 001 · 2026<br />
+      Use o botão "Modo Teleprompter" para ler apenas a locução
+    </footer>
+
+    <script>
+      // scroll progress
+      const prog = document.getElementById("prog");
+      const acts = [...document.querySelectorAll(".act[id]")];
+      const navLinks = [...document.querySelectorAll(".actnav a")];
+      function onScroll() {
+        const h = document.documentElement;
+        const pct = h.scrollTop / (h.scrollHeight - h.clientHeight);
+        prog.style.width = pct * 100 + "%";
+        // active act
+        let current = acts[0]?.id;
+        for (const a of acts) {
+          if (a.getBoundingClientRect().top < 160) current = a.id;
+        }
+        navLinks.forEach((l) =>
+          l.classList.toggle(
+            "active",
+            l.getAttribute("href") === "#" + current,
+          ),
+        );
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // reveal scenes
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
+      );
+      document.querySelectorAll(".scene").forEach((s) => io.observe(s));
+
+      // teleprompter mode + autoscroll
+      const tpBtn = document.getElementById("tpBtn");
+      const tpTools = document.getElementById("tptools");
+      const playBtn = document.getElementById("playBtn");
+      const speed = document.getElementById("speed");
+      const runtime = document.getElementById("runtime");
+      let scrolling = false,
+        raf = null;
+
+      function stopScroll() {
+        scrolling = false;
+        playBtn.textContent = "▶";
+        playBtn.classList.remove("on");
+        if (raf) cancelAnimationFrame(raf);
+      }
+      function step() {
+        if (!scrolling) return;
+        window.scrollBy(0, Number(speed.value) * 0.6);
+        if (
+          window.innerHeight + window.scrollY >=
+          document.body.scrollHeight - 2
+        ) {
+          stopScroll();
+          return;
+        }
+        raf = requestAnimationFrame(step);
+      }
+      playBtn.addEventListener("click", () => {
+        scrolling = !scrolling;
+        if (scrolling) {
+          playBtn.textContent = "❚❚";
+          playBtn.classList.add("on");
+          raf = requestAnimationFrame(step);
+        } else stopScroll();
+      });
+      tpBtn.addEventListener("click", () => {
+        const on = document.body.classList.toggle("tp");
+        tpBtn.classList.toggle("on", on);
+        tpTools.classList.toggle("show", on);
+        tpBtn.textContent = on ? "Sair do Teleprompter" : "Modo Teleprompter";
+        runtime.textContent = on
+          ? "TELEPROMPTER · SÓ LOCUÇÃO"
+          : "42–48 MIN · V.O.";
+        if (!on) stopScroll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    </script>
+  </body>
+</html>

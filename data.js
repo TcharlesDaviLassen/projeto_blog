@@ -256,6 +256,76 @@ const CATALOG = {
     },
 
     /* ============================================
+     * ADRENOCROMO
+     * ============================================ */
+    {
+      id: "adrenocromo",
+      name: "Adrenocromo",
+      glyph: "🧪",
+      description: "Teorias, mitos urbanos e documentações sobre o composto.",
+      tags: ["conspiração", "mistério", "documentário"],
+      children: [],
+      templates: [
+        {
+          id: "adr-001",
+          title: "Documentário Adrenocromo",
+          path: "templates/adrenocromo/documentario_adrenocromo.html",
+          description: "Interface e index principal para o acervo documental.",
+          tags: ["documentário", "dark", "layout"],
+          date: "2026-05-31",
+        },
+        {
+          id: "adr-002",
+          title: "Template Documentário Adrenocromo",
+          path: "templates/adrenocromo/template_documentario_adrenocromo.html",
+          description: "Layout de página estruturado para exibição de mídia.",
+          tags: ["documentário", "media", "template"],
+          date: "2026-05-31",
+        },
+      ],
+    },
+
+    /* ============================================
+     * DIVULGAÇÃO UAPs
+     * ============================================ */
+    {
+      id: "divulgacao_uaps",
+      name: "Divulgação UAPs",
+      glyph: "🛸",
+      description:
+        "Registros e relatórios oficiais sobre Fenômenos Anômalos Não Identificados.",
+      tags: ["uap", "ovni", "militar"],
+      children: [],
+      templates: [
+        {
+          id: "uap-001",
+          title: "Codex UAP",
+          path: "templates/divulgacao_uaps/codex.html",
+          description: "Compêndio histórico e registros ufológicos.",
+          tags: ["arquivo", "documentos", "história"],
+          date: "2026-05-31",
+        },
+        {
+          id: "uap-002",
+          title: "Player Interativo UAP",
+          path: "templates/divulgacao_uaps/player_interativo.html",
+          description:
+            "Módulo interativo para análise de avistamentos e áudio.",
+          tags: ["interativo", "player", "multimídia"],
+          date: "2026-05-31",
+        },
+        {
+          id: "uap-003",
+          title: "Roteiro do Template UAP",
+          path: "templates/divulgacao_uaps/roteiro_template.html",
+          description: "Estrutura narrativa e roteiros de apresentação.",
+          tags: ["roteiro", "documentação", "texto"],
+          date: "2026-05-31",
+        },
+      ],
+    },
+
+    /* ============================================
      * MINIMALISMO
      * ============================================ */
     // {

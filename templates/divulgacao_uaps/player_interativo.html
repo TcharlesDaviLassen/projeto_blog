@@ -1,0 +1,1283 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>O Arquivo do Céu · Player Interativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,16..72,400;0,16..72,500;1,16..72,400;1,16..72,500&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --void: #070809;
+        --void-2: #0c0e12;
+        --paper: #ece6d8;
+        --paper-dim: #9a937f;
+        --gold: #d6b266;
+        --gold-bright: #f3da93;
+        --cyan: #67c2cb;
+        --cyan-dim: #356a6f;
+        --purple: #bd8fd6;
+        --purple-dim: #5a3f6c;
+        --blood: #c0524f;
+        --blood-dim: #5e2826;
+        --accent: #67c2cb; /* swapped per act via JS */
+        --tc: "JetBrains Mono", monospace;
+        --disp: "Oswald", sans-serif;
+        --read: "Newsreader", Georgia, serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        background: var(--void);
+        color: var(--paper);
+        font-family: var(--read);
+        overflow: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* atmosphere */
+      #atmo {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        transition: background 1.4s ease;
+        background:
+          radial-gradient(
+            ellipse 70% 60% at 50% 38%,
+            color-mix(in srgb, var(--accent) 16%, transparent),
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 90% 70% at 50% 120%,
+            rgba(0, 0, 0, 0.6),
+            transparent
+          ),
+          var(--void);
+      }
+      #stars {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.5;
+        background:
+          radial-gradient(
+            1px 1px at 18% 24%,
+            rgba(236, 230, 216, 0.8),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 72% 62%,
+            rgba(236, 230, 216, 0.6),
+            transparent
+          ),
+          radial-gradient(
+            1.4px 1.4px at 86% 18%,
+            rgba(214, 178, 102, 0.7),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 40% 82%,
+            rgba(236, 230, 216, 0.5),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 55% 12%,
+            rgba(103, 194, 203, 0.6),
+            transparent
+          );
+        background-size: 520px 520px;
+        animation: drift 180s linear infinite;
+      }
+      @keyframes drift {
+        to {
+          background-position: 520px 520px;
+        }
+      }
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        pointer-events: none;
+        opacity: 0.045;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+      .vignette {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        box-shadow: inset 0 0 200px 60px rgba(0, 0, 0, 0.7);
+      }
+
+      /* top bar */
+      .top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 26px;
+      }
+      .top .brand {
+        font-family: var(--disp);
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-size: 13px;
+        color: var(--gold);
+      }
+      .top .brand b {
+        color: var(--paper-dim);
+        font-weight: 300;
+      }
+      .top .spacer {
+        flex: 1;
+      }
+      .legend {
+        display: flex;
+        gap: 7px;
+      }
+      .lchip {
+        font-family: var(--tc);
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 5px 9px;
+        border: 1px solid;
+        border-radius: 2px;
+        cursor: pointer;
+        opacity: 0.55;
+        transition: 0.2s;
+        user-select: none;
+      }
+      .lchip:hover {
+        opacity: 1;
+      }
+      .lchip.active {
+        opacity: 1;
+        box-shadow: 0 0 0 1px currentColor inset;
+      }
+      .lchip .ct {
+        opacity: 0.7;
+        margin-left: 5px;
+        font-weight: 400;
+      }
+      .lchip.fato {
+        color: var(--cyan);
+        border-color: var(--cyan-dim);
+      }
+      .lchip.hip {
+        color: var(--gold);
+        border-color: #7d5f28;
+      }
+      .lchip.esp {
+        color: var(--purple);
+        border-color: var(--purple-dim);
+      }
+      .lchip.cre {
+        color: var(--blood);
+        border-color: var(--blood-dim);
+      }
+      .lchip.all {
+        color: var(--paper-dim);
+        border-color: rgba(214, 178, 102, 0.2);
+      }
+
+      /* stage */
+      .stage {
+        position: relative;
+        z-index: 10;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 90px 20px 150px;
+        text-align: center;
+      }
+      .frame {
+        max-width: 820px;
+        width: 100%;
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+      .frame.swap {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      .scene-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+      }
+      .actlabel {
+        font-family: var(--tc);
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--accent);
+        transition: color 1s;
+      }
+      .tcode {
+        font-family: var(--tc);
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--void);
+        background: var(--accent);
+        padding: 4px 8px;
+        border-radius: 3px;
+        transition: background 1s;
+      }
+      .seg {
+        font-family: var(--tc);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--paper-dim);
+        text-transform: uppercase;
+      }
+      .scene-title {
+        font-family: var(--disp);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+        color: var(--paper);
+        margin: 4px 0 22px;
+        opacity: 0.9;
+      }
+
+      .cues {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 24px;
+        align-items: center;
+      }
+      .cue {
+        font-family: var(--tc);
+        font-size: 0.72rem;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        max-width: 600px;
+        padding: 7px 12px;
+        border-radius: 3px;
+      }
+      .cue.img {
+        color: var(--paper-dim);
+        border: 1px dashed rgba(214, 178, 102, 0.18);
+        background: rgba(12, 14, 18, 0.5);
+      }
+      .cue.img b {
+        color: var(--cyan);
+      }
+      .cue.trilha {
+        color: var(--paper-dim);
+        border-left: 2px solid var(--purple-dim);
+        padding-left: 14px;
+      }
+      .cue.trilha b {
+        color: var(--purple);
+      }
+
+      .vo {
+        font-family: var(--read);
+        font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+        line-height: 1.55;
+        color: var(--paper);
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      .vo em {
+        color: var(--gold-bright);
+        font-style: italic;
+      }
+      .vo .who {
+        display: block;
+        font-family: var(--tc);
+        font-size: 10px;
+        letter-spacing: 0.26em;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        transition: color 1s;
+      }
+
+      /* cartela style frame */
+      .frame.cartela .vo {
+        font-family: var(--disp);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--gold);
+      }
+      .frame.cartela .ctxt {
+        font-family: var(--read);
+        font-style: italic;
+        text-transform: none;
+        font-weight: 400;
+        font-size: 1.05rem;
+        color: var(--paper-dim);
+        max-width: 600px;
+        margin: 18px auto 0;
+        letter-spacing: normal;
+      }
+
+      .selos {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 26px;
+        min-height: 26px;
+      }
+      .selo {
+        font-family: var(--tc);
+        font-size: 9.5px;
+        font-weight: 500;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        border: 1px solid;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .selo .nt {
+        color: var(--paper-dim);
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        text-transform: none;
+        font-family: var(--read);
+        font-size: 0.82rem;
+      }
+      .selo.fato {
+        color: var(--cyan);
+        border-color: var(--cyan-dim);
+        background: rgba(103, 194, 203, 0.07);
+      }
+      .selo.hip {
+        color: var(--gold);
+        border-color: #7d5f28;
+        background: rgba(214, 178, 102, 0.07);
+      }
+      .selo.esp {
+        color: var(--purple);
+        border-color: var(--purple-dim);
+        background: rgba(189, 143, 214, 0.07);
+      }
+      .selo.cre {
+        color: var(--blood);
+        border-color: var(--blood-dim);
+        background: rgba(192, 82, 79, 0.08);
+      }
+
+      /* side arrows */
+      .arrow {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 25;
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        border: 1px solid rgba(214, 178, 102, 0.25);
+        background: rgba(12, 14, 18, 0.5);
+        color: var(--paper);
+        cursor: pointer;
+        font-size: 20px;
+        display: grid;
+        place-items: center;
+        transition: 0.25s;
+        backdrop-filter: blur(4px);
+      }
+      .arrow:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        background: rgba(12, 14, 18, 0.85);
+      }
+      .arrow:disabled {
+        opacity: 0.2;
+        cursor: default;
+      }
+      .arrow.prev {
+        left: 22px;
+      }
+      .arrow.next {
+        right: 22px;
+      }
+
+      /* bottom transport + timeline */
+      .transport {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 30;
+        padding: 16px 26px 18px;
+        background: linear-gradient(
+          0deg,
+          rgba(7, 8, 9, 0.95),
+          rgba(7, 8, 9, 0)
+        );
+      }
+      .tl {
+        position: relative;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        margin-bottom: 12px;
+      }
+      .tl .act {
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 4px;
+        flex: var(--w, 1);
+        min-width: 0;
+      }
+      .tl .act .nm {
+        font-family: var(--tc);
+        font-size: 8px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--paper-dim);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .tl .act .nm:hover {
+        color: var(--gold);
+      }
+      .tl .ticks {
+        display: flex;
+        gap: 3px;
+        height: 6px;
+      }
+      .tl .tick {
+        flex: 1;
+        background: rgba(214, 178, 102, 0.18);
+        border-radius: 2px;
+        cursor: pointer;
+        transition: 0.2s;
+        min-width: 4px;
+      }
+      .tl .tick:hover {
+        background: rgba(214, 178, 102, 0.5);
+      }
+      .tl .tick.done {
+        background: rgba(214, 178, 102, 0.4);
+      }
+      .tl .tick.cur {
+        background: var(--gold);
+        box-shadow: 0 0 8px var(--gold);
+      }
+      .tl .tick.dim {
+        opacity: 0.25;
+      }
+      .tl .tick.match {
+        background: var(--accent);
+      }
+
+      .ctrls {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        justify-content: center;
+      }
+      .ctrls button {
+        font-family: var(--tc);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        background: transparent;
+        color: var(--paper);
+        border: 1px solid rgba(214, 178, 102, 0.25);
+        padding: 9px 14px;
+        border-radius: 3px;
+        transition: 0.25s;
+      }
+      .ctrls button:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .ctrls .play {
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        display: grid;
+        place-items: center;
+        font-size: 14px;
+        border-radius: 50%;
+      }
+      .ctrls .play.on {
+        background: var(--gold);
+        color: var(--void);
+        border-color: var(--gold);
+      }
+      .ctrls .count {
+        font-family: var(--tc);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--paper-dim);
+        min-width: 70px;
+        text-align: center;
+      }
+      .ctrls .fnote {
+        font-family: var(--tc);
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        text-transform: uppercase;
+      }
+
+      /* per-beat autoplay timer line */
+      .beatbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: var(--accent);
+        width: 0;
+        z-index: 35;
+        transition: background 1s;
+      }
+
+      /* intro overlay */
+      .intro {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 30px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(12, 14, 18, 0.6),
+          var(--void)
+        );
+      }
+      .intro h1 {
+        font-family: var(--disp);
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 0.9;
+        font-size: clamp(2.6rem, 9vw, 6rem);
+        color: var(--paper);
+      }
+      .intro h1 b {
+        color: var(--gold);
+      }
+      .intro p {
+        font-family: var(--read);
+        font-style: italic;
+        color: var(--paper-dim);
+        max-width: 540px;
+        margin: 22px 0 8px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+      .intro .specs {
+        font-family: var(--tc);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: var(--paper-dim);
+        text-transform: uppercase;
+        margin: 10px 0 32px;
+      }
+      .intro button {
+        font-family: var(--tc);
+        font-size: 13px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: pointer;
+        background: var(--gold);
+        color: var(--void);
+        border: none;
+        padding: 16px 38px;
+        border-radius: 3px;
+        font-weight: 500;
+        transition: 0.25s;
+      }
+      .intro button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(214, 178, 102, 0.3);
+      }
+      .intro .hint {
+        font-family: var(--tc);
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        color: var(--paper-dim);
+        text-transform: uppercase;
+        margin-top: 24px;
+        opacity: 0.7;
+      }
+      .intro.hide {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.8s;
+      }
+
+      @media (max-width: 680px) {
+        .arrow {
+          width: 42px;
+          height: 42px;
+          font-size: 16px;
+        }
+        .arrow.prev {
+          left: 8px;
+        }
+        .arrow.next {
+          right: 8px;
+        }
+        .legend {
+          display: none;
+        }
+        .stage {
+          padding: 80px 16px 160px;
+        }
+        .tl .act .nm {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="atmo"></div>
+    <div id="stars"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <div class="top">
+      <div class="brand">O Arquivo do Céu <b>· Player</b></div>
+      <div class="spacer"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <button class="arrow prev" id="prev" aria-label="Anterior">‹</button>
+    <button class="arrow next" id="next" aria-label="Próximo">›</button>
+
+    <div class="stage">
+      <div class="frame" id="frame"></div>
+    </div>
+
+    <div class="beatbar" id="beatbar"></div>
+
+    <div class="transport">
+      <div class="tl" id="tl"></div>
+      <div class="ctrls">
+        <button id="restart" title="Recomeçar">⟲</button>
+        <button class="play" id="play" title="Reproduzir (espaço)">▶</button>
+        <span class="count" id="count">01 / 36</span>
+        <span class="fnote" id="fnote"></span>
+      </div>
+    </div>
+
+    <!-- INTRO -->
+    <div class="intro" id="intro">
+      <h1>O Arquivo<br />do <b>Céu</b></h1>
+      <p>
+        Uma investigação que costura os vídeos militares desclassificados às
+        visões de fogo e rodas dos textos antigos — sem fechar a resposta.
+      </p>
+      <div class="specs">Documentário · 5 atos · 7 segmentos · 36 momentos</div>
+      <button id="startBtn">Iniciar a projeção</button>
+      <div class="hint">
+        Setas ‹ › ou ← → · espaço = reproduzir · clique nos selos para filtrar
+      </div>
+    </div>
+
+    <script>
+      // ---------- ACTS ----------
+      const ACTS = [
+        { label: "Abertura · Teaser", accent: "#67c2cb" },
+        { label: "Ato I · O que o céu nos devolveu", accent: "#6fb6c9" },
+        { label: "Ato II · Os que viram primeiro", accent: "#d6b266" },
+        { label: "Ato III · A forma do que não tem forma", accent: "#d98a5a" },
+        {
+          label: "Ato IV · As portas que não sabemos abrir",
+          accent: "#bd8fd6",
+        },
+        { label: "Ato V · A margem do mapa", accent: "#c9c2ad" },
+        { label: "Encerramento · Aqui há dragões", accent: "#e0bd6a" },
+      ];
+      const ACT_SHORT = [
+        "Teaser",
+        "Ato I",
+        "Ato II",
+        "Ato III",
+        "Ato IV",
+        "Ato V",
+        "Fim",
+      ];
+
+      // ---------- BEATS ----------
+      const F = (t) => ({ k: "fato", l: "Fato", n: t }),
+        H = (t) => ({ k: "hip", l: "Hipótese", n: t }),
+        E = (t) => ({ k: "esp", l: "Especulação", n: t }),
+        C = (t) => ({ k: "cre", l: "Crença", n: t });
+
+      const B = [
+        // TEASER
+        {
+          a: 0,
+          seg: "Pré-créditos",
+          tc: "00:00",
+          title: "O ponto branco no escuro",
+          img: "Tela preta. Em vídeo infravermelho, um ponto branco se move contra o céu. Crosshair militar.",
+          tr: "Silêncio quase total. Um sub-bass grave crescendo.",
+          vo: "Há uma pergunta que atravessa os milênios sem nunca pedir licença.",
+        },
+        {
+          a: 0,
+          img: "Corte: manuscrito iluminado, ouro sobre pergaminho. Uma roda dentro de uma roda, cercada de olhos.",
+          vo: "Ela aparece nas tábuas da Mesopotâmia. Nos rolos do Mar Morto. Nas abóbadas das catedrais. E, agora, nos vídeos de caças militares.",
+        },
+        {
+          a: 0,
+          tr: "O sub-bass cessa de repente. Silêncio.",
+          vo: "A pergunta é simples. E desconcertante. <em>O que estamos vendo… quando vemos algo que não deveríamos estar vendo?</em>",
+        },
+        {
+          a: 0,
+          cartela: true,
+          vo: "O Arquivo do Céu",
+          ctxt: "Por séculos, a resposta veio embrulhada em linguagem sagrada. Hoje, ela vem embrulhada em sigilo de Estado.",
+          selos: [F("fato"), H("hipótese"), E("especulação"), C("crença")],
+          selnote: "distinguidos a cada passo",
+        },
+
+        // ATO I
+        {
+          a: 1,
+          seg: "Seg. 1",
+          tc: "02:10",
+          title: "A Disclosure dos OVNIs",
+          img: "Arquivo: manchetes de 2017, audiências do Congresso, o logotipo do Pentágono.",
+          tr: "Pulso eletrônico contido, ritmo de investigação.",
+          vo: "“Disclosure.” Divulgação. Ela nomeia o processo pelo qual governos e agências tornariam público aquilo que mantiveram, por décadas, em segredo.",
+        },
+        {
+          a: 1,
+          img: "Os três vídeos da Marinha: FLIR, GIMBAL e GOFAST. Objetos em infravermelho.",
+          vo: "O tema ganhou força com vídeos militares. Neles, objetos executavam manobras difíceis de conciliar com qualquer tecnologia conhecida.",
+          selos: [
+            F(
+              "Vídeos reconhecidos como autênticos pelo Departamento de Defesa.",
+            ),
+          ],
+        },
+        {
+          a: 1,
+          vo: "Pilotos experientes relataram acelerações instantâneas. Mudanças bruscas de direção. Ausência de propulsão visível. E, às vezes, um comportamento que parecia… inteligente.",
+        },
+        {
+          a: 1,
+          tr: "A música recua para quase nada. A frase precisa respirar.",
+          vo: "Mas é preciso traçar uma linha. <em>O que foi confirmado não é a existência de alienígenas — é a existência de fenômenos que ainda não têm explicação definitiva.</em>",
+          selos: [
+            F(
+              "A autenticidade das imagens é reconhecida; a natureza dos objetos, não.",
+            ),
+          ],
+        },
+        {
+          a: 1,
+          vo: "Entre um objeto não identificado e uma nave de outro mundo existe um espaço imenso. E esse espaço se chama investigação.",
+        },
+        {
+          a: 1,
+          img: "Arquivo: primeira audiência pública em mais de 50 anos (2022); depois, 2023, depoimentos sob juramento.",
+          vo: "O Pentágono criou um escritório dedicado, o AARO. E foi o próprio governo que entregou a conclusão mais incômoda: em quase 80 anos de arquivos, nenhuma evidência verificável de tecnologia extraterrestre.",
+          selos: [
+            F("Relatório do AARO, 2024."),
+            H("Alegações de “naves recuperadas” seguem sem prova pública."),
+          ],
+        },
+        {
+          a: 1,
+          tr: "Uma única nota suspensa, não resolvida.",
+          vo: "E, ainda assim, um resíduo. Vinte e um casos. Classificados como “verdadeiras anomalias”. Sem explicação. É ele que mantém viva uma pergunta muito mais antiga do que qualquer radar.",
+        },
+
+        // ATO II
+        {
+          a: 2,
+          seg: "Seg. 2",
+          tc: "11:00",
+          title: "As Rodas de Ezequiel",
+          img: "Recriação: um rio largo sob céu carregado. Tendas de um povo deslocado. Babilônia, séc. VI a.C.",
+          tr: "Cordas antigas, modais, solitárias.",
+          vo: "Século sexto antes de Cristo. Um sacerdote chamado Ezequiel está entre os exilados de seu povo, levados à força para a Babilônia. É um tempo de catástrofe.",
+          selos: [F("Contexto histórico: o exílio babilônico.")],
+        },
+        {
+          a: 2,
+          img: "O céu se abre numa tempestade luminosa. Brilhos de metal, fogo enrolando. Ao lado, as rodas — uma dentro da outra, girando.",
+          vo: "Criaturas de aparência impossível: múltiplos rostos, asas. E rodas dentro de rodas — capazes de se mover em qualquer direção sem girar. As bordas cobertas por algo que o relato chama de olhos.",
+          selos: [F("Descrição textual (Ezequiel, cap. 1).")],
+        },
+        {
+          a: 2,
+          tr: "Sobe, depois silencia de golpe.",
+          vo: "Para a tradição, isto é a Merkabah — a carruagem divina. Uma afirmação: o Deus daquele povo não estava preso ao templo destruído; era móvel, presente até no exílio.",
+          selos: [C("Leitura mística tradicional.")],
+        },
+        {
+          a: 2,
+          vo: "Mas há outra forma de ouvir. Rodas multidirecionais. Metal incandescente. “Olhos” que parecem observar. <em>Ezequiel registrava uma visão — ou lutava para explicar uma tecnologia que ultrapassava o seu mundo?</em>",
+          selos: [H("Leitura tecnológica do relato.")],
+        },
+
+        {
+          a: 2,
+          seg: "Seg. 3",
+          tc: "18:30",
+          title: "Blumrich e a régua do engenheiro",
+          img: "Arquivo da era espacial: o Saturno V, salas de controle da NASA, pranchetas de engenharia.",
+          tr: "Algo metódico, mecânico, quase um relógio.",
+          vo: "Josef F. Blumrich. Trabalhou na NASA, no foguete Saturno V e na estação Skylab. Não era um sonhador de fim de semana — era um construtor de máquinas reais.",
+          selos: [F("Engenheiro do Marshall Space Flight Center.")],
+        },
+        {
+          a: 2,
+          vo: "Ele decidiu provar que a leitura ufológica de Ezequiel era impossível. O resultado foi o oposto: ao destrinchar cada linha, convenceu-se do contrário. Disse que raramente se sentira tão satisfeito por estar errado.",
+        },
+        {
+          a: 2,
+          img: "Capa de “The Spaceships of Ezekiel” (1974). Depois, o documento da patente; zoom no número. Rodas omnidirecionais reais em uso.",
+          vo: "Mas há um detalhe que não é hipótese. A partir das “rodas dentro de rodas”, Blumrich projetou — e patenteou — uma roda omnidirecional. <em>A roda funciona. Isso é real.</em>",
+          selos: [
+            H("A tese de Blumrich é dele, não um consenso."),
+            F("Patente US 3.789.947 (1974), cedida à NASA."),
+          ],
+        },
+        {
+          a: 2,
+          tr: "A batida mecânica desacelera, ganha tom reflexivo.",
+          vo: "Que Ezequiel tenha visto uma máquina segue interpretação. E talvez a lição não seja sobre ele. Seja sobre nós: <em>vemos máquinas onde temos máquinas. Os antigos viam deuses, porque deuses eram o que tinham.</em>",
+        },
+
+        // ATO III
+        {
+          a: 3,
+          seg: "Seg. 4",
+          tc: "26:00",
+          title: "Como os textos descrevem os anjos",
+          img: "O anjo doce e familiar (pintura renascentista) que lentamente se desfaz.",
+          tr: "Um coral angelical que se distorce, fica dissonante.",
+          vo: "O anjo sereno de asas brancas é invenção da arte renascentista. Os textos descrevem outra coisa: serafins de seis asas e fogo, querubins de múltiplos rostos, ofanins — as rodas cheias de olhos.",
+          selos: [F("Descrições em Isaías, Ezequiel e tradições posteriores.")],
+        },
+        {
+          a: 3,
+          tr: "Corte para silêncio absoluto.",
+          vo: "E há um padrão. Quase sempre, a primeira coisa que dizem é a mesma: <em>“Não tenha medo.”</em> O crente entende: o sagrado é esmagador. O cético pergunta: por que algo bondoso precisaria acalmar o terror de quem o vê?",
+          selos: [C("Leitura teológica."), H("Leitura cética.")],
+          selnote: "duas leituras do mesmo detalhe",
+        },
+
+        {
+          a: 3,
+          seg: "Seg. 5",
+          tc: "31:30",
+          title: "O Livro de Enoque e os Vigilantes",
+          img: "Recriação dos Manuscritos do Mar Morto: fragmentos sob vidro, luz baixa de arquivo.",
+          tr: "Percussão grave, ancestral.",
+          vo: "O Livro de Enoque. Apócrifo. E, no entanto, fragmentos seus em aramaico estavam entre os Manuscritos do Mar Morto — prova de que circulava há mais de dois mil anos.",
+          selos: [F("Origem antiga confirmada pelos achados de Qumran.")],
+        },
+        {
+          a: 3,
+          img: "Figuras descendo de uma luz; forjas acendendo; o mundo se enchendo de violência.",
+          vo: "Os Vigilantes descem, unem-se a humanas, geram os Nefilins — gigantes — e ensinam um conhecimento proibido. O pecado, aqui, é a transferência de um saber para o qual a humanidade não estava pronta.",
+          selos: [H("Eco ufológico: “contato” e transferência de tecnologia.")],
+        },
+        {
+          a: 3,
+          vo: "Para os estudiosos, é literatura apocalíptica sobre a origem do mal. Para a ufologia, é quase um roteiro de primeiro contato. As duas revelam a mesma intuição: a fronteira entre o céu e a terra era porosa. E nem sempre amistosa.",
+        },
+
+        // ATO IV
+        {
+          a: 4,
+          seg: "Seg. 6",
+          tc: "36:30",
+          title: "Interdimensionais e antigos astronautas",
+          img: "Animação abstrata: o espaço se dobrando; um objeto que aparece e some sem trajetória.",
+          tr: "Drone eletrônico, etéreo, sem chão.",
+          vo: "As distâncias interestelares são monstruosas, e o comportamento “impossível” de certos objetos combina mal com uma viagem. Daí nasce uma alternativa: não viajantes do espaço — vizinhos, de outra camada da realidade.",
+          selos: [H("A hipótese interdimensional.")],
+        },
+        {
+          a: 4,
+          img: "Quadro-negro com equações reais; corte para o céu noturno.",
+          vo: "Honestidade máxima: sim, a física fala em dimensões adicionais; a Teoria das Cordas as postula. <em>Porém</em> — nada disso sugere que sejam habitadas ou atravessáveis. A ufologia empresta o vocabulário da ciência e o veste de um sentido que ela não autoriza.",
+          selos: [H("Sedutora; sem suporte e não testável, por ora.")],
+        },
+        {
+          a: 4,
+          img: "Monumentos megalíticos; arte antiga reinterpretada; depois, arqueólogos trabalhando a pedra.",
+          vo: "E a leitura mais ousada: os “deuses” teriam sido visitantes. Popular — e quase unanimemente criticada. Atribuir os monumentos a alienígenas tem um custo: subestimar a inteligência dos próprios povos antigos.",
+          selos: [
+            H("Antigos astronautas: rejeitada pela maioria dos especialistas."),
+          ],
+        },
+        {
+          a: 4,
+          vo: "E mesmo assim sobra uma coincidência: “deuses que descem do céu” reaparecem em culturas que jamais se encontraram. Talvez a estrutura do mito. Talvez o céu como lugar do sagrado. Ou talvez outra coisa.",
+        },
+
+        // ATO V
+        {
+          a: 5,
+          seg: "Seg. 7",
+          tc: "41:30",
+          title: "Consciência, e as três portas",
+          img: "Rosto humano em close, olhos fechados; depois, ressonância cerebral, padrões acendendo.",
+          tr: "Íntima, um piano só.",
+          vo: "E se uma parte desses encontros não viesse de fora, mas de dentro? Jejum, isolamento, transe produzem visões intensas. A neurociência reconhece a paralisia do sono: a presença sentida, o terror, a figura ao pé da cama.",
+          selos: [F("Estados alterados e paralisia do sono são reais.")],
+        },
+        {
+          a: 5,
+          vo: "Mas cuidado com a conclusão fácil. Ter correlato no cérebro não prova que seja “só” cérebro — como o amor ter química não o torna ilusão. A ciência descreve o mecanismo; não esgota o significado.",
+          selos: [C("O sentido"), F("o mecanismo")],
+          selnote: "podem coexistir",
+        },
+        {
+          a: 5,
+          img: "Triptych na tela: três painéis, três caminhos.",
+          vo: "Tudo conduz a três portas, e nenhuma se tranca hoje. <em>Uma:</em> tudo é técnico e humano. <em>Duas:</em> há uma realidade não-material que os textos tocaram. <em>Três:</em> algo novo, sem ciência ainda.",
+          selos: [H("Via 1"), C("Via 2"), E("Via 3")],
+        },
+
+        // ENCERRAMENTO
+        {
+          a: 6,
+          seg: "Final",
+          tc: "45:30",
+          title: "A pergunta em aberto",
+          img: "Lenta: um mapa antigo. A câmera desliza até a borda, onde se lê “aqui há dragões”.",
+          tr: "O tema principal retorna, contido, aberto, sem clímax triunfal.",
+          vo: "Os cartógrafos antigos escreviam, nas bordas: aqui há dragões. Não era ignorância. Era honestidade — a marcação exata de onde o conhecimento terminava e o mistério começava.",
+        },
+        {
+          a: 6,
+          img: "Montagem final: o ponto branco no infravermelho / a roda no pergaminho / o céu noturno em time-lapse.",
+          vo: "Talvez os antigos não estivessem descrevendo deuses. Talvez não fossem máquinas. Talvez tentassem explicar algo que ultrapassa nossas categorias de ciência, religião e filosofia.",
+        },
+        {
+          a: 6,
+          tr: "Recua para um único acorde sustentado.",
+          vo: "<em>Estamos observando visitantes de outros mundos? Entidades de outras dimensões? Manifestações da própria consciência humana? Ou algo ainda mais estranho?</em>",
+        },
+        {
+          a: 6,
+          img: "Corta para o céu. Apenas o céu.",
+          vo: "A resposta honesta, com tudo o que sabemos e tudo o que nos escapa, é a mais humana de todas. Ainda não sabemos. E talvez seja por isso… que continuamos olhando para cima.",
+        },
+        {
+          a: 6,
+          cartela: true,
+          vo: "Fim.",
+          ctxt: "Este documentário separou deliberadamente o fato, a hipótese, a especulação e a crença. O objetivo não foi convencer — foi convidar você a pensar por conta própria.",
+        },
+      ];
+
+      // ---------- STATE ----------
+      let i = 0,
+        playing = false,
+        filter = null,
+        rafId = null,
+        timerStart = 0,
+        beatDur = 0;
+      const frame = document.getElementById("frame"),
+        atmo = document.getElementById("atmo"),
+        beatbar = document.getElementById("beatbar"),
+        countEl = document.getElementById("count"),
+        fnote = document.getElementById("fnote"),
+        playBtn = document.getElementById("play");
+
+      const SEL = {
+        fato: "Fato",
+        hip: "Hipótese",
+        esp: "Especulação",
+        cre: "Crença",
+      };
+
+      // build legend with counts
+      function counts() {
+        const c = { fato: 0, hip: 0, esp: 0, cre: 0 };
+        B.forEach((b) => (b.selos || []).forEach((s) => c[s.k]++));
+        return c;
+      }
+      function buildLegend() {
+        const c = counts(),
+          L = document.getElementById("legend");
+        L.innerHTML = "";
+        [
+          ["all", "Todos"],
+          ["fato", "Fato"],
+          ["hip", "Hipótese"],
+          ["esp", "Especulação"],
+          ["cre", "Crença"],
+        ].forEach(([k, lbl]) => {
+          const el = document.createElement("span");
+          el.className =
+            "lchip " +
+            k +
+            ((filter === null && k === "all") || filter === k ? " active" : "");
+          el.innerHTML =
+            lbl + (k !== "all" ? `<span class="ct">${c[k]}</span>` : "");
+          el.onclick = () => {
+            filter = k === "all" || filter === k ? null : k;
+            buildLegend();
+            buildTL();
+            updateFNote();
+            if (filter && !beatMatches(i)) {
+              const n = findMatch(i, 1);
+              if (n >= 0) go(n);
+            }
+          };
+          L.appendChild(el);
+        });
+      }
+      function beatMatches(idx) {
+        if (!filter) return true;
+        return (B[idx].selos || []).some((s) => s.k === filter);
+      }
+      function findMatch(from, dir) {
+        let j = from;
+        for (let k = 0; k < B.length; k++) {
+          j += dir;
+          if (j < 0 || j >= B.length) break;
+          if (beatMatches(j)) return j;
+        }
+        return -1;
+      }
+      function updateFNote() {
+        if (!filter) {
+          fnote.textContent = "";
+          return;
+        }
+        const tot = B.filter((_, x) => beatMatches(x)).length;
+        const pos = B.filter((_, x) => x <= i && beatMatches(x)).length;
+        fnote.textContent = `Filtro: ${SEL[filter]} · ${beatMatches(i) ? pos : "–"}/${tot}`;
+      }
+
+      // build timeline grouped by act
+      function buildTL() {
+        const tl = document.getElementById("tl");
+        tl.innerHTML = "";
+        let idx = 0;
+        ACTS.forEach((act, ai) => {
+          const beats = B.map((b, x) => ({ b, x })).filter((o) => o.b.a === ai);
+          if (!beats.length) return;
+          const wrap = document.createElement("div");
+          wrap.className = "act";
+          wrap.style.setProperty("--w", beats.length);
+          const nm = document.createElement("div");
+          nm.className = "nm";
+          nm.textContent = ACT_SHORT[ai];
+          nm.onclick = () => go(beats[0].x);
+          const ticks = document.createElement("div");
+          ticks.className = "ticks";
+          beats.forEach((o) => {
+            const t = document.createElement("div");
+            t.className = "tick";
+            if (o.x < i) t.classList.add("done");
+            if (o.x === i) t.classList.add("cur");
+            if (filter) {
+              if (beatMatches(o.x)) t.classList.add("match");
+              else t.classList.add("dim");
+            }
+            t.title = o.b.title || ACT_SHORT[ai];
+            t.onclick = () => go(o.x);
+            ticks.appendChild(t);
+          });
+          wrap.appendChild(ticks);
+          wrap.appendChild(nm);
+          tl.appendChild(wrap);
+        });
+      }
+
+      // render a beat
+      function render() {
+        const b = B[i],
+          act = ACTS[b.a];
+        document.documentElement.style.setProperty("--accent", act.accent);
+        let html = "";
+        html += '<div class="scene-meta">';
+        html += `<span class="actlabel">${act.label}</span>`;
+        if (b.tc) html += `<span class="tcode">${b.tc}</span>`;
+        if (b.seg) html += `<span class="seg">${b.seg}</span>`;
+        html += "</div>";
+        if (b.title) html += `<div class="scene-title">${b.title}</div>`;
+        if (b.img || b.tr) {
+          html += '<div class="cues">';
+          if (b.img)
+            html += `<div class="cue img"><b>IMAGEM</b> · ${b.img}</div>`;
+          if (b.tr)
+            html += `<div class="cue trilha"><b>TRILHA</b> · ${b.tr}</div>`;
+          html += "</div>";
+        }
+        if (b.cartela) {
+          html += `<div class="vo">${b.vo}</div>`;
+          if (b.ctxt) html += `<div class="ctxt">${b.ctxt}</div>`;
+        } else {
+          html += `<div class="vo"><span class="who">Narrador (V.O.)</span>${b.vo}</div>`;
+        }
+        html += '<div class="selos">';
+        (b.selos || []).forEach((s) => {
+          html += `<span class="selo ${s.k}">${s.l}${s.n ? `<span class="nt">— ${s.n}</span>` : ""}</span>`;
+        });
+        if (b.selnote)
+          html += `<span class="selo" style="border-color:transparent;color:var(--paper-dim);font-family:var(--read);text-transform:none;letter-spacing:normal">${b.selnote}</span>`;
+        html += "</div>";
+
+        frame.classList.toggle("cartela", !!b.cartela);
+        frame.classList.add("swap");
+        setTimeout(() => {
+          frame.innerHTML = html;
+          frame.classList.remove("swap");
+        }, 180);
+
+        countEl.textContent = String(i + 1).padStart(2, "0") + " / " + B.length;
+        document.getElementById("prev").disabled = i === 0;
+        document.getElementById("next").disabled = i === B.length - 1;
+        buildTL();
+        updateFNote();
+        if (playing) startBeatTimer();
+      }
+
+      function go(n) {
+        if (n < 0 || n >= B.length) return;
+        i = n;
+        render();
+      }
+      function next() {
+        const n = filter ? findMatch(i, 1) : i + 1;
+        if (n >= 0 && n < B.length) go(n);
+        else stop();
+      }
+      function prev() {
+        const n = filter ? findMatch(i, -1) : i - 1;
+        if (n >= 0) go(n);
+      }
+
+      // autoplay with per-beat timer scaled to text length
+      function beatLength() {
+        const b = B[i];
+        const len = (b.vo || "").replace(/<[^>]+>/g, "").length;
+        return Math.min(13000, 4200 + len * 42);
+      }
+      function startBeatTimer() {
+        cancelAnimationFrame(rafId);
+        beatDur = beatLength();
+        timerStart = performance.now();
+        const tick = (t) => {
+          const p = Math.min(1, (t - timerStart) / beatDur);
+          beatbar.style.width = p * 100 + "%";
+          if (p >= 1) {
+            if (i < B.length - 1) next();
+            else stop();
+          } else rafId = requestAnimationFrame(tick);
+        };
+        rafId = requestAnimationFrame(tick);
+      }
+      function play() {
+        playing = true;
+        playBtn.textContent = "❚❚";
+        playBtn.classList.add("on");
+        startBeatTimer();
+      }
+      function stop() {
+        playing = false;
+        playBtn.textContent = "▶";
+        playBtn.classList.remove("on");
+        cancelAnimationFrame(rafId);
+        beatbar.style.width = "0";
+      }
+      function toggle() {
+        playing ? stop() : play();
+      }
+
+      // controls
+      document.getElementById("next").onclick = () => {
+        stop();
+        next();
+      };
+      document.getElementById("prev").onclick = () => {
+        stop();
+        prev();
+      };
+      playBtn.onclick = toggle;
+      document.getElementById("restart").onclick = () => {
+        stop();
+        go(0);
+      };
+      document.addEventListener("keydown", (e) => {
+        if (
+          document.getElementById("intro").classList.contains("hide") === false
+        ) {
+          if (e.key === "Enter") startBtn.click();
+          return;
+        }
+        if (e.key === "ArrowRight") {
+          stop();
+          next();
+        } else if (e.key === "ArrowLeft") {
+          stop();
+          prev();
+        } else if (e.key === " ") {
+          e.preventDefault();
+          toggle();
+        }
+      });
+
+      const startBtn = document.getElementById("startBtn");
+      startBtn.onclick = () => {
+        document.getElementById("intro").classList.add("hide");
+        buildLegend();
+        render();
+      };
+
+      // init (render behind intro so it's ready)
+      buildLegend();
+      render();
+    </script>
+  </body>
+</html>

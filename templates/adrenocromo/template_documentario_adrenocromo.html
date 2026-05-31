@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dossiê — Adrenocromo: Ciência, História, Mitos e Conspirações</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0c0a;
+    --ink-2:#15120d;
+    --panel:#1c1813;
+    --panel-2:#221d16;
+    --line:#3a3127;
+    --paper:#ece5d6;
+    --paper-dim:#b3a892;
+    --paper-faint:#7c715d;
+    --amber:#e0a23d;
+    --teal:#54b9a6;
+    --rust:#cf5a3c;
+    --violet:#a98bc4;
+    --blue:#6ea3c7;
+    --display:"Fraunces",serif;
+    --body:"Spectral",Georgia,serif;
+    --mono:"JetBrains Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--body);
+    font-weight:300;
+    line-height:1.65;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* grain + vignette atmosphere */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background:
+      radial-gradient(120% 90% at 50% -10%, rgba(224,162,61,.08), transparent 55%),
+      radial-gradient(140% 120% at 50% 120%, rgba(0,0,0,.55), transparent 60%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .layout{position:relative;z-index:3;display:grid;grid-template-columns:248px 1fr;max-width:1280px;margin:0 auto;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;align-self:start;height:100vh;
+    padding:40px 26px;border-right:1px solid var(--line);
+    overflow-y:auto;
+  }
+  nav .mark{font-family:var(--mono);font-size:10px;letter-spacing:.32em;color:var(--amber);text-transform:uppercase;}
+  nav h2{font-family:var(--display);font-weight:600;font-size:21px;line-height:1.1;margin:14px 0 26px;color:var(--paper);}
+  nav a{
+    display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;
+    color:var(--paper-faint);text-decoration:none;padding:7px 0;
+    border-bottom:1px solid transparent;transition:.25s;
+  }
+  nav a:hover{color:var(--paper);padding-left:8px;}
+  nav a.active{color:var(--amber);}
+  nav a span{color:var(--line);margin-right:9px;}
+
+  /* ---------- MAIN ---------- */
+  main{padding:0 clamp(28px,5vw,88px) 140px;}
+
+  /* hero */
+  header.hero{padding:90px 0 64px;border-bottom:1px solid var(--line);position:relative;}
+  .tag-row{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--paper-faint);display:flex;gap:18px;flex-wrap:wrap;margin-bottom:34px;}
+  .tag-row b{color:var(--amber);font-weight:500;}
+  header.hero h1{
+    font-family:var(--display);font-weight:600;font-size:clamp(40px,7vw,82px);
+    line-height:.98;letter-spacing:-.02em;color:var(--paper);
+  }
+  header.hero h1 em{font-style:italic;color:var(--amber);}
+  header.hero .sub{
+    margin-top:26px;max-width:60ch;font-size:19px;color:var(--paper-dim);font-style:italic;
+  }
+  .classified{
+    position:absolute;top:90px;right:0;font-family:var(--mono);font-size:10px;
+    letter-spacing:.25em;color:var(--rust);border:1px solid var(--rust);
+    padding:6px 12px;transform:rotate(4deg);opacity:.85;
+  }
+
+  /* section scaffolding */
+  section{padding:64px 0;border-bottom:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:20px;margin-bottom:34px;}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:.1em;}
+  .sec-head h3{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.05;color:var(--paper);letter-spacing:-.01em;}
+  .lead{font-size:18px;color:var(--paper-dim);max-width:68ch;margin-bottom:8px;}
+
+  /* editorial principles list */
+  .principles{counter-reset:p;list-style:none;display:grid;gap:2px;margin-top:24px;}
+  .principles li{
+    counter-increment:p;display:grid;grid-template-columns:54px 1fr;gap:18px;align-items:baseline;
+    padding:16px 18px;background:var(--panel);border-left:2px solid var(--line);transition:.3s;
+  }
+  .principles li:hover{border-left-color:var(--amber);background:var(--panel-2);}
+  .principles li::before{content:counter(p,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--amber);}
+  .principles b{color:var(--paper);font-weight:500;font-family:var(--body);}
+
+  /* verification legend */
+  .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:10px;}
+  .chip{
+    background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--c);
+    padding:18px;position:relative;
+  }
+  .chip .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c);font-weight:700;display:flex;align-items:center;gap:8px;}
+  .chip .dot{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);}
+  .chip p{font-size:14.5px;color:var(--paper-dim);margin-top:10px;line-height:1.5;}
+
+  /* chapter cards */
+  .chapters{display:grid;gap:18px;}
+  .chap{background:var(--panel);border:1px solid var(--line);overflow:hidden;transition:.35s;}
+  .chap.open{border-color:var(--amber);}
+  .chap-bar{
+    display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;
+    padding:22px 26px;cursor:pointer;user-select:none;
+  }
+  .chap-bar:hover{background:var(--panel-2);}
+  .chap-no{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:.05em;}
+  .chap-title{font-family:var(--display);font-weight:600;font-size:21px;color:var(--paper);line-height:1.15;}
+  .chap-toggle{font-family:var(--mono);font-size:20px;color:var(--paper-faint);transition:.35s;}
+  .chap.open .chap-toggle{transform:rotate(45deg);color:var(--amber);}
+  .chap-body{max-height:0;overflow:hidden;transition:max-height .5s ease;}
+  .chap-inner{padding:6px 26px 30px;border-top:1px solid var(--line);}
+  .field{margin-top:22px;}
+  .field .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+  .field ul{list-style:none;display:grid;gap:7px;}
+  .field ul li{padding-left:20px;position:relative;color:var(--paper-dim);font-size:15.5px;}
+  .field ul li::before{content:"—";position:absolute;left:0;color:var(--line);}
+  .anchor{background:var(--ink-2);border-left:2px solid var(--teal);padding:14px 16px;font-size:14.5px;color:var(--paper-dim);}
+  .anchor .pin{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--teal);text-transform:uppercase;display:block;margin-bottom:6px;}
+  .writebox{
+    margin-top:8px;min-height:78px;background:var(--ink-2);border:1px dashed var(--line);
+    padding:14px 16px;color:var(--paper);font-family:var(--body);font-size:15.5px;outline:none;transition:.3s;
+  }
+  .writebox:empty::before{content:"Desenvolva o conteúdo deste capítulo aqui…";color:var(--paper-faint);font-style:italic;}
+  .writebox:focus{border-color:var(--amber);border-style:solid;background:#181410;}
+
+  /* tables */
+  .tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px;}
+  .tbl th{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);}
+  .tbl td{padding:13px 14px;border-bottom:1px solid var(--line);color:var(--paper-dim);vertical-align:top;}
+  .tbl tr:last-child td{border-bottom:none;}
+
+  /* checklist */
+  .check{display:grid;gap:6px;margin-top:8px;}
+  .check label{
+    display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:var(--panel);
+    border:1px solid var(--line);cursor:pointer;transition:.25s;font-size:15.5px;color:var(--paper-dim);
+  }
+  .check label:hover{background:var(--panel-2);}
+  .check input{appearance:none;width:20px;height:20px;border:1.5px solid var(--paper-faint);flex:none;margin-top:2px;position:relative;transition:.2s;}
+  .check input:checked{background:var(--teal);border-color:var(--teal);}
+  .check input:checked::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:var(--ink);font-weight:700;font-size:13px;}
+  .check input:checked + span{color:var(--paper-faint);text-decoration:line-through;}
+
+  footer{padding:50px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--paper-faint);text-transform:uppercase;}
+  footer .rule{height:1px;background:var(--line);margin-bottom:24px;}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(22px);transition:.7s cubic-bezier(.2,.7,.3,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media(max-width:920px){
+    .layout{grid-template-columns:1fr;}
+    nav{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);}
+    nav a{display:inline-block;margin-right:16px;}
+    .classified{position:static;display:inline-block;margin-top:24px;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- NAV -->
+  <nav>
+    <div class="mark">Dossiê · v1</div>
+    <h2>Adrenocromo</h2>
+    <a href="#ficha"><span>00</span>Ficha técnica</a>
+    <a href="#principios"><span>01</span>Princípios</a>
+    <a href="#legenda"><span>02</span>Legenda</a>
+    <a href="#capitulos"><span>03</span>Capítulos</a>
+    <a href="#estilo"><span>04</span>Guia de estilo</a>
+    <a href="#fontes"><span>05</span>Bibliografia</a>
+    <a href="#checklist"><span>06</span>Checklist</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <header class="hero reveal">
+      <div class="tag-row">
+        <span>Documentário investigativo</span>
+        <span><b>Ciência</b> × Mito</span>
+        <span>Template de produção</span>
+      </div>
+      <h1>Adrenocromo<br><em>fato, ficção & fabricação</em></h1>
+      <p class="sub">Um gabarito de produção para separar com rigor o que é química documentada do que é lenda, boato e desinformação.</p>
+      <div class="classified">⛔ Classificar cada afirmação</div>
+    </header>
+
+    <!-- FICHA -->
+    <section id="ficha" class="reveal">
+      <div class="sec-head"><span class="sec-num">00</span><h3>Ficha técnica</h3></div>
+      <table class="tbl">
+        <tr><th style="width:30%">Campo</th><th>Preencher</th></tr>
+        <tr><td>Título de trabalho</td><td class="writebox" contenteditable></td></tr>
+        <tr><td>Formato</td><td>Roteiro de vídeo · Artigo longo · Podcast · Livro</td></tr>
+        <tr><td>Extensão / duração</td><td class="writebox" contenteditable></td></tr>
+        <tr><td>Público-alvo</td><td class="writebox" contenteditable></td></tr>
+        <tr><td>Tom</td><td>Cinematográfico · investigativo · documental</td></tr>
+        <tr><td>Autor · versão · data</td><td class="writebox" contenteditable></td></tr>
+      </table>
+    </section>
+
+    <!-- PRINCIPIOS -->
+    <section id="principios" class="reveal">
+      <div class="sec-head"><span class="sec-num">01</span><h3>Princípios editoriais</h3></div>
+      <p class="lead">A espinha dorsal do projeto. Fixe estas regras antes de escrever qualquer capítulo.</p>
+      <ol class="principles">
+        <li><span></span><span><b>Imparcialidade.</b> Apresentar os fatos sem endossar nem ridicularizar gratuitamente.</span></li>
+        <li><span></span><span><b>Separação rigorosa.</b> Distinguir os cinco níveis de afirmação (ver legenda).</span></li>
+        <li><span></span><span><b>Verificabilidade.</b> Toda afirmação científica precisa de fonte rastreável.</span></li>
+        <li><span></span><span><b>Transparência.</b> Quando algo é desconhecido, dizer que é desconhecido.</span></li>
+        <li><span></span><span><b>Contexto.</b> Nunca apresentar uma alegação conspiratória sem o contexto que a explica.</span></li>
+        <li><span></span><span><b>Respeito ao leitor.</b> Convidar ao pensamento crítico, não doutrinar.</span></li>
+      </ol>
+    </section>
+
+    <!-- LEGENDA -->
+    <section id="legenda" class="reveal">
+      <div class="sec-head"><span class="sec-num">02</span><h3>Legenda de verificação</h3></div>
+      <p class="lead">Classifique cada afirmação relevante com uma destas etiquetas ao longo de todo o documento.</p>
+      <div class="legend">
+        <div class="chip" style="--c:var(--teal)"><div class="lbl"><span class="dot"></span>Fato</div><p>Documentado e verificável em fontes primárias ou revisadas por pares.</p></div>
+        <div class="chip" style="--c:var(--blue)"><div class="lbl"><span class="dot"></span>Hipótese</div><p>Proposta científica testável — ainda não confirmada ou já abandonada.</p></div>
+        <div class="chip" style="--c:var(--amber)"><div class="lbl"><span class="dot"></span>Especulação</div><p>Interpretação possível, sem base empírica sólida.</p></div>
+        <div class="chip" style="--c:var(--violet)"><div class="lbl"><span class="dot"></span>Boato</div><p>Alegação popular sem fonte rastreável.</p></div>
+        <div class="chip" style="--c:var(--rust)"><div class="lbl"><span class="dot"></span>Desinformação</div><p>Afirmação refutada ou comprovadamente falsa.</p></div>
+      </div>
+    </section>
+
+    <!-- CAPITULOS -->
+    <section id="capitulos" class="reveal">
+      <div class="sec-head"><span class="sec-num">03</span><h3>Os doze capítulos</h3></div>
+      <p class="lead">Cada capítulo segue o mesmo gabarito: objetivo · perguntas-guia · âncoras factuais · quadro de evidência · redação. Clique para expandir.</p>
+      <div class="chapters" id="chapters"></div>
+    </section>
+
+    <!-- ESTILO -->
+    <section id="estilo" class="reveal">
+      <div class="sec-head"><span class="sec-num">04</span><h3>Guia de estilo</h3></div>
+      <div class="field"><ul>
+        <li><b style="color:var(--paper)">Voz:</b> terceira pessoa, investigativa, sóbria.</li>
+        <li><b style="color:var(--paper)">Ritmo:</b> gancho → contexto → evidência → contraponto → síntese.</li>
+        <li><b style="color:var(--paper)">Linguagem:</b> cinematográfica, mas precisa; sem sensacionalismo.</li>
+        <li><b style="color:var(--paper)">Fontes:</b> sempre citar; preferir primárias e revisadas por pares.</li>
+        <li><b style="color:var(--paper)">Equilíbrio:</b> explicar as alegações sem lhes dar peso que não têm.</li>
+      </ul></div>
+    </section>
+
+    <!-- FONTES -->
+    <section id="fontes" class="reveal">
+      <div class="sec-head"><span class="sec-num">05</span><h3>Bibliografia</h3></div>
+      <table class="tbl">
+        <tr><th>#</th><th>Tipo</th><th>Autor / Veículo</th><th>Título</th><th>Ano</th><th>Cap.</th></tr>
+        <tr><td>1</td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td></tr>
+        <tr><td>2</td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td></tr>
+        <tr><td>3</td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td></tr>
+      </table>
+    </section>
+
+    <!-- CHECKLIST -->
+    <section id="checklist" class="reveal" style="border-bottom:none">
+      <div class="sec-head"><span class="sec-num">06</span><h3>Checklist final</h3></div>
+      <div class="check">
+        <label><input type="checkbox"><span>Toda afirmação científica tem fonte rastreável?</span></label>
+        <label><input type="checkbox"><span>Cada alegação está classificada na legenda?</span></label>
+        <label><input type="checkbox"><span>Ficção e realidade estão claramente separadas?</span></label>
+        <label><input type="checkbox"><span>Há contexto histórico em cada narrativa conspiratória?</span></label>
+        <label><input type="checkbox"><span>A desinformação foi refutada, não amplificada?</span></label>
+        <label><input type="checkbox"><span>A conclusão responde às cinco perguntas centrais?</span></label>
+        <label><input type="checkbox"><span>O tom convida ao pensamento crítico em vez de doutrinar?</span></label>
+        <label><input type="checkbox"><span>Revisão de fatos por terceiro concluída?</span></label>
+      </div>
+      <footer>
+        <div class="rule"></div>
+        Template de produção · Edição não persistente — exporte ou imprima para salvar
+      </footer>
+    </section>
+
+  </main>
+</div>
+
+<script>
+const chapters = [
+  {n:"01",t:"O que é o adrenocromo?",
+   o:"Estabelecer a base química e biológica real antes de qualquer narrativa cultural.",
+   q:["Significado da palavra e estrutura química","Relação com a adrenalina (epinefrina) e oxidação","Como é sintetizado em laboratório","Aplicações científicas reais"],
+   a:"Derivado da oxidação da adrenalina/epinefrina. Fórmula usualmente citada: C₉H₉NO₃. Investigado em bioquímica (derivado relacionado: carbazocromo)."},
+  {n:"02",t:"A história da descoberta",
+   o:"Situar a descoberta no tempo e no contexto científico.",
+   q:["Quando e por quem foi estudado","Primeiros estudos (1940–1960)","Hipóteses neurológicas iniciais","Contexto da psiquiatria da época"],
+   a:"O interesse científico cresce a partir das décadas de 1940–1950, dentro da pesquisa sobre catecolaminas."},
+  {n:"03",t:"Adrenocromo e a psiquiatria",
+   o:"Explicar a 'hipótese do adrenocromo' para a esquizofrenia e por que foi abandonada.",
+   q:["Trabalhos de Humphry Osmond e Abram Hoffer","O que eles acreditavam","Como os estudos foram conduzidos","Por que as hipóteses foram descartadas"],
+   a:"Osmond e Hoffer (anos 1950) propuseram que metabólitos da adrenalina teriam efeitos psicotomiméticos. A hipótese NÃO se sustentou sob escrutínio posterior."},
+  {n:"04",t:"Literatura e cultura pop",
+   o:"Mostrar como a substância entrou no imaginário popular pela ficção.",
+   q:["Fear and Loathing in Las Vegas","O papel de Hunter S. Thompson","Impacto cultural e adaptações","Onde a ficção se afasta da realidade"],
+   a:"O retrato em 'Fear and Loathing in Las Vegas' (Thompson, 1971; filme 1998) é fictício e exagerado — não corresponde à farmacologia real."},
+  {n:"05",t:"O surgimento das teorias da conspiração",
+   o:"Rastrear a origem e a propagação das narrativas.",
+   q:["Como surgiram as primeiras teorias","Papel de fóruns e redes sociais","Influência dos algoritmos","Viralização digital"],
+   a:""},
+  {n:"06",t:"O adrenocromo e o fenômeno QAnon",
+   o:"Explicar como o movimento QAnon incorporou a substância.",
+   q:["O que foi o QAnon","Como o adrenocromo entrou nas narrativas","Principais alegações divulgadas","Aspectos psicológicos e sociológicos"],
+   a:"A partir de ~2017, o QAnon reciclou alegações SEM qualquer base científica. Tais alegações são desinformação."},
+  {n:"07",t:"O que diz a ciência moderna?",
+   o:"Consolidar o consenso atual e separar conhecimento de boato.",
+   q:["O que realmente se sabe hoje","O que permanece desconhecido","O que foi refutado","O que nunca foi comprovado"],
+   a:"Diferencie explicitamente: evidência · hipótese · especulação · boato · desinformação."},
+  {n:"08",t:"A psicologia das teorias da conspiração",
+   o:"Explicar por que tais teorias atraem pessoas.",
+   q:["Viés de confirmação","Efeito de câmara de eco","Necessidade humana de explicações complexas","Achados em psicologia, sociologia, neurociência e antropologia"],
+   a:""},
+  {n:"09",t:"Adrenocromo como mito moderno",
+   o:"Comparar com pânicos morais históricos.",
+   q:["Paralelos com lendas antigas e 'elites secretas'","Comparação com caças às bruxas","Pânicos satânicos","Acusações de cultos secretos"],
+   a:""},
+  {n:"10",t:"Internet, desinformação e realidade",
+   o:"Analisar os mecanismos de propagação digital.",
+   q:["Como informações falsas se espalham","Papel de algoritmos e influenciadores","Vídeos virais","Impacto de IA generativa e deepfakes"],
+   a:""},
+  {n:"11",t:"Análise filosófica",
+   o:"Elevar a discussão ao plano epistemológico.",
+   q:["Busca pela verdade × fascínio pelo oculto","Mistério × evidência; conhecimento × crença","Karl Popper (falseabilidade) e Thomas Kuhn (paradigmas)","Carl Sagan: afirmações extraordinárias exigem evidências extraordinárias"],
+   a:""},
+  {n:"12",t:"Conclusão",
+   o:"Responder às perguntas centrais e fechar com reflexão.",
+   q:["O que é fato? hipótese? ficção?","O que é teoria da conspiração?","O que a ciência realmente sabe hoje?","Reflexão sobre pensamento crítico e análise de evidências"],
+   a:""},
+];
+
+const wrap = document.getElementById('chapters');
+chapters.forEach(c=>{
+  const el = document.createElement('div');
+  el.className='chap';
+  el.innerHTML = `
+    <div class="chap-bar">
+      <span class="chap-no">${c.n}</span>
+      <span class="chap-title">${c.t}</span>
+      <span class="chap-toggle">+</span>
+    </div>
+    <div class="chap-body"><div class="chap-inner">
+      <div class="field"><div class="k">Objetivo</div><p style="color:var(--paper-dim);font-size:15.5px">${c.o}</p></div>
+      <div class="field"><div class="k">Perguntas-guia</div><ul>${c.q.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      ${c.a?`<div class="field"><div class="anchor"><span class="pin">📌 Âncora factual — verificar em fonte primária</span>${c.a}</div></div>`:''}
+      <div class="field"><div class="k">Quadro · Alegação × Evidência</div>
+        <table class="tbl"><tr><th>Afirmação</th><th>Etiqueta</th><th>Fonte</th></tr>
+        <tr><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td><td class="writebox" contenteditable></td></tr></table>
+      </div>
+      <div class="field"><div class="k">Redação</div><div class="writebox" contenteditable></div></div>
+    </div></div>`;
+  wrap.appendChild(el);
+  el.querySelector('.chap-bar').addEventListener('click',()=>{
+    const open = el.classList.toggle('open');
+    const body = el.querySelector('.chap-body');
+    body.style.maxHeight = open ? body.scrollHeight + 'px' : 0;
+  });
+});
+
+// reveal on scroll
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i*60)+'ms';io.observe(el);});
+
+// active nav
+const links = [...document.querySelectorAll('nav a')];
+const secs = links.map(a=>document.querySelector(a.getAttribute('href')));
+const navIo = new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){const id='#'+e.target.id;links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));}
+}),{rootMargin:"-40% 0px -55% 0px"});
+secs.forEach(s=>s&&navIo.observe(s));
+</script>
+</body>
+</html>
