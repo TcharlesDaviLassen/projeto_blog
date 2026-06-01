@@ -324,6 +324,29 @@ const CATALOG = {
         },
       ],
     },
+    /* ============================================
+     * RELATÓRIO INSTITUCIONAL DE INVESTIMENTOS
+     * ============================================ */
+    {
+      id: "relatorio_institucional_investimentos",
+      name: "Relatório Institucional de Investimentos",
+      glyph: "📊",
+      description:
+        "Análises de mercado, balanços e projeções estratégicas institucionais.",
+      tags: ["investimentos", "corporativo", "relatório"],
+      children: [],
+      templates: [
+        {
+          id: "inv-001",
+          title: "Relatório de Investimentos 2026",
+          path: "templates/relatorio_institucional_investimentos/relatorio_investimentos_2026.html",
+          description:
+            "Painel executivo com indicadores macroeconômicos e alocação de ativos.",
+          tags: ["finanças", "dashboard", "executivo"],
+          date: "2026-05-31",
+        },
+      ],
+    },
 
     /* ============================================
      * MINIMALISMO
